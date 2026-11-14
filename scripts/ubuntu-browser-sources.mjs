@@ -18,11 +18,12 @@ async function probeArchive(url, { signal }) {
 // Start with the independently reachable mirror and stop on the first healthy
 // origin. Do not let multiple unavailable DNS lookups delay a healthy origin.
 // Every request is bounded; APT continues to use the Ubuntu signing keys.
-export async function selectUbuntuBrowserMirror({ codename, probe = probeArchive, timeoutMs = 5000 }) {
+export async function selectUbuntuBrowserMirror({ codename, probe = probeArchive, timeoutMs = 5000, excludedMirrors = [] }) {
   assert.match(codename, /^[a-z][a-z0-9-]*$/)
   assert.ok(Number.isInteger(timeoutMs) && timeoutMs >= 1 && timeoutMs <= 10000)
+  assert.ok(Array.isArray(excludedMirrors) && excludedMirrors.every(mirror => SUPPORTED_MIRRORS.includes(mirror)), 'Unsupported excluded archive origin')
   const probes = []
-  for (const mirror of SUPPORTED_MIRRORS) {
+  for (const mirror of SUPPORTED_MIRRORS.filter(mirror => !excludedMirrors.includes(mirror))) {
     const controller = new AbortController()
     let timer, timedOut = false
     let result
@@ -57,4 +58,30 @@ export async function configureUbuntuBrowserSources({ lstat, readFile, writeFile
     if (after !== before) { await writeFile(file, after); changedSourceFiles++ }
   }
   return { changedSourceFiles }
+}
+
+// A healthy InRelease endpoint does not prove package downloads will succeed.
+// Retry only this installation phase, once, on a distinct approved origin.
+// Signature, package-resolution, signal and unknown failures remain terminal.
+export async function installUbuntuBrowserDependencies({ codename, browser, io, run, probe = probeArchive, timeoutMs = 5000 }) {
+  assert.ok(['chromium', 'webkit'].includes(browser), 'Unsupported CI browser')
+  assert.equal(typeof run, 'function')
+  const attempts = [], excludedMirrors = []
+  for (let index = 0; index < 2; index++) {
+    const selected = await selectUbuntuBrowserMirror({ codename, probe, timeoutMs, excludedMirrors })
+    excludedMirrors.push(selected.mirror)
+    const configured = await configureUbuntuBrowserSources(io, selected.mirror)
+    const result = await run(browser)
+    const output = result.output ?? ''
+    const integrityFailure = /NO_PUBKEY|BADSIG|EXPKEYSIG|invalid signature|not signed|Hash Sum mismatch|unauthenticated|does not have a Release file|Unable to locate package|Unmet dependencies/i.test(output)
+    const archiveFetchFailure = /E:\s*Failed to fetch https:\/\/(?:(?:azure\.archive|archive|security)\.ubuntu\.com|mirrors\.edge\.kernel\.org)\/ubuntu\//i.test(output)
+    const connectionFailure = /Could not (?:connect|resolve)|Network is unreachable|Temporary failure resolving|Connection (?:timed out|refused|failed)|Failed to connect|connection timed out/i.test(output)
+    const transportFailure = !integrityFailure && archiveFetchFailure && connectionFailure
+    attempts.push({ mirror: selected.mirror, probes: selected.probes, changedSourceFiles: configured.changedSourceFiles, status: result.status, signal: result.signal ?? null, transportFailure })
+    if (result.status === 0 && !result.signal && !integrityFailure) return { installed: true, browser, attemptLimit: 2, attempts }
+    const eligibleFallback = Number.isInteger(result.status) && result.status !== 0 && !result.signal && transportFailure
+    if (!eligibleFallback || index === 1) {
+      throw Object.assign(new Error(eligibleFallback && index === 1 ? 'Browser dependency downloads failed after the bounded archive fallback' : 'Browser dependency installation failed; no eligible archive transport fallback'), { attempts })
+    }
+  }
 }
