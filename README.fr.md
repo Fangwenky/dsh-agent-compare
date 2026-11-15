@@ -72,13 +72,13 @@ Captures réelles de DSH avec des candidats contrôlés. La couverture et le par
 
 ## Voir le parcours complet
 
-[![Exemple à candidats fixes : quatre pages pomodoro en direct, deux mises de côté, C choisie et les styles révélés](https://raw.githubusercontent.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/main/docs/media/comparison-preview.gif)](https://github.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/blob/main/docs/media/comparison-workflow.mp4)
+[![Exemple à candidats fixes : une baleine par version en cours et les étapes en direct, quatre pages pomodoro en direct, C mise en avant avec sa réponse à côté de sa page, puis choisie](https://raw.githubusercontent.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/main/docs/media/comparison-preview.gif)](https://github.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/blob/main/docs/media/comparison-workflow.mp4)
 
-Enregistrement à candidats fixes dans un hôte DSH réel, à partir du code candidat de la 2.1.0, avec l'interface chinoise. Quatre versions créent une page pomodoro dans un dossier ordinaire, et les quatre pages en direct sont utilisables. Deux sont mises de côté, les autres se comparent côte à côte, le choix révèle chaque style et le résultat est enregistré dans un nouveau dossier avant de reprendre la conversation. La vidéo coupe les attentes et garde le reste à vitesse normale. Les chemins locaux sont masqués.
+Enregistrement à candidats fixes dans un hôte DSH réel, à partir du code candidat de la 3.0.0, avec l'interface chinoise. Quatre versions créent une page pomodoro dans un dossier ordinaire pendant que deux comètes font le tour de la carte de comparaison. La grande fenêtre s'ouvre pendant qu'elles travaillent : une baleine par version, qui lâche des bulles d'une pichenette, et les **Steps** ouverts sur la réflexion et l'écriture du fichier en direct. Les réponses arrivent avant les pages, puis les quatre pages en direct sont utilisables. Deux sont mises de côté, C est mise en avant avec sa réponse à gauche de sa page, le choix révèle chaque style et le résultat est enregistré dans un nouveau dossier avant de reprendre la conversation. La vidéo coupe les attentes et garde le reste à vitesse normale. Les chemins locaux sont masqués.
 
 Après le choix, deux raisons (mise en page, plus simple) sont cochées ; elles parviennent à la requête suivante de la conversation principale.
 
-[Vidéo complète (28 secondes)](https://github.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/blob/main/docs/media/comparison-workflow.mp4) · [Conditions et résultats](https://github.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/blob/main/docs/demo.md)
+[Vidéo complète (46 secondes)](https://github.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/blob/main/docs/media/comparison-workflow.mp4) · [Conditions et résultats](https://github.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/blob/main/docs/demo.md)
 
 <details>
 <summary>English answers · 390 px</summary>

@@ -72,13 +72,13 @@ AgentCompare は [DeepSeek Harness](https://github.com/deepseek-ai/deepseek-harn
 
 ## 操作の流れを見る
 
-[![4 つのポモドーロページを同時に実行し、2 つを外して C を選び、スタイルを公開する固定候補の例](https://raw.githubusercontent.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/main/docs/media/comparison-preview.gif)](https://github.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/blob/main/docs/media/comparison-workflow.mp4)
+[![作業中のバージョンごとのクジラとリアルタイムのステップ、4 つのポモドーロページの同時実行、返信とページを並べた C の選択を示す固定候補の例](https://raw.githubusercontent.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/main/docs/media/comparison-preview.gif)](https://github.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/blob/main/docs/media/comparison-workflow.mp4)
 
-実際の DSH ホストで録画した固定候補の実演です（2.1.0 リリース候補のソース、画面は中国語）。通常のフォルダーで 4 つのバージョンがそれぞれポモドーロのページを作り、4 つのライブページをそのまま操作できます。2 つを外して残りを並べ、選択後に各スタイルを公開し、新しいフォルダーに保存して会話を続けます。待機部分は省略し、それ以外は等速です。ローカルパスは非表示です。
+実際の DSH ホストで録画した固定候補の実演です（3.0.0 リリース候補のソース、画面は中国語）。通常のフォルダーで 4 つのバージョンがそれぞれポモドーロのページを作り、比較カードの周りを 2 つの彗星が走ります。作業中に大きなウィンドウを開くと、バージョンごとにクジラがいて、つつくと泡を出します。「过程」（Steps）を開くと思考とファイル書き込みがリアルタイムに見えます。返信はページより先に表示され、その後 4 つのライブページをそのまま操作できます。2 つを外し、C に絞ると返信が左、ページが右に並びます。選択後に各スタイルを公開し、新しいフォルダーに保存して会話を続けます。待機部分は省略し、それ以外は等速です。ローカルパスは非表示です。
 
 選択後に理由（レイアウト、よりシンプル）を 2 つ選ぶと、主会話の次のリクエストに伝わります。
 
-[動画全編（28秒）](https://github.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/blob/main/docs/media/comparison-workflow.mp4) · [条件と結果](https://github.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/blob/main/docs/demo.md)
+[動画全編（46秒）](https://github.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/blob/main/docs/media/comparison-workflow.mp4) · [条件と結果](https://github.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/blob/main/docs/demo.md)
 
 <details>
 <summary>English answers · 390 px</summary>

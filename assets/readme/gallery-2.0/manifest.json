@@ -1,14 +1,14 @@
 {
   "schema": "agentcompare.gallery/v1",
-  "packageVersion": "2.1.0",
-  "updatedAt": "2026-11-14T15:03:46.603Z",
-  "runtimeSource": "2b5c9920378b8414dfa1449033808385c30f55c8",
+  "packageVersion": "3.0.0",
+  "updatedAt": "2026-11-15T05:17:26.040Z",
+  "runtimeSource": "72c03e8295e6d51bebef57677179e19c1d3f8871",
   "hostVersion": "0.2.2-rc.1",
   "browser": "Microsoft Edge 157",
-  "runtimeFilesMatched": 95,
+  "runtimeFilesMatched": 153,
   "privatePathsHidden": true,
   "captionsAdded": true,
-  "scenario": "Two product illustrations and six actual interface captures. The captures use controlled candidates in an isolated DSH Web profile at desktop window sizes, recorded on 2026-11-14 (local date) from the source named here; the installed runtime matched it byte for byte. They show real application execution, answers and saved history, not external-model generation. The conversation view shows a greeting sent from a Vite repository and answered by four versions with nothing built. No user Desktop profile was changed.",
+  "scenario": "Two product illustrations and six actual interface captures. The captures use controlled candidates in an isolated DSH Web profile at desktop window sizes, recorded on 2026-11-15 (local date) from the source named here; every installed file other than package.json matched it byte for byte. They show real application execution, steps, replies, answers and saved history, not external-model generation. The conversation view shows a greeting sent from a Vite repository and answered by four versions with nothing built, with the steps of one version open. No user Desktop profile was changed.",
   "files": [
     {
       "path": "assets/readme/gallery-2.0/01-overview.png",
@@ -24,21 +24,21 @@
       "path": "assets/readme/gallery-2.0/02-live-comparison.png",
       "url": "https://raw.githubusercontent.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/main/assets/readme/gallery-2.0/02-live-comparison.png",
       "kind": "screenshot",
-      "title": "四版页面直接操作 / Four independently interactive pages",
+      "title": "四版实时页面、过程与回复 / Four live pages with steps and replies",
       "width": 1576,
       "height": 1140,
-      "bytes": 624347,
-      "sha256": "0d2a576ee3b5b3d04ece8aff437ae73d07e3165bc89e742b47b8cfba08ebf1ab"
+      "bytes": 1064351,
+      "sha256": "2019d637d28e80d0675b51c0b40814bbabe239bde03e32e6134a1bae47beb54b"
     },
     {
       "path": "assets/readme/gallery-2.0/03-main-conversation.png",
       "url": "https://raw.githubusercontent.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/main/assets/readme/gallery-2.0/03-main-conversation.png",
       "kind": "screenshot",
-      "title": "打招呼得到四种回答 / A greeting answered four ways",
+      "title": "打招呼得到四种回答，过程可展开 / A greeting answered four ways, with steps",
       "width": 1600,
       "height": 1200,
-      "bytes": 306255,
-      "sha256": "9096ab4f5836fe348739c1779eaf184842ea9b273991fe1eb40115f2842fdcb9"
+      "bytes": 323261,
+      "sha256": "78b535838487bed3498af24b7c06a2cc08559fc16cfc444ac063a5dfbd89fcd5"
     },
     {
       "path": "assets/readme/gallery-2.0/04-comparison-settings.png",
@@ -46,19 +46,19 @@
       "kind": "screenshot",
       "title": "版本、风格与上下文 / Versions, styles and context",
       "width": 988,
-      "height": 426,
-      "bytes": 164404,
-      "sha256": "7aeddc41e31c6198d7c16be87e743b4acc948be0c75325307d8f65088fbf5737"
+      "height": 438,
+      "bytes": 162843,
+      "sha256": "804432c3bb9d555793f9e52f458ff37b7595c106f26f6616228a72c97c4ae36a"
     },
     {
       "path": "assets/readme/gallery-2.0/05-saved-result.png",
       "url": "https://raw.githubusercontent.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/main/assets/readme/gallery-2.0/05-saved-result.png",
       "kind": "screenshot",
-      "title": "保存、撤销和选择理由 / Save, undo and reasons for the pick",
+      "title": "回复与页面并排，保存并说明理由 / Reply beside the page, saved with reasons",
       "width": 1576,
       "height": 1140,
-      "bytes": 480610,
-      "sha256": "4c0c95ceed32c8e690eb51406540e6565ad00d937ff146e913518e6e99188c7c"
+      "bytes": 844164,
+      "sha256": "8082843c5f9d6d3b1b4d5b27f26cde90552047b974e5c8fbd05e47982e5fb170"
     },
     {
       "path": "assets/readme/gallery-2.0/06-english-answers.png",
@@ -67,8 +67,8 @@
       "title": "英文回答并排比较 / Compare English answers",
       "width": 1576,
       "height": 1140,
-      "bytes": 586653,
-      "sha256": "018518f76a76221a3b094bb1664809694f72de4a69c8643653eac282e9570774"
+      "bytes": 1183265,
+      "sha256": "5f20ed14b70c321b886a94974d223ab5e5b12b608f488ad97ca06f77682d6575"
     },
     {
       "path": "assets/readme/gallery-2.0/07-history.png",
@@ -77,8 +77,8 @@
       "title": "查找历史，保留选择与理由 / Find history, picks and reasons",
       "width": 1576,
       "height": 520,
-      "bytes": 402995,
-      "sha256": "dd5f2542e329f570ec0ace209862802d25ed521bb746a90e878c06dda8bab6f6"
+      "bytes": 620109,
+      "sha256": "8baf936c2f685b873cc5034f4aae73d24cf3595ba8d8c7eb3b4686ad5448cc9f"
     },
     {
       "path": "assets/readme/gallery-2.0/08-workflow.png",

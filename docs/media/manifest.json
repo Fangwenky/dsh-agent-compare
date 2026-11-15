@@ -1,50 +1,66 @@
 {
   "schema": "agentcompare.demo/v1",
   "source": {
-    "version": "2.1.0 release candidate",
-    "commit": "2b5c9920378b8414dfa1449033808385c30f55c8",
-    "archiveSha256": "804d302ce8e4d018664d5c5744b09eb4d78ec0ed1c1222e33fa44ffbcb363e8b",
-    "archiveNote": "Recorded from this commit's build, packed as a uniquely versioned development archive and installed in an isolated test profile; all 95 installed runtime files matched the committed build byte for byte. Later commits update documentation and media only.",
+    "version": "3.0.0 release candidate",
+    "commit": "72c03e8295e6d51bebef57677179e19c1d3f8871",
+    "archiveSha256": "d926663c8353f5afd15c640c44ecb5798583154a10d95d4f0c1d7aeede19d734",
+    "archiveNote": "Recorded from this commit's build, packed as a uniquely versioned development archive and installed in an isolated test profile; all 153 installed files other than package.json, which carries the development version, matched the commit byte for byte. Later commits update documentation and media only.",
     "host": "0.2.2-rc.1",
     "browser": "Microsoft Edge 157.0.4341.42 (headless)",
     "os": "Windows",
-    "capturedAt": "2026-11-14T14:57:37.542Z",
+    "capturedAt": "2026-11-15T05:06:39.926Z",
     "ffmpeg": "ffmpeg version 9.0.2-full_build-www.gyan.dev Copyright (c) 2000-2026 the FFmpeg developers",
     "candidate": "Local controlled model uses the native DSH write tool. No external model request.",
-    "task": "Four pomodoro pages in a folder outside Git, compared blind: two set aside, C picked with two reasons, saved into a new folder. In the same session: a greeting sent from a Vite repository answered by four versions in their styles with nothing built, and three open English answers from a quick set."
+    "task": "Four pomodoro pages in a folder outside Git, compared blind. The large window is opened while the versions work (a whale per version, one poked, the live steps of A), replies arrive before the pages, two versions are set aside, C is shown in focus with its reply beside its page and picked with two reasons, then saved into a new folder. In the same session: a greeting sent from a Vite repository answered by four versions in their styles with nothing built, and three open English answers from a quick set."
   },
   "editing": {
-    "rawSeconds": 69.68,
-    "workflowSeconds": 28.2,
+    "rawSeconds": 74.47,
+    "workflowSeconds": 46.11,
     "workflowSegments": [
       [
-        10.77,
-        16.32
+        9.71,
+        15.25
       ],
       [
-        44.47,
-        67.08
+        17.02,
+        27.82
+      ],
+      [
+        28.56,
+        29.96
+      ],
+      [
+        43.46,
+        71.66
       ]
     ],
     "workflowPlaybackRate": 1,
-    "previewSeconds": 13.9,
+    "previewSeconds": 14.56,
     "previewSegments": [
       [
-        44.57,
-        46.17
+        19.66,
+        23.19
       ],
       [
-        49.36,
-        58.34
+        26.22,
+        27.52
       ],
       [
-        60.26,
-        63.56
+        43.56,
+        44.96
+      ],
+      [
+        56,
+        62.13
+      ],
+      [
+        65.48,
+        67.68
       ]
     ],
     "previewPlaybackRate": 1,
-    "previewFps": 6,
-    "previewWidth": 720,
+    "previewFps": 5,
+    "previewWidth": 640,
     "previewCrop": {
       "x": 12,
       "y": 48,
@@ -58,11 +74,14 @@
   },
   "proof": {
     "assignment": {
-      "A": "活力 · Vibrant",
-      "B": "大胆 · Bold",
+      "A": "大胆 · Bold",
+      "B": "活力 · Vibrant",
       "C": "稳妥 · Conservative",
       "D": "极简 · Minimal"
     },
+    "stepsShownWhileWorking": true,
+    "repliesBeforePages": true,
+    "focusWithReplyBesidePage": true,
     "setAside": [
       "B",
       "D"
@@ -111,13 +130,13 @@
   "files": [
     {
       "path": "comparison-workflow.mp4",
-      "bytes": 711872,
-      "sha256": "a8e03f964f21ae142dbab93e116c0f1d90dcff8827b7346b73f8f586d75a0550"
+      "bytes": 1711543,
+      "sha256": "1c59f4f9100e737b7916d579f1f0d395e64ae254937e1ac216129782b4be5cdc"
     },
     {
       "path": "comparison-preview.gif",
-      "bytes": 2162132,
-      "sha256": "b0791d80a1f9b1c0a196ee53f77e058da096d847976f635fe8e22be2a017bde4"
+      "bytes": 3192964,
+      "sha256": "8080530525313a51a2457efff23b90238dfe32b2937e15f77adb341818a437cf"
     },
     {
       "path": "social-preview.png",

@@ -72,13 +72,13 @@ Echte DSH-Aufnahmen mit kontrollierten Kandidaten. Titelbild und Ablaufgrafik si
 
 ## Den gesamten Ablauf ansehen
 
-[![Beispiel mit festen Kandidaten: vier laufende Pomodoro-Seiten, zwei beiseitegelegt, C gewählt und die Stile aufgedeckt](https://raw.githubusercontent.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/main/docs/media/comparison-preview.gif)](https://github.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/blob/main/docs/media/comparison-workflow.mp4)
+[![Beispiel mit festen Kandidaten: ein Wal je arbeitender Version und Schritte live, vier laufende Pomodoro-Seiten, C im Fokus mit der Antwort neben der Seite und gewählt](https://raw.githubusercontent.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/main/docs/media/comparison-preview.gif)](https://github.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/blob/main/docs/media/comparison-workflow.mp4)
 
-Aufzeichnung mit festen Kandidaten in einem echten DSH-Host, aus dem Quellstand des 2.1.0-Kandidaten und mit chinesischer Oberfläche. Vier Versionen bauen in einem gewöhnlichen Ordner je eine Pomodoro-Seite, und alle vier laufenden Seiten lassen sich bedienen. Zwei werden beiseitegelegt, die übrigen stehen nebeneinander, die Wahl deckt jeden Stil auf, und das Ergebnis wird in einem neuen Ordner gespeichert, bevor das Gespräch weitergeht. Das Video lässt Wartezeiten aus und zeigt den Rest in normaler Geschwindigkeit. Lokale Pfade sind ausgeblendet.
+Aufzeichnung mit festen Kandidaten in einem echten DSH-Host, aus dem Quellstand des 3.0.0-Kandidaten und mit chinesischer Oberfläche. Vier Versionen bauen in einem gewöhnlichen Ordner je eine Pomodoro-Seite, während zwei Kometen um die Vergleichskarte jagen. Das große Fenster wird geöffnet, während sie arbeiten: ein Wal je Version, der nach einem Stups Blasen aufsteigen lässt, und die **Steps** mit Überlegung und Dateischreiben live. Die Antworten erscheinen vor den Seiten, danach lassen sich alle vier laufenden Seiten bedienen. Zwei werden beiseitegelegt, C steht im Fokus mit der Antwort links neben der Seite, die Wahl deckt jeden Stil auf, und das Ergebnis wird in einem neuen Ordner gespeichert, bevor das Gespräch weitergeht. Das Video lässt Wartezeiten aus und zeigt den Rest in normaler Geschwindigkeit. Lokale Pfade sind ausgeblendet.
 
 Nach der Wahl werden zwei Gründe (Layout, einfacher) angetippt; sie erreichen die nächste Anfrage im Hauptgespräch.
 
-[Vollständiges Video (28 Sekunden)](https://github.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/blob/main/docs/media/comparison-workflow.mp4) · [Bedingungen und Ergebnisse](https://github.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/blob/main/docs/demo.md)
+[Vollständiges Video (46 Sekunden)](https://github.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/blob/main/docs/media/comparison-workflow.mp4) · [Bedingungen und Ergebnisse](https://github.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/blob/main/docs/demo.md)
 
 <details>
 <summary>English answers · 390 px</summary>

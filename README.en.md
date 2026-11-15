@@ -85,18 +85,18 @@ Try the live pages, compare in the conversation, choose styles and keep your rea
 
 ## Watch the complete workflow
 
-[![Fixed-candidate workflow: four live pomodoro pages, two set aside, C picked, the styles revealed and the reasons given](https://raw.githubusercontent.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/main/docs/media/comparison-preview.gif)](https://github.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/blob/main/docs/media/comparison-workflow.mp4)
+[![Fixed-candidate workflow: a whale per working version and live steps, four live pomodoro pages, C in focus with its reply beside its page, C picked and the reasons given](https://raw.githubusercontent.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/main/docs/media/comparison-preview.gif)](https://github.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/blob/main/docs/media/comparison-workflow.mp4)
 
-A controlled-candidate recording in a real DSH host, from the 2.1.0 release-candidate source with the Chinese interface:
-- Four versions each build a pomodoro page in a plain folder, and all four live pages can be used.
-- Two are set aside, and the remaining two move up side by side.
-- The pick reveals every style, with a burst of light and a sweep across the cards.
-- Two reasons are tapped (layout, simpler); the next request in the main conversation carries them.
-- The pick is saved into a new folder, and the conversation continues.
+A controlled-candidate recording in a real DSH host, from the 3.0.0 release-candidate source with the Chinese interface:
+- Four versions each build a pomodoro page in a plain folder, while two comets race around the comparison card.
+- The large window opens while they work: a whale per version, which blows bubbles when poked, and **Steps** opened to show thinking and a file write live.
+- The replies arrive before the pages; then all four live pages can be used.
+- Two are set aside, C is shown in focus with its reply beside its page, and the pick reveals every style.
+- Two reasons are tapped (layout, simpler), which the next request in the main conversation carries; the pick is saved into a new folder, and the conversation continues.
 
 The video cuts waiting and keeps the rest at the original speed. Local paths are hidden.
 
-[Full video (28 seconds)](https://github.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/blob/main/docs/media/comparison-workflow.mp4) · [Method and results](https://github.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/blob/main/docs/demo.md)
+[Full video (46 seconds)](https://github.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/blob/main/docs/media/comparison-workflow.mp4) · [Method and results](https://github.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/blob/main/docs/demo.md)
 
 [Four-step quick start](docs/quickstart.en.md) · [Troubleshooting a run](docs/runs-and-recovery.en.md)
 

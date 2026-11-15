@@ -85,18 +85,18 @@ AgentCompare 是 [DeepSeek Harness](https://github.com/deepseek-ai/deepseek-harn
 
 ## 看一次完整流程
 
-[![固定候选流程示例：4 版番茄钟页面同时实时运行，排除两版后选择 C，揭晓风格并点选理由](https://raw.githubusercontent.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/main/docs/media/comparison-preview.gif)](https://github.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/blob/main/docs/media/comparison-workflow.mp4)
+[![固定候选流程示例：各版工作时每版一只小鲸鱼、实时展开过程，4 版番茄钟页面同时运行，专注 C 时回复与页面并排，选择 C 并点选理由](https://raw.githubusercontent.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/main/docs/media/comparison-preview.gif)](https://github.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/blob/main/docs/media/comparison-workflow.mp4)
 
-在真实 DSH 宿主里录制的固定候选演示（2.1.0 发布候选源码，中文界面）：
-- 在普通文件夹里让 4 版各写一个番茄钟页面，4 个实时页面都能直接操作；
-- 排除两版后，剩下的并排比较；
-- 选择后揭晓每版的风格，光粒迸发、光束扫过卡片；
-- 点选两个理由（布局、更简洁），主对话的下一条请求会带上它们；
-- 保存到新文件夹后，继续主对话。
+在真实 DSH 宿主里录制的固定候选演示（3.0.0 发布候选源码，中文界面）：
+- 在普通文件夹里让 4 版各写一个番茄钟页面，比较卡片有两颗彗星绕边框奔跑；
+- 各版工作时打开大窗口：每版一只小鲸鱼，戳一下会吐泡泡；展开「过程」，实时看到思考和写文件；
+- 回复先于页面出现，随后 4 个实时页面都能直接操作；
+- 排除两版，专注 C：回复在左、页面在右；选择后揭晓每版的风格；
+- 点选两个理由（布局、更简洁），主对话的下一条请求会带上它们；保存到新文件夹后，继续主对话。
 
 视频剪去了等待，保留的部分按原速播放，本地路径已隐藏。
 
-[完整视频（28 秒）](https://github.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/blob/main/docs/media/comparison-workflow.mp4) · [演示条件与结果](https://github.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/blob/main/docs/demo.md)
+[完整视频（46 秒）](https://github.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/blob/main/docs/media/comparison-workflow.mp4) · [演示条件与结果](https://github.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/blob/main/docs/demo.md)
 
 [四步快速上手](docs/quickstart.md) · [运行中遇到问题](docs/runs-and-recovery.md)
 

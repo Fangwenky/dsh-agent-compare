@@ -1,24 +1,24 @@
 {
   "schema": "agentcompare.screenshots/v1",
-  "capturedAt": "2026-11-14T14:57:37.542Z",
-  "packageVersion": "2.1.0",
-  "sourceCommit": "2b5c9920378b8414dfa1449033808385c30f55c8",
-  "packageArchiveSha256": "804d302ce8e4d018664d5c5744b09eb4d78ec0ed1c1222e33fa44ffbcb363e8b",
-  "archiveNote": "Recorded from this commit's build, packed as a uniquely versioned development archive and installed in an isolated test profile; all 95 installed runtime files matched the committed build byte for byte. Later commits update documentation and media only.",
+  "capturedAt": "2026-11-15T05:06:39.926Z",
+  "packageVersion": "3.0.0",
+  "sourceCommit": "72c03e8295e6d51bebef57677179e19c1d3f8871",
+  "packageArchiveSha256": "d926663c8353f5afd15c640c44ecb5798583154a10d95d4f0c1d7aeede19d734",
+  "archiveNote": "Recorded from this commit's build, packed as a uniquely versioned development archive and installed in an isolated test profile; all 153 installed files other than package.json, which carries the development version, matched the commit byte for byte. Later commits update documentation and media only.",
   "hostVersion": "0.2.2-rc.1",
-  "scenario": "Controlled candidates; four independently interactive pages in a blind comparison, two set aside, a pick with reasons and a save into a new folder. No external model request.",
+  "scenario": "Controlled candidates; four independently interactive pages with their replies and the steps of A, in a blind comparison; the picked version in focus with its reply beside its page, saved into a new folder with reasons. No external model request.",
   "privatePathsHidden": true,
   "captionsAdded": true,
   "files": [
     {
       "path": "docs/media/screenshots/11-live-comparison.png",
-      "bytes": 88608,
-      "sha256": "8a629093db8dad8f8af578001427ea750346bf97ce5bbebd12c343bfc919a9c7"
+      "bytes": 98735,
+      "sha256": "3e25b502d0529e03a40549e81adf32368e8e367b5da57e6ca0b0e524e5ff4eb7"
     },
     {
       "path": "docs/media/screenshots/12-reviewed-adoption.png",
-      "bytes": 105013,
-      "sha256": "305bb434d80274f4aad68ef44641a641625b5c48f0dfe728701e75696c6ddcbe"
+      "bytes": 96291,
+      "sha256": "9c85488034f33c4152e9ed695bb075ca4eafb24540421d4482d40816e322583d"
     }
   ]
 }

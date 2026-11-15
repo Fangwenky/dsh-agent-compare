@@ -72,13 +72,13 @@ AgentCompare는 [DeepSeek Harness](https://github.com/deepseek-ai/deepseek-harne
 
 ## 전체 흐름 보기
 
-[![4개의 뽀모도로 페이지를 동시에 실행하고 2개를 뺀 뒤 C를 골라 스타일을 공개하는 고정 후보 예시](https://raw.githubusercontent.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/main/docs/media/comparison-preview.gif)](https://github.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/blob/main/docs/media/comparison-workflow.mp4)
+[![작업 중인 버전마다 고래와 실시간 단계, 동시에 실행되는 뽀모도로 페이지 4개, 답장과 페이지를 나란히 놓고 C를 고르는 고정 후보 예시](https://raw.githubusercontent.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/main/docs/media/comparison-preview.gif)](https://github.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/blob/main/docs/media/comparison-workflow.mp4)
 
-실제 DSH 호스트에서 녹화한 고정 후보 시연입니다(2.1.0 릴리스 후보 소스, 화면은 중국어). 일반 폴더에서 4개 버전이 각각 뽀모도로 페이지를 만들고, 4개의 라이브 페이지를 바로 사용할 수 있습니다. 2개를 빼고 나머지를 나란히 비교한 뒤, 선택하면 각 스타일이 공개되고, 새 폴더에 저장한 다음 대화를 이어 갑니다. 대기 구간만 편집했고 나머지는 원래 속도입니다. 로컬 경로는 숨겼습니다.
+실제 DSH 호스트에서 녹화한 고정 후보 시연입니다(3.0.0 릴리스 후보 소스, 화면은 중국어). 일반 폴더에서 4개 버전이 각각 뽀모도로 페이지를 만들고, 비교 카드 둘레를 혜성 두 개가 달립니다. 작업 중에 큰 창을 열면 버전마다 고래가 있고, 콕 찌르면 거품을 냅니다. 「过程」을 펼치면 생각과 파일 쓰기가 실시간으로 보입니다. 답장이 페이지보다 먼저 나타나고, 이어서 4개의 라이브 페이지를 바로 사용할 수 있습니다. 2개를 빼고 C에 집중하면 답장은 왼쪽, 페이지는 오른쪽에 놓입니다. 선택하면 각 스타일이 공개되고, 새 폴더에 저장한 다음 대화를 이어 갑니다. 대기 구간만 편집했고 나머지는 원래 속도입니다. 로컬 경로는 숨겼습니다.
 
 선택한 뒤 이유 두 가지(레이아웃, 더 간결함)를 고르면 주 대화의 다음 요청에 전달됩니다.
 
-[전체 영상(28초)](https://github.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/blob/main/docs/media/comparison-workflow.mp4) · [조건과 결과](https://github.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/blob/main/docs/demo.md)
+[전체 영상(46초)](https://github.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/blob/main/docs/media/comparison-workflow.mp4) · [조건과 결과](https://github.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/blob/main/docs/demo.md)
 
 <details>
 <summary>English answers · 390 px</summary>
