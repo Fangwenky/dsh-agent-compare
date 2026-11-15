@@ -11,12 +11,12 @@
 [![npm version](https://img.shields.io/npm/v/dsh-agent-compare?label=npm&color=3657f5&style=flat&labelColor=0b1b4f&logo=npm&logoColor=white)](https://www.npmjs.com/package/dsh-agent-compare)
 [![CI](https://img.shields.io/github/actions/workflow/status/lijiaqi-AI-Product-Manager/dsh-agent-compare/ci.yml?branch=main&label=CI&logo=github&logoColor=white&style=flat&labelColor=0b1b4f)](https://github.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/actions/workflows/ci.yml)
 [![Node.js ^22.22.2 || ^24.15.0 || >=26.0.0](https://img.shields.io/badge/Node.js-22%20%2F%2024%20%2F%2026%2B-238636?style=flat&labelColor=0b1b4f&logo=nodedotjs&logoColor=white)](https://github.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/blob/main/package.json)
-[![Tested on DSH 0.2.1-rc.5](https://img.shields.io/badge/DSH%20tested-0.2.1--rc.5-4d6bfe?style=flat&labelColor=0b1b4f)](https://github.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/blob/main/docs/demo.md)
+[![Tested on DSH 0.2.1-rc.5 and 0.2.2-rc.1](https://img.shields.io/badge/DSH%20tested-0.2.1--rc.5%20%2F%200.2.2--rc.1-4d6bfe?style=flat&labelColor=0b1b4f)](https://github.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/blob/main/docs/demo.md)
 [![License: MIT](https://img.shields.io/badge/license-MIT-4d6bfe?style=flat&labelColor=0b1b4f)](https://github.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/blob/main/LICENSE)
 
 [中文](https://github.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/blob/main/README.md) · [English](https://github.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/blob/main/README.en.md) · [日本語](https://github.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/blob/main/README.ja.md) · **한국어** · [Español](https://github.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/blob/main/README.es.md) · [Português (Brasil)](https://github.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/blob/main/README.pt-BR.md) · [Français](https://github.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/blob/main/README.fr.md) · [Deutsch](https://github.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/blob/main/README.de.md)
 
-**하나의 요구, 실제로 실행되는 2~4개 구현. 스타일을 고르고 블라인드나 공개로 비교한 뒤 적용하세요.**
+**하나의 요구에서 답변·파일·페이지를 2~4개 버전으로. 스타일을 고르고 비교한 뒤 선택하세요.**
 
 중국어 이름은 **鲸挑细选**(징탸오시쉬안)입니다. '정성껏 고르다'라는 뜻의 精挑细选을 비튼 말로, 鲸은 고래입니다. 같은 요청에 DeepSeek 고래 2–4마리가 동시에 달려들고, 가장 좋은 버전을 고릅니다. 별명은 **大肥鱼赛马**('뚱뚱한 물고기 경주'). 중국 네티즌은 DeepSeek 고래를 '뚱뚱한 물고기'라고 부릅니다. 같은 트랙에서 여러 마리가 달리고, 승자는 당신이 정합니다.
 
@@ -24,7 +24,7 @@
 
 <p align="center"><a href="#demo">真实演示 / Recorded demo</a> · <a href="#ui">界面与体验 / Interface</a> · <a href="#install">安装 / Install</a> · <a href="#whats-new">版本更新 / What's new</a></p>
 
-> **npm 정식 버전 2.0.0 · main 소스 3.1.0.** DSH Desktop과 Web, 중국어·영어 인터페이스를 지원합니다. 기본 대화 안에서 2–4개 버전의 답변, 파일 또는 웹 페이지를 비교합니다. 각 버전의 생각과 도구 호출을 펼쳐 볼 수 있고, 답장은 결과물과 나란히 보입니다.
+> **이 가이드는 3.1.0 기준입니다. 공개된 npm 버전은 위 배지에서 확인할 수 있습니다.** DSH Desktop과 Web, 중국어·영어 인터페이스를 지원합니다. 기본 대화 안에서 2–4개 버전의 답변, 파일 또는 웹 페이지를 비교합니다. 각 버전의 생각과 도구 호출을 펼쳐 볼 수 있고, 답장은 결과물과 나란히 보입니다.
 
 <a id="demo"></a>
 
@@ -42,7 +42,7 @@
 
 <p align="center"><sub>功能示意 / Product illustration</sub></p>
 
-AgentCompare는 [DeepSeek Harness](https://github.com/deepseek-ai/deepseek-harness)(DSH) 플러그인입니다. 하나의 작업으로 독립된 2~4개 구현을 만들고 의존성 설치, 빌드, 공통 검사를 실행합니다. 실제 페이지를 사용해 본 뒤 하나를 고르거나 모두 선택하지 않을 수 있습니다. 블라인드 비교에서는 선택한 뒤에 모델과 스타일이 공개됩니다. 적용 전에는 현재 프로젝트와 합친 상태를 검증합니다.
+AgentCompare는 [DeepSeek Harness](https://github.com/deepseek-ai/deepseek-harness)(DSH) 플러그인입니다. 같은 요청으로 답변, 파일 또는 웹 페이지를 2~4개 버전으로 만들어 비교합니다. 실행 가능한 페이지는 직접 조작하고, 답변과 파일은 내용을 읽고 선택합니다. 블라인드는 선택 후 모델과 스타일을 공개하며, 공개 비교는 처음부터 표시합니다. 프로젝트 변경은 차이와 검증 결과를 확인한 뒤 적용합니다.
 
 [插件目录与安装](https://github.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/blob/main/docs/distribution.md) · [Plugin directories and installation](https://github.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/blob/main/docs/distribution.en.md) · [Listing status / 收录状态](https://github.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/issues/4)
 
@@ -53,13 +53,15 @@ AgentCompare는 [DeepSeek Harness](https://github.com/deepseek-ai/deepseek-harne
 
 기다림도, 비교도, 선택도 모두 눈에 보이고 바로 누를 수 있습니다. 아래 애니메이션과 두 장의 이미지는 실제 DSH 호스트에서 고정 후보를 비교한 화면입니다.
 
-- **파란 리퀴드 글래스.** 반투명 유리 패널과 미끄러지는 선택 컨트롤 뒤로 천천히 흐르며 섞이는 파란 빛. 라이트·다크 테마를 지원하고, 동작 줄이기를 켜면 화면이 멈춰 있습니다. 두 테마 모두 글자를 하나하나 측정해 대비 4.5:1 이상을 지킵니다.
+- **파란 리퀴드 글래스.** 반투명 유리 패널과 미끄러지는 선택 컨트롤 뒤로 천천히 흐르며 섞이는 파란 빛. 라이트·다크 테마를 지원하고, 동작 줄이기를 켜면 화면이 멈춰 있습니다. 검증한 화면 상태의 제품 UI 텍스트를 두 테마에서 글자별로 측정했으며 대비는 4.5:1 이상이었습니다.
 - **뚱뚱한 물고기가 함께 기다립니다.** 버전마다 DeepSeek 파란 고래 한 마리. 진행될수록 파란 물이 차오르고 빛 두 줄기가 윤곽을 따라 달립니다. 머리 위로 생각이 떠오르고, 찌르면 대답하고, 연달아 찌르면 빙글 돌고 비틀거리고 물을 튀깁니다.
 - **모든 단계가 보입니다.** 「Steps」 버튼으로 생각, 도구 호출, 변경을 볼 수 있고, 작업 중에는 최신 3단계가 고래 아래에서 실시간으로 흐릅니다.
 - **답장과 결과물을 같은 비중으로.** 답변만 있으면 답변만, 페이지가 있으면 답장과 나란히 보여 주고, 한 버전에 집중하면 답장은 왼쪽, 페이지는 오른쪽에 놓입니다.
 - **A–D는 네 가지 파랑.** 블라인드 비교에서는 A–D만 보이고, 스타일과 모델은 선택 뒤에 공개되며 카드 위로 빛이 지나갑니다.
 - **실행 중인지 한눈에.** 실행 중인 비교 둘레를 혜성 두 개가 달리고, 페이지는 시작되는 즉시 사용할 수 있습니다.
 - **데스크톱, 브라우저, 휴대폰 폭** 모두 지원하며 중국어와 영어 화면을 전환할 수 있습니다.
+
+과정에는 모델과 호스트가 제공한 정보만 표시됩니다. 긴 기록은 처음과 끝을 보관하고 생략을 표시하며, 블라인드 선택 전에는 스타일 이름을 가립니다. 고래의 수위는 처리 단계이며 품질 점수나 정확한 완료 비율이 아닙니다.
 
 ![大肥鱼特写：两版同时工作，头上冒出想法，连戳五下会跳、转圈、晕头、溅水花，展开「过程」看实时步骤，回复出现后水注满 / Whale close-up: thoughts, a five-poke combo, live steps and the Steps panel, then replies as the whales fill up; controlled candidates in a real DSH host](https://raw.githubusercontent.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/main/assets/readme/whale-closeup.webp)
 
@@ -88,7 +90,7 @@ AgentCompare는 [DeepSeek Harness](https://github.com/deepseek-ai/deepseek-harne
 
 아래 명령은 직접 실행하는 DSH Web 프로필용입니다. 데스크톱의 `desktop` 프로필은 앱이 관리하므로 앱의 플러그인 페이지를 사용하세요.
 
-개발 기준은 Node 26.13.0, npm 12.2.2입니다. 공식 최신 DSH 패키지 0.2.1-rc.5로 검증합니다. 이미 사용하는 DSH 프로필을 확인하세요.
+개발 기준은 Node 26.13.0, npm 12.2.2입니다. DSH 패키지 0.2.1-rc.5 / 0.2.2-rc.1로 검증합니다. 이미 사용하는 DSH 프로필을 확인하세요.
 
 npm 패키지를 기본 Web 프로필에 추가합니다. 공개 상태는 위의 npm 배지에서 확인하세요.
 
@@ -97,6 +99,8 @@ dsh plugin --profile web add dsh-agent-compare
 ```
 
 다른 자체 관리 프로필을 쓰면 `web`을 실제 이름으로 바꾸세요.
+
+**업데이트 후 완전히 다시 시작하세요.** DSH Desktop을 완전히 종료한 뒤 다시 엽니다. Web에서는 해당 DSH 서비스를 재시작하고 페이지를 새로고침합니다. 화면만 새로고침하면 이전 백엔드가 남을 수 있으며, 버전이 다르면 재시작 안내가 표시됩니다.
 
 소스에서 빌드하여 설치할 수도 있습니다.
 
@@ -117,12 +121,12 @@ DSH를 다시 시작합니다. 업데이트 전에는 같은 기록을 사용하
 
 ## 첫 비교
 
-1. 대화 입력창 왼쪽 아래의 **A|B**를 누릅니다. 설정은 기존 입력창 위에 열립니다.
-2. 기본값은 같은 모델과 두 전략입니다. 현재 DSH 모델을 재사용하므로 두 번째 계정이 필요 없습니다. 두 모델 모드도 이미 설정한 모델 중에서 고릅니다.
-3. 화면에서 각 구현의 생성 한도를 고릅니다. 5~120분이며 기본값은 30분입니다. 입력창에는 요구사항만 작성해 전송합니다. 옵션을 직접 입력할 필요가 없습니다.
-4. 대화 카드에서 진행 상태와 두 실행 페이지를 확인합니다. 데스크톱·휴대전화 크기, A/B 집중 보기, 큰 창을 사용할 수 있습니다.
-5. `选 A`, `选 B`, `都不满意`로 선택합니다. 그 뒤 실제 모델 또는 전략, 검증 결과, 제공된 사용량이 표시됩니다.
-6. `审查并采用`로 대상 저장소와 사전 검사를 확인합니다. 별도의 확인 버튼을 눌러야 파일을 적용합니다. `继续主对话`는 비교 모드를 끝내고 원래 입력창으로 돌아갑니다.
+1. 입력창 왼쪽 아래 **A|B**를 누르면 기존 입력창 위에 비교 설정이 열립니다.
+2. 2~4개 버전을 고릅니다. 기본값은 같은 모델·다른 스타일이며 현재 모델을 재사용합니다. 버전마다 스타일이나 한 줄 설명을 설정할 수 있고, 다른 모델 모드에서는 DSH에 설정된 모델 중에서 고릅니다.
+3. 블라인드·공개 비교, 버전별 생성 한도(5~120분), 공유할 대화 문맥을 정한 뒤 평소 입력창에 요청을 적어 전송합니다.
+4. 카드에서 진행 상태와 답변·파일·페이지 결과를 확인합니다. 실행 중인 페이지는 직접 조작할 수 있고 데스크톱·휴대전화 크기, 1~4 키 집중 보기, 0 키 전체 보기를 지원합니다. 3~4개일 때는 제외할 버전을 빼둘 수 있습니다.
+5. 「Choose A」등으로 하나를 고르거나 「None of these」로 모두 선택하지 않을 수 있습니다. 블라인드는 선택 후 모델과 스타일을 공개하고, 공개 비교에서는 처음부터 보입니다.
+6. 프로젝트 변경은 「Review and adopt」에서 차이와 검증 결과를 확인한 뒤 별도로 승인해야 적용됩니다. Git 밖의 폴더는 새 폴더로 저장할 수 있습니다. 답변만 있는 결과는 파일 적용이 필요 없습니다. 「Continue conversation」으로 선택 기록을 유지하며 기본 대화로 돌아갑니다.
 
 `试跑内置示例`는 별도 예제 상점 저장소에서 실행합니다. 기존 프로젝트를 건드리지 않으며 적용 대상도 예제입니다. 오른쪽 위의 `比较记录`와 `使用教程`는 새 대화와 기존 대화 모두에서 사용할 수 있습니다.
 

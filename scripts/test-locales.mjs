@@ -215,6 +215,7 @@ try {
   check(!/[㐀-鿿]/.test(await settings.locator('.ac-style-row').innerText()), 'the style row must have no untranslated copy')
   await page.screenshot({ path: path.join(output, 'settings-versions-en.png') })
   await open('four')
+  check(await page.getByRole('button', { name: 'None of these', exact: true }).isVisible(), 'rejecting all four versions must not use the two-option word Neither')
   check(await page.getByRole('button', { name: 'All side by side', exact: true }).isVisible() && await page.getByRole('button', { name: 'Focus D', exact: true }).isVisible(), 'layout choices for four versions must be translated')
   await page.getByRole('region', { name: 'Candidate B', exact: true }).getByRole('button', { name: 'Set aside', exact: true }).click()
   check(await page.getByRole('button', { name: 'Restore B', exact: true }).isVisible() && (await page.locator('.ac-bar').innerText()).includes('(B set aside)'), 'narrowing down must be translated')

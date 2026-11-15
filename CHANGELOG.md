@@ -3,6 +3,7 @@
 ## 3.1.0
 
 - **Independent dependency copies.** Reusing a warm installation now relocates links into each candidate's own copy. A link that escapes the warm tree, a dangling link, a redirected root or an existing destination instead falls back to that candidate's normal frozen installation; it never preserves a shared mutable link as a successful prewarm.
+- **Clearer first-run guides.** All eight README languages now describe 2–4 answers, files and pages, blind or open choices, full restarts after updating, and the separate adoption or folder-save flows. The published version comes from the npm badge. Rejecting several versions reads “None of these” in English instead of the two-option “Neither”.
 
 3.0.0 was prepared but not published; its changes (and those of 2.1.0) are part of this release and listed after the new ones.
 

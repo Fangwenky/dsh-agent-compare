@@ -11,12 +11,12 @@
 [![npm version](https://img.shields.io/npm/v/dsh-agent-compare?label=npm&color=3657f5&style=flat&labelColor=0b1b4f&logo=npm&logoColor=white)](https://www.npmjs.com/package/dsh-agent-compare)
 [![CI](https://img.shields.io/github/actions/workflow/status/lijiaqi-AI-Product-Manager/dsh-agent-compare/ci.yml?branch=main&label=CI&logo=github&logoColor=white&style=flat&labelColor=0b1b4f)](https://github.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/actions/workflows/ci.yml)
 [![Node.js ^22.22.2 || ^24.15.0 || >=26.0.0](https://img.shields.io/badge/Node.js-22%20%2F%2024%20%2F%2026%2B-238636?style=flat&labelColor=0b1b4f&logo=nodedotjs&logoColor=white)](https://github.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/blob/main/package.json)
-[![Tested on DSH 0.2.1-rc.5](https://img.shields.io/badge/DSH%20tested-0.2.1--rc.5-4d6bfe?style=flat&labelColor=0b1b4f)](https://github.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/blob/main/docs/demo.md)
+[![Tested on DSH 0.2.1-rc.5 and 0.2.2-rc.1](https://img.shields.io/badge/DSH%20tested-0.2.1--rc.5%20%2F%200.2.2--rc.1-4d6bfe?style=flat&labelColor=0b1b4f)](https://github.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/blob/main/docs/demo.md)
 [![License: MIT](https://img.shields.io/badge/license-MIT-4d6bfe?style=flat&labelColor=0b1b4f)](https://github.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/blob/main/LICENSE)
 
 [中文](https://github.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/blob/main/README.md) · [English](https://github.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/blob/main/README.en.md) · [日本語](https://github.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/blob/main/README.ja.md) · [한국어](https://github.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/blob/main/README.ko.md) · **Español** · [Português (Brasil)](https://github.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/blob/main/README.pt-BR.md) · [Français](https://github.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/blob/main/README.fr.md) · [Deutsch](https://github.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/blob/main/README.de.md)
 
-**Una tarea. De 2 a 4 implementaciones en ejecución. Elige estilos, compara a ciegas o a la vista y adopta.**
+**Una tarea, de 2 a 4 versiones: respuestas, archivos o páginas. Elige estilos, compara y decide.**
 
 Su nombre en chino es **鲸挑细选** (*jīng tiāo xì xuǎn*), un juego con 精挑细选, «elegido con cuidado», donde 鲸 significa ballena: 2–4 ballenas de DeepSeek abordan la misma tarea y tú te quedas con la mejor. Su apodo es **大肥鱼赛马**, «la carrera del pez gordo»: en China llaman «pez gordo» a la ballena de DeepSeek, y aquí varios corren en la misma pista mientras tú decides el ganador.
 
@@ -24,7 +24,7 @@ Su nombre en chino es **鲸挑细选** (*jīng tiāo xì xuǎn*), un juego con �
 
 <p align="center"><a href="#demo">真实演示 / Recorded demo</a> · <a href="#ui">界面与体验 / Interface</a> · <a href="#install">安装 / Install</a> · <a href="#whats-new">版本更新 / What's new</a></p>
 
-> **npm estable 2.0.0 · Código de main 3.1.0.** DSH Desktop y Web, con interfaz en chino e inglés. Compara 2–4 versiones de respuestas, archivos o páginas web en la conversación principal; abre lo que pensó cada versión y las herramientas que usó, y lee su respuesta junto a lo que construyó.
+> **Esta guía corresponde a 3.1.0. La insignia npm de arriba muestra la versión publicada.** DSH Desktop y Web, con interfaz en chino e inglés. Compara 2–4 versiones de respuestas, archivos o páginas web en la conversación principal; abre lo que pensó cada versión y las herramientas que usó, y lee su respuesta junto a lo que construyó.
 
 <a id="demo"></a>
 
@@ -42,7 +42,7 @@ Tras elegir, se marcan dos motivos (diseño y más simple), que llegan a la sigu
 
 <p align="center"><sub>功能示意 / Product illustration</sub></p>
 
-AgentCompare es un complemento de [DeepSeek Harness](https://github.com/deepseek-ai/deepseek-harness), DSH. De 2 a 4 agentes trabajan sobre copias independientes del mismo proyecto. El complemento instala dependencias, compila, sirve cada aplicación y aplica criterios comunes de verificación. Puedes usar las páginas antes de elegir una o ninguna; en una comparación a ciegas, el modelo y el estilo se revelan al elegir. Antes de incorporar una propuesta, comprueba cómo encaja con el estado actual de tu proyecto.
+AgentCompare es un complemento de [DeepSeek Harness](https://github.com/deepseek-ai/deepseek-harness), DSH, que compara 2–4 versiones de una misma petición: respuestas, archivos o páginas web. Las páginas ejecutables se pueden usar directamente; las respuestas y los archivos se comparan por su contenido. A ciegas, el modelo y el estilo se revelan al elegir; en comparación abierta se muestran desde el principio. Los cambios del proyecto se revisan junto con sus comprobaciones antes de aplicarlos.
 
 [插件目录与安装](https://github.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/blob/main/docs/distribution.md) · [Plugin directories and installation](https://github.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/blob/main/docs/distribution.en.md) · [Listing status / 收录状态](https://github.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/issues/4)
 
@@ -53,13 +53,15 @@ AgentCompare es un complemento de [DeepSeek Harness](https://github.com/deepseek
 
 Esperar, comparar y elegir: todo se ve y se puede tocar. La animación y las dos imágenes de abajo muestran candidatos fijos en un host DSH real.
 
-- **Vidrio líquido azul.** Paneles de vidrio translúcido y selectores que se deslizan sobre una luz azul que fluye despacio, en tema claro y oscuro; con el movimiento reducido activado, todo se queda quieto. Cada texto se mide glifo a glifo en ambos temas con un contraste de 4.5:1 o más.
+- **Vidrio líquido azul.** Paneles de vidrio translúcido y selectores que se deslizan sobre una luz azul que fluye despacio, en tema claro y oscuro; con el movimiento reducido activado, todo se queda quieto. El texto del producto en los estados de interfaz comprobados se midió glifo a glifo en ambos temas, con un contraste de 4.5:1 o más.
 - **Un pez gordo te acompaña.** Una ballena azul de DeepSeek por versión se llena de agua azul a medida que avanza mientras dos luces recorren su borde. Le suben pensamientos sobre la cabeza; tócala y te contesta, sigue tocándola y gira, se tambalea y salpica.
 - **Cada paso a la vista.** El botón **Steps** muestra razonamientos, llamadas a herramientas y cambios; mientras trabaja, los tres pasos más recientes pasan en vivo bajo la ballena.
 - **Respuesta y resultado con el mismo peso.** Una respuesta se muestra sola; una página comparte la tarjeta con su respuesta, y al enfocar una versión la respuesta queda a la izquierda de la página.
 - **Cuatro azules para A–D.** En una comparación a ciegas solo ves A–D; los estilos y modelos se revelan tras elegir, con un barrido de luz sobre las tarjetas.
 - **Se nota que está en marcha.** Dos cometas recorren el borde de una comparación en curso, y cada página se puede usar en cuanto arranca.
 - **Escritorio, navegador y ancho de móvil**, con interfaz en chino e inglés.
+
+Los pasos muestran la información que proporcionan el modelo y el host. Los registros largos conservan el principio y el final, con los recortes indicados; los nombres de estilo se ocultan antes de una elección a ciegas. El nivel de agua indica una etapa, no calidad ni un porcentaje exacto.
 
 ![大肥鱼特写：两版同时工作，头上冒出想法，连戳五下会跳、转圈、晕头、溅水花，展开「过程」看实时步骤，回复出现后水注满 / Whale close-up: thoughts, a five-poke combo, live steps and the Steps panel, then replies as the whales fill up; controlled candidates in a real DSH host](https://raw.githubusercontent.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/main/assets/readme/whale-closeup.webp)
 
@@ -88,7 +90,7 @@ La interfaz está disponible en chino simplificado e inglés, seleccionables en 
 
 Los comandos siguientes corresponden a un perfil DSH Web gestionado por el usuario. El perfil `desktop` lo gestiona la aplicación de escritorio; utiliza su página de complementos.
 
-La referencia de desarrollo es Node 26.13.0 y npm 12.2.2. Las comprobaciones actuales usan el paquete oficial DSH 0.2.1-rc.5. Identifica el perfil de DSH que utilizas.
+La referencia de desarrollo es Node 26.13.0 y npm 12.2.2. Las comprobaciones actuales usan el paquete oficial DSH 0.2.1-rc.5 / 0.2.2-rc.1. Identifica el perfil de DSH que utilizas.
 
 Instala el paquete npm en el perfil Web predeterminado. La insignia de npm indica el estado de publicación:
 
@@ -97,6 +99,8 @@ dsh plugin --profile web add dsh-agent-compare
 ```
 
 Para otro perfil autogestionado, sustituye `web` por su nombre real.
+
+**Reinicia por completo tras actualizar.** Cierra DSH Desktop completamente y vuelve a abrirlo. En Web, reinicia el servicio DSH correspondiente y recarga la página. Recargar solo la interfaz puede dejar activo el backend anterior; si las versiones difieren, aparece un aviso.
 
 También puedes compilar e instalar desde el código fuente:
 
@@ -117,12 +121,12 @@ Reinicia DSH. Antes de actualizar, termina las comparaciones activas y cierra la
 
 ## Primera comparación
 
-1. Pulsa **A|B**, abajo a la izquierda del cuadro de conversación. Los ajustes aparecen sobre el cuadro existente.
-2. El modo predeterminado reutiliza el modelo actual con dos estrategias. No exige una segunda cuenta. El modo de dos modelos permite elegir dos de los que ya configuraste en DSH.
-3. Elige en pantalla el límite de generación por propuesta: 5–120 minutos, 30 de forma predeterminada. Escribe únicamente lo que necesitas y envíalo. No tienes que escribir parámetros.
-4. La conversación muestra el progreso y dos aplicaciones interactivas. Puedes usar vistas de escritorio y móvil, centrar A o B y abrir una ventana de inspección más grande.
-5. Selecciona `选 A`, `选 B` o `都不满意` —A, B o ninguna—. Después se revelan la estrategia o el modelo real, las comprobaciones y el uso disponible.
-6. Usa `审查并采用` para revisar el repositorio de destino y las condiciones previas. Una confirmación separada escribe los cambios. `继续主对话` vuelve al cuadro original y sale del modo de comparación.
+1. Pulsa **A|B**, abajo a la izquierda del cuadro de conversación. Los ajustes se abren sobre el cuadro existente.
+2. Elige 2–4 versiones. El modo predeterminado reutiliza el modelo actual con estilos distintos; puedes seleccionar cada estilo o describirlo en una línea. Si usas modelos distintos, elige entre los ya configurados en DSH.
+3. Elige comparación a ciegas o abierta, el límite por versión (5–120 minutos) y el contexto de conversación compartido. Escribe la petición en el cuadro habitual y envíala.
+4. Cada tarjeta muestra el progreso y su respuesta, archivos o página. Las páginas en ejecución son interactivas. Puedes cambiar el tamaño de escritorio/móvil, enfocar con 1–4 y volver a todas con 0; con 3–4 versiones puedes apartar las descartadas.
+5. Usa «Choose A», por ejemplo, o «None of these» para no elegir ninguna. A ciegas, los modelos y estilos se revelan al elegir; en comparación abierta están visibles desde el principio.
+6. Para cambios del proyecto, «Review and adopt» muestra diferencias y comprobaciones antes de una confirmación separada. Fuera de Git puedes guardar en una carpeta nueva. Una respuesta no requiere aplicar archivos. «Continue conversation» vuelve al diálogo conservando la elección.
 
 `试跑内置示例` crea una tienda de ejemplo en otro repositorio; no modifica tu proyecto. La incorporación del resultado también apunta a ese ejemplo. `比较记录` abre el historial y `使用教程` la guía; ambos controles aparecen en conversaciones nuevas y existentes.
 

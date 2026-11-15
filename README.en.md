@@ -11,12 +11,12 @@
 [![npm version](https://img.shields.io/npm/v/dsh-agent-compare?label=npm&color=3657f5&style=flat&labelColor=0b1b4f&logo=npm&logoColor=white)](https://www.npmjs.com/package/dsh-agent-compare)
 [![CI](https://img.shields.io/github/actions/workflow/status/lijiaqi-AI-Product-Manager/dsh-agent-compare/ci.yml?branch=main&label=CI&logo=github&logoColor=white&style=flat&labelColor=0b1b4f)](https://github.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/actions/workflows/ci.yml)
 [![Node.js ^22.22.2 || ^24.15.0 || >=26.0.0](https://img.shields.io/badge/Node.js-22%20%2F%2024%20%2F%2026%2B-238636?style=flat&labelColor=0b1b4f&logo=nodedotjs&logoColor=white)](https://github.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/blob/main/package.json)
-[![Tested on DSH 0.2.1-rc.5](https://img.shields.io/badge/DSH%20tested-0.2.1--rc.5-4d6bfe?style=flat&labelColor=0b1b4f)](https://github.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/blob/main/docs/demo.md)
+[![Tested on DSH 0.2.1-rc.5 and 0.2.2-rc.1](https://img.shields.io/badge/DSH%20tested-0.2.1--rc.5%20%2F%200.2.2--rc.1-4d6bfe?style=flat&labelColor=0b1b4f)](https://github.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/blob/main/docs/demo.md)
 [![License: MIT](https://img.shields.io/badge/license-MIT-4d6bfe?style=flat&labelColor=0b1b4f)](https://github.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/blob/main/LICENSE)
 
 [中文](https://github.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/blob/main/README.md) · **English** · [日本語](https://github.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/blob/main/README.ja.md) · [한국어](https://github.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/blob/main/README.ko.md) · [Español](https://github.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/blob/main/README.es.md) · [Português (Brasil)](https://github.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/blob/main/README.pt-BR.md) · [Français](https://github.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/blob/main/README.fr.md) · [Deutsch](https://github.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/blob/main/README.de.md)
 
-**Same task. Up to four live builds. Pick styles, compare blind or open, then adopt.**
+**One task. 2–4 versions of answers, files or pages. Pick styles, compare, then choose.**
 
 Its Chinese name is **鲸挑细选** (*jīng tiāo xì xuǎn*), a pun on 精挑细选, "picked with care", where 鲸 means whale: 2–4 DeepSeek whales take on the same task, and you keep the best. Its nickname is **大肥鱼赛马**, "the Big Fat Fish race": Chinese users call DeepSeek's whale the Big Fat Fish, and here several of them race on one track while you call the winner.
 
@@ -24,7 +24,7 @@ Its Chinese name is **鲸挑细选** (*jīng tiāo xì xuǎn*), a pun on 精挑�
 
 <p align="center"><a href="#demo">真实演示 / Recorded demo</a> · <a href="#ui">界面与体验 / Interface</a> · <a href="#install">安装 / Install</a> · <a href="#whats-new">版本更新 / What's new</a></p>
 
-> **npm stable 2.0.0 · Main source 3.1.0.** DSH Desktop + Web, with Chinese and English interfaces. Compare 2–4 versions of answers, files or web pages in the main conversation; open each version's thinking and tool calls, and read its reply beside what it built.
+> **This guide covers 3.1.0. The npm badge above shows the published version.** DSH Desktop + Web, with Chinese and English interfaces. Compare 2–4 versions of answers, files or web pages in the main conversation; open each version's thinking and tool calls, and read its reply beside what it built.
 
 <a id="demo"></a>
 
@@ -53,11 +53,11 @@ AgentCompare is a [DeepSeek Harness](https://github.com/deepseek-ai/deepseek-har
 
 | You want | Where it works | What the card shows |
 |---|---|---|
-| A page or UI change | Vite, Node or static-site projects in a Git repository, including subfolders | 2–4 live pages you can click and type into, plus shared checks |
+| A page or UI change | Vite, Node or static-site projects in a Git repository, including subfolders | Interactive previews when available, plus each version’s shared acceptance results |
 | A script, document or other files | Any folder, including the DSH default workspace | Each version's files, each one openable before the pick |
 | An answer | Any conversation | Formatted answers side by side with one-click copy; the picked one enters the conversation's memory |
 
-**Start in 30 seconds:**
+**Start your first comparison:**
 1. In DSH Desktop, install `dsh-agent-compare` from **Plugins → Add plugin** (for Web, see [Install](#install)).
 2. Click **A|B** at the bottom left of the composer, then pick the number of versions and their styles.
 3. Write the task and send, as usual. The race is on.
@@ -71,13 +71,15 @@ AgentCompare is a [DeepSeek Harness](https://github.com/deepseek-ai/deepseek-har
 
 Waiting, comparing and picking are all visible and clickable. The animation and the two images below are controlled candidates in a real DSH host.
 
-- **Blue liquid glass.** Translucent glass panels and sliding selectors over slowly flowing blue light, in light and dark themes; with reduced motion on, everything holds still. Every text is measured glyph by glyph in both themes at 4.5:1 contrast or better.
+- **Blue liquid glass.** Translucent glass panels and sliding selectors over slowly flowing blue light, in light and dark themes; with reduced motion on, everything holds still. Product text in the tested interface states was measured glyph by glyph in both themes at 4.5:1 contrast or better.
 - **A Big Fat Fish keeps you company.** One blue DeepSeek whale per version fills with blue water as it goes while two lights trace its edge. Thoughts rise over its head; poke it and it answers, keep poking and it spins, wobbles and splashes.
 - **Every step in view.** The **Steps** button lists thoughts, tool calls and edits; while a version works, its newest three steps run live under the whale.
 - **Reply and result side by side.** An answer stands alone; a page shares the card with its reply, and in focus the reply sits to the left of the page.
 - **Four blues for A–D.** In a blind comparison you only see A–D; styles and models are revealed after the pick, with a sweep of light across the cards.
 - **Easy to tell it's running.** Two comets race around a running comparison, and each page can be used the moment it starts.
 - **Desktop, browser and phone widths**, with Chinese and English interfaces.
+
+Steps contain only information the model and host provide. Long records retain their beginning and end; shortened text is marked, and style names are masked before a blind pick. The whale’s water level represents a processing stage, not a quality score or an exact completion percentage.
 
 ![大肥鱼特写：两版同时工作，头上冒出想法，连戳五下会跳、转圈、晕头、溅水花，展开「过程」看实时步骤，回复出现后水注满 / Whale close-up: thoughts, a five-poke combo, live steps and the Steps panel, then replies as the whales fill up; controlled candidates in a real DSH host](https://raw.githubusercontent.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/main/assets/readme/whale-closeup.webp)
 
@@ -114,6 +116,8 @@ dsh plugin --profile web add dsh-agent-compare
 
 For another self-managed profile, replace `web` with its actual name.
 
+**Restart fully after an update.** Quit DSH Desktop completely and reopen it. For Web, restart the relevant DSH service and reload the page. Refreshing the interface alone can leave the old backend running; a version mismatch now shows a restart notice.
+
 Or build from source and install:
 
 ```bash
@@ -136,8 +140,8 @@ After restarting DSH, enable **A|B at the bottom left of the conversation compos
 2. Choose 2, 3 or 4 versions, and blind or open. With one model, pick a style for each version or describe your own in one line. The strip notes that more versions use more.
 3. Select a per-version generation limit (5–120 minutes) and the **main-conversation context** every version sees: none, the recent exchanges (3 by default) or messages you tick. The strip shows the complete excerpt they will receive. Settings are retained for this conversation across reopening.
 4. Write the task in the original composer and send. No flags to type. Mode switching changes only its command chip, preserving the draft, references, and attachments. Unsupported attachment submissions are refused by the host while retaining the originals.
-5. The conversation renders a persistent A|B card where every version is a **live, interactive application**. In a new conversation without a chat timeline, the same record appears above the composer. Adaptive views support direct interaction. Matching desktop/phone sizes are available, and you can focus one version (press 1–4 in the card, 0 for all). With three or four versions, **Set aside** the ones you have ruled out so the rest move up side by side. Expand the card for closer inspection.
-6. In a blind comparison, the pick reveals models and styles; an open comparison shows them from the start. Review source changes, then **Review and adopt**: the target repository and preflight result appear before a separate confirmation writes anything. Recovery actions stay at the top. **Continue conversation** exits comparison mode and focuses the original composer, retaining the record.
+5. The conversation renders a persistent A|B card with **answers, files or runnable web pages**. Live pages support clicking and typing. In a new conversation without a chat timeline, the same record appears above the composer. Adaptive views support direct interaction. Matching desktop/phone sizes are available, and you can focus one version (press 1–4 in the card, 0 for all). With three or four versions, **Set aside** the ones you have ruled out so the rest move up side by side. Expand the card for closer inspection.
+6. Choose a version or **None of these**. A blind pick reveals models and styles; an open comparison shows them from the start. For project changes that pass checks, **Review and adopt** shows the target, differences and preflight before a separate write confirmation. Outside Git, save into a new folder. Answers require no file adoption. **Continue conversation** returns to the composer, retaining the choice and recovery record.
 
 The example selector offers a smaller search-and-clear case or the full filtering/mobile case and remembers the choice. It creates a separate repository in the same conversation, preserving unrelated drafts; adoption targets that example repository. Every version uses the configured real model and consumes usage. Smaller scope is not a fixed-time guarantee. [Example scope and timing](https://github.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/blob/main/docs/first-use.md).
 

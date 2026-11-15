@@ -222,7 +222,7 @@ export const messages: Readonly<Record<string, string>> = {
   "仅": "Only ",
   "已可体验。": " is ready to try. ",
   "先操作这一版，再决定是否选择；选完立即揭晓。": "Try this version before deciding. Its identity is revealed after your choice.",
-  "都不满意": "Neither",
+  "都不满意": "None of these",
   "选": "Choose ",
   "这次都没选。可以换个描述再来一次。": "You chose no version. Try a different brief in a new comparison.",
   "先核对目标与改动，必要时在副本中预演；确认后才写入。": "Review the target and changes. Rehearse in a copy when needed; nothing is written until you confirm.",
