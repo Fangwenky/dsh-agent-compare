@@ -753,9 +753,11 @@ export class Comparer {
     try { handle = await startStaticPreview(projectDir, entry, { timeoutMs: this.opts.previewTimeoutMs ?? 60_000, signal }) }
     catch (error) {
       if (signal.aborted) throw error
-      return { checks: [], checkedTree, drift: await driftOf(), result: 'files', previewNote: `页面服务没有启动：${(error as Error).message}` }
+      // Keep the helper's last words: they say why it stopped.
+      const said = error instanceof PreviewError ? error.log.trim().split('\n').filter(Boolean).at(-1)?.slice(0, 200) : undefined
+      return { checks: [], checkedTree, drift: await driftOf(), result: 'files', previewNote: `页面服务没有启动：${(error as Error).message}${said ? `（${said}）` : ''}` }
     }
-    const preview = { handle, info: { url: handle.url, port: handle.port, pid: handle.pid, kind: 'static' as const, cwd: projectDir } }
+    const preview = { handle, info: { url: handle.url, port: handle.port, pid: handle.pid, kind: 'static' as const, cwd: projectDir, ...(handle.inProcess ? { inProcess: true as const } : {}) } }
     return this.finishPreview(acceptance, [], preview, shotBase, signal, driftOf, checkedTree, note)
   }
 
@@ -1020,7 +1022,7 @@ export class Comparer {
         handle = await startStaticPreview(projectDir, entry, { timeoutMs, signal: this.lifetime.signal })
       }
       lr.previews.set(label, handle)
-      c.preview = { url: handle.url, port: handle.port, pid: handle.pid, kind, cwd: projectDir, ...(handle.launcher ? { launcher: handle.launcher } : {}) }
+      c.preview = { url: handle.url, port: handle.port, pid: handle.pid, kind, cwd: projectDir, ...(handle.launcher ? { launcher: handle.launcher } : {}), ...(handle.inProcess ? { inProcess: true as const } : {}) }
       await this.save(lr.record)
       return lr.record
     })
@@ -1780,6 +1782,8 @@ class StageFailure extends Error {
 
 /** Kill a recorded preview only when its process provably is that preview. */
 async function stopOwnedPreview(p: PreviewInfo): Promise<void> {
+  // A page served by an earlier host process ended with that process; its pid is not a preview's.
+  if (p.inProcess) return
   const observed = await observeProcess(p.pid)
   if (observed.state === 'unavailable') throw new Error(`无法确认进程 ${p.pid} 的归属：${observed.reason}`)
   if (observed.state === 'observed' && isPreviewProcess(p, observed.commandLine)) {

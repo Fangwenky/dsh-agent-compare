@@ -76,7 +76,7 @@ const check = shape({
   screenshot: optional(absolutePath), mobileScreenshot: optional(absolutePath),
 })
 const preview: Rule = (value, field) => {
-  shape({ url: text(32768, false), port: count(1, 65535), pid: count(1), kind: oneOf('build', 'dev', 'static', 'script'), cwd: absolutePath, launcher: optional(oneOf('yarn')) })(value, field)
+  shape({ url: text(32768, false), port: count(1, 65535), pid: count(1), kind: oneOf('build', 'dev', 'static', 'script'), cwd: absolutePath, launcher: optional(oneOf('yarn')), inProcess: optional((flag, name) => { if (flag !== true) invalid(name) }) })(value, field)
   const raw = value as { url: string; port: number }
   try {
     parsePreviewUrl(raw.url, raw.port)

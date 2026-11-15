@@ -31,6 +31,14 @@ describe('serialized record validation', () => {
       expect(() => assertRunRecord(changed, record.runId)).toThrow(RecordValidationError)
     }
   })
+  it('records a page served by the host process itself, and nothing but true as that flag', () => {
+    const record = fixtureRecord()
+    record.rev = 1
+    record.candidates[0]!.preview = { url: `http://ac-${'b'.repeat(32)}.localhost:4321/`, port: 4321, pid: process.pid, kind: 'static', cwd: record.candidates[0]!.dir!, inProcess: true }
+    assertRunRecord(record, record.runId)
+    const forged = structuredClone(record); (forged.candidates[0]!.preview as any).inProcess = false
+    expect(() => assertRunRecord(forged, record.runId)).toThrow(RecordValidationError)
+  })
 
   it('accepts complete recorded facts, including browser artifacts and adoption journals', () => {
     const record = fixtureRecord()

@@ -9,6 +9,8 @@ export interface Preview {
     readonly pid: number;
     readonly log: Tail;
     readonly launcher?: 'yarn';
+    /** Served by this process itself; there is no preview process to stop. */
+    readonly inProcess?: true;
     stop(): Promise<void>;
 }
 /**
@@ -38,13 +40,22 @@ export declare function startVitePreview(dir: string, opts?: {
 }): Promise<Preview>;
 /**
  * Serve a folder of static files (an `index.html` page, or another entry
- * page) through the preview helper. No project code runs; the helper only
- * reads files inside `dir`.
+ * page). No project code runs: only files inside `dir` are read. They are
+ * served from this process, so the page is up at once and no child process
+ * can be stopped by the host before it answers (the desktop app did exactly
+ * that to the helper); the helper is the fallback.
  */
 export declare function startStaticPreview(dir: string, entry: string, opts?: {
     timeoutMs?: number;
     signal?: AbortSignal;
 }): Promise<Preview>;
+/** The same files served by the helper process: the fallback when this process cannot listen. */
+export declare function startStaticHelperPreview(dir: string, entry: string, opts?: {
+    timeoutMs?: number;
+    signal?: AbortSignal;
+}): Promise<Preview>;
+/** The served file for a request path, or undefined when it must not be served (same rules as the helper). */
+export declare function staticFileFor(root: string, entry: string, pathname: string): string | undefined;
 /**
  * Run a project's own `dev` or `start` script as a preview. The script runs
  * inside the host's process boundary like every other project command; the

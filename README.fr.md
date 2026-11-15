@@ -20,13 +20,16 @@
 
 <p align="center"><a href="#install">安装 / Install</a> · <a href="#demo">真实演示 / Recorded demo</a></p>
 
-> **3.0.0 · Version stable.** DSH Desktop et Web, avec interface en chinois et en anglais. Comparez 2 à 4 versions de réponses, de fichiers ou de pages web dans la conversation principale ; ouvrez le raisonnement et les appels d'outils de chaque version, et lisez sa réponse à côté de ce qu'elle a construit.
+> **3.1.0 · Version stable.** DSH Desktop et Web, avec interface en chinois et en anglais. Comparez 2 à 4 versions de réponses, de fichiers ou de pages web dans la conversation principale ; ouvrez le raisonnement et les appels d'outils de chaque version, et lisez sa réponse à côté de ce qu'elle a construit.
 
-**Nouveautés de la version 3.0.0 :**
-- **Chaque étape sous les yeux.** Chaque carte a un bouton **Steps**. Ouvert, il montre le travail de la version dans l'ordre : ses réflexions avec leur durée, ses appels d'outils (lire ou modifier un fichier, lancer une commande… chacun s'ouvre sur son entrée et sa sortie) et ce qu'elle a écrit entre deux étapes. La liste se met à jour en direct et, même fermée, indique ce que fait la version à l'instant. Dans une comparaison à l'aveugle, les mots qui nomment un style s'affichent en ▒▒.
+**Nouveautés de la version 3.1.0 :**
+- **Chaque étape sous les yeux, en direct et après coup.** Dès qu'une version commence, sa carte a un bouton **Steps**. Ouvert, il montre le travail dans l'ordre : réflexions avec leur durée, appels d'outils (lire ou modifier un fichier, lancer une commande… chacun s'ouvre sur son entrée et sa sortie) et ce qui a été écrit entre deux étapes. Pendant le travail, les trois dernières étapes défilent aussi en direct sous la baleine, et une fois la version terminée, chaque étape reste à un clic. Dans une comparaison à l'aveugle, les mots qui nomment un style s'affichent en ▒▒.
 - **La réponse, directement affichée.** Une version qui ne fait que répondre n'affiche que sa réponse. Une version qui a construit une page ou écrit des fichiers affiche sa réponse avec le même poids : au-dessus de la page côte à côte, et à gauche de la page quand cette version est mise en avant. La réponse apparaît dès que la version a terminé, avant sa page.
-- **Des résultats plus tôt.** Une version est considérée comme terminée dès la fin de son tour, sans attendre d'autres extensions qui occupent sa session. Les dépendances sont installées depuis le fichier de verrouillage pendant que les versions travaillent, et une version qui ne les a pas modifiées en reçoit sa propre copie ; les vérifications tournent en parallèle et la page est utilisable dès son démarrage. Dans l'environnement d'enregistrement à candidats fixes, quatre versions Vite sont passées de l'envoi à quatre pages utilisables en 24 à 30 secondes environ.
-- **L'attente devient amusante.** Chaque version en cours affiche la baleine bleue de DeepSeek, pâle au début, qui se remplit d'eau bleue à mesure que la version avance pendant que deux lumières parcourent son bord. Elle souffle un jet à chaque pas, se tourne vers le pointeur et, d'une pichenette, lâche des bulles. Deux comètes font le tour d'une comparaison en cours, sur une lumière bleue qui s'écoule lentement.
+- **Les pages, directement affichées.** Les pages statiques sont servies par l'extension elle-même : elles s'ouvrent dès qu'elles sont écrites, sans processus séparé que l'application de bureau pourrait arrêter. Si une page ne peut toujours pas être servie, un résultat HTML s'affiche quand même comme une page, son code source à un clic.
+- **Des résultats plus tôt.** Une version est considérée comme terminée moins d'une seconde après la fin de son tour ; auparavant, la comparaison attendait que d'autres extensions (de mémoire, par exemple) libèrent la session, environ 40 secondes sur un poste de bureau typique. Les dépendances sont installées depuis le fichier de verrouillage pendant que les versions travaillent, et une version qui ne les a pas modifiées en reçoit sa propre copie ; les vérifications tournent en parallèle et la page est utilisable dès son démarrage. Dans l'environnement d'enregistrement à candidats fixes, quatre versions Vite sont passées de l'envoi à quatre pages utilisables en 24 à 30 secondes environ.
+- **L'attente devient amusante.** Chaque version en cours affiche la baleine bleue de DeepSeek, pâle au début, qui se remplit d'eau bleue à mesure que la version avance pendant que deux lumières parcourent son bord. De temps en temps, une pensée monte au-dessus de sa tête : ce qu'elle fait, une idée, ou une invitation à la taquiner. Elle souffle un jet à chaque pas et se tourne vers le pointeur ; plusieurs pichenettes d'affilée la font sauter, tourner, vaciller et éclabousser, avec une nouvelle réplique à chaque fois. Deux comètes font le tour d'une comparaison en cours (même sur les moteurs plus anciens et avec les thèmes qui arrêtent les animations), sur une lumière bleue qui s'écoule lentement.
+- **Quatre bleus pour A–D.** Les étiquettes des versions sont quatre bleus différents.
+- **Un rappel pour redémarrer DSH.** DSH remplace aussitôt l'interface d'une extension mais garde le serveur chargé au démarrage. Quand les deux diffèrent, AgentCompare vous demande de quitter puis de rouvrir DSH, au lieu de perdre en silence les étapes et les réponses.
 - **Inclut aussi la 2.1.0, qui n'a pas été publiée seule :** un bonjour ou une question reçoit des réponses plutôt que des pages ; un verre liquide plus clair et plus lumineux, des boutons plus légers et des contrôles qui glissent ; dans les deux thèmes, tout le texte de 21 états de l'interface atteint au moins 4.5:1.
 
 **Nouveautés de la version 2.0.0 :** comparez **2, 3 ou 4 versions** à la fois. Chaque version peut recevoir un **style** (ampleur : prudent, audacieux ; apparence : minimaliste, soigné, vivant ; priorité : accessible, rigoureux, léger ; ou une ligne personnalisée). Comparez **à l'aveugle** (styles révélés au choix) ou **à découvert** (styles affichés dès le début). Avec trois ou quatre versions, **mettez de côté** celles que vous écartez pour comparer les autres côte à côte ; dans la carte, les touches 1 à 4 mettent une version au premier plan.
@@ -74,7 +77,7 @@ Captures réelles de DSH avec des candidats contrôlés. La couverture et le par
 
 [![Exemple à candidats fixes : une baleine par version en cours et les étapes en direct, quatre pages pomodoro en direct, C mise en avant avec sa réponse à côté de sa page, puis choisie](https://raw.githubusercontent.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/main/docs/media/comparison-preview.gif)](https://github.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/blob/main/docs/media/comparison-workflow.mp4)
 
-Enregistrement à candidats fixes dans un hôte DSH réel, à partir du code candidat de la 3.0.0, avec l'interface chinoise. Quatre versions créent une page pomodoro dans un dossier ordinaire pendant que deux comètes font le tour de la carte de comparaison. La grande fenêtre s'ouvre pendant qu'elles travaillent : une baleine par version, qui lâche des bulles d'une pichenette, et les **Steps** ouverts sur la réflexion et l'écriture du fichier en direct. Les réponses arrivent avant les pages, puis les quatre pages en direct sont utilisables. Deux sont mises de côté, C est mise en avant avec sa réponse à gauche de sa page, le choix révèle chaque style et le résultat est enregistré dans un nouveau dossier avant de reprendre la conversation. La vidéo coupe les attentes et garde le reste à vitesse normale. Les chemins locaux sont masqués.
+Enregistrement à candidats fixes dans un hôte DSH réel, à partir du code candidat de la 3.1.0, avec l'interface chinoise. Quatre versions créent une page pomodoro dans un dossier ordinaire pendant que deux comètes font le tour de la carte de comparaison. La grande fenêtre s'ouvre pendant qu'elles travaillent : une baleine par version, qui lâche des bulles d'une pichenette, et les **Steps** ouverts sur la réflexion et l'écriture du fichier en direct. Les réponses arrivent avant les pages, puis les quatre pages en direct sont utilisables. Deux sont mises de côté, C est mise en avant avec sa réponse à gauche de sa page, le choix révèle chaque style et le résultat est enregistré dans un nouveau dossier avant de reprendre la conversation. La vidéo coupe les attentes et garde le reste à vitesse normale. Les chemins locaux sont masqués.
 
 Après le choix, deux raisons (mise en page, plus simple) sont cochées ; elles parviennent à la requête suivante de la conversation principale.
 
@@ -100,7 +103,7 @@ La référence de développement est Node 26.13.0 et npm 12.2.2. Les vérificati
 Installez le paquet npm dans le profil Web par défaut. Le badge npm indique son état de publication :
 
 ```bash
-dsh plugin --profile web add dsh-agent-compare@3.0.0
+dsh plugin --profile web add dsh-agent-compare@3.1.0
 ```
 
 Pour un autre profil autogéré, remplacez `web` par son nom réel.
@@ -117,7 +120,7 @@ npm pack
 Remplacez `<your-profile>` par le nom réel de votre profil :
 
 ```bash
-dsh plugin --profile <your-profile> add ./dsh-agent-compare-3.0.0.tgz
+dsh plugin --profile <your-profile> add ./dsh-agent-compare-3.1.0.tgz
 ```
 
 Redémarrez DSH. Avant une mise à jour, terminez les comparaisons actives et fermez les anciennes instances qui partagent leurs fichiers. Les modifications simultanées par plusieurs versions de l'extension ne sont pas prises en charge.

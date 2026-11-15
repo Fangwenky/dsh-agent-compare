@@ -21,8 +21,34 @@ export function RunRing(): React.ReactElement {
     const parent = svg.current?.parentElement
     if (parent) setRadius(Math.max(0, (parseFloat(getComputedStyle(parent).borderTopLeftRadius) || 0) - 1.5))
   }, [])
+  // If the stylesheet animation does not run (an older engine, or a theme that stops
+  // animations), the comets are moved by script instead, at the same speed and spacing.
+  useEffect(() => {
+    const el = svg.current
+    if (!el || typeof matchMedia === 'function' && matchMedia('(prefers-reduced-motion: reduce)').matches) return
+    let running: Animation[] = [], sample: ReturnType<typeof setTimeout> | undefined
+    // The ring is only shown while a comparison runs; look again until it has been seen moving or not.
+    const watch = setInterval(() => {
+      const head = el.querySelector<SVGRectElement>('.head')
+      if (!head || typeof head.animate !== 'function' || getComputedStyle(el).display === 'none' || sample) return
+      const before = getComputedStyle(head).strokeDashoffset
+      sample = setTimeout(() => {
+        sample = undefined
+        if (getComputedStyle(el).display === 'none') return
+        clearInterval(watch)
+        if (getComputedStyle(head).strokeDashoffset !== before) return
+        const lead: Record<string, number> = { t1: 0, t2: 0.3, t3: 0.48, head: 0.636 }
+        running = [...el.querySelectorAll<SVGRectElement>('.t1, .t2, .t3, .head')].map(rect => {
+          rect.style.animation = 'none'
+          return rect.animate([{ strokeDashoffset: 0 }, { strokeDashoffset: -100 }], { duration: 3000, iterations: Infinity, delay: -(lead[rect.classList[0]!] ?? 0) * 1000 })
+        })
+        el.dataset.scripted = 'true'
+      }, 150)
+    }, 900)
+    return () => { clearInterval(watch); if (sample) clearTimeout(sample); for (const animation of running) animation.cancel() }
+  }, [])
   return <svg ref={svg} className="ac-run-ring" aria-hidden="true">
-    <defs><linearGradient id={id} x1="0" y1="0" x2="1" y2="1"><stop offset="0" stopColor="#4d6bfe" /><stop offset=".5" stopColor="#45b6ff" /><stop offset="1" stopColor="#7d6bff" /></linearGradient></defs>
+    <defs><linearGradient id={id} x1="0" y1="0" x2="1" y2="1"><stop offset="0" stopColor="#4d6bfe" /><stop offset=".5" stopColor="#45b6ff" /><stop offset="1" stopColor="#6f8cff" /></linearGradient></defs>
     <rect className="track" rx={radius} pathLength={100} />
     {(['t1', 't2', 't3'] as const).map(name => <rect key={name} className={name} rx={radius} pathLength={100} stroke={`url(#${id})`} />)}
     <rect className="head" rx={radius} pathLength={100} />
@@ -30,7 +56,7 @@ export function RunRing(): React.ReactElement {
 }
 
 interface Blob { x: number; y: number; vx: number; vy: number; tx: number; ty: number; r: number; color: readonly [number, number, number]; alpha: number; next: number }
-const AMBIENT_COLORS: ReadonlyArray<readonly [number, number, number]> = [[77, 107, 254], [69, 182, 255], [142, 164, 255], [169, 232, 255], [125, 107, 255], [96, 200, 255]]
+const AMBIENT_COLORS: ReadonlyArray<readonly [number, number, number]> = [[77, 107, 254], [69, 182, 255], [142, 164, 255], [169, 232, 255], [92, 128, 255], [96, 200, 255]]
 
 /**
  * Soft blue light that drifts and merges like liquid behind the workspace.

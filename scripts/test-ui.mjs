@@ -554,9 +554,33 @@ try {
   const crests = await page.locator('.ac-whale-water').evaluateAll(nodes => nodes.map(n => parseFloat(n.style.transform.replace(/[^\d.]+/, ''))))
   check(crests.length === 2 && crests[0] < crests[1], 'a version further along must show more water in its whale')
   check(await page.locator('.ac-sheet .ac-action-dock > .ac-run-ring').evaluate(ring => getComputedStyle(ring).display !== 'none' && ring.getBoundingClientRect().width > 300), 'a running comparison must show comets around its run bar')
+  // The comets move on plain keyframes with staggered starts, which older Chromium also runs.
+  // (This page runs with reduced motion, which hides the comets; the stylesheet itself is checked.)
+  check(await page.evaluate(() => {
+    const rules = [...document.styleSheets].flatMap(s => { try { return [...s.cssRules] } catch { return [] } })
+    const flat = rules.flatMap(rule => rule.cssRules ? [rule, ...rule.cssRules] : [rule])
+    const keyframes = flat.find(rule => rule.type === CSSRule.KEYFRAMES_RULE && rule.name === 'ac-ring-run')
+    const head = flat.find(rule => rule.selectorText === '.ac-run-ring .head' && rule.style.animationDelay)
+    return keyframes !== undefined && !/var\(|calc\(/.test(keyframes.cssText) && parseFloat(head?.style.animationDelay ?? '0') < 0
+  }), 'the comets must animate without custom-property arithmetic in their keyframes')
+  // Every label a different blue: no purple, no green.
+  const labelHues = await page.evaluate(() => ['A', 'B', 'C', 'D'].map(label => {
+    const probe = document.createElement('section'); probe.dataset.label = label; probe.className = 'ac-card'
+    const chip = document.createElement('span'); chip.className = 'ac-label'; probe.append(chip); document.querySelector('.ac-sheet')?.append(probe)
+    const [r, g, b] = getComputedStyle(chip).backgroundColor.match(/\d+(\.\d+)?/g).map(Number); probe.remove()
+    const max = Math.max(r, g, b), min = Math.min(r, g, b), d = max - min
+    const hue = d === 0 ? 0 : max === r ? 60 * (((g - b) / d) % 6) : max === g ? 60 * ((b - r) / d + 2) : 60 * ((r - g) / d + 4)
+    return { label, hue: (hue + 360) % 360, color: `${r},${g},${b}` }
+  }))
+  check(labelHues.every(item => item.hue >= 195 && item.hue <= 235) && new Set(labelHues.map(item => item.color)).size === 4, `version labels must be four different blues: ${JSON.stringify(labelHues)}`)
   const workingCard = page.getByRole('region', { name: '候选 B', exact: true })
   const stepsToggle = workingCard.locator('button.ac-steps-toggle')
-  check(await stepsToggle.getAttribute('aria-expanded') === 'false' && (await stepsToggle.innerText()).includes('npm run typecheck'), 'closed steps must still say what the version is doing')
+  check(await stepsToggle.getAttribute('aria-expanded') === 'false' && (await stepsToggle.innerText()).includes('过程'), 'a working version must offer a steps button')
+  check((await workingCard.locator('.ac-live-steps').innerText()).includes('npm run typecheck') && await workingCard.locator('.ac-live-step').count() >= 2, 'the newest steps must show live under the whale without opening anything')
+  await workingCard.locator('.ac-whale-bubble.think').waitFor({ timeout: 9000 })
+  check(await workingCard.locator('.ac-whale-bubble.think').getAttribute('aria-hidden') === 'true', 'a thought rises over a working whale on its own, away from screen readers')
+  for (let poke = 0; poke < 3; poke++) { const box = await workingCard.locator('.ac-whale').boundingBox(); await page.mouse.click(box.x + box.width / 2, box.y + box.height / 2); await page.waitForTimeout(120) }
+  check(await workingCard.locator('.ac-whale-stage.spin').count() === 1 && (await workingCard.locator('.ac-whale-bubble.say').innerText()).length > 0, 'three pokes in a row make the whale spin and answer')
   check(await page.evaluate(() => window.__requests.filter(request => request.method === 'trace').every(request => request.body.summary === true)), 'closed steps must read only a summary')
   await stepsToggle.click()
   await workingCard.getByRole('region', { name: '步骤', exact: true }).waitFor()
@@ -567,6 +591,23 @@ try {
   check(await workingCard.locator('.ac-step-io pre').first().isVisible(), 'a tool step must open to its input and output')
   check(await workingCard.getByText('盲选中：步骤里点明风格的词显示为 ▒▒，选择后显示原文。').count() === 0, 'the blind note must appear only when something was masked')
   await stepsToggle.click()
+
+  // A newer interface on an older backend says so plainly; a matching backend says nothing.
+  check(await page.locator('.ac-stale-backend').count() === 0, 'a matching backend must not raise the restart notice')
+  for (const [error, expected] of [['stale-backend', '3.0.0'], ['old-backend', '3.1.0 之前的版本']]) {
+    await open('running', `&error=${error}`)
+    await page.locator('.ac-sheet .ac-stale-backend').waitFor({ timeout: 6000 })
+    check((await page.locator('.ac-sheet .ac-stale-backend').innerText()).includes(expected), `an older backend (${error}) must ask for a DSH restart and name what runs`)
+  }
+
+  // A version that wrote an HTML file shows it as a page even when no preview could start.
+  await open('folder-files-running')
+  const filesCard = page.getByRole('region', { name: '候选 B', exact: true })
+  await filesCard.locator('iframe.ac-file-page').waitFor({ timeout: 6000 })
+  check(await filesCard.locator('iframe.ac-file-page').getAttribute('sandbox') === 'allow-scripts allow-forms allow-modals', 'an HTML result shows as a sandboxed page')
+  await filesCard.getByRole('button', { name: '源码', exact: true }).click()
+  check(await filesCard.locator('.ac-file-text').isVisible(), 'its source is one click away')
+  check(await filesCard.getByRole('region', { name: '候选 B 的回复', exact: true }).isVisible(), 'the reply sits beside the files')
 
   await page.setViewportSize({ width: 1440, height: 900 })
   await open('judging')

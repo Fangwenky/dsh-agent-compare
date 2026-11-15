@@ -20,13 +20,16 @@
 
 <p align="center"><a href="#install">安装 / Install</a> · <a href="#demo">真实演示 / Recorded demo</a></p>
 
-> **3.0.0 · Versão estável.** DSH Desktop e Web, com interface em chinês e inglês. Compare 2–4 versões de respostas, arquivos ou páginas web na conversa principal; abra o raciocínio e as chamadas de ferramentas de cada versão e leia a resposta ao lado do que ela construiu.
+> **3.1.0 · Versão estável.** DSH Desktop e Web, com interface em chinês e inglês. Compare 2–4 versões de respostas, arquivos ou páginas web na conversa principal; abra o raciocínio e as chamadas de ferramentas de cada versão e leia a resposta ao lado do que ela construiu.
 
-**Novidades da versão 3.0.0:**
-- **Cada passo à vista.** Cada cartão tem um botão **Steps**. Ao abrir, o trabalho da versão aparece em ordem: os raciocínios com o tempo de cada um, as chamadas de ferramentas (ler ou editar um arquivo, executar um comando…; cada uma abre com entrada e saída) e o que ela escreveu entre os passos. Atualiza ao vivo e, mesmo fechado, diz o que a versão está fazendo agora. Numa comparação às cegas, palavras que nomeiam um estilo aparecem como ▒▒.
+**Novidades da versão 3.1.0:**
+- **Cada passo à vista, ao vivo e depois.** Assim que uma versão começa, o cartão ganha um botão **Steps**. Ao abrir, o trabalho aparece em ordem: raciocínios com o tempo de cada um, chamadas de ferramentas (ler ou editar um arquivo, executar um comando…; cada uma abre com entrada e saída) e o que foi escrito entre os passos. Enquanto trabalha, os três passos mais recentes também passam ao vivo sob a baleia, e depois de terminar cada passo fica a um clique. Numa comparação às cegas, palavras que nomeiam um estilo aparecem como ▒▒.
 - **A resposta, direto na tela.** Uma versão que só responde mostra apenas a resposta. Uma versão que construiu uma página ou escreveu arquivos mostra a resposta com o mesmo peso: acima da página lado a lado e à esquerda da página quando essa versão está em foco. A resposta aparece assim que a versão termina, antes da página.
-- **Resultados mais cedo.** Uma versão conta como pronta quando seu turno termina, sem esperar outros plugins que mantenham a sessão ocupada. As dependências são instaladas a partir do lockfile enquanto as versões trabalham, e uma versão que não as alterou recebe a própria cópia; as verificações rodam em paralelo e a página pode ser usada assim que inicia. No ambiente de gravação com candidatos fixos, quatro versões Vite foram do envio a quatro páginas utilizáveis em cerca de 24–30 segundos.
-- **Esperar ficou divertido.** Cada versão em andamento mostra a baleia azul do DeepSeek, clara no início, que se enche de água azul conforme avança, enquanto duas luzes percorrem a borda. Ela solta um esguicho a cada passo, se vira para o ponteiro e, com um toque, solta bolhas. Dois cometas percorrem a borda de uma comparação em andamento, sobre uma luz azul que flui devagar.
+- **Páginas direto na tela.** Páginas estáticas são servidas pelo próprio plugin: podem ser usadas assim que são escritas, sem um processo separado que o aplicativo de desktop possa encerrar. Se mesmo assim uma página não puder ser servida, um resultado HTML aparece como página do mesmo jeito, com o código a um clique.
+- **Resultados mais cedo.** Uma versão conta como pronta menos de um segundo depois que o turno termina; antes, a comparação esperava outros plugins (de memória, por exemplo) liberarem a sessão, cerca de 40 segundos num desktop típico. As dependências são instaladas a partir do lockfile enquanto as versões trabalham, e uma versão que não as alterou recebe a própria cópia; as verificações rodam em paralelo e a página pode ser usada assim que inicia. No ambiente de gravação com candidatos fixos, quatro versões Vite foram do envio a quatro páginas utilizáveis em cerca de 24–30 segundos.
+- **Esperar ficou divertido.** Cada versão em andamento mostra a baleia azul do DeepSeek, clara no início, que se enche de água azul conforme avança, enquanto duas luzes percorrem a borda. De vez em quando sobe um pensamento acima da cabeça dela: o que está fazendo, uma ideia ou um convite para tocá-la. Ela solta um esguicho a cada passo e se vira para o ponteiro; vários toques seguidos a fazem pular, girar, cambalear e espirrar água, com uma fala nova a cada vez. Dois cometas percorrem a borda de uma comparação em andamento (também em motores mais antigos e com temas que param animações), sobre uma luz azul que flui devagar.
+- **Quatro azuis para A–D.** As etiquetas das versões são quatro azuis diferentes.
+- **Um lembrete para reiniciar o DSH.** O DSH troca na hora a interface de um plugin, mas mantém o servidor que carregou ao iniciar. Quando os dois não batem, o AgentCompare pede para fechar e reabrir o DSH, em vez de perder em silêncio os passos e as respostas.
 - **Inclui também a 2.1.0, que não foi publicada separadamente:** uma saudação ou uma pergunta recebe respostas em vez de páginas; vidro líquido mais claro e luminoso, botões mais leves e controles que deslizam; nos dois temas, todo texto em 21 estados da interface tem pelo menos 4.5:1.
 
 **Novidades da versão 2.0.0:** compare **2, 3 ou 4 versões** de uma vez. Cada versão pode ter um **estilo** (alcance: conservador, ousado; aparência: minimalista, refinado, vibrante; prioridade: amigável, rigoroso, leve; ou uma linha própria). Compare **às cegas** (estilos revelados na escolha) ou **abertamente** (estilos visíveis desde o início). Com três ou quatro versões, **deixe de lado** as que descartou para comparar o restante lado a lado; no cartão, as teclas 1–4 focam uma versão.
@@ -74,7 +77,7 @@ Capturas reais do DSH com candidatos controlados. A capa e o fluxo são ilustra�
 
 [![Exemplo com candidatos fixos: uma baleia por versão em andamento e passos ao vivo, quatro páginas pomodoro ao vivo, C em foco com a resposta ao lado da página e escolhida](https://raw.githubusercontent.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/main/docs/media/comparison-preview.gif)](https://github.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/blob/main/docs/media/comparison-workflow.mp4)
 
-Gravação com candidatos fixos em um host DSH real, a partir do código candidato da 3.0.0, com interface em chinês. Quatro versões criam uma página pomodoro numa pasta comum enquanto dois cometas percorrem a borda do cartão de comparação. A janela grande é aberta enquanto elas trabalham: uma baleia por versão, que solta bolhas com um toque, e os **Steps** abertos com o raciocínio e a escrita do arquivo ao vivo. As respostas chegam antes das páginas, e depois as quatro páginas ao vivo podem ser usadas. Duas são deixadas de lado, C fica em foco com a resposta à esquerda da página, a escolha revela cada estilo e o resultado é salvo numa pasta nova antes de continuar a conversa. O vídeo corta a espera e mantém o restante em velocidade normal. Caminhos locais estão ocultos.
+Gravação com candidatos fixos em um host DSH real, a partir do código candidato da 3.1.0, com interface em chinês. Quatro versões criam uma página pomodoro numa pasta comum enquanto dois cometas percorrem a borda do cartão de comparação. A janela grande é aberta enquanto elas trabalham: uma baleia por versão, que solta bolhas com um toque, e os **Steps** abertos com o raciocínio e a escrita do arquivo ao vivo. As respostas chegam antes das páginas, e depois as quatro páginas ao vivo podem ser usadas. Duas são deixadas de lado, C fica em foco com a resposta à esquerda da página, a escolha revela cada estilo e o resultado é salvo numa pasta nova antes de continuar a conversa. O vídeo corta a espera e mantém o restante em velocidade normal. Caminhos locais estão ocultos.
 
 Depois da escolha, dois motivos (layout e mais simples) são marcados e chegam ao próximo pedido da conversa principal.
 
@@ -100,7 +103,7 @@ A referência de desenvolvimento é Node 26.13.0 com npm 12.2.2. As verificaçõ
 Instale o pacote npm no perfil Web padrão. O selo do npm indica o estado de publicação:
 
 ```bash
-dsh plugin --profile web add dsh-agent-compare@3.0.0
+dsh plugin --profile web add dsh-agent-compare@3.1.0
 ```
 
 Para outro perfil gerenciado por você, substitua `web` pelo nome real.
@@ -117,7 +120,7 @@ npm pack
 Substitua `<your-profile>` pelo nome real do seu perfil:
 
 ```bash
-dsh plugin --profile <your-profile> add ./dsh-agent-compare-3.0.0.tgz
+dsh plugin --profile <your-profile> add ./dsh-agent-compare-3.1.0.tgz
 ```
 
 Reinicie o DSH. Antes de atualizar, finalize as comparações ativas e feche instâncias antigas que usam os mesmos registros. Não há suporte a alterações simultâneas por versões diferentes do plugin.

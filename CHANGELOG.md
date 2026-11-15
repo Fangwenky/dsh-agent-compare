@@ -1,5 +1,20 @@
 # Changelog
 
+## 3.1.0
+
+3.0.0 was prepared but not published; its changes (and those of 2.1.0) are part of this release and listed after the new ones.
+
+- **Upgrade notes.**
+  - After installing, quit DSH completely and open it again. DSH swaps in a plugin's new interface at once but keeps running the backend it loaded when it started. Until it restarts, the new interface shows a notice that says which backend is running.
+  - A static page is now served by the plugin's own process, and its record carries `preview.inProcess`. Releases before 3.1.0 cannot read a record that has it; they list it as read-only history.
+  - The new read-only `version` route reports the backend's version.
+- **Steps you can always open.** A version's card has a **Steps** button as soon as the version starts work, and it stays after the version finishes, for answers as well as pages and files. While a version works, its newest three steps scroll by live under the whale; one click opens them all. Steps that cannot be read say so instead of loading forever. A closed card's summary now carries the newest three steps instead of one.
+- **Pages show in the desktop app.** Static pages were served by a helper process that the desktop app stopped before it could answer, so a written page showed as "the preview service exited before responding", with its HTML as code. The plugin now serves static pages itself, and they are up the moment they are written; the helper remains the fallback. If a page still cannot be served, an HTML result opens as a sandboxed page with its source one click away, and the note keeps the helper's last line.
+- **Finished means finished.** On the desktop app with the 2.1.0 backend, versions were marked done 41–44 seconds after DSH ended their turns, while a memory plugin kept the sessions busy. With this backend the gap is under a second (0.4–0.6 seconds in the recorded setup). While a comparison runs, the conversation's card also checks for the end every 2 seconds instead of every 5.
+- **A livelier whale.** Every few seconds a thought rises over its head on its own: what the version is doing, an idea, or an invitation to poke it. Pokes in a row build up: a jump, a spin on the third, a wobble on the fourth and a splash after that, each with its own line. It leans toward the pointer without a 3D tilt, so the logo stays sharp.
+- **Comets that always move.** The ring's keyframes no longer compute offsets from custom properties, which the desktop app's engine (Chromium 152) dropped, freezing the comets. If the comets still do not move (under a theme that stops animations, for example), a script moves them at the same speed.
+- **Four blues.** Labels A–D are four different blues (indigo, azure, navy and ocean) instead of including purple and teal. Step markers, the comet trail and the background light no longer use violet either.
+
 ## 3.0.0
 
 2.1.0 was prepared but not published; its changes are part of this release and listed after the new ones.

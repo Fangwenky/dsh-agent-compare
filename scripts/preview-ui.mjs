@@ -15,6 +15,7 @@ import { fileURLToPath, pathToFileURL } from 'node:url'
 import { build } from 'esbuild'
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..')
+const packageVersion = JSON.parse(await readFile(path.join(root, 'package.json'), 'utf8')).version
 const now = Date.now()
 const t = (a, b) => ({ startedAt: now - a * 1000, ...(b === undefined ? {} : { endedAt: now - b * 1000 }) })
 const done = { preparing: t(95, 94), generating: t(94, 40), sealing: t(40, 39), installing: t(39, 31), verifying: t(31, 26), previewing: t(26, 20), ready: t(20) }
@@ -62,6 +63,8 @@ const states = {
     { label: 'B', stage: 'generating', timings: { preparing: t(50, 49), generating: t(49) }, progress: { steps: 5, lastAction: 'write src\\App.tsx', lastActivityAt: now - 150_000, tokens: 61240 } },
   ] }],
   inline: [{ ...base, state: 'judging', origin: { kind: 'command' }, checksFavoured: 'A', candidates: [A, B] }],
+  // Four versions at work in the conversation's own card.
+  'inline-running': [{ ...base, state: 'running', origin: { kind: 'command' }, task: '你好', candidates: ['A', 'B', 'C', 'D'].map((label, i) => ({ label, stage: 'generating', timings: { preparing: t(70, 69), generating: t(69) }, progress: { steps: 1 + i, lastAction: i % 2 ? 'read README.md' : undefined, lastActivityAt: now - 1500 } })) }],
   allfailed: [{ ...base, state: 'judging', checksFavoured: 'none', candidates: [
     { label: 'A', stage: 'failed', timings: { preparing: t(1890, 1889), generating: t(1889, 2) }, usage: { kind: 'reported', totalTokens: 233363 }, salvageable: false, generation: { ended: 'budget' }, error: { stage: 'sealing', message: '超出生成时间预算（30 分钟）时还没有改动任何文件。' } },
     { label: 'B', stage: 'failed', timings: { preparing: t(1910, 1909), generating: t(1909, 2) }, usage: { kind: 'reported', totalTokens: 257649 }, salvageable: true, error: { stage: 'generating', message: '超出生成时间预算（30 分钟），已停止这个候选' } },
@@ -88,6 +91,11 @@ const states = {
   'four-open': [{ ...base, runId: '4b4b4b4b', blind: false, state: 'judging', candidates: [A, B, C, D].map(c => ({ ...c, ...strat[c.label] })) }],
   'three-revealed': [{ ...base, runId: '3c3c3c3c', state: 'revealed', checksFavoured: 'C', choice: { pick: 'C' }, revealedAt: now, candidates: [A, B, C].map(c => ({ ...c, ...strat[c.label] })) }],
   folder: [{ ...folderRun, state: 'judging', candidates: [folderAnswer, folderFiles] }],
+  // One version still working while the others wrote a page whose preview could not start: each shows its reply.
+  'folder-files-running': [{ ...folderRun, state: 'running', task: '做一个最简单的网页', candidates: [
+    { label: 'A', stage: 'generating', timings: { preparing: t(130, 129), generating: t(129) }, progress: { steps: 3, lastAction: 'write index.html', lastActivityAt: now - 2000 } },
+    ...['B', 'C', 'D'].map(label => ({ ...folderFiles, label, resultFiles: ['index.html'], previewNote: '页面服务没有启动：预览服务在响应前退出', reply: `做好了：只生成 **1 个文件**，没有依赖，双击 [index.html](<index.html>) 就能打开。（${label}）` })),
+  ] }],
   'folder-answer': [{ ...folderRun, state: 'revealed', choice: { pick: 'A' }, revealedAt: now, candidates: [{ ...folderAnswer, ...strat.A }, { ...folderFiles, ...strat.B }] }],
   // A greeting sent inside a project that can be built: four replies, nothing built.
   'project-answers': [{ ...base, runId: '9e9e9e9e', task: '你好', conversationContext: undefined, state: 'judging', candidates: greetings }],
@@ -141,7 +149,7 @@ function contextPreview(body) {
 }
 function sampleTrace(run, label, summary) {
   const full = sampleFullTrace(run, label);
-  return summary === true ? {...full, items: full.items.slice(-1)} : full;
+  return summary === true ? {...full, items: full.items.slice(-3)} : full;
 }
 function sampleFullTrace(run, label) {
   const c = run && run.candidates.find(x => x.label === label);
@@ -182,6 +190,7 @@ window.fetch = async (url, init) => {
     if (plan.delayMs) await new Promise(resolve=>setTimeout(resolve,plan.delayMs));
     return new Response(snapshot,{status:plan.error?503:200,headers:{'content-type':'application/json'}});
   }
+  if (m[1] === 'version') return new Response(JSON.stringify(${JSON.stringify(error)}==='old-backend'?{ok:false,error:'unknown method version'}:{ok:true,value:{pluginVersion:${JSON.stringify(error)}==='stale-backend'?'3.0.0':${JSON.stringify(packageVersion)}}}),{status:${JSON.stringify(error)}==='old-backend'?404:200,headers:{'content-type':'application/json'}});
   if (m[1] === ${JSON.stringify(error)}) return new Response(JSON.stringify({ok:false,error:'请求失败，请重试'}),{status:503});
   if (m[1] === 'setup' && ${JSON.stringify(error === 'setup-slow')}) await new Promise(resolve=>setTimeout(resolve,5000));
   if (m[1] === 'shot') {

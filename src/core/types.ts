@@ -167,6 +167,8 @@ export interface PreviewInfo {
   readonly cwd: string
   /** Modern Yarn starts Vite through its project-aware dependency loader. */
   readonly launcher?: 'yarn'
+  /** Static files served by the host process itself: there is no process to stop, and it ends with the host. */
+  readonly inProcess?: true
 }
 
 /** Why a candidate may or may not be written into the user's checkout. */

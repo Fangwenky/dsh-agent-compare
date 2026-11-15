@@ -23,7 +23,8 @@ import { CopyButton, ProjectNotes, ResultView } from './results.js'
 import { BlindControl, MAX_VERSIONS, MIN_VERSIONS, revealedStyleName, Segmented, StyleCombos, StyleHabit, StylePicker, StyleSlots, stylesFor, VersionsControl, type StyleChoice } from './style-picker.js'
 import { LABELS, MAX_PICK_NOTE, PICK_REASONS, type Label, type PickReason, type StyleStat } from './model.js'
 import { Ambient, attachFx, burst, RunRing } from './fx.js'
-import { currentAction, ReplyBlock, StepsPanel, StepsToggle, useTrace, Whale } from './agent-view.js'
+import { currentAction, LiveSteps, ReplyBlock, StepsPanel, StepsToggle, useTrace, Whale } from './agent-view.js'
+import { StaleBackendNotice } from './version.js'
 export const name = 'agent-compare-client'
 export const inject = ['slots', 'remote', 'remote.commands']
 interface SlotsLike {
@@ -335,11 +336,11 @@ function CandidateCard({ run, c, revealed, picked, busy, act, device, compact, h
         <Checks checks={c.checks} />
       </div>
       <div className="ac-steps-bar">
-        <StepsToggle trace={trace} open={stepsOpen} onToggle={() => setStepsOpen(v => !v)} busy={c.stage === 'generating'} id={stepsId} steps={c.progress?.steps ?? 0} />
+        <StepsToggle trace={trace} open={stepsOpen} onToggle={() => setStepsOpen(v => !v)} busy={c.stage === 'generating'} id={stepsId} steps={c.progress?.steps ?? 0} started={c.stage !== 'queued' && c.stage !== 'preparing'} />
         {c.stage === 'generating' && c.progress && Date.now() - c.progress.lastActivityAt > 90_000 && <span className="ac-meta ac-slow">{fmt(Date.now() - c.progress.lastActivityAt)}{t(" 没有新动作（在等模型或工具）")}</span>}
         {c.install?.prewarmed && <span className="ac-meta" title={t("依赖与基线相同，复用了比较开始时按锁文件预装的依赖")}>{t("依赖已预装")}</span>}
       </div>
-      {stepsOpen && trace && trace.items.length > 0 && <StepsPanel trace={trace} id={stepsId} busy={c.stage === 'generating'} />}
+      {stepsOpen && <StepsPanel trace={trace} id={stepsId} busy={c.stage === 'generating'} />}
       {reply && <ReplyBlock text={reply} label={c.label} />}
       {live ? (
         <div className="ac-browser">
@@ -365,7 +366,8 @@ function CandidateCard({ run, c, revealed, picked, busy, act, device, compact, h
         <Screenshots runId={run.runId} c={c} busy={busy} act={act} device={device} />
       ) : (
         <div className={`ac-empty${reply ? ' compact' : ''}`}>
-          <Whale stage={c.stage} level={(step + (c.stage === 'generating' ? Math.min(trace?.steps ?? c.progress?.steps ?? 0, 30) / 30 * 0.9 : 0)) / PIPELINE.length} steps={trace?.steps ?? c.progress?.steps ?? 0} caption={waitingText} />
+          <Whale stage={c.stage} level={(step + (c.stage === 'generating' ? Math.min(trace?.steps ?? c.progress?.steps ?? 0, 30) / 30 * 0.9 : 0)) / PIPELINE.length} steps={trace?.steps ?? c.progress?.steps ?? 0} caption={waitingText} action={action} />
+          {c.stage === 'generating' && !stepsOpen && <LiveSteps trace={trace} onOpen={() => setStepsOpen(true)} />}
         </div>
       )}
       <div className="ac-card-evidence">
@@ -500,6 +502,7 @@ function ComposerDockState({ sessionId, session }: { sessionId: string; session?
   const [collapsed, setCollapsed] = useState(false)
   const [error, setError] = useState<string>()
   const blank = session?.blank === true
+  const running = latest !== undefined && ACTIVE.has(latest.state)
   useEffect(() => {
     let active = true, request = 0, applied = 0
     const refresh = (): void => {
@@ -509,9 +512,10 @@ function ComposerDockState({ sessionId, session }: { sessionId: string; session?
       latestRequest.then(value => { if (active && version >= applied) { applied = version; setLatest(value ?? undefined); setError(undefined) } }, (e: Error) => { if (active && version >= applied) { applied = version; setError(e.message) } })
     }
     refresh()
-    const timer = setInterval(refresh, 5000)
+    // While a comparison runs, look more often so its end shows promptly.
+    const timer = setInterval(refresh, running ? 2000 : 5000)
     return () => { active = false; clearInterval(timer) }
-  }, [blank, sessionId, mode.runId, mode.refreshVersion])
+  }, [blank, sessionId, mode.runId, mode.refreshVersion, running])
   useEffect(() => {
     // An open comparison needs the space above the composer; fold the settings once per comparison.
     if (!latest || !ACTIVE.has(latest.state) || mode.autoCollapsedRunId === latest.runId) return
@@ -522,6 +526,7 @@ function ComposerDockState({ sessionId, session }: { sessionId: string; session?
   const runId = blank ? mode.runId ?? latest?.runId : resident ? latest?.runId : undefined
   useEffect(() => { setCollapsed(!blank && latest?.state === 'adopted' && latest.adoption?.state === 'adopted') }, [runId])
   return <>
+    {(runId || mode.preferences.enabled) && <div lang={currentLocale()} className="ac-root ac-notice-root"><Styles /><StaleBackendNotice call={call} /></div>}
     {capabilityError && <div lang={currentLocale()} className="ac-root"><Styles /><div className="ac-feedback ac-prerequisite" role="alert"><span><Diagnostic text={capabilityError} /></span><div className="ac-prerequisite-actions"><button className="ac-text-btn" onClick={() => { void loadMode(sessionId) }}>{t("重新检查接口")}</button><button className="ac-text-btn" onClick={() => setOpen(sessionId)}>{t("比较记录")}</button></div></div></div>}
     {runId && <section lang={currentLocale()} className="ac-root ac-conversation-run" aria-label={t("本对话的 A|B 结果")}><Styles /><RunRing />
       {collapsed && <div className="ac-conversation-run-head"><b>{t("本次比较")}</b><span className="ac-meta">{runId}</span><span className="ac-spacer" /><button className="ac-text-btn" onClick={() => setOpen(sessionId)}>{t("记录与教程")}</button><button className="ac-text-btn" onClick={() => setCollapsed(false)}>{t("展开结果")}</button></div>}
@@ -1237,6 +1242,7 @@ function Sheet({ sessionId, runId, tab, trigger }: { sessionId: string; runId?: 
           <nav className="ac-tabs" aria-label={t("比较工作区")}>{(['history', 'guide'] as const).map((item) => { const text = { history: t("历史记录"), guide: t("使用教程") }[item]; return <button key={item} className={`ac-tab${view === item && !selected ? ' on' : ''}`} aria-current={view === item && !selected ? 'page' : undefined} data-text={text} onClick={() => navigate(item)}>{text}</button> })}</nav>
           <button className="ac-icon-btn" onClick={() => setOpen(undefined)} aria-label={t("关闭（Esc）")} title={t("关闭（Esc）")}><IconClose /></button>
         </header>
+        <StaleBackendNotice call={call} />
         {err && <div className="ac-error" role="alert"><Diagnostic text={err} /><button className="ac-text-btn" onClick={() => { void refreshList() }}>{t("重试")}</button></div>}
         <div className="ac-body">{selected ? <>
           <div className="ac-run-heading"><button className="ac-text-btn" onClick={() => navigate('history')}>{t("← 比较记录")}</button><span className="ac-task" title={current?.task}>{current?.task ?? t("比较结果")}</span><span className="ac-meta">{selected}</span></div>

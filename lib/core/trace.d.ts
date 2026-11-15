@@ -61,9 +61,10 @@ export declare function maskStyle(text: string, strategy?: Strategy): string;
 export declare function maskTrace(trace: Trace, strategy?: Strategy): Trace;
 /**
  * What a reader is shown of a stored trace. Before a blind pick, words that
- * name the version's style are masked. A summary keeps the counts and only the
- * newest step, which is enough to say what the version is doing.
+ * name the version's style are masked. A summary keeps the counts and the
+ * newest few steps, enough to show live what the version is doing.
  */
+export declare const SUMMARY_ITEMS = 3;
 export declare function traceView(stored: Trace, options: {
     blind: boolean;
     strategy?: Strategy;

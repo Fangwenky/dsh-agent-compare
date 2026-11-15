@@ -33,7 +33,9 @@ export function useTrace(run: Run, c: Cand, call: Call, full: boolean): Trace | 
   useEffect(() => {
     if (c.stage === 'queued' || c.stage === 'preparing') return
     const controller = new AbortController()
-    call<Trace>('trace', { runId: run.runId, label: c.label, ...(full ? {} : { summary: true }) }, controller.signal).then(value => setTrace(value), () => {})
+    // Steps that cannot be read (an older backend, or none were kept) show as none, not as loading forever.
+    call<Trace>('trace', { runId: run.runId, label: c.label, ...(full ? {} : { summary: true }) }, controller.signal)
+      .then(value => setTrace(value), () => { if (!controller.signal.aborted) setTrace(current => current ?? { items: [], steps: 0, tools: 0, thinking: 0, truncated: false, done: true, updatedAt: 0 }) })
     return () => controller.abort()
   }, [run.runId, c.label, activity, run.state, full])
   return trace
@@ -86,40 +88,87 @@ function Step({ item, live }: { item: TraceItem; live: boolean }): React.ReactEl
 /** "N 步" with a singular form for English. */
 const stepCount = (n: number): string => n === 1 ? t('1 步') : t('{0} 步', { 0: n })
 
-/** The toggle that opens a version's steps, with a count of what is inside. */
-export function StepsToggle({ trace, open, onToggle, busy, id, steps = 0 }: { trace: Trace | undefined; open: boolean; onToggle(): void; busy: boolean; id: string; steps?: number }): React.ReactElement | null {
-  if (!trace || trace.items.length === 0) return busy ? <span className="ac-steps-toggle idle"><span className="ac-shimmer">{steps ? stepCount(steps) : t('正在启动…')}</span></span> : null
-  const now = busy ? currentAction(trace) : undefined
-  // The run record may be newer than the stored steps; count whichever has seen more.
-  const count = Math.max(trace.steps, steps)
-  return <button type="button" className={`ac-steps-toggle${open ? ' open' : ''}`} aria-expanded={open} aria-controls={id} onClick={onToggle}>
+/** What a version's steps hold: thoughts, tool calls and steps, singular in English. */
+function counts(trace: Trace | undefined, steps: number): string {
+  const count = Math.max(trace?.steps ?? 0, steps)
+  return [
+    trace?.thinking ? (trace.thinking === 1 ? t('思考 1') : t('思考 {0}', { 0: trace.thinking })) : '',
+    trace?.tools ? (trace.tools === 1 ? t('工具 1') : t('工具 {0}', { 0: trace.tools })) : '',
+    count ? stepCount(count) : '',
+  ].filter(Boolean).join(' · ')
+}
+
+/**
+ * The button that opens a version's steps. It is there as soon as the version
+ * starts work and stays after it finishes, so every thought, tool call and
+ * edit can be read live or afterwards, the way a conversation shows them.
+ */
+export function StepsToggle({ trace, open, onToggle, busy, id, steps = 0, started = true }: { trace: Trace | undefined; open: boolean; onToggle(): void; busy: boolean; id: string; steps?: number; started?: boolean }): React.ReactElement | null {
+  if (!started) return null
+  // What it is doing now shows in the live steps below; here only before the first step.
+  const now = busy && !trace?.items.length ? t('正在启动…') : undefined
+  const summary = counts(trace, steps)
+  return <button type="button" className={`ac-steps-toggle${open ? ' open' : ''}${busy ? ' live' : ''}`} aria-expanded={open} aria-controls={id} onClick={onToggle}
+    title={open ? t('收起这一版的过程') : t('查看这一版的全部过程：思考、工具调用、改动和中间的话')}>
+    <svg className="ac-steps-icon" width="14" height="14" viewBox="0 0 14 14" aria-hidden="true"><circle cx="3" cy="3.5" r="1.3" /><circle cx="3" cy="7" r="1.3" /><circle cx="3" cy="10.5" r="1.3" /><path d="M6 3.5h6M6 7h6M6 10.5h4" fill="none" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" /></svg>
+    <span className="ac-steps-title">{open ? t('收起过程') : t('过程')}</span>
+    {now && <span className="ac-steps-now"><span className="ac-shimmer">{now}</span></span>}
+    {summary && <span className="ac-steps-count">{summary}</span>}
     <svg className="ac-steps-chevron" width="12" height="12" viewBox="0 0 12 12" aria-hidden="true"><path d="M4 2.5L7.5 6 4 9.5" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" /></svg>
-    <span className="ac-steps-title">{now ? <span className="ac-shimmer">{now}</span> : t('过程')}</span>
-    <span className="ac-steps-count">{[trace.thinking ? (trace.thinking === 1 ? t('思考 1') : t('思考 {0}', { 0: trace.thinking })) : '', trace.tools ? (trace.tools === 1 ? t('工具 1') : t('工具 {0}', { 0: trace.tools })) : '', stepCount(count)].filter(Boolean).join(' · ')}</span>
   </button>
 }
 
-export function StepsPanel({ trace, id, busy }: { trace: Trace; id: string; busy: boolean }): React.ReactElement {
+export function StepsPanel({ trace, id, busy }: { trace: Trace | undefined; id: string; busy: boolean }): React.ReactElement {
   const list = useRef<HTMLOListElement>(null)
   const follow = useRef(true)
+  const items = trace?.items ?? []
   // While the version works, stay at the newest step unless the reader scrolled up.
   useEffect(() => {
     const el = list.current
     if (el && busy && follow.current) el.scrollTop = el.scrollHeight
-  }, [trace.items.length, busy])
-  const lastIndex = trace.items.length - 1
+  }, [items.length, busy])
+  const lastIndex = items.length - 1
   // Say so only when something here was actually hidden or left out.
-  const masked = trace.masked === true && trace.items.some(item => [item.text, item.target, item.input, item.output].some(value => value?.includes('▒▒')))
-  const gap = trace.omitted ? TRACE_HEAD : -1
+  const masked = trace?.masked === true && items.some(item => [item.text, item.target, item.input, item.output].some(value => value?.includes('▒▒')))
+  const gap = trace?.omitted ? TRACE_HEAD : -1
   return <div className="ac-steps" id={id} role="region" aria-label={t('步骤')}>
     {masked && <p className="ac-steps-note">{t('盲选中：步骤里点明风格的词显示为 ▒▒，选择后显示原文。')}</p>}
-    <ol ref={list} onScroll={event => { const el = event.currentTarget; follow.current = el.scrollHeight - el.scrollTop - el.clientHeight < 40 }}>
-      {trace.items.map((item, index) => <React.Fragment key={`${index}:${item.at}`}>
-        {gap === index && <li className="ac-step-gap">{t('中间省略了 {0} 项', { 0: trace.omitted! })}</li>}
-        <Step item={item} live={busy && index === lastIndex && item.kind === 'thinking'} />
-      </React.Fragment>)}
-    </ol>
+    {items.length === 0
+      ? <p className="ac-steps-empty">{busy ? <span className="ac-shimmer">{t('等模型走出第一步…')}</span> : trace === undefined ? t('正在读取过程…') : t('这一版没有留下步骤记录。')}</p>
+      : <ol ref={list} onScroll={event => { const el = event.currentTarget; follow.current = el.scrollHeight - el.scrollTop - el.clientHeight < 40 }}>
+        {items.map((item, index) => <React.Fragment key={`${index}:${item.at}`}>
+          {gap === index && <li className="ac-step-gap">{t('中间省略了 {0} 项', { 0: trace!.omitted! })}</li>}
+          <Step item={item} live={busy && index === lastIndex && item.kind === 'thinking'} />
+        </React.Fragment>)}
+      </ol>}
   </div>
+}
+
+/** One short line for a step in the live feed. */
+function liveLine(item: TraceItem): string {
+  if (item.kind === 'tool') return `${toolName(item.name)}${item.target ? ` · ${item.target}` : ''}`
+  return (item.text ?? '').replace(/\s+/g, ' ').trim().slice(0, 90)
+}
+
+/**
+ * The newest steps, live, under the whale while a version works: what it
+ * thought, which tools it ran and what it wrote, without opening anything.
+ * A click opens all of them.
+ */
+export function LiveSteps({ trace, onOpen }: { trace: Trace | undefined; onOpen(): void }): React.ReactElement | null {
+  const items = (trace?.items ?? []).slice(-3)
+  if (items.length === 0) return null
+  return <button type="button" className="ac-live-steps" onClick={onOpen} title={t('查看这一版的全部过程')} aria-label={t('最新步骤，点开查看全部过程')}>
+    {items.map((item, index) => {
+      const newest = index === items.length - 1
+      const kind = item.kind === 'tool' ? (item.status === 'running' ? 'running' : item.status === 'error' ? 'error' : 'done') : item.kind === 'thinking' ? 'think' : 'text'
+      return <span key={`${item.kind}:${item.at}:${index}`} className={`ac-live-step ${kind}${newest ? ' newest' : ''}`}>
+        <span className={`ac-step-dot ${kind}`} aria-hidden="true" />
+        <b>{item.kind === 'tool' ? t('工具') : item.kind === 'thinking' ? t('思考') : t('写道')}</b>
+        <span className="ac-live-text">{liveLine(item)}</span>
+      </span>
+    })}
+  </button>
 }
 
 /** The reply a version ended with, beside what it built. Long replies open on request. */
@@ -152,26 +201,86 @@ function wave(period: number, amp: number): string {
   return `${d} V30 H120 Z`
 }
 const WAVE_BACK = wave(5.2, 0.55), WAVE_FRONT = wave(6.4, 0.7)
-/** What the whale says when poked. */
-const POKE_LINES = ['嘿！', '收到～', '再戳就吐泡泡了'] as const
+/** What the whale thinks while it works, by stage. */
+const THOUGHTS = {
+  start: ['复制一份工作区…', '热身中，伸个懒腰', '深吸一口气，下潜'],
+  think: ['让我想想…', '这个需求有点意思', '先在脑子里画个草图', '灵感 +1', '翻翻工具箱', '别催，鲸鱼也要构思', '这段要写得漂亮点', '想偷看别的版本？盲选哦', '海底信号有点慢…', '用最少的字，办最多的事'],
+  check: ['装依赖，咕噜咕噜', '跑检查，祈祷全绿', '页面马上就好', '最后擦亮一下', '水快满啦！'],
+  hint: ['戳戳我？', '无聊就戳我一下', '我会吐泡泡哦'],
+} as const
+/** What the whale says to a poke, by how many came in a row. */
+const POKES = {
+  one: ['嘿！', '收到～', '在呢在呢', '痒！', '我在认真干活呢', '泡泡送你', '再戳就吐泡泡了'],
+  two: ['还来？', '哈哈哈好痒', '你是不是想摸鱼'],
+  three: ['三连击！转个圈给你看'],
+  four: ['晕…晕了'],
+  more: ['好啦好啦，让我专心写完', '再戳我就喷你一脸水', '大鲸鱼也是要面子的'],
+} as const
+type Bubble = { text: string; kind: 'think' | 'say'; id: number }
+const pick = <T,>(list: readonly T[], avoid?: T): T => { const options = list.length > 1 ? list.filter(x => x !== avoid) : list; return options[Math.floor(Math.random() * options.length)]! }
+
+/** A thought that fits what the version is doing now. */
+function thoughtFor(stage: Stage, action: string | undefined, last: string | undefined): string {
+  if (Math.random() < 0.18) return pick(THOUGHTS.hint, last)
+  if (stage === 'queued' || stage === 'preparing') return pick(THOUGHTS.start, last)
+  if (stage !== 'generating') return pick(THOUGHTS.check, last)
+  // Now and then, say what the newest step is about.
+  if (action && Math.random() < 0.3) return t('正在：{0}', { 0: action.length > 26 ? `${action.slice(0, 25)}…` : action })
+  return pick(THOUGHTS.think, last)
+}
 
 /**
  * DeepSeek's blue whale (the mark DSH ships), pale at first, filling with
  * DeepSeek blue as a version gets further until it is the logo itself, belly
  * and eye white in both themes; two lights run around its outline while it
- * works, it spouts when a new step lands, leans toward the pointer and
- * answers a poke. Purely decorative: the caption says the same thing, and
- * reduced motion keeps it still.
+ * works. Now and then a thought rises over its head (what it is doing, an
+ * idea, or an invitation to poke it); a new step makes it spout; it leans
+ * toward the pointer; pokes in a row make it jump, spin and splash, with a
+ * new line each time. Purely decorative: the caption says what matters, the
+ * bubbles stay away from screen readers, and reduced motion keeps it still.
  */
-export function Whale({ stage, level, steps, caption }: { stage: Stage; level: number; steps: number; caption: string }): React.ReactElement {
+export function Whale({ stage, level, steps, caption, action }: { stage: Stage; level: number; steps: number; caption: string; action?: string }): React.ReactElement {
   const box = useRef<HTMLDivElement>(null)
   const lean = useRef<HTMLSpanElement>(null)
   const [poked, setPoked] = useState(0)
+  const [combo, setCombo] = useState(0)
+  const [bubble, setBubble] = useState<Bubble>()
   const [puff, setPuff] = useState(0)
   const seen = useRef(steps)
+  const streak = useRef({ count: 0, at: 0 })
+  const now = useRef({ stage, action, last: undefined as string | undefined })
+  now.current.stage = stage; now.current.action = action
   const asleep = stage === 'cancelled' || stage === 'stopping'
   useEffect(() => { if (steps !== seen.current) { seen.current = steps; setPuff(n => n + 1) } }, [steps])
-  useEffect(() => { if (!poked) return; const timer = setTimeout(() => setPoked(0), 1600); return () => clearTimeout(timer) }, [poked])
+  // A poke shows for a moment; pokes in a row build a combo.
+  useEffect(() => { if (!poked) return; const timer = setTimeout(() => { setPoked(0); setCombo(0) }, 1700); return () => clearTimeout(timer) }, [poked])
+  useEffect(() => { if (bubble === undefined) return; const timer = setTimeout(() => setBubble(current => current?.id === bubble.id ? undefined : current), bubble.kind === 'say' ? 2200 : 3600); return () => clearTimeout(timer) }, [bubble])
+  // Thoughts rise on their own every few seconds, at a different rhythm for each whale.
+  useEffect(() => {
+    if (asleep) return
+    let timer: ReturnType<typeof setTimeout>
+    const next = (delay: number): void => {
+      timer = setTimeout(() => {
+        const text = thoughtFor(now.current.stage, now.current.action, now.current.last)
+        now.current.last = text
+        setBubble(current => current?.kind === 'say' ? current : { text, kind: 'think', id: Date.now() })
+        next(7000 + Math.random() * 6000)
+      }, delay)
+    }
+    next(1800 + Math.random() * 3500)
+    return () => clearTimeout(timer)
+  }, [asleep])
+  const poke = (): void => {
+    const time = Date.now()
+    const count = time - streak.current.at < 2600 ? streak.current.count + 1 : 1
+    streak.current = { count, at: time }
+    const lines = count === 1 ? POKES.one : count === 2 ? POKES.two : count === 3 ? POKES.three : count === 4 ? POKES.four : POKES.more
+    const text = pick(lines, now.current.last)
+    now.current.last = text
+    setCombo(count)
+    setPoked(n => n + 1)
+    setBubble({ text, kind: 'say', id: time })
+  }
   useEffect(() => {
     const el = box.current
     if (!el || reduced()) return
@@ -185,7 +294,8 @@ export function Whale({ stage, level, steps, caption }: { stage: Stage; level: n
         const r = el.getBoundingClientRect()
         const dx = Math.max(-1, Math.min(1, (x - (r.left + r.width / 2)) / (r.width / 2 || 1)))
         const dy = Math.max(-1, Math.min(1, (y - (r.top + r.height / 2)) / (r.height / 2 || 1)))
-        if (lean.current) lean.current.style.transform = `perspective(500px) rotateY(${(dx * 12).toFixed(1)}deg) rotateX(${(-dy * 9).toFixed(1)}deg)`
+        // A flat lean and nudge: a 3D tilt would be rasterised soft and blur the logo.
+        if (lean.current) lean.current.style.transform = `translate(${(dx * 4).toFixed(1)}px, ${(dy * 3).toFixed(1)}px) rotate(${(dx * 5).toFixed(1)}deg)`
       })
     }
     const leave = (): void => { if (lean.current) lean.current.style.transform = '' }
@@ -199,9 +309,11 @@ export function Whale({ stage, level, steps, caption }: { stage: Stage; level: n
   const fill = Math.max(0.06, Math.min(1, level))
   // The crest goes from just under the mark (hollow) to just over it (solid).
   const crest = MARK_BOTTOM + 0.3 - fill * (MARK_BOTTOM - MARK_TOP + 1.6)
-  return <div ref={box} className={`ac-whale-stage${asleep ? ' asleep' : ''}${poked ? ' poked' : ''}${fill >= 1 ? ' full' : ''}`}>
+  const moves = poked ? (combo >= 5 ? ' poked splash' : combo === 3 ? ' poked spin' : combo === 4 ? ' poked dizzy' : ' poked') : ''
+  return <div ref={box} className={`ac-whale-stage${asleep ? ' asleep' : ''}${moves}${fill >= 1 ? ' full' : ''}`}>
+    {bubble && <span className={`ac-whale-bubble ${bubble.kind}`} key={bubble.id} aria-hidden="true">{t(bubble.text)}</span>}
     {/* A toy for the pointer; it stays out of the keyboard order and away from screen readers. */}
-    <button type="button" className="ac-whale" tabIndex={-1} aria-hidden="true" title={t('小鲸鱼，点一下打个招呼')} onClick={() => setPoked(n => n + 1)}>
+    <button type="button" className="ac-whale" tabIndex={-1} aria-hidden="true" title={t('小鲸鱼，戳一下试试')} onClick={poke}>
       <span ref={lean} className="ac-whale-lean">
         <svg viewBox="143.6 6.6 26.4 23.4" width="150" height="133" aria-hidden="true">
           <defs>
@@ -227,9 +339,9 @@ export function Whale({ stage, level, steps, caption }: { stage: Stage; level: n
           <path className="ac-whale-head two" d={MARK_BODY} pathLength={100} />
         </svg>
       </span>
-      {poked > 0 && <span className="ac-whale-bubble" key={poked}>{t(POKE_LINES[(poked - 1) % POKE_LINES.length]!)}</span>}
     </button>
-    {poked > 0 && <span className="ac-whale-pops" key={poked} aria-hidden="true"><i /><i /><i /><i /><i /></span>}
+    {poked > 0 && <span className="ac-whale-ripple" key={`r${poked}`} aria-hidden="true" />}
+    {poked > 0 && <span className="ac-whale-pops" key={poked} aria-hidden="true">{Array.from({ length: combo >= 5 ? 9 : 5 }, (_, i) => <i key={i} />)}</span>}
     <div className="ac-whale-caption" role="status">{caption}</div>
   </div>
 }

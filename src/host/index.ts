@@ -59,7 +59,7 @@ export interface Config {
   home?: string
 }
 
-const VERSION = '3.0.0'
+const VERSION = '3.1.0'
 const ROUTE = '/agent-compare/api'
 
 // Minimal structural views of the host services this plugin touches.
@@ -610,6 +610,8 @@ export async function apply(ctx: HostCtx, config: Config = {}): Promise<void> {
     return typeof o.model === 'string' && o.model !== '' ? { ...(typeof o.provider === 'string' ? { provider: o.provider } : {}), model: o.model } : undefined
   }
   const api: Record<string, Handler> = {
+    // Lets the interface notice it was updated while DSH still runs an older backend.
+    async version() { return { pluginVersion: VERSION } },
     async preferences(b, signal) {
       const agent = await agentFor(b, signal)
       return b.value === undefined ? preferences.load(agent.session.id) : preferences.save(agent.session.id, b.value)

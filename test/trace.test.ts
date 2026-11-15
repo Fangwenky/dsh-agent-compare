@@ -155,13 +155,14 @@ describe('masking style names before a blind pick', () => {
     expect(masked.items[0]).toMatchObject({ input: MASK, target: `${MASK} style.md` })
   })
 
-  it('shows readers a masked trace before the pick, the full one after, and only the newest step in a summary', () => {
-    const stored = { items: [{ kind: 'thinking' as const, at: 0, text: 'Go with the Bold style.' }, { kind: 'tool' as const, at: 5, name: 'write', target: 'BOLD.md', status: 'running' as const }], steps: 2, tools: 1, thinking: 1, truncated: false, done: false, updatedAt: 0 }
-    expect(traceView(stored, { blind: true })).toMatchObject({ masked: true, items: [{ text: `Go with the ${MASK} style.` }, { target: `${MASK}.md` }] })
-    expect(traceView(stored, { blind: false })).toMatchObject({ masked: false, items: [{ text: 'Go with the Bold style.' }, { target: 'BOLD.md' }] })
+  it('shows readers a masked trace before the pick, the full one after, and only the newest steps in a summary', () => {
+    const early = [{ kind: 'text' as const, at: 0, text: 'one' }, { kind: 'text' as const, at: 0, text: 'two' }]
+    const stored = { items: [...early, { kind: 'thinking' as const, at: 0, text: 'Go with the Bold style.' }, { kind: 'tool' as const, at: 5, name: 'write', target: 'BOLD.md', status: 'running' as const }], steps: 2, tools: 1, thinking: 1, truncated: false, done: false, updatedAt: 0 }
+    expect(traceView(stored, { blind: true })).toMatchObject({ masked: true, items: [{}, {}, { text: `Go with the ${MASK} style.` }, { target: `${MASK}.md` }] })
+    expect(traceView(stored, { blind: false })).toMatchObject({ masked: false, items: [{}, {}, { text: 'Go with the Bold style.' }, { target: 'BOLD.md' }] })
     const summary = traceView(stored, { blind: true, summary: true })
     expect(summary).toMatchObject({ steps: 2, tools: 1, thinking: 1, masked: true })
-    expect(summary.items).toEqual([{ kind: 'tool', at: 5, name: 'write', target: `${MASK}.md`, status: 'running' }])
+    expect(summary.items).toEqual([{ kind: 'text', at: 0, text: 'two' }, { kind: 'thinking', at: 0, text: `Go with the ${MASK} style.` }, { kind: 'tool', at: 5, name: 'write', target: `${MASK}.md`, status: 'running' }])
   })
 })
 

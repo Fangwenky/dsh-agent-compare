@@ -1,12 +1,13 @@
 /**
- * Live pages for projects that are not Vite: the static file server and a
- * project's own server script, both run as recognisable helper processes.
+ * Live pages for projects that are not Vite: static files served from the
+ * host process itself (with the helper process as fallback), and a project's
+ * own server script run as a recognisable helper process.
  */
 import { describe, expect, it } from 'vitest'
 import { mkdir, symlink, writeFile } from 'node:fs/promises'
 import { request } from 'node:http'
 import path from 'node:path'
-import { isPreviewProcess, startScriptPreview, startStaticPreview, type Preview } from '../src/core/preview.ts'
+import { isPreviewProcess, startScriptPreview, startStaticHelperPreview, startStaticPreview, type Preview } from '../src/core/preview.ts'
 import { fetchPreview } from '../src/core/preview-url.ts'
 import { observeProcess, waitGone } from '../src/core/proc.ts'
 import { prepareFixtureProcess, tmp } from './fixture.ts'
@@ -21,24 +22,46 @@ const post = (port: number): Promise<number> => new Promise((resolve, reject) =>
   req.on('error', reject); req.end('x')
 })
 
+/** A folder with a page, a nested page, and a secret outside it (linked in when allowed). */
+async function staticFixture(): Promise<{ root: string; outside: string; linked: boolean }> {
+  const root = await tmp('ac-static'), outside = await tmp('ac-outside')
+  await writeFile(path.join(root, 'index.html'), '<h1>calculator</h1>')
+  await mkdir(path.join(root, 'pages'))
+  await writeFile(path.join(root, 'pages', 'about.html'), '<p>about</p>')
+  await writeFile(path.join(outside, 'secret.txt'), 'secret')
+  let linked = false
+  try { await symlink(path.join(outside, 'secret.txt'), path.join(root, 'link.txt')); linked = true } catch { /* no symlink permission on this machine */ }
+  return { root, outside, linked }
+}
+async function expectOnlyFolderFiles(preview: Preview, outside: string, linked: boolean): Promise<void> {
+  expect(await text(preview.url)).toMatchObject({ status: 200, body: '<h1>calculator</h1>', type: expect.stringContaining('text/html') })
+  expect((await text(new URL('pages/about.html', preview.url).href)).body).toBe('<p>about</p>')
+  expect((await text(new URL('pages/', preview.url).href)).status).toBe(404)
+  const escape = `%2e%2e%2f${encodeURIComponent(path.basename(outside))}%2fsecret.txt`
+  expect((await text(`${preview.url}${escape}`)).status).toBe(404)
+  if (linked) expect((await text(new URL('link.txt', preview.url).href)).status).toBe(404)
+  expect(await post(preview.port)).toBe(405)
+}
+
 describe('static preview', () => {
-  it('serves only regular files inside its folder, with no listings', async () => {
-    const root = await tmp('ac-static'), outside = await tmp('ac-outside')
-    await writeFile(path.join(root, 'index.html'), '<h1>calculator</h1>')
-    await mkdir(path.join(root, 'pages'))
-    await writeFile(path.join(root, 'pages', 'about.html'), '<p>about</p>')
-    await writeFile(path.join(outside, 'secret.txt'), 'secret')
-    let linked = false
-    try { await symlink(path.join(outside, 'secret.txt'), path.join(root, 'link.txt')); linked = true } catch { /* no symlink permission on this machine */ }
+  it('serves only regular files inside its folder from this process, at once, and stops cleanly', async () => {
+    const { root, outside, linked } = await staticFixture()
+    const started = Date.now()
     const preview = await startStaticPreview(root, 'index.html', { timeoutMs: 30_000 })
+    // No child process: nothing for a desktop host to stop before the page answers.
+    expect(preview).toMatchObject({ inProcess: true, pid: process.pid })
+    expect(Date.now() - started).toBeLessThan(2_000)
+    try { await expectOnlyFolderFiles(preview, outside, linked) }
+    finally { await preview.stop() }
+    await expect(fetchPreview(preview.url, { signal: AbortSignal.timeout(3_000) })).rejects.toThrow()
+    await preview.stop()
+  }, T)
+
+  it('serves the same files through the helper process as a fallback', async () => {
+    const { root, outside, linked } = await staticFixture()
+    const preview = await startStaticHelperPreview(root, 'index.html', { timeoutMs: 30_000 })
     try {
-      expect(await text(preview.url)).toMatchObject({ status: 200, body: '<h1>calculator</h1>', type: expect.stringContaining('text/html') })
-      expect((await text(new URL('pages/about.html', preview.url).href)).body).toBe('<p>about</p>')
-      expect((await text(new URL('pages/', preview.url).href)).status).toBe(404)
-      const escape = `%2e%2e%2f${encodeURIComponent(path.basename(outside))}%2fsecret.txt`
-      expect((await text(`${preview.url}${escape}`)).status).toBe(404)
-      if (linked) expect((await text(new URL('link.txt', preview.url).href)).status).toBe(404)
-      expect(await post(preview.port)).toBe(405)
+      await expectOnlyFolderFiles(preview, outside, linked)
       const observed = await observeProcess(preview.pid)
       expect(observed.state).toBe('observed')
       if (observed.state === 'observed') {
@@ -47,6 +70,7 @@ describe('static preview', () => {
       }
     } finally { await preview.stop() }
     expect(await waitGone(preview.pid, 5_000)).toBe(true)
+    await expect(startStaticHelperPreview(root, '../outside.html')).rejects.toThrow(/入口无效/)
   }, T)
 
   it('opens another entry page when there is no index.html', async () => {

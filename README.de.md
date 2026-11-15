@@ -20,13 +20,16 @@
 
 <p align="center"><a href="#install">安装 / Install</a> · <a href="#demo">真实演示 / Recorded demo</a></p>
 
-> **3.0.0 · Stabile Version.** DSH Desktop und Web, mit chinesischer und englischer Oberfläche. 2–4 Versionen von Antworten, Dateien oder Webseiten im Hauptgespräch vergleichen; die Überlegungen und Werkzeugaufrufe jeder Version aufklappen und ihre Antwort neben dem Ergebnis lesen.
+> **3.1.0 · Stabile Version.** DSH Desktop und Web, mit chinesischer und englischer Oberfläche. 2–4 Versionen von Antworten, Dateien oder Webseiten im Hauptgespräch vergleichen; die Überlegungen und Werkzeugaufrufe jeder Version aufklappen und ihre Antwort neben dem Ergebnis lesen.
 
-**Neu in 3.0.0:**
-- **Jeder Schritt sichtbar.** Jede Karte hat einen Schalter **Steps**. Aufgeklappt zeigt er die Arbeit der Version der Reihe nach: ihre Überlegungen mit Dauer, ihre Werkzeugaufrufe (Datei lesen, Datei bearbeiten, Befehl ausführen …; jeder lässt sich mit Ein- und Ausgabe öffnen) und was sie zwischen den Schritten geschrieben hat. Die Liste aktualisiert sich live und sagt auch zugeklappt, was die Version gerade tut. Im Blindvergleich erscheinen Wörter, die einen Stil verraten, als ▒▒.
+**Neu in 3.1.0:**
+- **Jeder Schritt sichtbar, live und danach.** Sobald eine Version arbeitet, hat ihre Karte eine Schaltfläche **Steps**. Aufgeklappt zeigt sie die Arbeit der Reihe nach: Überlegungen mit Dauer, Werkzeugaufrufe (Datei lesen, Datei bearbeiten, Befehl ausführen …; jeder lässt sich mit Ein- und Ausgabe öffnen) und was zwischen den Schritten geschrieben wurde. Während die Version arbeitet, laufen ihre neuesten drei Schritte außerdem live unter dem Wal mit, und nach dem Ende bleibt jeder Schritt einen Klick entfernt. Im Blindvergleich erscheinen Wörter, die einen Stil verraten, als ▒▒.
 - **Die Antwort, direkt sichtbar.** Eine Version, die nur antwortet, zeigt nur ihre Antwort. Eine Version, die eine Seite gebaut oder Dateien geschrieben hat, zeigt ihre Antwort gleichrangig: nebeneinander über der Seite, im Fokus links neben der Seite. Die Antwort erscheint, sobald die Version fertig ist, noch vor ihrer Seite.
-- **Ergebnisse früher.** Eine Version gilt als fertig, sobald ihr Zug endet, ohne auf andere Plugins zu warten, die ihre Sitzung beschäftigt halten. Abhängigkeiten werden aus der Lockdatei installiert, während die Versionen arbeiten, und eine Version, die sie nicht geändert hat, bekommt eine eigene Kopie; Prüfungen laufen parallel, und die Seite ist bedienbar, sobald sie startet. In der Aufnahmeumgebung mit festen Kandidaten waren vier Vite-Versionen etwa 24–30 Sekunden nach dem Senden als vier nutzbare Seiten da.
-- **Warten macht Spaß.** Jede arbeitende Version zeigt das blaue Wal-Logo von DeepSeek, anfangs hell, das sich mit dem Fortschritt mit blauem Wasser füllt, während zwei Lichter um seinen Rand laufen. Bei jedem Schritt bläst der Wal eine Fontäne, er dreht sich zum Zeiger, und ein Stups lässt Blasen aufsteigen. Zwei Kometen jagen um einen laufenden Vergleich, über langsam fließendem blauem Licht.
+- **Seiten direkt sichtbar.** Statische Seiten liefert das Plugin selbst aus; sie sind bedienbar, sobald sie geschrieben sind, ohne eigenen Prozess, den die Desktop-App beenden könnte. Lässt sich eine Seite trotzdem nicht ausliefern, wird ein HTML-Ergebnis dennoch als Seite gezeigt, der Quelltext ist einen Klick entfernt.
+- **Ergebnisse früher.** Eine Version gilt binnen einer Sekunde nach dem Ende ihres Zugs als fertig; früher wartete der Vergleich, bis andere Plugins (etwa Gedächtnis-Plugins) die Sitzung freigaben, auf einem typischen Desktop rund 40 Sekunden. Abhängigkeiten werden aus der Lockdatei installiert, während die Versionen arbeiten, und eine Version, die sie nicht geändert hat, bekommt eine eigene Kopie; Prüfungen laufen parallel, und die Seite ist bedienbar, sobald sie startet. In der Aufnahmeumgebung mit festen Kandidaten waren vier Vite-Versionen etwa 24–30 Sekunden nach dem Senden als vier nutzbare Seiten da.
+- **Warten macht Spaß.** Jede arbeitende Version zeigt das blaue Wal-Logo von DeepSeek, anfangs hell, das sich mit dem Fortschritt mit blauem Wasser füllt, während zwei Lichter um seinen Rand laufen. Ab und zu steigt ein Gedanke über seinem Kopf auf: was er gerade tut, eine Idee oder die Einladung, ihn anzustupsen. Bei jedem Schritt bläst er eine Fontäne und dreht sich zum Zeiger; mehrere Stupser hintereinander lassen ihn springen, sich drehen, taumeln und spritzen, jedes Mal mit einem neuen Satz. Zwei Kometen jagen um einen laufenden Vergleich (auch in älteren Engines und unter Themen, die Animationen anhalten), über langsam fließendem blauem Licht.
+- **Vier Blautöne für A–D.** Die Versionsetiketten sind vier verschiedene Blautöne.
+- **Erinnerung an den Neustart.** DSH tauscht die Oberfläche eines Plugins sofort aus, behält aber das Backend, das es beim Start geladen hat. Weichen beide voneinander ab, bittet AgentCompare darum, DSH zu beenden und neu zu öffnen, statt still Schritte und Antworten zu verlieren.
 - **Enthält auch 2.1.0, die nicht einzeln veröffentlicht wurde:** Ein Gruß oder eine Frage bekommt Antworten statt Seiten; helleres, klareres Flüssigglas, leichtere Schaltflächen und gleitende Bedienelemente; in beiden Themen erreicht jeder Text in 21 Zuständen der Oberfläche mindestens 4.5:1.
 
 **Neu in 2.0.0:** Vergleiche **2, 3 oder 4 Versionen** gleichzeitig. Jede Version kann einen **Stil** erhalten (Umfang: konservativ, mutig; Wirkung: minimal, ausgefeilt, lebendig; Priorität: zugänglich, gründlich, schlank; oder eine eigene Zeile). Vergleiche **blind** (Stile nach der Wahl aufgedeckt) oder **offen** (Stile von Anfang an sichtbar). Bei drei oder vier Versionen legst du verworfene Versionen **beiseite**, damit die übrigen nebeneinander stehen; in der Karte fokussieren die Tasten 1–4 eine Version.
@@ -74,7 +77,7 @@ Echte DSH-Aufnahmen mit kontrollierten Kandidaten. Titelbild und Ablaufgrafik si
 
 [![Beispiel mit festen Kandidaten: ein Wal je arbeitender Version und Schritte live, vier laufende Pomodoro-Seiten, C im Fokus mit der Antwort neben der Seite und gewählt](https://raw.githubusercontent.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/main/docs/media/comparison-preview.gif)](https://github.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/blob/main/docs/media/comparison-workflow.mp4)
 
-Aufzeichnung mit festen Kandidaten in einem echten DSH-Host, aus dem Quellstand des 3.0.0-Kandidaten und mit chinesischer Oberfläche. Vier Versionen bauen in einem gewöhnlichen Ordner je eine Pomodoro-Seite, während zwei Kometen um die Vergleichskarte jagen. Das große Fenster wird geöffnet, während sie arbeiten: ein Wal je Version, der nach einem Stups Blasen aufsteigen lässt, und die **Steps** mit Überlegung und Dateischreiben live. Die Antworten erscheinen vor den Seiten, danach lassen sich alle vier laufenden Seiten bedienen. Zwei werden beiseitegelegt, C steht im Fokus mit der Antwort links neben der Seite, die Wahl deckt jeden Stil auf, und das Ergebnis wird in einem neuen Ordner gespeichert, bevor das Gespräch weitergeht. Das Video lässt Wartezeiten aus und zeigt den Rest in normaler Geschwindigkeit. Lokale Pfade sind ausgeblendet.
+Aufzeichnung mit festen Kandidaten in einem echten DSH-Host, aus dem Quellstand des 3.1.0-Kandidaten und mit chinesischer Oberfläche. Vier Versionen bauen in einem gewöhnlichen Ordner je eine Pomodoro-Seite, während zwei Kometen um die Vergleichskarte jagen. Das große Fenster wird geöffnet, während sie arbeiten: ein Wal je Version, der nach einem Stups Blasen aufsteigen lässt, und die **Steps** mit Überlegung und Dateischreiben live. Die Antworten erscheinen vor den Seiten, danach lassen sich alle vier laufenden Seiten bedienen. Zwei werden beiseitegelegt, C steht im Fokus mit der Antwort links neben der Seite, die Wahl deckt jeden Stil auf, und das Ergebnis wird in einem neuen Ordner gespeichert, bevor das Gespräch weitergeht. Das Video lässt Wartezeiten aus und zeigt den Rest in normaler Geschwindigkeit. Lokale Pfade sind ausgeblendet.
 
 Nach der Wahl werden zwei Gründe (Layout, einfacher) angetippt; sie erreichen die nächste Anfrage im Hauptgespräch.
 
@@ -100,7 +103,7 @@ Entwicklungsgrundlage sind Node 26.13.0 und npm 12.2.2. Die aktuellen Prüfungen
 Installiere das npm-Paket im voreingestellten Web-Profil. Das npm-Badge zeigt den Veröffentlichungsstatus:
 
 ```bash
-dsh plugin --profile web add dsh-agent-compare@3.0.0
+dsh plugin --profile web add dsh-agent-compare@3.1.0
 ```
 
 Für ein anderes selbst verwaltetes Profil ersetzt du `web` durch dessen tatsächlichen Namen.
@@ -117,7 +120,7 @@ npm pack
 Ersetze `<your-profile>` durch den tatsächlichen Profilnamen:
 
 ```bash
-dsh plugin --profile <your-profile> add ./dsh-agent-compare-3.0.0.tgz
+dsh plugin --profile <your-profile> add ./dsh-agent-compare-3.1.0.tgz
 ```
 
 Starte DSH neu. Beende vor einem Update aktive Vergleiche und schließe ältere Instanzen, die dieselben Aufzeichnungen verwenden. Gleichzeitige Änderungen durch unterschiedliche Plugin-Versionen werden nicht unterstützt.
