@@ -23,7 +23,7 @@ import { CopyButton, ProjectNotes, ResultView } from './results.js'
 import { BlindControl, MAX_VERSIONS, MIN_VERSIONS, revealedStyleName, Segmented, StyleCombos, StyleHabit, StylePicker, StyleSlots, stylesFor, VersionsControl, type StyleChoice } from './style-picker.js'
 import { LABELS, MAX_PICK_NOTE, PICK_REASONS, type Label, type PickReason, type StyleStat } from './model.js'
 import { Ambient, attachFx, burst, RunRing } from './fx.js'
-import { currentAction, LiveSteps, ReplyBlock, StepsPanel, StepsToggle, useTrace, Whale } from './agent-view.js'
+import { runningTool, LiveSteps, ReplyBlock, StepsPanel, StepsToggle, useTrace, Whale } from './agent-view.js'
 import { StaleBackendNotice } from './version.js'
 export const name = 'agent-compare-client'
 export const inject = ['slots', 'remote', 'remote.commands']
@@ -295,7 +295,7 @@ function CandidateCard({ run, c, revealed, picked, busy, act, device, compact, h
   const stepsId = `ac-steps-${run.runId}-${c.label}`
   // An answer is its own result; any other reply sits beside the page or files.
   const reply = c.result === 'answer' ? undefined : c.reply ?? (revealed ? c.summary : undefined)
-  const action = currentAction(trace)
+  const action = runningTool(trace)
   const waitingText = c.stage === 'cancelled' ? t("已停止") : c.stage === 'stopping' ? t("正在停止并回收资源…")
     : step > 0 ? t("第 {0}/{1} 步 · {2}", { 0: step, 1: PIPELINE.length, 2: t(STAGE_TEXT[c.stage]) }) + (['installing', 'verifying', 'previewing'].includes(c.stage) && run.target === undefined ? t(" · 页面马上就好") : '')
     : t(STAGE_TEXT[c.stage])

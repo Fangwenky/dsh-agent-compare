@@ -51,13 +51,15 @@ const TOOL_NAMES: Record<string, string> = {
 export const toolName = (name = ''): string => t(TOOL_NAMES[name.toLowerCase()] ?? name)
 const seconds = (ms?: number): string => ms === undefined ? '' : ms < 1000 ? t('不到 1 秒') : ms < 60_000 ? t('{0} 秒', { 0: (ms / 1000).toFixed(ms < 10_000 ? 1 : 0) }) : fmt(ms)
 
-/** One line saying what the version is doing now, from its newest step. */
-export function currentAction(trace: Trace | undefined): string | undefined {
+/**
+ * The tool a version is running now, in plain words, for the whale to mention
+ * ("Now: Write file · index.html"). Between tools there is nothing specific
+ * to say, so the whale thinks its own thoughts instead.
+ */
+export function runningTool(trace: Trace | undefined): string | undefined {
   const last = trace?.items[trace.items.length - 1]
-  if (!last || trace?.done) return undefined
-  if (last.kind === 'tool') return last.status === 'running' ? `${toolName(last.name)}${last.target ? ` · ${last.target}` : ''}` : t('正在思考下一步')
-  if (last.kind === 'thinking') return t('正在思考下一步')
-  return t('正在组织回复')
+  if (!last || trace?.done || last.kind !== 'tool' || last.status !== 'running') return undefined
+  return `${toolName(last.name)}${last.target ? ` · ${last.target}` : ''}`
 }
 
 function Status({ item }: { item: TraceItem }): React.ReactElement {
@@ -224,7 +226,7 @@ function thoughtFor(stage: Stage, action: string | undefined, last: string | und
   if (Math.random() < 0.18) return pick(THOUGHTS.hint, last)
   if (stage === 'queued' || stage === 'preparing') return pick(THOUGHTS.start, last)
   if (stage !== 'generating') return pick(THOUGHTS.check, last)
-  // Now and then, say what the newest step is about.
+  // Now and then, name the tool it is running.
   if (action && Math.random() < 0.3) return t('正在：{0}', { 0: action.length > 26 ? `${action.slice(0, 25)}…` : action })
   return pick(THOUGHTS.think, last)
 }

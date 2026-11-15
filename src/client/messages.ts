@@ -692,8 +692,6 @@ export const messages: Readonly<Record<string, string>> = {
   " · 因为": " · for ",
   "不到 1 秒": "under 1 s",
   "{0} 秒": "{0} s",
-  "正在思考下一步": "Deciding the next step",
-  "正在组织回复": "Writing the reply",
   "出错": "Error",
   "正在思考": "Thinking",
   "思考": "Thought",
