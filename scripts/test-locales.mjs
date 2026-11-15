@@ -161,10 +161,17 @@ try {
   check(await page.getByText('Package registry connection or certificate check failed', { exact: true }).isVisible(), 'English installation failures must explain the actual failure category')
   check(await page.getByText(/Check the network, registry, proxy and certificates/).isVisible(), 'English installation failures must provide an actionable recovery hint')
   await open('project-answers')
-  const answerSteps = await page.locator('[role="dialog"] button.ac-steps-toggle').first().innerText()
+  const traceSummary = async () => {
+    const toggle = page.locator('[role="dialog"] button.ac-steps-toggle').first()
+    // The card is mounted before its separate trace request finishes. Wait
+    // for trace data, not merely for the candidate region or step total.
+    await toggle.locator('.ac-steps-count').filter({ hasText: /\b(?:thoughts?|tools?)\b/ }).waitFor()
+    return toggle.innerText()
+  }
+  const answerSteps = await traceSummary()
   check(answerSteps.includes('1 thought') && !answerSteps.includes('1 thoughts') && answerSteps.includes('1 step') && !answerSteps.includes('1 steps'), `English step counts must use the singular for one: ${answerSteps}`)
   await open('judging')
-  check((await page.locator('[role="dialog"] button.ac-steps-toggle').first().innerText()).includes('2 thoughts'), 'English step counts must use the plural for more than one')
+  check((await traceSummary()).includes('2 thoughts'), 'English step counts must use the plural for more than one')
   await open('allfailed')
   const failedCandidate = page.getByRole('region', { name: 'Candidate B', exact: true })
   check(await failedCandidate.getByText('Handling the request failed', { exact: true }).isVisible(), 'English failure titles must keep the stage and outcome as separate words')
@@ -227,6 +234,7 @@ try {
   console.log(JSON.stringify({ localeAssertions: assertions, screenshots: output, browser: browser.version(), engine, channel, locale: 'en-GB', languages: ['zh-CN', 'en'] }))
 } catch (error) {
   await page?.screenshot({ path: path.join(output, 'language-failure.png') }).catch(() => {})
-  await writeFile(path.join(output, 'language-failure.json'), JSON.stringify({ localeAssertions: assertions, message: error.message, browser: browser?.version(), pageErrors: errors }, null, 2))
+  const stepSummaries = await page?.locator('[role="dialog"] button.ac-steps-toggle').allTextContents().catch(() => [])
+  await writeFile(path.join(output, 'language-failure.json'), JSON.stringify({ localeAssertions: assertions, message: error.message, browser: browser?.version(), pageErrors: errors, stepSummaries }, null, 2))
   throw error
 } finally { await browser?.close(); await harness.close() }
