@@ -26,7 +26,7 @@
 - **Every step in view.** Each card has a **Steps** toggle. Open it to see the version's work in order: its thoughts with their timing, its tool calls (Read file, Edit file, Run command… each opens to its input and output) and the words it wrote in between. It updates live, and even closed it says what the version is doing right now. Before a blind pick, words that name a style show as ▒▒.
 - **The reply, shown directly.** A version that only answers shows just its answer. A version that built a page or wrote files shows its reply with the same standing: above the page side by side, and to the left of the page when that version is in focus. The reply appears as soon as the version finishes, before its page.
 - **Results sooner.** A version counts as done when its turn ends, without waiting for other plugins that keep its session busy. Dependencies are installed from the lockfile while the versions work, and a version that kept them gets its own copy; checks run in parallel, and the page can be used as soon as it starts. In the controlled recording setup, four Vite versions went from sending to four usable pages in about 24–30 seconds.
-- **Waiting is fun.** Each working version shows DSH's own whale mark as a hollow outline that fills with water as the version gets further, while two lights run around its edge. It spouts at every step, turns toward the pointer, and a poke sends up bubbles. Two comets race around a running comparison, over slowly flowing blue light.
+- **Waiting is fun.** Each working version shows DeepSeek's blue whale logo, pale at first and filling with blue water as the version gets further, while two lights run around its edge. It spouts at every step, turns toward the pointer, and a poke sends up bubbles. Two comets race around a running comparison, over slowly flowing blue light.
 - **Also includes 2.1.0, which was not published on its own:** a greeting or a question gets answers instead of pages; brighter, clearer liquid glass, lighter buttons and sliding controls; in both themes, every text in 21 interface states measures at least 4.5:1.
 
 **New in 2.0.0:**
@@ -85,11 +85,11 @@ Try the live pages, compare in the conversation, choose styles and keep your rea
 
 ## Watch the complete workflow
 
-[![Fixed-candidate workflow: DSH's whale filling per working version and live steps, four live pomodoro pages, C in focus with its reply beside its page, C picked and the reasons given](https://raw.githubusercontent.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/main/docs/media/comparison-preview.gif)](https://github.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/blob/main/docs/media/comparison-workflow.mp4)
+[![Fixed-candidate workflow: DeepSeek's blue whale filling per working version and live steps, four live pomodoro pages, C in focus with its reply beside its page, C picked and the reasons given](https://raw.githubusercontent.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/main/docs/media/comparison-preview.gif)](https://github.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/blob/main/docs/media/comparison-workflow.mp4)
 
 A controlled-candidate recording in a real DSH host, from the 3.0.0 release-candidate source with the Chinese interface:
 - Four versions each build a pomodoro page in a plain folder, while two comets race around the comparison card.
-- The large window opens while they work: DSH's whale per version, filling with water as it goes and blowing bubbles when poked, and **Steps** opened to show thinking and a file write live.
+- The large window opens while they work: DeepSeek's blue whale per version, filling with water as it goes and blowing bubbles when poked, and **Steps** opened to show thinking and a file write live.
 - The replies arrive before the pages; then all four live pages can be used.
 - Two are set aside, C is shown in focus with its reply beside its page, and the pick reveals every style.
 - Two reasons are tapped (layout, simpler), which the next request in the main conversation carries; the pick is saved into a new folder, and the conversation continues.

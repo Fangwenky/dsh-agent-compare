@@ -407,11 +407,12 @@ const AGENT = `
 .ac-whale:focus-visible{outline:2px solid var(--ac-v-ink);outline-offset:6px;border-radius:24px}
 .ac-whale-lean{display:block;transition:transform .5s var(--ac-v-out)}
 .ac-whale svg{display:block;width:150px;height:auto;overflow:visible;filter:drop-shadow(0 10px 14px rgba(54,87,245,.2))}
-.ac-whale-glass{fill:rgba(77,107,254,.07)}
+.ac-whale-holes{fill:#fff}
+.ac-whale-glass{fill:rgba(77,107,254,.16)}
 .ac-whale-line{fill:none;stroke:#4d6bfe;stroke-width:.3;stroke-linejoin:round}
 .ac-whale-water{transition:transform 1.3s var(--ac-v-expo)}
 .ac-whale-wave{transform-box:view-box}
-.ac-whale-wave.back{fill:#9fb3ff;opacity:.55;--ac-p:5.2px;animation:ac-whale-drift 3.4s linear infinite}
+.ac-whale-wave.back{fill:#7d95ff;opacity:.5;--ac-p:5.2px;animation:ac-whale-drift 3.4s linear infinite}
 .ac-whale-wave.front{--ac-p:-6.4px;animation:ac-whale-drift 2.6s linear infinite}
 .ac-whale-rise circle{fill:#fff;opacity:0;transform-box:fill-box;animation:ac-whale-rise 3.2s ease-in infinite}
 .ac-whale-rise circle:nth-child(2){animation-delay:.9s}.ac-whale-rise circle:nth-child(3){animation-delay:1.7s}.ac-whale-rise circle:nth-child(4){animation-delay:2.4s}
@@ -452,13 +453,13 @@ const AGENT = `
 .ac-step-thinking{border-left-color:rgba(143,162,255,.28)}
 .ac-reply{background:rgba(24,30,58,.72);box-shadow:inset 0 1px 0 rgba(255,255,255,.06),0 0 0 1px rgba(123,147,255,.16)}
 .ac-whale-stage{background:linear-gradient(180deg,rgba(20,26,50,.3),rgba(28,36,72,.5))}
-.ac-whale-glass{fill:rgba(143,162,255,.08)}.ac-whale-line{stroke:#8fa2ff}.ac-whale-wave.back{fill:#5a74ff;opacity:.45}
+.ac-whale-holes{fill:#f2f5ff}.ac-whale-glass{fill:rgba(125,149,255,.38)}.ac-whale-line{stroke:#9aaeff}.ac-whale-wave.back{fill:#7d95ff;opacity:.55}
 .ac-whale-bubble{background:#1e2648;color:var(--ac-fg);box-shadow:0 0 0 1px rgba(143,162,255,.3),0 6px 14px -8px rgba(0,0,0,.6)}
 .ac-whale-caption{color:var(--ac-fg)}
 .ac-shimmer{background-image:linear-gradient(90deg,var(--ac-fg2) 0 38%,#c0caff 50%,var(--ac-fg2) 62% 100%)}
 }
 @media(prefers-reduced-motion:reduce){.ac-shimmer{animation:none;-webkit-text-fill-color:currentColor;background:none}.ac-whale-stage :is(.ac-whale-trail,.ac-whale-head,.ac-whale-rise){display:none}}
-@media(forced-colors:active){.ac-shimmer{-webkit-text-fill-color:currentColor;background:none}.ac-whale-stage :is(.ac-whale-water,.ac-whale-glass,.ac-whale-trail,.ac-whale-head){display:none}.ac-whale-line{stroke:CanvasText}}
+@media(forced-colors:active){.ac-shimmer{-webkit-text-fill-color:currentColor;background:none}.ac-whale-stage :is(.ac-whale-water,.ac-whale-glass,.ac-whale-holes,.ac-whale-trail,.ac-whale-head){display:none}.ac-whale-line{stroke:CanvasText}}
 `
 
 /** Scoped styles shared by the conversation, composer and history sheet. */
