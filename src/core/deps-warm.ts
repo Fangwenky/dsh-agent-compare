@@ -120,10 +120,18 @@ export async function copyTree(from: string, to: string): Promise<number> {
     const target = process.platform === 'win32' && link.directory ? link.target : path.relative(path.dirname(link.dest), link.target) || '.'
     await symlink(target, link.dest, process.platform === 'win32' ? kind : undefined)
   }
-  let next = 0
-  await Promise.all(Array.from({ length: Math.min(COPY_CONCURRENCY, files.length) }, async () => {
-    while (next < files.length) { const [s, d] = files[next++]!; await copyFile(s, d, constants.COPYFILE_FICLONE) }
+  let next = 0, failed = false
+  // A rejected copy must not leave other workers writing into the caller's
+  // fallback installation. Stop queued work and drain every in-flight write.
+  const results = await Promise.allSettled(Array.from({ length: Math.min(COPY_CONCURRENCY, files.length) }, async () => {
+    while (!failed && next < files.length) {
+      const [s, d] = files[next++]!
+      try { await copyFile(s, d, constants.COPYFILE_FICLONE) }
+      catch (error) { failed = true; throw error }
+    }
   }))
+  const error = results.find(result => result.status === 'rejected')
+  if (error?.status === 'rejected') throw error.reason
   return files.length
 }
 

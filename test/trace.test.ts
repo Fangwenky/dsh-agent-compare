@@ -1,5 +1,5 @@
 /** Steps, replies and fast completion of a version's session. */
-import { describe, expect, it } from 'vitest'
+import { describe, expect, it, vi } from 'vitest'
 import { mkdir, readFile, realpath, symlink, writeFile } from 'node:fs/promises'
 import path from 'node:path'
 import { settled } from '../src/host/index.ts'
@@ -267,5 +267,38 @@ describe('dependencies installed while versions generate', () => {
     await writeFile(path.join(target, 'state.txt'), 'existing')
     await expect(copyTree(warm, target)).rejects.toThrow(/destination.*empty/i)
     expect(await readFile(path.join(target, 'state.txt'), 'utf8')).toBe('existing')
+  })
+
+  it('finishes in-flight writes before rejecting so fallback cannot race them', async () => {
+    const dir = await tmp('ac-warm-copy-failure'), warm = path.join(dir, 'warm'), target = path.join(dir, 'candidate')
+    await mkdir(warm)
+    await writeFile(path.join(warm, 'blocked.txt'), 'blocked')
+    await writeFile(path.join(warm, 'slow.txt'), 'independent copy')
+    const fs = await vi.importActual<typeof import('node:fs/promises')>('node:fs/promises')
+    const failure = new Error('copy is locked')
+    let release!: () => void, slowStarted = false, settled = false
+    const pending = new Promise<void>(resolve => { release = resolve })
+    vi.resetModules()
+    vi.doMock('node:fs/promises', () => ({ ...fs, copyFile: async (...args: Parameters<typeof fs.copyFile>) => {
+      if (path.basename(String(args[0])) === 'blocked.txt') throw failure
+      slowStarted = true
+      await pending
+      return fs.copyFile(...args)
+    } }))
+    let task: Promise<unknown> | undefined
+    try {
+      const copy = (await import('../src/core/deps-warm.ts')).copyTree
+      task = copy(warm, target).then(value => { settled = true; return value }, error => { settled = true; return error })
+      await vi.waitFor(() => expect(slowStarted).toBe(true))
+      await new Promise<void>(resolve => setImmediate(resolve))
+      expect(settled, 'the caller must not start fallback while another copy can still write').toBe(false)
+      release()
+      expect(await task).toBe(failure)
+      expect(await readFile(path.join(target, 'slow.txt'), 'utf8')).toBe('independent copy')
+    } finally {
+      release()
+      await task
+      vi.doUnmock('node:fs/promises')
+    }
   })
 })
