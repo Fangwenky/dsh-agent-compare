@@ -1,6 +1,6 @@
-[![AgentCompare 2.0：在主对话里比较 2–4 版回答、文件与网页。Desktop + Web，中英双语，选择后继续对话 / Compare 2–4 answers, files and live pages in the main conversation. Styles, blind or open comparison, reasons for the pick, reviewed adoption and conversation memory, in a blue liquid-glass interface. Product illustration.](https://raw.githubusercontent.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/main/assets/readme/hero-bilingual.webp)](#install)
+[![鲸挑细选 · AgentCompare（大肥鱼赛马）：在主对话里比较 2–4 版回答、文件与网页。Desktop + Web，中英双语，选择后继续对话 / Compare 2–4 answers, files and live pages in the main conversation. Styles, blind or open comparison, reasons for the pick, reviewed adoption and conversation memory, in a blue liquid-glass interface. Product illustration.](https://raw.githubusercontent.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/main/assets/readme/hero-bilingual.webp)](#install)
 
-# AgentCompare
+# AgentCompare · 鲸挑细选
 
 [![GitHub stars](https://img.shields.io/github/stars/lijiaqi-AI-Product-Manager/dsh-agent-compare?label=GitHub%20Stars&color=3657f5&style=flat&labelColor=0b1b4f)](https://github.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/stargazers)
 [![npm total download requests](https://raw.githubusercontent.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/main/assets/statistics/npm-total-badge.svg)](https://www.npmjs.com/package/dsh-agent-compare)
@@ -16,79 +16,63 @@
 
 **하나의 요구, 실제로 실행되는 2~4개 구현. 스타일을 고르고 블라인드나 공개로 비교한 뒤 적용하세요.**
 
+중국어 이름은 **鲸挑细选**(징탸오시쉬안)입니다. '정성껏 고르다'라는 뜻의 精挑细选을 비튼 말로, 鲸은 고래입니다. 같은 요청에 DeepSeek 고래 2–4마리가 동시에 달려들고, 가장 좋은 버전을 고릅니다. 별명은 **大肥鱼赛马**('뚱뚱한 물고기 경주'). 중국 네티즌은 DeepSeek 고래를 '뚱뚱한 물고기'라고 부릅니다. 같은 트랙에서 여러 마리가 달리고, 승자는 당신이 정합니다.
+
 **DSH 桌面端 + 浏览器 / Desktop + Web**
 
-<p align="center"><a href="#install">安装 / Install</a> · <a href="#demo">真实演示 / Recorded demo</a></p>
+<p align="center"><a href="#demo">真实演示 / Recorded demo</a> · <a href="#ui">界面与体验 / Interface</a> · <a href="#install">安装 / Install</a> · <a href="#whats-new">版本更新 / What's new</a></p>
 
 > **3.1.0 · 정식 버전.** DSH Desktop과 Web, 중국어·영어 인터페이스를 지원합니다. 기본 대화 안에서 2–4개 버전의 답변, 파일 또는 웹 페이지를 비교합니다. 각 버전의 생각과 도구 호출을 펼쳐 볼 수 있고, 답장은 결과물과 나란히 보입니다.
 
-**3.1.0의 새로운 기능:**
-- **모든 단계를, 실행 중에도 끝난 뒤에도.** 버전이 작업을 시작하면 카드에 「Steps」 버튼이 생깁니다. 펼치면 한 일이 순서대로 나옵니다. 걸린 시간이 붙은 생각, 도구 호출(파일 읽기, 파일 편집, 명령 실행 등, 펼치면 입력과 출력이 보입니다), 그 사이에 쓴 말입니다. 작업 중에는 최신 3단계가 고래 아래에서 실시간으로 흐르고, 끝난 뒤에도 모든 단계를 클릭 한 번으로 다시 볼 수 있습니다. 블라인드 비교에서는 스타일을 드러내는 말이 ▒▒로 표시됩니다.
-- **답장을 바로 보여 줍니다.** 답변만 한 버전은 답변만 보입니다. 페이지나 파일을 만든 버전은 답장을 결과물과 같은 비중으로 보여 줍니다. 나란히 볼 때는 페이지 위에, 한 버전에 집중할 때는 페이지 왼쪽에 놓입니다. 답장은 버전이 끝나는 즉시, 페이지보다 먼저 나타납니다.
-- **페이지를 바로 보여 줍니다.** 정적 페이지는 플러그인이 직접 제공하므로 다 쓰이는 즉시 사용할 수 있고, 데스크톱 앱이 멈출 수 있는 별도 프로세스도 없습니다. 그래도 제공할 수 없으면 HTML 결과를 그대로 페이지로 보여 주며, 소스는 클릭 한 번으로 전환됩니다.
-- **결과를 더 빨리.** 버전은 턴이 끝난 뒤 1초 안에 완료로 처리됩니다. 이전에는 다른 플러그인(예: 메모리 플러그인)이 세션을 놓아 줄 때까지 기다려, 일반적인 데스크톱에서 약 40초가 더 걸렸습니다. 각 버전이 작업하는 동안 잠금 파일로 의존성을 미리 설치하고, 의존성을 바꾸지 않은 버전은 그 독립된 사본을 받습니다. 검사는 병렬로 실행하고, 페이지는 시작되는 즉시 사용할 수 있습니다. 고정 후보 녹화 환경에서는 Vite 버전 4개가 전송 후 약 24–30초 만에 모두 사용 가능해졌습니다.
-- **기다리는 시간도 즐겁게.** 작업 중인 버전마다 DeepSeek의 파란 고래 로고가 나타나고, 처음에는 옅은 색이다가 진행될수록 파란 물이 차오르며 빛 두 줄기가 윤곽을 따라 달립니다. 가끔 머리 위로 생각 말풍선이 떠오릅니다(지금 하는 일, 떠오른 생각, 또는 찔러 달라는 초대). 단계를 밟을 때마다 물을 뿜고 포인터 쪽으로 몸을 돌리며, 연달아 찌르면 뛰어오르고, 빙글 돌고, 비틀거리고, 물을 튀기며, 그때마다 새로운 대사를 합니다. 실행 중인 비교 둘레에서는 혜성 두 개가 테두리를 달리고(오래된 엔진이나 애니메이션을 멈추는 테마에서도 움직입니다), 배경에는 천천히 흐르는 파란 빛이 섞입니다.
-- **A–D는 네 가지 파랑.** 버전 라벨이 서로 다른 네 가지 파란색으로 바뀌었습니다.
-- **DSH 재시작 안내.** DSH는 플러그인 화면은 바로 바꾸지만, 백엔드는 시작할 때 불러온 것을 계속 씁니다. 둘이 다르면 AgentCompare는 조용히 단계와 답장을 빠뜨리는 대신 DSH를 완전히 종료했다가 다시 열라고 알려 줍니다.
-- **따로 공개하지 않은 2.1.0의 개선도 포함합니다:** 인사나 질문에는 페이지 대신 답변이 돌아옵니다. 더 밝고 투명한 리퀴드 글래스, 가벼운 버튼, 미끄러지는 컨트롤. 라이트와 다크 모두에서 21개 화면 상태의 모든 글자가 대비 4.5:1 이상입니다.
+<a id="demo"></a>
 
-**2.0.0의 새로운 기능:** 한 번에 **2~4개 버전**을 비교합니다. 버전마다 **스타일**을 고를 수 있습니다(변경 폭: 안정·대담 / 분위기: 미니멀·세련·활기 / 우선순위: 친절·엄밀·가벼움, 또는 한 줄 직접 입력). **블라인드**(선택 후 공개)와 **공개 비교**(처음부터 표시) 중에서 선택합니다. 3~4개 버전일 때는 제외할 버전을 **빼두고** 나머지를 나란히 비교할 수 있으며, 카드에서 1~4 키로 한 버전에 집중할 수 있습니다.
-- **새 블루 리퀴드 글래스 인터페이스.** 오로라와 별빛 배경, 유리 패널, 선택지 사이를 미끄러지는 유리 렌즈, 액체 진행 표시. 선택하는 순간 빛 입자가 터지고 공개할 때 빛이 지나갑니다. 다크 모드, 동작 줄이기, 고대비 모드를 지원합니다.
-- **선택한 이유 남기기.** 선택 후 이유(레이아웃, 색감과 질감, 사용감 등)를 고르거나 한 줄을 덧붙이면 주 대화의 후속 수정이 그 장점을 유지합니다.
-- **빠른 조합.** 버전 수와 스타일을 한 번에 설정합니다: 기본 대비, 세 가지 룩, 세 가지 우선순위, 네 방향 탐색.
-- **스타일별 2–4개 버전.** 8개 프리셋이나 한 줄 사용자 지정 스타일을 선택하고, 서로 다른 모델에 같은 스타일을 적용할 수 있습니다.
-- **블라인드 또는 공개 비교.** 각 버전을 사용해 보고 제외·복원합니다. 1–4로 집중 보기, 0으로 전체 보기가 가능합니다.
-- **답변·파일·실행 페이지.** Markdown을 읽고 답변, 코드, 파일 내용, 저장 경로를 복사합니다. 선택한 버전이 명확히 표시됩니다.
-- **주 대화에서 계속.** 비교, 선택, 적용과 실행 취소가 현재 대화 기억에 남아 이어서 수정할 수 있습니다.
-- **Desktop + Web, 중국어·영어 UI.** 설정된 모델을 재사용하고 변경을 검토한 뒤 적용합니다. 실행 취소와 복구도 지원합니다.
+## 大肥鱼赛马 한 판 전체 보기
+
+[![작업 중인 버전마다 고래와 실시간 단계, 동시에 실행되는 뽀모도로 페이지 4개, 답장과 페이지를 나란히 놓고 C를 고르는 고정 후보 예시](https://raw.githubusercontent.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/main/docs/media/comparison-preview.gif)](https://github.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/blob/main/docs/media/comparison-workflow.mp4)
+
+뚱뚱한 물고기 네 마리가 뽀모도로 페이지 넷을 두고 겨루는, 실제 DSH 호스트에서 녹화한 고정 후보 시연입니다(3.1.0 릴리스 후보 소스, 화면은 중국어). 일반 폴더에서 4개 버전이 각각 뽀모도로 페이지를 만들고, 비교 카드 둘레를 혜성 두 개가 달립니다. 작업 중에 큰 창을 열면 버전마다 DeepSeek 파란 고래가 있고, 머리 위로 생각이 떠오르며 아래에는 최신 단계가 실시간으로 흐릅니다. 콕 찌르면 대답합니다. 「过程」을 펼치면 생각과 파일 쓰기가 실시간으로 보입니다. 답장이 페이지보다 먼저 나타나고, 이어서 4개의 라이브 페이지를 바로 사용할 수 있습니다. 2개를 빼고 C에 집중하면 답장은 왼쪽, 페이지는 오른쪽에 놓입니다. 선택하면 각 스타일이 공개되고, 새 폴더에 저장한 다음 대화를 이어 갑니다. 대기 구간만 편집했고 나머지는 원래 속도입니다. 로컬 경로는 숨겼습니다.
+
+선택한 뒤 이유 두 가지(레이아웃, 더 간결함)를 고르면 주 대화의 다음 요청에 전달됩니다.
+
+[전체 영상(45초)](https://github.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/blob/main/docs/media/comparison-workflow.mp4) · [조건과 결과](https://github.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/blob/main/docs/demo.md)
+
+[![设定 2–4 版与风格，并行实跑，体验后选择并说明理由，审查并继续主对话 / Set up, run, choose and say why, review and continue. Answers, files, live pages and conversation memory. Product illustration.](https://raw.githubusercontent.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/main/assets/readme/comparison-workflow.webp)](https://raw.githubusercontent.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/main/assets/readme/comparison-workflow.webp)
+
+<p align="center"><sub>功能示意 / Product illustration</sub></p>
 
 AgentCompare는 [DeepSeek Harness](https://github.com/deepseek-ai/deepseek-harness)(DSH) 플러그인입니다. 하나의 작업으로 독립된 2~4개 구현을 만들고 의존성 설치, 빌드, 공통 검사를 실행합니다. 실제 페이지를 사용해 본 뒤 하나를 고르거나 모두 선택하지 않을 수 있습니다. 블라인드 비교에서는 선택한 뒤에 모델과 스타일이 공개됩니다. 적용 전에는 현재 프로젝트와 합친 상태를 검증합니다.
 
 [插件目录与安装](https://github.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/blob/main/docs/distribution.md) · [Plugin directories and installation](https://github.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/blob/main/docs/distribution.en.md) · [Listing status / 收录状态](https://github.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/issues/4)
 
-[![设定 2–4 版与风格，并行实跑，体验后选择并说明理由，审查并继续主对话 / Set up, run, choose and say why, review and continue. Answers, files, live pages and conversation memory. Product illustration.](https://raw.githubusercontent.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/main/assets/readme/comparison-workflow.webp)](https://raw.githubusercontent.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/main/assets/readme/comparison-workflow.webp)
-
-<p align="center"><sub>功能示意 / Product illustrations · <a href="#demo">查看真实演示 / Watch the recorded workflow</a></sub></p>
-
+<a id="ui"></a>
 <a id="gallery"></a>
 
-## 최신 화면 살펴보기
+## 화면과 경험
 
-고정 후보를 사용한 실제 DSH 화면입니다. 대표 이미지와 흐름도는 기능 설명용입니다.
+기다림도, 비교도, 선택도 모두 눈에 보이고 바로 누를 수 있습니다. 아래 두 장은 실제 DSH 호스트에서 고정 후보를 비교한 화면입니다.
 
-<details>
-<summary>Open four interface views / 展开实际界面</summary>
+- **파란 리퀴드 글래스.** 반투명 유리 패널과 미끄러지는 선택 컨트롤 뒤로 천천히 흐르며 섞이는 파란 빛. 라이트·다크 테마를 지원하고, 동작 줄이기를 켜면 화면이 멈춰 있습니다. 두 테마 모두 글자를 하나하나 측정해 대비 4.5:1 이상을 지킵니다.
+- **뚱뚱한 물고기가 함께 기다립니다.** 버전마다 DeepSeek 파란 고래 한 마리. 진행될수록 파란 물이 차오르고 빛 두 줄기가 윤곽을 따라 달립니다. 머리 위로 생각이 떠오르고, 찌르면 대답하고, 연달아 찌르면 빙글 돌고 비틀거리고 물을 튀깁니다.
+- **모든 단계가 보입니다.** 「Steps」 버튼으로 생각, 도구 호출, 변경을 볼 수 있고, 작업 중에는 최신 3단계가 고래 아래에서 실시간으로 흐릅니다.
+- **답장과 결과물을 같은 비중으로.** 답변만 있으면 답변만, 페이지가 있으면 답장과 나란히 보여 주고, 한 버전에 집중하면 답장은 왼쪽, 페이지는 오른쪽에 놓입니다.
+- **A–D는 네 가지 파랑.** 블라인드 비교에서는 A–D만 보이고, 스타일과 모델은 선택 뒤에 공개되며 카드 위로 빛이 지나갑니다.
+- **실행 중인지 한눈에.** 실행 중인 비교 둘레를 혜성 두 개가 달리고, 페이지는 시작되는 즉시 사용할 수 있습니다.
+- **데스크톱, 브라우저, 휴대폰 폭** 모두 지원하며 중국어와 영어 화면을 전환할 수 있습니다.
 
 ![四版页面直接操作 / Four independently interactive pages; controlled candidates in a real DSH host](https://raw.githubusercontent.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/main/assets/readme/gallery-2.0/02-live-comparison.png)
 
 ![打招呼得到四种回答 / A greeting answered four ways; controlled candidates in a real DSH host](https://raw.githubusercontent.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/main/assets/readme/gallery-2.0/03-main-conversation.png)
 
-![版本、风格与上下文 / Versions, styles and context; controlled candidates in a real DSH host](https://raw.githubusercontent.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/main/assets/readme/gallery-2.0/04-comparison-settings.png)
-
-![英文回答并排比较 / Compare English answers; controlled candidates in a real DSH host](https://raw.githubusercontent.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/main/assets/readme/gallery-2.0/06-english-answers.png)
-
-</details>
-
-[이미지 8장과 촬영 조건](https://github.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/blob/main/docs/storefront-gallery.md)
-
-<a id="demo"></a>
-
-## 전체 흐름 보기
-
-[![작업 중인 버전마다 고래와 실시간 단계, 동시에 실행되는 뽀모도로 페이지 4개, 답장과 페이지를 나란히 놓고 C를 고르는 고정 후보 예시](https://raw.githubusercontent.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/main/docs/media/comparison-preview.gif)](https://github.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/blob/main/docs/media/comparison-workflow.mp4)
-
-실제 DSH 호스트에서 녹화한 고정 후보 시연입니다(3.1.0 릴리스 후보 소스, 화면은 중국어). 일반 폴더에서 4개 버전이 각각 뽀모도로 페이지를 만들고, 비교 카드 둘레를 혜성 두 개가 달립니다. 작업 중에 큰 창을 열면 버전마다 고래가 있고, 콕 찌르면 거품을 냅니다. 「过程」을 펼치면 생각과 파일 쓰기가 실시간으로 보입니다. 답장이 페이지보다 먼저 나타나고, 이어서 4개의 라이브 페이지를 바로 사용할 수 있습니다. 2개를 빼고 C에 집중하면 답장은 왼쪽, 페이지는 오른쪽에 놓입니다. 선택하면 각 스타일이 공개되고, 새 폴더에 저장한 다음 대화를 이어 갑니다. 대기 구간만 편집했고 나머지는 원래 속도입니다. 로컬 경로는 숨겼습니다.
-
-선택한 뒤 이유 두 가지(레이아웃, 더 간결함)를 고르면 주 대화의 다음 요청에 전달됩니다.
-
-[전체 영상(46초)](https://github.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/blob/main/docs/media/comparison-workflow.mp4) · [조건과 결과](https://github.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/blob/main/docs/demo.md)
-
 <details>
-<summary>English answers · 390 px</summary>
+<summary>더 보기: 설정, 영어 답변, 휴대폰 폭</summary>
+
+![版本、风格与上下文 / Versions, styles and context; controlled candidates in a real DSH host](https://raw.githubusercontent.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/main/assets/readme/gallery-2.0/04-comparison-settings.png)
 
 <p align="center"><img src="https://raw.githubusercontent.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/main/assets/readme/13-english-answers.webp" width="840" alt="Three open English answers from the Three looks quick set: B is the pick, with Layout and More complete as its reasons; controlled candidates in a real DSH host."> <img src="https://raw.githubusercontent.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/main/assets/readme/14-phone-answer.webp" width="260" alt="390-pixel English answer result in the blue glass interface, with the chosen version and a visible Continue conversation action; controlled candidates in a real DSH host."></p>
 
 </details>
+
+[이미지 8장과 촬영 조건](https://github.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/blob/main/docs/storefront-gallery.md)
 
 <a id="install"></a>
 
@@ -141,6 +125,31 @@ DSH를 다시 시작합니다. 업데이트 전에는 같은 기록을 사용하
 검색·필터, 폼 흐름, 랜딩 페이지, 대시보드, 컴포넌트 재설계처럼 직접 사용하며 품질을 판단하는 작업에 적합합니다. 정답이 명확한 버그 수정이나 기계적인 리팩터링은 단일 에이전트와 테스트가 더 적절합니다.
 
 같은 모델 모드는 기존 구조를 재사용하는 전략과 상호작용을 다시 설계하는 전략을 비교합니다. 두 모델 모드는 모델만 바꾸고 요구·지시·검증을 맞춥니다. 두 구현은 동일한 코드 기준점에서 시작합니다. 한 번의 선택은 모델 전체의 순위를 뜻하지 않습니다.
+
+<a id="whats-new"></a>
+
+## 업데이트 내역
+
+**3.1.0의 새로운 기능:**
+- **모든 단계를, 실행 중에도 끝난 뒤에도.** 버전이 작업을 시작하면 카드에 「Steps」 버튼이 생깁니다. 펼치면 한 일이 순서대로 나옵니다. 걸린 시간이 붙은 생각, 도구 호출(파일 읽기, 파일 편집, 명령 실행 등, 펼치면 입력과 출력이 보입니다), 그 사이에 쓴 말입니다. 작업 중에는 최신 3단계가 고래 아래에서 실시간으로 흐르고, 끝난 뒤에도 모든 단계를 클릭 한 번으로 다시 볼 수 있습니다. 블라인드 비교에서는 스타일을 드러내는 말이 ▒▒로 표시됩니다.
+- **답장을 바로 보여 줍니다.** 답변만 한 버전은 답변만 보입니다. 페이지나 파일을 만든 버전은 답장을 결과물과 같은 비중으로 보여 줍니다. 나란히 볼 때는 페이지 위에, 한 버전에 집중할 때는 페이지 왼쪽에 놓입니다. 답장은 버전이 끝나는 즉시, 페이지보다 먼저 나타납니다.
+- **페이지를 바로 보여 줍니다.** 정적 페이지는 플러그인이 직접 제공하므로 다 쓰이는 즉시 사용할 수 있고, 데스크톱 앱이 멈출 수 있는 별도 프로세스도 없습니다. 그래도 제공할 수 없으면 HTML 결과를 그대로 페이지로 보여 주며, 소스는 클릭 한 번으로 전환됩니다.
+- **결과를 더 빨리.** 버전은 턴이 끝난 뒤 1초 안에 완료로 처리됩니다. 이전에는 다른 플러그인(예: 메모리 플러그인)이 세션을 놓아 줄 때까지 기다려, 일반적인 데스크톱에서 약 40초가 더 걸렸습니다. 각 버전이 작업하는 동안 잠금 파일로 의존성을 미리 설치하고, 의존성을 바꾸지 않은 버전은 그 독립된 사본을 받습니다. 검사는 병렬로 실행하고, 페이지는 시작되는 즉시 사용할 수 있습니다. 고정 후보 녹화 환경에서는 Vite 버전 4개가 전송 후 약 24–30초 만에 모두 사용 가능해졌습니다.
+- **기다리는 시간도 즐겁게.** 작업 중인 버전마다 DeepSeek의 파란 고래 로고가 나타나고, 처음에는 옅은 색이다가 진행될수록 파란 물이 차오르며 빛 두 줄기가 윤곽을 따라 달립니다. 가끔 머리 위로 생각 말풍선이 떠오릅니다(지금 하는 일, 떠오른 생각, 또는 찔러 달라는 초대). 단계를 밟을 때마다 물을 뿜고 포인터 쪽으로 몸을 돌리며, 연달아 찌르면 뛰어오르고, 빙글 돌고, 비틀거리고, 물을 튀기며, 그때마다 새로운 대사를 합니다. 실행 중인 비교 둘레에서는 혜성 두 개가 테두리를 달리고(오래된 엔진이나 애니메이션을 멈추는 테마에서도 움직입니다), 배경에는 천천히 흐르는 파란 빛이 섞입니다.
+- **A–D는 네 가지 파랑.** 버전 라벨이 서로 다른 네 가지 파란색으로 바뀌었습니다.
+- **DSH 재시작 안내.** DSH는 플러그인 화면은 바로 바꾸지만, 백엔드는 시작할 때 불러온 것을 계속 씁니다. 둘이 다르면 AgentCompare는 조용히 단계와 답장을 빠뜨리는 대신 DSH를 완전히 종료했다가 다시 열라고 알려 줍니다.
+- **중국어 이름이 생겼습니다.** 공식 이름은 「鲸挑细选」, 별명은 「大肥鱼赛马」입니다.
+- **따로 공개하지 않은 2.1.0의 개선도 포함합니다:** 인사나 질문에는 페이지 대신 답변이 돌아옵니다. 더 밝고 투명한 리퀴드 글래스, 가벼운 버튼, 미끄러지는 컨트롤. 라이트와 다크 모두에서 21개 화면 상태의 모든 글자가 대비 4.5:1 이상입니다.
+
+**2.0.0의 새로운 기능:** 한 번에 **2~4개 버전**을 비교합니다. 버전마다 **스타일**을 고를 수 있습니다(변경 폭: 안정·대담 / 분위기: 미니멀·세련·활기 / 우선순위: 친절·엄밀·가벼움, 또는 한 줄 직접 입력). **블라인드**(선택 후 공개)와 **공개 비교**(처음부터 표시) 중에서 선택합니다. 3~4개 버전일 때는 제외할 버전을 **빼두고** 나머지를 나란히 비교할 수 있으며, 카드에서 1~4 키로 한 버전에 집중할 수 있습니다.
+- **새 블루 리퀴드 글래스 인터페이스.** 오로라와 별빛 배경, 유리 패널, 선택지 사이를 미끄러지는 유리 렌즈, 액체 진행 표시. 선택하는 순간 빛 입자가 터지고 공개할 때 빛이 지나갑니다. 다크 모드, 동작 줄이기, 고대비 모드를 지원합니다.
+- **선택한 이유 남기기.** 선택 후 이유(레이아웃, 색감과 질감, 사용감 등)를 고르거나 한 줄을 덧붙이면 주 대화의 후속 수정이 그 장점을 유지합니다.
+- **빠른 조합.** 버전 수와 스타일을 한 번에 설정합니다: 기본 대비, 세 가지 룩, 세 가지 우선순위, 네 방향 탐색.
+- **스타일별 2–4개 버전.** 8개 프리셋이나 한 줄 사용자 지정 스타일을 선택하고, 서로 다른 모델에 같은 스타일을 적용할 수 있습니다.
+- **블라인드 또는 공개 비교.** 각 버전을 사용해 보고 제외·복원합니다. 1–4로 집중 보기, 0으로 전체 보기가 가능합니다.
+- **답변·파일·실행 페이지.** Markdown을 읽고 답변, 코드, 파일 내용, 저장 경로를 복사합니다. 선택한 버전이 명확히 표시됩니다.
+- **주 대화에서 계속.** 비교, 선택, 적용과 실행 취소가 현재 대화 기억에 남아 이어서 수정할 수 있습니다.
+- **Desktop + Web, 중국어·영어 UI.** 설정된 모델을 재사용하고 변경을 검토한 뒤 적용합니다. 실행 취소와 복구도 지원합니다.
 
 ## 실행과 공통 검증
 

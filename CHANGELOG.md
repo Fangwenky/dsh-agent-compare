@@ -14,6 +14,7 @@
 - **A livelier whale.** Every few seconds a thought rises over its head on its own: what the version is doing, an idea, or an invitation to poke it. Pokes in a row build up: a jump, a spin on the third, a wobble on the fourth and a splash after that, each with its own line. It leans toward the pointer without a 3D tilt, so the logo stays sharp.
 - **Comets that always move.** The ring's keyframes no longer compute offsets from custom properties, which the desktop app's engine (Chromium 152) dropped, freezing the comets. If the comets still do not move (under a theme that stops animations, for example), a script moves them at the same speed.
 - **Four blues.** Labels A–D are four different blues (indigo, azure, navy and ocean) instead of including purple and teal. Step markers, the comet trail and the background light no longer use violet either.
+- **A Chinese name.** The project's Chinese name is 鲸挑细选, a pun on 精挑细选 ("picked with care") with 鲸, whale; its nickname is 大肥鱼赛马, "the Big Fat Fish race".
 
 ## 3.0.0
 

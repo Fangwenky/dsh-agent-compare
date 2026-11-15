@@ -1,6 +1,6 @@
-[![AgentCompare 2.0：在主对话里比较 2–4 版回答、文件与网页。Desktop + Web，中英双语，选择后继续对话 / Compare 2–4 answers, files and live pages in the main conversation. Styles, blind or open comparison, reasons for the pick, reviewed adoption and conversation memory, in a blue liquid-glass interface. Product illustration.](https://raw.githubusercontent.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/main/assets/readme/hero-bilingual.webp)](#install)
+[![鲸挑细选 · AgentCompare（大肥鱼赛马）：在主对话里比较 2–4 版回答、文件与网页。Desktop + Web，中英双语，选择后继续对话 / Compare 2–4 answers, files and live pages in the main conversation. Styles, blind or open comparison, reasons for the pick, reviewed adoption and conversation memory, in a blue liquid-glass interface. Product illustration.](https://raw.githubusercontent.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/main/assets/readme/hero-bilingual.webp)](#install)
 
-# AgentCompare
+# 鲸挑细选 · AgentCompare
 
 [![GitHub stars](https://img.shields.io/github/stars/lijiaqi-AI-Product-Manager/dsh-agent-compare?label=GitHub%20Stars&color=3657f5&style=flat&labelColor=0b1b4f)](https://github.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/stargazers)
 [![npm total download requests](https://raw.githubusercontent.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/main/assets/statistics/npm-total-badge.svg)](https://www.npmjs.com/package/dsh-agent-compare)
@@ -16,33 +16,36 @@
 
 **同一需求，2–4 版真跑。选风格，盲选或公开对比，再采用。**
 
+**鲸挑细选**，取「精挑细选」的谐音：一个需求，让 2–4 条 DeepSeek 蓝鲸同时开工，跑完再挑最好的那版。昵称 **「大肥鱼赛马」**：网友管 DeepSeek 的蓝鲸叫「大肥鱼」，这里就是几条大肥鱼在同一条赛道上比，谁做得好，你说了算。
+
 **DSH 桌面端 + 浏览器 / Desktop + Web**
 
-<p align="center"><a href="#install">安装 / Install</a> · <a href="#demo">真实演示 / Recorded demo</a></p>
+<p align="center"><a href="#demo">真实演示 / Recorded demo</a> · <a href="#ui">界面与体验 / Interface</a> · <a href="#install">安装 / Install</a> · <a href="#whats-new">版本更新 / What's new</a></p>
 
 > **3.1.0 · 正式版。** DSH 桌面端与 Web 端，中英双语。在主对话内比较 2–4 版回答、文件或网页；每版的思考和工具调用都能展开查看，回复与成品同等显示。
 
-**3.1.0 新增：**
-- **每一步都看得见，运行中和结束后都能看。** 每版一开始工作，卡片上就有「过程」按钮，展开后按顺序列出这一版的思考（含用时）、工具调用（读取文件、编辑文件、运行命令……可再展开看输入和输出）以及中间说的话；运行中，最新三步还会在鲸鱼下方实时滚动，结束后也随时能点开回看全部过程。盲选时点明风格的词显示为 ▒▒。
-- **回复直接显示。** 只回答的版本只显示回答；做了网页或文件的版本，回复和成品同等显示：并排时回复在页面上方，专注某一版时回复在左、页面在右。一版结束，回复立刻出现，不必等页面。
-- **网页直接显示。** 静态网页由插件自己提供，写完即可操作，不再依赖单独的进程（桌面版曾在它响应前将其终止）；万一仍无法提供，HTML 结果也会直接当作页面显示，源码一键切换。
-- **更快看到成品。** 一版说完 1 秒内就算完成；过去要等其他插件（例如记忆插件）放开会话，桌面版上常常多等约 40 秒。各版工作时依赖就按锁文件预装好，没改依赖的版本直接拿到一份独立副本；检查命令并行执行，页面一启动就能操作。在固定候选的录制环境中，四版 Vite 页面从发送到全部可用约 24–30 秒。
-- **等待也有趣。** 每版显示 DeepSeek 的蓝色鲸鱼标志：开始是浅蓝的轮廓，随进度注入蓝色的水，越接近完成越满，两道光沿轮廓奔跑；头上不时冒出想法气泡（在做什么、灵感，或者邀你戳一戳）；每走一步喷一下水，鲸鱼会朝鼠标转身，连戳会跳起、转圈、晕头、溅水花，每次都有新台词。运行中的比较有两颗彗星绕着边框奔跑（在较旧的内核或关掉动画的主题里也会动），背景是缓慢流动、彼此交融的蓝色光。
-- **A–D 四种蓝。** 版本标签改为四种不同的蓝色。
-- **更新后提醒重启。** DSH 会立刻换上插件的新界面，但后台仍是启动时加载的版本；两者不一致时，AgentCompare 会提醒你完全退出并重新打开 DSH，而不是悄悄缺少过程和回复。
-- **同时包含 2.1.0（未单独发布）的改进：** 打招呼和提问得到的是回答而不是网页；更亮更通透的液态玻璃、更轻的按钮、会滑动的控件；浅色和深色下，21 个界面状态逐字实测，所有文字对比度不低于 4.5:1。
+<a id="demo"></a>
 
-**2.0.0 新增：**
-- **全新蓝色液态玻璃界面。** 极光与星尘背景、玻璃面板、会滑动的玻璃选择器、液体进度球；选中时光粒迸发，揭晓时光束扫过。深色模式、减弱动效与高对比模式都已适配。
-- **说出为什么选。** 选完点几个理由（布局、配色与质感、交互手感……）或补一句话；主对话接着修改时会保留这些优点。
-- **快速组合。** 一键设好版本数和风格：经典对照、三种视觉、三种取舍、四向探索。
-- **2–4 版，按风格比较。** 八种预设或一句话自定义；也可让不同模型使用同一风格。
-- **盲选或公开对比。** 逐版体验，暂时排除后可恢复，用 1–4 专注、0 回到全部。
-- **回答、文件、网页都可看。** Markdown 排版，复制回答、代码、文件内容和保存路径；明确标记你的选择。
-- **留在主对话。** 比较、选择、采用与撤销写入当前对话记忆；继续交流时可接着修改。
-- **Desktop + Web，中英双语。** 沿用已配置模型；有改动时先审查，再确认采用，并保留撤销与恢复入口。
+## 看一场完整的大肥鱼赛马
 
-1.3.0 起，普通文件夹、项目子目录、非 Vite 的 Node 项目、静态网页都能比较，回答和文件也能比较。范围与限制见[更新记录](https://github.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/blob/main/CHANGELOG.md#200)。
+[![固定候选流程示例：各版工作时每版一只随进度注水的 DeepSeek 蓝鲸、实时展开过程，4 版番茄钟页面同时运行，专注 C 时回复与页面并排，选择 C 并点选理由](https://raw.githubusercontent.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/main/docs/media/comparison-preview.gif)](https://github.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/blob/main/docs/media/comparison-workflow.mp4)
+
+四条大肥鱼、四版番茄钟：在真实 DSH 宿主里录制的固定候选演示（3.1.0 发布候选源码，中文界面）：
+- 在普通文件夹里让 4 版各写一个番茄钟页面，比较卡片有两颗彗星绕边框奔跑；
+- 各版工作时打开大窗口：每版一只 DeepSeek 蓝鲸随进度注水，头上冒出想法，下方实时滚动最新的步骤；戳一下会回话；展开「过程」，看到思考和写文件；
+- 回复先于页面出现，随后 4 个实时页面都能直接操作；
+- 排除两版，专注 C：回复在左、页面在右；选择后揭晓每版的风格；
+- 点选两个理由（布局、更简洁），主对话的下一条请求会带上它们；保存到新文件夹后，继续主对话。
+
+视频剪去了等待，保留的部分按原速播放，本地路径已隐藏。
+
+[完整视频（45 秒）](https://github.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/blob/main/docs/media/comparison-workflow.mp4) · [演示条件与结果](https://github.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/blob/main/docs/demo.md)
+
+[四步快速上手](docs/quickstart.md) · [运行中遇到问题](docs/runs-and-recovery.md)
+
+[![设定 2–4 版与风格，并行实跑，体验后选择并说明理由，审查并继续主对话 / Set up, run, choose and say why, review and continue. Answers, files, live pages and conversation memory. Product illustration.](https://raw.githubusercontent.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/main/assets/readme/comparison-workflow.webp)](https://raw.githubusercontent.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/main/assets/readme/comparison-workflow.webp)
+
+<p align="center"><sub>功能示意 / Product illustration</sub></p>
 
 AgentCompare 是 [DeepSeek Harness](https://github.com/deepseek-ai/deepseek-harness)（DSH）插件：同一需求，独立完成 2–4 版回答、文件或网页。有可运行页面时实际预览；没有可运行项目时按内容比较，不宣称通过功能测试。先体验再选；盲选时选后才揭晓模型和风格。采用前核对当前项目与候选改动，确认后才写回。
 
@@ -55,60 +58,39 @@ AgentCompare 是 [DeepSeek Harness](https://github.com/deepseek-ai/deepseek-harn
 **30 秒上手：**
 1. 桌面版在应用的「插件 → 添加插件」里安装 `dsh-agent-compare`（Web 版见[安装](#install)）。
 2. 点输入框左下角的 **A|B**，选好版本数和风格。
-3. 像平常一样写需求并发送。
+3. 像平常一样写需求并发送，大肥鱼赛马就开跑了。
 
 [插件目录与安装](https://github.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/blob/main/docs/distribution.md) · [Plugin directories and installation](https://github.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/blob/main/docs/distribution.en.md) · [Listing status / 收录状态](https://github.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/issues/4)
 
-[![设定 2–4 版与风格，并行实跑，体验后选择并说明理由，审查并继续主对话 / Set up, run, choose and say why, review and continue. Answers, files, live pages and conversation memory. Product illustration.](https://raw.githubusercontent.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/main/assets/readme/comparison-workflow.webp)](https://raw.githubusercontent.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/main/assets/readme/comparison-workflow.webp)
-
-<p align="center"><sub>功能示意 / Product illustrations · <a href="#demo">查看真实演示 / Watch the recorded workflow</a></sub></p>
-
+<a id="ui"></a>
 <a id="gallery"></a>
 
-## 新版界面速览
+## 界面与体验
 
-先看四版实时页面，再看主对话、设置与选择理由。下面是固定候选在真实 DSH 宿主中的界面；首图和流程图为功能示意。
+等待、比较、选择，每一步都看得见、点得到。下面两张图是固定候选在真实 DSH 宿主中的界面。
 
-<details>
-<summary>展开四张实际界面 / Open four interface views</summary>
+- **蓝色液态玻璃。** 半透明玻璃面板、会滑动的选择器，背后是缓慢流动、彼此交融的蓝色光；浅色与深色两套主题，开启「减弱动态效果」后画面保持静止。所有文字在两种主题下逐字实测，对比度不低于 4.5:1。
+- **大肥鱼陪你等。** 每版一条 DeepSeek 蓝鲸，随进度注入蓝色的水，两道光沿轮廓奔跑；头上不时冒出想法，戳一下会回话，连戳会转圈、晕头、溅水花。
+- **过程一目了然。** 「过程」按钮列出思考、工具调用和改动；工作中，最新三步在鲸鱼下方实时滚动。
+- **回复与成品同等显示。** 只回答就只显示回答；做了网页时回复和页面并排，专注某一版时回复在左、页面在右。
+- **A–D 四种蓝。** 每版一种蓝色标签；盲选时只看 A–D，选完才揭晓风格和模型，揭晓时光束扫过卡片。
+- **一眼看出在跑。** 运行中的比较有两颗彗星绕边框奔跑；页面一启动就能直接点、直接输入。
+- **桌面、浏览器和手机宽度都能用**，中英文界面随时切换。
 
 ![四版页面直接操作 / Four independently interactive pages; controlled candidates in a real DSH host](https://raw.githubusercontent.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/main/assets/readme/gallery-2.0/02-live-comparison.png)
 
 ![打招呼得到四种回答 / A greeting answered four ways; controlled candidates in a real DSH host](https://raw.githubusercontent.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/main/assets/readme/gallery-2.0/03-main-conversation.png)
 
-![版本、风格与上下文 / Versions, styles and context; controlled candidates in a real DSH host](https://raw.githubusercontent.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/main/assets/readme/gallery-2.0/04-comparison-settings.png)
-
-![英文回答并排比较 / Compare English answers; controlled candidates in a real DSH host](https://raw.githubusercontent.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/main/assets/readme/gallery-2.0/06-english-answers.png)
-
-</details>
-
-[全部 8 张图片与拍摄说明](https://github.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/blob/main/docs/storefront-gallery.md)
-
-<a id="demo"></a>
-
-## 看一次完整流程
-
-[![固定候选流程示例：各版工作时每版一只随进度注水的 DeepSeek 蓝鲸、实时展开过程，4 版番茄钟页面同时运行，专注 C 时回复与页面并排，选择 C 并点选理由](https://raw.githubusercontent.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/main/docs/media/comparison-preview.gif)](https://github.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/blob/main/docs/media/comparison-workflow.mp4)
-
-在真实 DSH 宿主里录制的固定候选演示（3.1.0 发布候选源码，中文界面）：
-- 在普通文件夹里让 4 版各写一个番茄钟页面，比较卡片有两颗彗星绕边框奔跑；
-- 各版工作时打开大窗口：每版一只 DeepSeek 蓝鲸随进度注水，戳一下会吐泡泡；展开「过程」，实时看到思考和写文件；
-- 回复先于页面出现，随后 4 个实时页面都能直接操作；
-- 排除两版，专注 C：回复在左、页面在右；选择后揭晓每版的风格；
-- 点选两个理由（布局、更简洁），主对话的下一条请求会带上它们；保存到新文件夹后，继续主对话。
-
-视频剪去了等待，保留的部分按原速播放，本地路径已隐藏。
-
-[完整视频（46 秒）](https://github.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/blob/main/docs/media/comparison-workflow.mp4) · [演示条件与结果](https://github.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/blob/main/docs/demo.md)
-
-[四步快速上手](docs/quickstart.md) · [运行中遇到问题](docs/runs-and-recovery.md)
-
 <details>
-<summary>English answers · 390 px</summary>
+<summary>更多界面：设置、英文回答、手机宽度 / More views</summary>
+
+![版本、风格与上下文 / Versions, styles and context; controlled candidates in a real DSH host](https://raw.githubusercontent.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/main/assets/readme/gallery-2.0/04-comparison-settings.png)
 
 <p align="center"><img src="https://raw.githubusercontent.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/main/assets/readme/13-english-answers.webp" width="840" alt="Three open English answers from the Three looks quick set: B is the pick, with Layout and More complete as its reasons; controlled candidates in a real DSH host."> <img src="https://raw.githubusercontent.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/main/assets/readme/14-phone-answer.webp" width="260" alt="390-pixel English answer result in the blue glass interface, with the chosen version and a visible Continue conversation action; controlled candidates in a real DSH host."></p>
 
 </details>
+
+[全部 8 张图片与拍摄说明](https://github.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/blob/main/docs/storefront-gallery.md)
 
 <a id="install"></a>
 
@@ -200,13 +182,40 @@ dsh plugin --profile <你的 profile> add ./dsh-agent-compare-3.1.0.tgz
 
 ## 它替你做掉的那部分
 
-自己多开几个会话也能让模型写几版，真正麻烦的是后面这些，AgentCompare 把它们变成一步：
+自己多开几个会话也能让模型写几版，真正麻烦的是后面这些，鲸挑细选把它们变成一步：
 
 - 每一版都从**同一基线**出发，包括你还没提交的改动，而你的 index 和文件一点不动；
 - 每个候选分别申请以自己副本为根的宿主写入约束，并披露宿主实际提供的约束范围；
 - 各版各装一份依赖、各自构建、各占一个端口，**同时跑起来**；
 - 用**同一套、事先固定并绑定内容**的验收比较，候选改了验收脚本或测试就不算通过；
 - 选完以后合回项目时，先确认它和你这期间的修改能一起工作；待写入前发现目标发生变化，就停止采用。
+
+<a id="whats-new"></a>
+
+## 版本更新
+
+**3.1.0 新增：**
+- **每一步都看得见，运行中和结束后都能看。** 每版一开始工作，卡片上就有「过程」按钮，展开后按顺序列出这一版的思考（含用时）、工具调用（读取文件、编辑文件、运行命令……可再展开看输入和输出）以及中间说的话；运行中，最新三步还会在鲸鱼下方实时滚动，结束后也随时能点开回看全部过程。盲选时点明风格的词显示为 ▒▒。
+- **回复直接显示。** 只回答的版本只显示回答；做了网页或文件的版本，回复和成品同等显示：并排时回复在页面上方，专注某一版时回复在左、页面在右。一版结束，回复立刻出现，不必等页面。
+- **网页直接显示。** 静态网页由插件自己提供，写完即可操作，不再依赖单独的进程（桌面版曾在它响应前将其终止）；万一仍无法提供，HTML 结果也会直接当作页面显示，源码一键切换。
+- **更快看到成品。** 一版说完 1 秒内就算完成；过去要等其他插件（例如记忆插件）放开会话，桌面版上常常多等约 40 秒。各版工作时依赖就按锁文件预装好，没改依赖的版本直接拿到一份独立副本；检查命令并行执行，页面一启动就能操作。在固定候选的录制环境中，四版 Vite 页面从发送到全部可用约 24–30 秒。
+- **等待也有趣。** 每版显示 DeepSeek 的蓝色鲸鱼标志：开始是浅蓝的轮廓，随进度注入蓝色的水，越接近完成越满，两道光沿轮廓奔跑；头上不时冒出想法气泡（在做什么、灵感，或者邀你戳一戳）；每走一步喷一下水，鲸鱼会朝鼠标转身，连戳会跳起、转圈、晕头、溅水花，每次都有新台词。运行中的比较有两颗彗星绕着边框奔跑（在较旧的内核或关掉动画的主题里也会动），背景是缓慢流动、彼此交融的蓝色光。
+- **A–D 四种蓝。** 版本标签改为四种不同的蓝色。
+- **更新后提醒重启。** DSH 会立刻换上插件的新界面，但后台仍是启动时加载的版本；两者不一致时，AgentCompare 会提醒你完全退出并重新打开 DSH，而不是悄悄缺少过程和回复。
+- **有了中文名。** 正式中文名「鲸挑细选」，昵称「大肥鱼赛马」。
+- **同时包含 2.1.0（未单独发布）的改进：** 打招呼和提问得到的是回答而不是网页；更亮更通透的液态玻璃、更轻的按钮、会滑动的控件；浅色和深色下，21 个界面状态逐字实测，所有文字对比度不低于 4.5:1。
+
+**2.0.0 新增：**
+- **全新蓝色液态玻璃界面。** 极光与星尘背景、玻璃面板、会滑动的玻璃选择器、液体进度球；选中时光粒迸发，揭晓时光束扫过。深色模式、减弱动效与高对比模式都已适配。
+- **说出为什么选。** 选完点几个理由（布局、配色与质感、交互手感……）或补一句话；主对话接着修改时会保留这些优点。
+- **快速组合。** 一键设好版本数和风格：经典对照、三种视觉、三种取舍、四向探索。
+- **2–4 版，按风格比较。** 八种预设或一句话自定义；也可让不同模型使用同一风格。
+- **盲选或公开对比。** 逐版体验，暂时排除后可恢复，用 1–4 专注、0 回到全部。
+- **回答、文件、网页都可看。** Markdown 排版，复制回答、代码、文件内容和保存路径；明确标记你的选择。
+- **留在主对话。** 比较、选择、采用与撤销写入当前对话记忆；继续交流时可接着修改。
+- **Desktop + Web，中英双语。** 沿用已配置模型；有改动时先审查，再确认采用，并保留撤销与恢复入口。
+
+1.3.0 起，普通文件夹、项目子目录、非 Vite 的 Node 项目、静态网页都能比较，回答和文件也能比较。范围与限制见[更新记录](https://github.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/blob/main/CHANGELOG.md#200)。
 
 <a id="how-it-works"></a>
 

@@ -1,6 +1,6 @@
-[![AgentCompare 2.0：在主对话里比较 2–4 版回答、文件与网页。Desktop + Web，中英双语，选择后继续对话 / Compare 2–4 answers, files and live pages in the main conversation. Styles, blind or open comparison, reasons for the pick, reviewed adoption and conversation memory, in a blue liquid-glass interface. Product illustration.](https://raw.githubusercontent.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/main/assets/readme/hero-bilingual.webp)](#install)
+[![鲸挑细选 · AgentCompare（大肥鱼赛马）：在主对话里比较 2–4 版回答、文件与网页。Desktop + Web，中英双语，选择后继续对话 / Compare 2–4 answers, files and live pages in the main conversation. Styles, blind or open comparison, reasons for the pick, reviewed adoption and conversation memory, in a blue liquid-glass interface. Product illustration.](https://raw.githubusercontent.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/main/assets/readme/hero-bilingual.webp)](#install)
 
-# AgentCompare
+# AgentCompare · 鲸挑细选
 
 [![GitHub stars](https://img.shields.io/github/stars/lijiaqi-AI-Product-Manager/dsh-agent-compare?label=GitHub%20Stars&color=3657f5&style=flat&labelColor=0b1b4f)](https://github.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/stargazers)
 [![npm total download requests](https://raw.githubusercontent.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/main/assets/statistics/npm-total-badge.svg)](https://www.npmjs.com/package/dsh-agent-compare)
@@ -16,79 +16,63 @@
 
 **同じ依頼を、動く 2〜4 の実装へ。スタイルを選び、ブラインドか公開で比べて採用。**
 
+中国語名は **鲸挑细选**（ジン・ティアオ・シー・シュエン）。「精挑细选（えりすぐる）」のもじりで、鲸はクジラ。同じ依頼に 2〜4 頭の DeepSeek のクジラが同時に取り組み、いちばん良い版を選びます。愛称は **大肥鱼赛马**（「太っちょ魚のレース」）。中国のネットでは DeepSeek のクジラを「太っちょ魚」と呼びます。同じコースを何匹かが走り、勝者はあなたが決めます。
+
 **DSH 桌面端 + 浏览器 / Desktop + Web**
 
-<p align="center"><a href="#install">安装 / Install</a> · <a href="#demo">真实演示 / Recorded demo</a></p>
+<p align="center"><a href="#demo">真实演示 / Recorded demo</a> · <a href="#ui">界面与体验 / Interface</a> · <a href="#install">安装 / Install</a> · <a href="#whats-new">版本更新 / What's new</a></p>
 
 > **3.1.0 · 正式版。** DSH Desktop と Web、中国語・英語の画面に対応。メイン会話内で 2〜4 バージョンの回答・ファイル・Web ページを比較できます。各バージョンの思考とツール呼び出しを開いて確認でき、返信は成果物と並べて表示されます。
 
-**3.1.0 の新機能：**
-- **すべてのステップを、実行中も終わった後も。** バージョンが作業を始めると、カードに「Steps」ボタンが現れます。開くと作業が順に並びます。所要時間つきの思考、ツール呼び出し（ファイルの読み取り・編集・コマンド実行など。開くと入力と出力を確認できます）、途中で書いた言葉です。作業中は最新の 3 ステップがクジラの下でリアルタイムに流れ、終わった後もすべてのステップをワンクリックで見返せます。ブラインド比較ではスタイルを示す語が ▒▒ になります。
-- **返信をそのまま表示。** 回答だけのバージョンは回答だけを表示します。ページやファイルを作ったバージョンは、返信を成果物と同じ重みで表示します。並べて比較するときはページの上に、1 つに絞ったときはページの左に表示します。返信はバージョンが終わった時点で、ページより先に表示されます。
-- **ページをそのまま表示。** 静的なページはプラグイン自身が配信するため、書き終えた時点で操作でき、デスクトップアプリに止められる別プロセスもありません。それでも配信できない場合は、HTML の成果物をそのままページとして表示し、ソースはワンクリックで切り替えられます。
-- **成果物がより早く。** バージョンはターン終了から 1 秒以内に完了とみなします。以前はほかのプラグイン（記憶系など）がセッションを解放するまで待っており、一般的なデスクトップでは約 40 秒余計にかかっていました。各バージョンが作業している間にロックファイルから依存関係を先にインストールし、依存関係を変えていないバージョンにはその独立したコピーを渡します。チェックは並列で実行し、ページは起動した時点で操作できます。固定候補の録画環境では、4 つの Vite バージョンが送信から約 24〜30 秒ですべて使える状態になりました。
-- **待ち時間も楽しく。** 作業中の各バージョンには DeepSeek の青いクジラのロゴが表示され、最初は淡い色で、進むにつれて青い水が満ち、2 つの光が輪郭を走ります。ときどき頭の上に考えごとの吹き出しが浮かびます（今していること、ひらめき、つついてという誘い）。ステップごとに潮を吹いてポインターのほうを向き、続けてつつくと跳ねたり、回ったり、ふらついたり、水しぶきを上げたりして、そのたびに新しいセリフを言います。実行中の比較の周りでは 2 つの彗星が枠を走り（古いエンジンやアニメーションを止めるテーマでも動きます）、背景ではゆっくり流れる青い光が溶け合います。
-- **A〜D は 4 つの青。** バージョンのラベルは 4 種類の異なる青になりました。
-- **DSH の再起動をお知らせ。** DSH はプラグインの画面をすぐ入れ替えますが、バックエンドは起動時に読み込んだものを使い続けます。両者が食い違うと、AgentCompare は黙ってステップや返信を欠くのではなく、DSH を完全に終了して開き直すよう案内します。
-- **単独では公開しなかった 2.1.0 の改善も含みます：** あいさつや質問にはページではなく回答が返ります。より明るく透明感のあるリキッドグラス、軽いボタン、スライドする操作部品。ライトとダークの両方で、21 の画面状態のすべての文字がコントラスト比 4.5:1 以上です。
+<a id="demo"></a>
 
-**2.0.0 の新機能：** 一度に **2〜4 バージョン**を比較できます。各バージョンに**スタイル**を指定できます（変更の幅：堅実・大胆／見た目：ミニマル・洗練・活発／優先：使いやすさ・厳密・軽快、または一行の自由記述）。**ブラインド**（選択後に公開）と**公開比較**（最初から表示）を選べます。3〜4 バージョンでは不要な版を**外して**残りを並べて比べられ、カード内で 1〜4 キーを押すとその版に集中できます。
-- **青いリキッドグラスの新しい UI。** オーロラと星屑の背景、ガラスのパネル、選択肢の間を滑るガラスのレンズ、液体の進捗表示。選んだ瞬間に光の粒がはじけ、公開時には光が走ります。ダークモード、視差効果を減らす設定、ハイコントラストに対応。
-- **選んだ理由を伝える。** 選択後に理由（レイアウト、配色と質感、操作感など）を選ぶか一言添えると、主会話での後続の修正がその長所を保ちます。
-- **クイックセット。** バージョン数とスタイルをワンタップで設定：定番の対比、3 つの見た目、3 つの優先、4 方向の探索。
-- **2〜4 版をスタイルで比較。** 8 種のプリセットか一行のカスタム指定。異なるモデルで同じスタイルも使えます。
-- **ブラインドか公開比較。** 各版を試し、一時除外して復元。1〜4 で集中表示、0 で全版に戻れます。
-- **回答・ファイル・実行ページ。** Markdown を読み、回答・コード・内容・保存先をコピー。選んだ版が明確に表示されます。
-- **主会話で続ける。** 比較・選択・採用・取り消しが現在の会話メモリに残り、そのまま修正を続けられます。
-- **Desktop + Web、中国語・英語 UI。** 設定済みモデルを再利用。変更を確認してから採用し、取り消し・復元も行えます。
+## 大肥鱼赛马を最初から最後まで見る
+
+[![作業中のバージョンごとのクジラとリアルタイムのステップ、4 つのポモドーロページの同時実行、返信とページを並べた C の選択を示す固定候補の例](https://raw.githubusercontent.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/main/docs/media/comparison-preview.gif)](https://github.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/blob/main/docs/media/comparison-workflow.mp4)
+
+4 匹の太っちょ魚が 4 つのポモドーロに挑む、実際の DSH ホストで録画した固定候補の実演です（3.1.0 リリース候補のソース、画面は中国語）。通常のフォルダーで 4 つのバージョンがそれぞれポモドーロのページを作り、比較カードの周りを 2 つの彗星が走ります。作業中に大きなウィンドウを開くと、バージョンごとに DeepSeek の青いクジラがいて、頭の上に考えごとが浮かび、下には最新のステップがリアルタイムに流れます。つつくと返事をします。「过程」（Steps）を開くと思考とファイル書き込みがリアルタイムに見えます。返信はページより先に表示され、その後 4 つのライブページをそのまま操作できます。2 つを外し、C に絞ると返信が左、ページが右に並びます。選択後に各スタイルを公開し、新しいフォルダーに保存して会話を続けます。待機部分は省略し、それ以外は等速です。ローカルパスは非表示です。
+
+選択後に理由（レイアウト、よりシンプル）を 2 つ選ぶと、主会話の次のリクエストに伝わります。
+
+[動画全編（45秒）](https://github.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/blob/main/docs/media/comparison-workflow.mp4) · [条件と結果](https://github.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/blob/main/docs/demo.md)
+
+[![设定 2–4 版与风格，并行实跑，体验后选择并说明理由，审查并继续主对话 / Set up, run, choose and say why, review and continue. Answers, files, live pages and conversation memory. Product illustration.](https://raw.githubusercontent.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/main/assets/readme/comparison-workflow.webp)](https://raw.githubusercontent.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/main/assets/readme/comparison-workflow.webp)
+
+<p align="center"><sub>功能示意 / Product illustration</sub></p>
 
 AgentCompare は [DeepSeek Harness](https://github.com/deepseek-ai/deepseek-harness)（DSH）のプラグインです。一つの課題から独立した 2〜4 の実装を作り、依存関係のインストール、ビルド、共通の検証を実行します。実際のページを操作して、いずれかを選ぶか「どれも選ばない」を選択できます。ブラインド比較では、選択後にモデルとスタイルが公開されます。採用前には、現在のプロジェクトと組み合わせた状態を検証します。
 
 [插件目录与安装](https://github.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/blob/main/docs/distribution.md) · [Plugin directories and installation](https://github.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/blob/main/docs/distribution.en.md) · [Listing status / 收录状态](https://github.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/issues/4)
 
-[![设定 2–4 版与风格，并行实跑，体验后选择并说明理由，审查并继续主对话 / Set up, run, choose and say why, review and continue. Answers, files, live pages and conversation memory. Product illustration.](https://raw.githubusercontent.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/main/assets/readme/comparison-workflow.webp)](https://raw.githubusercontent.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/main/assets/readme/comparison-workflow.webp)
-
-<p align="center"><sub>功能示意 / Product illustrations · <a href="#demo">查看真实演示 / Watch the recorded workflow</a></sub></p>
-
+<a id="ui"></a>
 <a id="gallery"></a>
 
-## 最新の画面を見る
+## 画面と体験
 
-実際の DSH で固定候補を比較した画面です。主画像とフロー図は機能のイメージです。
+待ち時間も、比較も、選択も、すべて目に見えて操作できます。下の 2 枚は実際の DSH ホストで固定候補を比較した画面です。
 
-<details>
-<summary>Open four interface views / 展开实际界面</summary>
+- **青いリキッドグラス。** 半透明のガラスパネルとスライドする選択部品、その後ろでゆっくり流れて溶け合う青い光。ライトとダークに対応し、視差効果を減らす設定では静止します。両テーマですべての文字をグリフ単位で測定し、コントラスト比は 4.5:1 以上です。
+- **太っちょ魚が付き添います。** バージョンごとに DeepSeek の青いクジラが 1 頭。進むにつれて青い水が満ち、2 つの光が輪郭を走ります。頭の上に考えごとが浮かび、つつくと返事をし、続けてつつくと回ったり、ふらついたり、水しぶきを上げたりします。
+- **すべてのステップが見える。** 「Steps」ボタンで思考・ツール呼び出し・変更を一覧でき、作業中は最新の 3 ステップがクジラの下でリアルタイムに流れます。
+- **返信と成果物を同じ重みで。** 回答だけなら回答だけ、ページがあれば返信と並べて表示し、1 つに絞ると返信が左、ページが右に並びます。
+- **A〜D は 4 つの青。** ブラインド比較では A〜D だけが見え、スタイルとモデルは選んだ後に公開され、カードに光が走ります。
+- **動いているのがひと目でわかる。** 実行中の比較の周りを 2 つの彗星が走り、ページは起動した瞬間から操作できます。
+- **デスクトップ・ブラウザー・スマホ幅**に対応し、中国語と英語の画面を切り替えられます。
 
 ![四版页面直接操作 / Four independently interactive pages; controlled candidates in a real DSH host](https://raw.githubusercontent.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/main/assets/readme/gallery-2.0/02-live-comparison.png)
 
 ![打招呼得到四种回答 / A greeting answered four ways; controlled candidates in a real DSH host](https://raw.githubusercontent.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/main/assets/readme/gallery-2.0/03-main-conversation.png)
 
-![版本、风格与上下文 / Versions, styles and context; controlled candidates in a real DSH host](https://raw.githubusercontent.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/main/assets/readme/gallery-2.0/04-comparison-settings.png)
-
-![英文回答并排比较 / Compare English answers; controlled candidates in a real DSH host](https://raw.githubusercontent.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/main/assets/readme/gallery-2.0/06-english-answers.png)
-
-</details>
-
-[全8枚の画像と撮影条件](https://github.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/blob/main/docs/storefront-gallery.md)
-
-<a id="demo"></a>
-
-## 操作の流れを見る
-
-[![作業中のバージョンごとのクジラとリアルタイムのステップ、4 つのポモドーロページの同時実行、返信とページを並べた C の選択を示す固定候補の例](https://raw.githubusercontent.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/main/docs/media/comparison-preview.gif)](https://github.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/blob/main/docs/media/comparison-workflow.mp4)
-
-実際の DSH ホストで録画した固定候補の実演です（3.1.0 リリース候補のソース、画面は中国語）。通常のフォルダーで 4 つのバージョンがそれぞれポモドーロのページを作り、比較カードの周りを 2 つの彗星が走ります。作業中に大きなウィンドウを開くと、バージョンごとにクジラがいて、つつくと泡を出します。「过程」（Steps）を開くと思考とファイル書き込みがリアルタイムに見えます。返信はページより先に表示され、その後 4 つのライブページをそのまま操作できます。2 つを外し、C に絞ると返信が左、ページが右に並びます。選択後に各スタイルを公開し、新しいフォルダーに保存して会話を続けます。待機部分は省略し、それ以外は等速です。ローカルパスは非表示です。
-
-選択後に理由（レイアウト、よりシンプル）を 2 つ選ぶと、主会話の次のリクエストに伝わります。
-
-[動画全編（46秒）](https://github.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/blob/main/docs/media/comparison-workflow.mp4) · [条件と結果](https://github.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/blob/main/docs/demo.md)
-
 <details>
-<summary>English answers · 390 px</summary>
+<summary>その他の画面：設定、英語の回答、スマホ幅</summary>
+
+![版本、风格与上下文 / Versions, styles and context; controlled candidates in a real DSH host](https://raw.githubusercontent.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/main/assets/readme/gallery-2.0/04-comparison-settings.png)
 
 <p align="center"><img src="https://raw.githubusercontent.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/main/assets/readme/13-english-answers.webp" width="840" alt="Three open English answers from the Three looks quick set: B is the pick, with Layout and More complete as its reasons; controlled candidates in a real DSH host."> <img src="https://raw.githubusercontent.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/main/assets/readme/14-phone-answer.webp" width="260" alt="390-pixel English answer result in the blue glass interface, with the chosen version and a visible Continue conversation action; controlled candidates in a real DSH host."></p>
 
 </details>
+
+[全8枚の画像と撮影条件](https://github.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/blob/main/docs/storefront-gallery.md)
 
 <a id="install"></a>
 
@@ -141,6 +125,31 @@ DSH を再起動します。同じ記録を使う古いプラグインの実行�
 検索・絞り込み、フォーム、ランディングページ、ダッシュボード、コンポーネントの再設計など、操作して品質を比較したい課題に向いています。答えが明確な不具合修正や機械的なリファクタリングは、単一のエージェントとテストのほうが適しています。
 
 同じモデルでは「既存構造を活かす」と「操作方法を見直す」という二つの戦略を使います。二つのモデルでは同じ依頼と指示を使います。いずれも同じコード基準点と共通の検証を利用します。一度の比較は、モデル全体の順位を意味しません。
+
+<a id="whats-new"></a>
+
+## 更新内容
+
+**3.1.0 の新機能：**
+- **すべてのステップを、実行中も終わった後も。** バージョンが作業を始めると、カードに「Steps」ボタンが現れます。開くと作業が順に並びます。所要時間つきの思考、ツール呼び出し（ファイルの読み取り・編集・コマンド実行など。開くと入力と出力を確認できます）、途中で書いた言葉です。作業中は最新の 3 ステップがクジラの下でリアルタイムに流れ、終わった後もすべてのステップをワンクリックで見返せます。ブラインド比較ではスタイルを示す語が ▒▒ になります。
+- **返信をそのまま表示。** 回答だけのバージョンは回答だけを表示します。ページやファイルを作ったバージョンは、返信を成果物と同じ重みで表示します。並べて比較するときはページの上に、1 つに絞ったときはページの左に表示します。返信はバージョンが終わった時点で、ページより先に表示されます。
+- **ページをそのまま表示。** 静的なページはプラグイン自身が配信するため、書き終えた時点で操作でき、デスクトップアプリに止められる別プロセスもありません。それでも配信できない場合は、HTML の成果物をそのままページとして表示し、ソースはワンクリックで切り替えられます。
+- **成果物がより早く。** バージョンはターン終了から 1 秒以内に完了とみなします。以前はほかのプラグイン（記憶系など）がセッションを解放するまで待っており、一般的なデスクトップでは約 40 秒余計にかかっていました。各バージョンが作業している間にロックファイルから依存関係を先にインストールし、依存関係を変えていないバージョンにはその独立したコピーを渡します。チェックは並列で実行し、ページは起動した時点で操作できます。固定候補の録画環境では、4 つの Vite バージョンが送信から約 24〜30 秒ですべて使える状態になりました。
+- **待ち時間も楽しく。** 作業中の各バージョンには DeepSeek の青いクジラのロゴが表示され、最初は淡い色で、進むにつれて青い水が満ち、2 つの光が輪郭を走ります。ときどき頭の上に考えごとの吹き出しが浮かびます（今していること、ひらめき、つついてという誘い）。ステップごとに潮を吹いてポインターのほうを向き、続けてつつくと跳ねたり、回ったり、ふらついたり、水しぶきを上げたりして、そのたびに新しいセリフを言います。実行中の比較の周りでは 2 つの彗星が枠を走り（古いエンジンやアニメーションを止めるテーマでも動きます）、背景ではゆっくり流れる青い光が溶け合います。
+- **A〜D は 4 つの青。** バージョンのラベルは 4 種類の異なる青になりました。
+- **DSH の再起動をお知らせ。** DSH はプラグインの画面をすぐ入れ替えますが、バックエンドは起動時に読み込んだものを使い続けます。両者が食い違うと、AgentCompare は黙ってステップや返信を欠くのではなく、DSH を完全に終了して開き直すよう案内します。
+- **中国語名がつきました。** 正式名は「鲸挑细选」、愛称は「大肥鱼赛马」です。
+- **単独では公開しなかった 2.1.0 の改善も含みます：** あいさつや質問にはページではなく回答が返ります。より明るく透明感のあるリキッドグラス、軽いボタン、スライドする操作部品。ライトとダークの両方で、21 の画面状態のすべての文字がコントラスト比 4.5:1 以上です。
+
+**2.0.0 の新機能：** 一度に **2〜4 バージョン**を比較できます。各バージョンに**スタイル**を指定できます（変更の幅：堅実・大胆／見た目：ミニマル・洗練・活発／優先：使いやすさ・厳密・軽快、または一行の自由記述）。**ブラインド**（選択後に公開）と**公開比較**（最初から表示）を選べます。3〜4 バージョンでは不要な版を**外して**残りを並べて比べられ、カード内で 1〜4 キーを押すとその版に集中できます。
+- **青いリキッドグラスの新しい UI。** オーロラと星屑の背景、ガラスのパネル、選択肢の間を滑るガラスのレンズ、液体の進捗表示。選んだ瞬間に光の粒がはじけ、公開時には光が走ります。ダークモード、視差効果を減らす設定、ハイコントラストに対応。
+- **選んだ理由を伝える。** 選択後に理由（レイアウト、配色と質感、操作感など）を選ぶか一言添えると、主会話での後続の修正がその長所を保ちます。
+- **クイックセット。** バージョン数とスタイルをワンタップで設定：定番の対比、3 つの見た目、3 つの優先、4 方向の探索。
+- **2〜4 版をスタイルで比較。** 8 種のプリセットか一行のカスタム指定。異なるモデルで同じスタイルも使えます。
+- **ブラインドか公開比較。** 各版を試し、一時除外して復元。1〜4 で集中表示、0 で全版に戻れます。
+- **回答・ファイル・実行ページ。** Markdown を読み、回答・コード・内容・保存先をコピー。選んだ版が明確に表示されます。
+- **主会話で続ける。** 比較・選択・採用・取り消しが現在の会話メモリに残り、そのまま修正を続けられます。
+- **Desktop + Web、中国語・英語 UI。** 設定済みモデルを再利用。変更を確認してから採用し、取り消し・復元も行えます。
 
 ## 検証とコードの状態
 

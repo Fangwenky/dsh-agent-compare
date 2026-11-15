@@ -1,6 +1,6 @@
-[![AgentCompare 2.0：在主对话里比较 2–4 版回答、文件与网页。Desktop + Web，中英双语，选择后继续对话 / Compare 2–4 answers, files and live pages in the main conversation. Styles, blind or open comparison, reasons for the pick, reviewed adoption and conversation memory, in a blue liquid-glass interface. Product illustration.](https://raw.githubusercontent.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/main/assets/readme/hero-bilingual.webp)](#install)
+[![鲸挑细选 · AgentCompare（大肥鱼赛马）：在主对话里比较 2–4 版回答、文件与网页。Desktop + Web，中英双语，选择后继续对话 / Compare 2–4 answers, files and live pages in the main conversation. Styles, blind or open comparison, reasons for the pick, reviewed adoption and conversation memory, in a blue liquid-glass interface. Product illustration.](https://raw.githubusercontent.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/main/assets/readme/hero-bilingual.webp)](#install)
 
-# AgentCompare
+# AgentCompare · 鲸挑细选
 
 [![GitHub stars](https://img.shields.io/github/stars/lijiaqi-AI-Product-Manager/dsh-agent-compare?label=GitHub%20Stars&color=3657f5&style=flat&labelColor=0b1b4f)](https://github.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/stargazers)
 [![npm total download requests](https://raw.githubusercontent.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/main/assets/statistics/npm-total-badge.svg)](https://www.npmjs.com/package/dsh-agent-compare)
@@ -16,79 +16,63 @@
 
 **Una tarea. De 2 a 4 implementaciones en ejecución. Elige estilos, compara a ciegas o a la vista y adopta.**
 
+Su nombre en chino es **鲸挑细选** (*jīng tiāo xì xuǎn*), un juego con 精挑细选, «elegido con cuidado», donde 鲸 significa ballena: 2–4 ballenas de DeepSeek abordan la misma tarea y tú te quedas con la mejor. Su apodo es **大肥鱼赛马**, «la carrera del pez gordo»: en China llaman «pez gordo» a la ballena de DeepSeek, y aquí varios corren en la misma pista mientras tú decides el ganador.
+
 **DSH 桌面端 + 浏览器 / Desktop + Web**
 
-<p align="center"><a href="#install">安装 / Install</a> · <a href="#demo">真实演示 / Recorded demo</a></p>
+<p align="center"><a href="#demo">真实演示 / Recorded demo</a> · <a href="#ui">界面与体验 / Interface</a> · <a href="#install">安装 / Install</a> · <a href="#whats-new">版本更新 / What's new</a></p>
 
 > **3.1.0 · Versión estable.** DSH Desktop y Web, con interfaz en chino e inglés. Compara 2–4 versiones de respuestas, archivos o páginas web en la conversación principal; abre lo que pensó cada versión y las herramientas que usó, y lee su respuesta junto a lo que construyó.
 
-**Novedades de 3.1.0:**
-- **Cada paso a la vista, en vivo y después.** En cuanto una versión empieza, su tarjeta tiene un botón **Steps**. Al abrirlo aparece el trabajo en orden: razonamientos con lo que tardaron, llamadas a herramientas (leer o editar un archivo, ejecutar un comando…; cada una se abre con su entrada y su salida) y lo que se escribió entre pasos. Mientras trabaja, sus tres pasos más recientes también pasan en vivo bajo la ballena, y al terminar cada paso queda a un clic. En una comparación a ciegas, las palabras que nombran un estilo aparecen como ▒▒.
-- **La respuesta, a la vista.** Una versión que solo responde muestra solo su respuesta. Una versión que construyó una página o escribió archivos muestra su respuesta con el mismo peso: encima de la página en paralelo y a la izquierda de la página cuando esa versión está enfocada. La respuesta aparece en cuanto la versión termina, antes que su página.
-- **Las páginas, a la vista.** Las páginas estáticas las sirve el propio complemento: se pueden usar en cuanto se escriben, sin un proceso aparte que la aplicación de escritorio pueda detener. Si aun así una página no puede servirse, un resultado HTML se muestra igualmente como página, con su código a un clic.
-- **Resultados antes.** Una versión se da por terminada menos de un segundo después de acabar su turno; antes, la comparación esperaba a que otros complementos (de memoria, por ejemplo) liberaran la sesión, unos 40 segundos en un escritorio típico. Las dependencias se instalan desde el archivo de bloqueo mientras las versiones trabajan, y una versión que no las cambió recibe su propia copia; las comprobaciones corren en paralelo y la página se puede usar en cuanto arranca. En el entorno de grabación con candidatos fijos, cuatro versiones Vite pasaron del envío a cuatro páginas utilizables en unos 24–30 segundos.
-- **Esperar es divertido.** Cada versión en marcha muestra la ballena azul de DeepSeek, pálida al principio, que se llena de agua azul a medida que avanza, mientras dos luces recorren su borde. De vez en cuando le sube un pensamiento sobre la cabeza: lo que está haciendo, una idea o una invitación a tocarla. Lanza un chorro en cada paso y se gira hacia el puntero; varios toques seguidos la hacen saltar, girar, tambalearse y salpicar, con una frase nueva cada vez. Dos cometas recorren el borde de una comparación en curso (también en motores más antiguos y con temas que detienen las animaciones), sobre una luz azul que fluye despacio.
-- **Cuatro azules para A–D.** Las etiquetas de las versiones son cuatro azules distintos.
-- **Un aviso para reiniciar DSH.** DSH cambia al momento la interfaz de un complemento, pero mantiene el servidor que cargó al iniciar. Cuando no coinciden, AgentCompare te pide cerrar y volver a abrir DSH, en vez de perder en silencio los pasos y las respuestas.
-- **Incluye también 2.1.0, que no se publicó por separado:** un saludo o una pregunta recibe respuestas en lugar de páginas; vidrio líquido más claro y luminoso, botones más ligeros y controles que se deslizan; en ambos temas, todo el texto de 21 estados de la interfaz alcanza al menos 4.5:1.
+<a id="demo"></a>
 
-**Novedades de 2.0.0:** compara **2, 3 o 4 versiones** a la vez. Cada versión puede tener un **estilo** (alcance: conservador, audaz; aspecto: minimalista, pulido, vibrante; prioridad: amigable, riguroso, ligero; o una línea propia). Compara **a ciegas** (estilos revelados al elegir) o **a la vista** (estilos visibles desde el inicio). Con tres o cuatro versiones puedes **apartar** las que descartas para ver el resto en paralelo, y en la tarjeta las teclas 1–4 enfocan una versión.
-- **Nueva interfaz de vidrio líquido azul.** Aurora y polvo de estrellas tras paneles de vidrio, una lente de vidrio que se desliza entre opciones y progreso líquido; un destello al elegir y un barrido de luz al revelar. Compatible con modo oscuro, movimiento reducido y alto contraste.
-- **Di por qué ganó.** Tras elegir, marca algunos motivos (diseño, color y acabado, sensación de uso…) o añade una línea; los cambios posteriores en la conversación principal conservan esas virtudes.
-- **Combinaciones rápidas.** Un toque fija el número de versiones y sus estilos: Par clásico, Tres estéticas, Tres prioridades, Cuatro direcciones.
-- **2–4 versiones con estilos.** Ocho estilos predefinidos o una descripción de una línea; varios modelos pueden compartir un estilo.
-- **Comparación a ciegas o abierta.** Prueba cada versión, apártala y restáurala; 1–4 enfoca una versión y 0 muestra todas.
-- **Respuestas, archivos y páginas reales.** Lee Markdown y copia respuestas, código, archivos o rutas. Tu elección queda señalada.
-- **Continúa en la conversación.** Comparaciones, elecciones, adopciones y deshacer quedan en la memoria de la conversación actual.
-- **Desktop + Web, interfaz en chino e inglés.** Reutiliza modelos configurados, revisa los cambios antes de adoptarlos y conserva deshacer y recuperación.
+## Ver una carrera del pez gordo completa
+
+[![Ejemplo con candidatos fijos: una ballena por versión en marcha y pasos en vivo, cuatro páginas pomodoro en vivo, C enfocada con su respuesta junto a la página y elegida](https://raw.githubusercontent.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/main/docs/media/comparison-preview.gif)](https://github.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/blob/main/docs/media/comparison-workflow.mp4)
+
+Cuatro peces gordos, cuatro páginas pomodoro: grabación con candidatos fijos en un host DSH real, a partir del código candidato de 3.1.0 y con la interfaz en chino. Cuatro versiones crean una página pomodoro en una carpeta normal mientras dos cometas recorren el borde de la tarjeta de comparación. La ventana grande se abre mientras trabajan: una ballena azul de DeepSeek por versión, con pensamientos sobre la cabeza y sus pasos más recientes en vivo debajo, que contesta al tocarla, y los **Steps** abiertos con el razonamiento y la escritura del archivo en vivo. Las respuestas llegan antes que las páginas, y luego las cuatro páginas en vivo se pueden usar. Se apartan dos, C se enfoca con su respuesta a la izquierda de la página, la elección revela cada estilo y el resultado se guarda en una carpeta nueva antes de seguir la conversación. El vídeo omite las esperas y mantiene el resto a velocidad normal. Se ocultan las rutas locales.
+
+Tras elegir, se marcan dos motivos (diseño y más simple), que llegan a la siguiente petición de la conversación principal.
+
+[Vídeo completo (45 segundos)](https://github.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/blob/main/docs/media/comparison-workflow.mp4) · [Condiciones y resultados](https://github.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/blob/main/docs/demo.md)
+
+[![设定 2–4 版与风格，并行实跑，体验后选择并说明理由，审查并继续主对话 / Set up, run, choose and say why, review and continue. Answers, files, live pages and conversation memory. Product illustration.](https://raw.githubusercontent.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/main/assets/readme/comparison-workflow.webp)](https://raw.githubusercontent.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/main/assets/readme/comparison-workflow.webp)
+
+<p align="center"><sub>功能示意 / Product illustration</sub></p>
 
 AgentCompare es un complemento de [DeepSeek Harness](https://github.com/deepseek-ai/deepseek-harness), DSH. De 2 a 4 agentes trabajan sobre copias independientes del mismo proyecto. El complemento instala dependencias, compila, sirve cada aplicación y aplica criterios comunes de verificación. Puedes usar las páginas antes de elegir una o ninguna; en una comparación a ciegas, el modelo y el estilo se revelan al elegir. Antes de incorporar una propuesta, comprueba cómo encaja con el estado actual de tu proyecto.
 
 [插件目录与安装](https://github.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/blob/main/docs/distribution.md) · [Plugin directories and installation](https://github.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/blob/main/docs/distribution.en.md) · [Listing status / 收录状态](https://github.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/issues/4)
 
-[![设定 2–4 版与风格，并行实跑，体验后选择并说明理由，审查并继续主对话 / Set up, run, choose and say why, review and continue. Answers, files, live pages and conversation memory. Product illustration.](https://raw.githubusercontent.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/main/assets/readme/comparison-workflow.webp)](https://raw.githubusercontent.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/main/assets/readme/comparison-workflow.webp)
-
-<p align="center"><sub>功能示意 / Product illustrations · <a href="#demo">查看真实演示 / Watch the recorded workflow</a></sub></p>
-
+<a id="ui"></a>
 <a id="gallery"></a>
 
-## La interfaz actual
+## Interfaz y experiencia
 
-Capturas reales de DSH con candidatos controlados. La portada y el flujo son ilustraciones del producto.
+Esperar, comparar y elegir: todo se ve y se puede tocar. Las dos imágenes de abajo muestran candidatos fijos en un host DSH real.
 
-<details>
-<summary>Open four interface views / 展开实际界面</summary>
+- **Vidrio líquido azul.** Paneles de vidrio translúcido y selectores que se deslizan sobre una luz azul que fluye despacio, en tema claro y oscuro; con el movimiento reducido activado, todo se queda quieto. Cada texto se mide glifo a glifo en ambos temas con un contraste de 4.5:1 o más.
+- **Un pez gordo te acompaña.** Una ballena azul de DeepSeek por versión se llena de agua azul a medida que avanza mientras dos luces recorren su borde. Le suben pensamientos sobre la cabeza; tócala y te contesta, sigue tocándola y gira, se tambalea y salpica.
+- **Cada paso a la vista.** El botón **Steps** muestra razonamientos, llamadas a herramientas y cambios; mientras trabaja, los tres pasos más recientes pasan en vivo bajo la ballena.
+- **Respuesta y resultado con el mismo peso.** Una respuesta se muestra sola; una página comparte la tarjeta con su respuesta, y al enfocar una versión la respuesta queda a la izquierda de la página.
+- **Cuatro azules para A–D.** En una comparación a ciegas solo ves A–D; los estilos y modelos se revelan tras elegir, con un barrido de luz sobre las tarjetas.
+- **Se nota que está en marcha.** Dos cometas recorren el borde de una comparación en curso, y cada página se puede usar en cuanto arranca.
+- **Escritorio, navegador y ancho de móvil**, con interfaz en chino e inglés.
 
 ![四版页面直接操作 / Four independently interactive pages; controlled candidates in a real DSH host](https://raw.githubusercontent.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/main/assets/readme/gallery-2.0/02-live-comparison.png)
 
 ![打招呼得到四种回答 / A greeting answered four ways; controlled candidates in a real DSH host](https://raw.githubusercontent.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/main/assets/readme/gallery-2.0/03-main-conversation.png)
 
-![版本、风格与上下文 / Versions, styles and context; controlled candidates in a real DSH host](https://raw.githubusercontent.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/main/assets/readme/gallery-2.0/04-comparison-settings.png)
-
-![英文回答并排比较 / Compare English answers; controlled candidates in a real DSH host](https://raw.githubusercontent.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/main/assets/readme/gallery-2.0/06-english-answers.png)
-
-</details>
-
-[Las 8 imágenes y las condiciones de captura](https://github.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/blob/main/docs/storefront-gallery.md)
-
-<a id="demo"></a>
-
-## Ver el flujo completo
-
-[![Ejemplo con candidatos fijos: una ballena por versión en marcha y pasos en vivo, cuatro páginas pomodoro en vivo, C enfocada con su respuesta junto a la página y elegida](https://raw.githubusercontent.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/main/docs/media/comparison-preview.gif)](https://github.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/blob/main/docs/media/comparison-workflow.mp4)
-
-Grabación con candidatos fijos en un host DSH real, a partir del código candidato de 3.1.0 y con la interfaz en chino. Cuatro versiones crean una página pomodoro en una carpeta normal mientras dos cometas recorren el borde de la tarjeta de comparación. La ventana grande se abre mientras trabajan: una ballena por versión, que suelta burbujas al tocarla, y los **Steps** abiertos con el razonamiento y la escritura del archivo en vivo. Las respuestas llegan antes que las páginas, y luego las cuatro páginas en vivo se pueden usar. Se apartan dos, C se enfoca con su respuesta a la izquierda de la página, la elección revela cada estilo y el resultado se guarda en una carpeta nueva antes de seguir la conversación. El vídeo omite las esperas y mantiene el resto a velocidad normal. Se ocultan las rutas locales.
-
-Tras elegir, se marcan dos motivos (diseño y más simple), que llegan a la siguiente petición de la conversación principal.
-
-[Vídeo completo (46 segundos)](https://github.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/blob/main/docs/media/comparison-workflow.mp4) · [Condiciones y resultados](https://github.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/blob/main/docs/demo.md)
-
 <details>
-<summary>English answers · 390 px</summary>
+<summary>Más vistas: ajustes, respuestas en inglés, ancho de móvil</summary>
+
+![版本、风格与上下文 / Versions, styles and context; controlled candidates in a real DSH host](https://raw.githubusercontent.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/main/assets/readme/gallery-2.0/04-comparison-settings.png)
 
 <p align="center"><img src="https://raw.githubusercontent.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/main/assets/readme/13-english-answers.webp" width="840" alt="Three open English answers from the Three looks quick set: B is the pick, with Layout and More complete as its reasons; controlled candidates in a real DSH host."> <img src="https://raw.githubusercontent.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/main/assets/readme/14-phone-answer.webp" width="260" alt="390-pixel English answer result in the blue glass interface, with the chosen version and a visible Continue conversation action; controlled candidates in a real DSH host."></p>
 
 </details>
+
+[Las 8 imágenes y las condiciones de captura](https://github.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/blob/main/docs/storefront-gallery.md)
 
 <a id="install"></a>
 
@@ -141,6 +125,31 @@ Reinicia DSH. Antes de actualizar, termina las comparaciones activas y cierra la
 Búsquedas, filtros, formularios, páginas de presentación, paneles y rediseños de componentes: tareas cuya calidad se aprecia al utilizarlas. Para errores con una respuesta clara o refactorizaciones mecánicas suele ser mejor un agente con pruebas.
 
 Con un modelo se comparan una estrategia que conserva la estructura y otra que replantea la interacción. Con dos modelos se mantienen la tarea, las instrucciones y la verificación. Ambos parten del mismo código. Una elección no demuestra que un modelo sea mejor en general.
+
+<a id="whats-new"></a>
+
+## Novedades por versión
+
+**Novedades de 3.1.0:**
+- **Cada paso a la vista, en vivo y después.** En cuanto una versión empieza, su tarjeta tiene un botón **Steps**. Al abrirlo aparece el trabajo en orden: razonamientos con lo que tardaron, llamadas a herramientas (leer o editar un archivo, ejecutar un comando…; cada una se abre con su entrada y su salida) y lo que se escribió entre pasos. Mientras trabaja, sus tres pasos más recientes también pasan en vivo bajo la ballena, y al terminar cada paso queda a un clic. En una comparación a ciegas, las palabras que nombran un estilo aparecen como ▒▒.
+- **La respuesta, a la vista.** Una versión que solo responde muestra solo su respuesta. Una versión que construyó una página o escribió archivos muestra su respuesta con el mismo peso: encima de la página en paralelo y a la izquierda de la página cuando esa versión está enfocada. La respuesta aparece en cuanto la versión termina, antes que su página.
+- **Las páginas, a la vista.** Las páginas estáticas las sirve el propio complemento: se pueden usar en cuanto se escriben, sin un proceso aparte que la aplicación de escritorio pueda detener. Si aun así una página no puede servirse, un resultado HTML se muestra igualmente como página, con su código a un clic.
+- **Resultados antes.** Una versión se da por terminada menos de un segundo después de acabar su turno; antes, la comparación esperaba a que otros complementos (de memoria, por ejemplo) liberaran la sesión, unos 40 segundos en un escritorio típico. Las dependencias se instalan desde el archivo de bloqueo mientras las versiones trabajan, y una versión que no las cambió recibe su propia copia; las comprobaciones corren en paralelo y la página se puede usar en cuanto arranca. En el entorno de grabación con candidatos fijos, cuatro versiones Vite pasaron del envío a cuatro páginas utilizables en unos 24–30 segundos.
+- **Esperar es divertido.** Cada versión en marcha muestra la ballena azul de DeepSeek, pálida al principio, que se llena de agua azul a medida que avanza, mientras dos luces recorren su borde. De vez en cuando le sube un pensamiento sobre la cabeza: lo que está haciendo, una idea o una invitación a tocarla. Lanza un chorro en cada paso y se gira hacia el puntero; varios toques seguidos la hacen saltar, girar, tambalearse y salpicar, con una frase nueva cada vez. Dos cometas recorren el borde de una comparación en curso (también en motores más antiguos y con temas que detienen las animaciones), sobre una luz azul que fluye despacio.
+- **Cuatro azules para A–D.** Las etiquetas de las versiones son cuatro azules distintos.
+- **Un aviso para reiniciar DSH.** DSH cambia al momento la interfaz de un complemento, pero mantiene el servidor que cargó al iniciar. Cuando no coinciden, AgentCompare te pide cerrar y volver a abrir DSH, en vez de perder en silencio los pasos y las respuestas.
+- **Nombre en chino.** El nombre oficial es «鲸挑细选» y el apodo, «大肥鱼赛马».
+- **Incluye también 2.1.0, que no se publicó por separado:** un saludo o una pregunta recibe respuestas en lugar de páginas; vidrio líquido más claro y luminoso, botones más ligeros y controles que se deslizan; en ambos temas, todo el texto de 21 estados de la interfaz alcanza al menos 4.5:1.
+
+**Novedades de 2.0.0:** compara **2, 3 o 4 versiones** a la vez. Cada versión puede tener un **estilo** (alcance: conservador, audaz; aspecto: minimalista, pulido, vibrante; prioridad: amigable, riguroso, ligero; o una línea propia). Compara **a ciegas** (estilos revelados al elegir) o **a la vista** (estilos visibles desde el inicio). Con tres o cuatro versiones puedes **apartar** las que descartas para ver el resto en paralelo, y en la tarjeta las teclas 1–4 enfocan una versión.
+- **Nueva interfaz de vidrio líquido azul.** Aurora y polvo de estrellas tras paneles de vidrio, una lente de vidrio que se desliza entre opciones y progreso líquido; un destello al elegir y un barrido de luz al revelar. Compatible con modo oscuro, movimiento reducido y alto contraste.
+- **Di por qué ganó.** Tras elegir, marca algunos motivos (diseño, color y acabado, sensación de uso…) o añade una línea; los cambios posteriores en la conversación principal conservan esas virtudes.
+- **Combinaciones rápidas.** Un toque fija el número de versiones y sus estilos: Par clásico, Tres estéticas, Tres prioridades, Cuatro direcciones.
+- **2–4 versiones con estilos.** Ocho estilos predefinidos o una descripción de una línea; varios modelos pueden compartir un estilo.
+- **Comparación a ciegas o abierta.** Prueba cada versión, apártala y restáurala; 1–4 enfoca una versión y 0 muestra todas.
+- **Respuestas, archivos y páginas reales.** Lee Markdown y copia respuestas, código, archivos o rutas. Tu elección queda señalada.
+- **Continúa en la conversación.** Comparaciones, elecciones, adopciones y deshacer quedan en la memoria de la conversación actual.
+- **Desktop + Web, interfaz en chino e inglés.** Reutiliza modelos configurados, revisa los cambios antes de adoptarlos y conserva deshacer y recuperación.
 
 ## Ejecución y criterios comunes
 

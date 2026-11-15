@@ -1,6 +1,6 @@
-[![AgentCompare 2.0：在主对话里比较 2–4 版回答、文件与网页。Desktop + Web，中英双语，选择后继续对话 / Compare 2–4 answers, files and live pages in the main conversation. Styles, blind or open comparison, reasons for the pick, reviewed adoption and conversation memory, in a blue liquid-glass interface. Product illustration.](https://raw.githubusercontent.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/main/assets/readme/hero-bilingual.webp)](#install)
+[![鲸挑细选 · AgentCompare（大肥鱼赛马）：在主对话里比较 2–4 版回答、文件与网页。Desktop + Web，中英双语，选择后继续对话 / Compare 2–4 answers, files and live pages in the main conversation. Styles, blind or open comparison, reasons for the pick, reviewed adoption and conversation memory, in a blue liquid-glass interface. Product illustration.](https://raw.githubusercontent.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/main/assets/readme/hero-bilingual.webp)](#install)
 
-# AgentCompare
+# AgentCompare · 鲸挑细选
 
 [![GitHub stars](https://img.shields.io/github/stars/lijiaqi-AI-Product-Manager/dsh-agent-compare?label=GitHub%20Stars&color=3657f5&style=flat&labelColor=0b1b4f)](https://github.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/stargazers)
 [![npm total download requests](https://raw.githubusercontent.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/main/assets/statistics/npm-total-badge.svg)](https://www.npmjs.com/package/dsh-agent-compare)
@@ -16,33 +16,36 @@
 
 **Same task. Up to four live builds. Pick styles, compare blind or open, then adopt.**
 
+Its Chinese name is **鲸挑细选** (*jīng tiāo xì xuǎn*), a pun on 精挑细选, "picked with care", where 鲸 means whale: 2–4 DeepSeek whales take on the same task, and you keep the best. Its nickname is **大肥鱼赛马**, "the Big Fat Fish race": Chinese users call DeepSeek's whale the Big Fat Fish, and here several of them race on one track while you call the winner.
+
 **DSH 桌面端 + 浏览器 / Desktop + Web**
 
-<p align="center"><a href="#install">安装 / Install</a> · <a href="#demo">真实演示 / Recorded demo</a></p>
+<p align="center"><a href="#demo">真实演示 / Recorded demo</a> · <a href="#ui">界面与体验 / Interface</a> · <a href="#install">安装 / Install</a> · <a href="#whats-new">版本更新 / What's new</a></p>
 
 > **3.1.0 · Stable release.** DSH Desktop + Web, with Chinese and English interfaces. Compare 2–4 versions of answers, files or web pages in the main conversation; open each version's thinking and tool calls, and read its reply beside what it built.
 
-**New in 3.1.0:**
-- **Every step in view, live and afterwards.** As soon as a version starts, its card has a **Steps** button. Open it to see the work in order: thoughts with their timing, tool calls (Read file, Edit file, Run command… each opens to its input and output) and the words written in between. While a version works, its newest three steps also scroll by live under the whale, and after it finishes every step stays one click away. Before a blind pick, words that name a style show as ▒▒.
-- **The reply, shown directly.** A version that only answers shows just its answer. A version that built a page or wrote files shows its reply with the same standing: above the page side by side, and to the left of the page when that version is in focus. The reply appears as soon as the version finishes, before its page.
-- **Pages shown directly.** Static pages are served by the plugin itself, so they open the moment they are written, with no separate process for the desktop app to stop. If a page still cannot be served, an HTML result is shown as a page anyway, with its source one click away.
-- **Results sooner.** A version counts as done within a second of its turn ending; before, the run waited for other plugins (memory writers, for example) to release the session, about 40 seconds on a typical desktop. Dependencies are installed from the lockfile while the versions work, and a version that kept them gets its own copy; checks run in parallel, and the page can be used as soon as it starts. In the controlled recording setup, four Vite versions went from sending to four usable pages in about 24–30 seconds.
-- **Waiting is fun.** Each working version shows DeepSeek's blue whale logo, pale at first and filling with blue water as the version gets further, while two lights run around its edge. Now and then a thought rises over its head: what it is doing, an idea, or an invitation to poke it. It spouts at every step and turns toward the pointer, and pokes in a row make it jump, spin, wobble and splash, with a new line each time. Two comets race around a running comparison (they keep moving on older engines and under themes that stop animations), over slowly flowing blue light.
-- **Four blues for A–D.** Version labels are four different blues.
-- **A reminder to restart DSH.** DSH swaps in a plugin's new interface at once but keeps running the backend it loaded at start. When the two differ, AgentCompare asks you to quit and reopen DSH instead of quietly missing steps and replies.
-- **Also includes 2.1.0, which was not published on its own:** a greeting or a question gets answers instead of pages; brighter, clearer liquid glass, lighter buttons and sliding controls; in both themes, every text in 21 interface states measures at least 4.5:1.
+<a id="demo"></a>
 
-**New in 2.0.0:**
-- **A new blue liquid-glass interface.** Aurora and star dust behind glass panels, a glass lens that slides between options and liquid progress; a burst of light when you pick and a sweep of light at the reveal. Dark mode, reduced motion and high-contrast mode are supported.
-- **Say why it won.** After the pick, tap a few reasons (layout, look and colour, feel in use…) or add a line; later changes in the main conversation keep those strengths.
-- **Quick sets.** One tap sets the number of versions and their styles: Classic pair, Three looks, Three priorities, Four directions.
-- **2–4 versions, with styles.** Eight presets or a one-line custom style; different models can share one style.
-- **Blind or open comparison.** Try each version, set it aside and restore it; use 1–4 to focus and 0 to show all.
-- **Answers, files and live pages.** Read formatted Markdown and copy answers, code, file contents or saved paths. Your pick is clearly marked.
-- **Stay in the conversation.** Comparisons, picks, adoption and undo enter the current conversation's memory so you can keep working.
-- **Desktop + Web, Chinese + English.** Reuse configured models; review changes before confirming adoption, with undo and recovery available.
+## Watch a whole Big Fat Fish race
 
-Since 1.3.0, any folder works, including repository subfolders, non-Vite Node projects and static sites, and answers and files can be compared too. See the [changelog](https://github.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/blob/main/CHANGELOG.md#200) for scope and limits.
+[![Fixed-candidate workflow: DeepSeek's blue whale filling per working version and live steps, four live pomodoro pages, C in focus with its reply beside its page, C picked and the reasons given](https://raw.githubusercontent.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/main/docs/media/comparison-preview.gif)](https://github.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/blob/main/docs/media/comparison-workflow.mp4)
+
+Four fish, four pomodoro pages: a controlled-candidate recording in a real DSH host, from the 3.1.0 release-candidate source with the Chinese interface:
+- Four versions each build a pomodoro page in a plain folder, while two comets race around the comparison card.
+- The large window opens while they work: DeepSeek's blue whale per version, filling with water as it goes, with thoughts over its head and its newest steps running live underneath; a poke makes it answer, and **Steps** opens to show thinking and a file write.
+- The replies arrive before the pages; then all four live pages can be used.
+- Two are set aside, C is shown in focus with its reply beside its page, and the pick reveals every style.
+- Two reasons are tapped (layout, simpler), which the next request in the main conversation carries; the pick is saved into a new folder, and the conversation continues.
+
+The video cuts waiting and keeps the rest at the original speed. Local paths are hidden.
+
+[Full video (45 seconds)](https://github.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/blob/main/docs/media/comparison-workflow.mp4) · [Method and results](https://github.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/blob/main/docs/demo.md)
+
+[Four-step quick start](docs/quickstart.en.md) · [Troubleshooting a run](docs/runs-and-recovery.en.md)
+
+[![设定 2–4 版与风格，并行实跑，体验后选择并说明理由，审查并继续主对话 / Set up, run, choose and say why, review and continue. Answers, files, live pages and conversation memory. Product illustration.](https://raw.githubusercontent.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/main/assets/readme/comparison-workflow.webp)](https://raw.githubusercontent.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/main/assets/readme/comparison-workflow.webp)
+
+<p align="center"><sub>功能示意 / Product illustration</sub></p>
 
 AgentCompare is a [DeepSeek Harness](https://github.com/deepseek-ai/deepseek-harness) (DSH) plugin that completes 2–4 versions of a task as answers, files or web pages. Runnable pages get live previews. Content-only comparison does not claim arbitrary-language execution or functional test coverage. You try every version before choosing; in a blind comparison, the model and style are revealed only after the pick. Before adoption, you review the combination with your current project.
 
@@ -55,60 +58,39 @@ AgentCompare is a [DeepSeek Harness](https://github.com/deepseek-ai/deepseek-har
 **Start in 30 seconds:**
 1. In DSH Desktop, install `dsh-agent-compare` from **Plugins → Add plugin** (for Web, see [Install](#install)).
 2. Click **A|B** at the bottom left of the composer, then pick the number of versions and their styles.
-3. Write the task and send, as usual.
+3. Write the task and send, as usual. The race is on.
 
 [插件目录与安装](https://github.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/blob/main/docs/distribution.md) · [Plugin directories and installation](https://github.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/blob/main/docs/distribution.en.md) · [Listing status / 收录状态](https://github.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/issues/4)
 
-[![设定 2–4 版与风格，并行实跑，体验后选择并说明理由，审查并继续主对话 / Set up, run, choose and say why, review and continue. Answers, files, live pages and conversation memory. Product illustration.](https://raw.githubusercontent.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/main/assets/readme/comparison-workflow.webp)](https://raw.githubusercontent.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/main/assets/readme/comparison-workflow.webp)
-
-<p align="center"><sub>功能示意 / Product illustrations · <a href="#demo">查看真实演示 / Watch the recorded workflow</a></sub></p>
-
+<a id="ui"></a>
 <a id="gallery"></a>
 
-## See the current interface
+## Interface and experience
 
-Try the live pages, compare in the conversation, choose styles and keep your reasons. These are actual DSH captures with controlled candidates; the hero and workflow are product illustrations.
+Waiting, comparing and picking are all visible and clickable. The two images below are controlled candidates in a real DSH host.
 
-<details>
-<summary>Open four interface views / 展开实际界面</summary>
+- **Blue liquid glass.** Translucent glass panels and sliding selectors over slowly flowing blue light, in light and dark themes; with reduced motion on, everything holds still. Every text is measured glyph by glyph in both themes at 4.5:1 contrast or better.
+- **A Big Fat Fish keeps you company.** One blue DeepSeek whale per version fills with blue water as it goes while two lights trace its edge. Thoughts rise over its head; poke it and it answers, keep poking and it spins, wobbles and splashes.
+- **Every step in view.** The **Steps** button lists thoughts, tool calls and edits; while a version works, its newest three steps run live under the whale.
+- **Reply and result side by side.** An answer stands alone; a page shares the card with its reply, and in focus the reply sits to the left of the page.
+- **Four blues for A–D.** In a blind comparison you only see A–D; styles and models are revealed after the pick, with a sweep of light across the cards.
+- **Easy to tell it's running.** Two comets race around a running comparison, and each page can be used the moment it starts.
+- **Desktop, browser and phone widths**, with Chinese and English interfaces.
 
 ![四版页面直接操作 / Four independently interactive pages; controlled candidates in a real DSH host](https://raw.githubusercontent.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/main/assets/readme/gallery-2.0/02-live-comparison.png)
 
 ![打招呼得到四种回答 / A greeting answered four ways; controlled candidates in a real DSH host](https://raw.githubusercontent.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/main/assets/readme/gallery-2.0/03-main-conversation.png)
 
-![版本、风格与上下文 / Versions, styles and context; controlled candidates in a real DSH host](https://raw.githubusercontent.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/main/assets/readme/gallery-2.0/04-comparison-settings.png)
-
-![英文回答并排比较 / Compare English answers; controlled candidates in a real DSH host](https://raw.githubusercontent.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/main/assets/readme/gallery-2.0/06-english-answers.png)
-
-</details>
-
-[All 8 images and capture notes](https://github.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/blob/main/docs/storefront-gallery.md)
-
-<a id="demo"></a>
-
-## Watch the complete workflow
-
-[![Fixed-candidate workflow: DeepSeek's blue whale filling per working version and live steps, four live pomodoro pages, C in focus with its reply beside its page, C picked and the reasons given](https://raw.githubusercontent.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/main/docs/media/comparison-preview.gif)](https://github.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/blob/main/docs/media/comparison-workflow.mp4)
-
-A controlled-candidate recording in a real DSH host, from the 3.1.0 release-candidate source with the Chinese interface:
-- Four versions each build a pomodoro page in a plain folder, while two comets race around the comparison card.
-- The large window opens while they work: DeepSeek's blue whale per version, filling with water as it goes and blowing bubbles when poked, and **Steps** opened to show thinking and a file write live.
-- The replies arrive before the pages; then all four live pages can be used.
-- Two are set aside, C is shown in focus with its reply beside its page, and the pick reveals every style.
-- Two reasons are tapped (layout, simpler), which the next request in the main conversation carries; the pick is saved into a new folder, and the conversation continues.
-
-The video cuts waiting and keeps the rest at the original speed. Local paths are hidden.
-
-[Full video (46 seconds)](https://github.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/blob/main/docs/media/comparison-workflow.mp4) · [Method and results](https://github.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/blob/main/docs/demo.md)
-
-[Four-step quick start](docs/quickstart.en.md) · [Troubleshooting a run](docs/runs-and-recovery.en.md)
-
 <details>
-<summary>English answers · 390 px</summary>
+<summary>More views: settings, English answers, phone width</summary>
+
+![版本、风格与上下文 / Versions, styles and context; controlled candidates in a real DSH host](https://raw.githubusercontent.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/main/assets/readme/gallery-2.0/04-comparison-settings.png)
 
 <p align="center"><img src="https://raw.githubusercontent.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/main/assets/readme/13-english-answers.webp" width="840" alt="Three open English answers from the Three looks quick set: B is the pick, with Layout and More complete as its reasons; controlled candidates in a real DSH host."> <img src="https://raw.githubusercontent.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/main/assets/readme/14-phone-answer.webp" width="260" alt="390-pixel English answer result in the blue glass interface, with the chosen version and a visible Continue conversation action; controlled candidates in a real DSH host."></p>
 
 </details>
+
+[All 8 images and capture notes](https://github.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/blob/main/docs/storefront-gallery.md)
 
 <a id="install"></a>
 
@@ -200,6 +182,33 @@ A blind comparison shuffles the chosen styles across A–D at the start and reve
 - One install, one build and one port per version, **all running at once**.
 - **One fixed, content-bound acceptance**: a candidate that edits the test script, configs or existing tests does not count as passing.
 - Adoption checks the result **together with what you changed meanwhile**, and stops when the checked target changes before a pending write.
+
+<a id="whats-new"></a>
+
+## What's new
+
+**New in 3.1.0:**
+- **Every step in view, live and afterwards.** As soon as a version starts, its card has a **Steps** button. Open it to see the work in order: thoughts with their timing, tool calls (Read file, Edit file, Run command… each opens to its input and output) and the words written in between. While a version works, its newest three steps also scroll by live under the whale, and after it finishes every step stays one click away. Before a blind pick, words that name a style show as ▒▒.
+- **The reply, shown directly.** A version that only answers shows just its answer. A version that built a page or wrote files shows its reply with the same standing: above the page side by side, and to the left of the page when that version is in focus. The reply appears as soon as the version finishes, before its page.
+- **Pages shown directly.** Static pages are served by the plugin itself, so they open the moment they are written, with no separate process for the desktop app to stop. If a page still cannot be served, an HTML result is shown as a page anyway, with its source one click away.
+- **Results sooner.** A version counts as done within a second of its turn ending; before, the run waited for other plugins (memory writers, for example) to release the session, about 40 seconds on a typical desktop. Dependencies are installed from the lockfile while the versions work, and a version that kept them gets its own copy; checks run in parallel, and the page can be used as soon as it starts. In the controlled recording setup, four Vite versions went from sending to four usable pages in about 24–30 seconds.
+- **Waiting is fun.** Each working version shows DeepSeek's blue whale logo, pale at first and filling with blue water as the version gets further, while two lights run around its edge. Now and then a thought rises over its head: what it is doing, an idea, or an invitation to poke it. It spouts at every step and turns toward the pointer, and pokes in a row make it jump, spin, wobble and splash, with a new line each time. Two comets race around a running comparison (they keep moving on older engines and under themes that stop animations), over slowly flowing blue light.
+- **Four blues for A–D.** Version labels are four different blues.
+- **A reminder to restart DSH.** DSH swaps in a plugin's new interface at once but keeps running the backend it loaded at start. When the two differ, AgentCompare asks you to quit and reopen DSH instead of quietly missing steps and replies.
+- **A Chinese name.** The official Chinese name is 鲸挑细选; the nickname is 大肥鱼赛马.
+- **Also includes 2.1.0, which was not published on its own:** a greeting or a question gets answers instead of pages; brighter, clearer liquid glass, lighter buttons and sliding controls; in both themes, every text in 21 interface states measures at least 4.5:1.
+
+**New in 2.0.0:**
+- **A new blue liquid-glass interface.** Aurora and star dust behind glass panels, a glass lens that slides between options and liquid progress; a burst of light when you pick and a sweep of light at the reveal. Dark mode, reduced motion and high-contrast mode are supported.
+- **Say why it won.** After the pick, tap a few reasons (layout, look and colour, feel in use…) or add a line; later changes in the main conversation keep those strengths.
+- **Quick sets.** One tap sets the number of versions and their styles: Classic pair, Three looks, Three priorities, Four directions.
+- **2–4 versions, with styles.** Eight presets or a one-line custom style; different models can share one style.
+- **Blind or open comparison.** Try each version, set it aside and restore it; use 1–4 to focus and 0 to show all.
+- **Answers, files and live pages.** Read formatted Markdown and copy answers, code, file contents or saved paths. Your pick is clearly marked.
+- **Stay in the conversation.** Comparisons, picks, adoption and undo enter the current conversation's memory so you can keep working.
+- **Desktop + Web, Chinese + English.** Reuse configured models; review changes before confirming adoption, with undo and recovery available.
+
+Since 1.3.0, any folder works, including repository subfolders, non-Vite Node projects and static sites, and answers and files can be compared too. See the [changelog](https://github.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/blob/main/CHANGELOG.md#200) for scope and limits.
 
 ## How it works
 
