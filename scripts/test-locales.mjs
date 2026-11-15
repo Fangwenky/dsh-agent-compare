@@ -153,7 +153,7 @@ try {
   check(await page.getByText(/Check the network, registry, proxy and certificates/).isVisible(), 'English installation failures must provide an actionable recovery hint')
   await open('allfailed')
   const failedCandidate = page.getByRole('region', { name: 'Candidate B', exact: true })
-  check(await failedCandidate.getByText('Implementation failed', { exact: true }).isVisible(), 'English failure titles must keep the stage and outcome as separate words')
+  check(await failedCandidate.getByText('Handling the request failed', { exact: true }).isVisible(), 'English failure titles must keep the stage and outcome as separate words')
   check((await page.locator('.ac-bar-text').first().innerText()).includes('usable preview. Changes'), 'English sentences assembled from separate strings must keep their spacing')
   check(await failedCandidate.locator('.ac-fail').evaluate(element => !/mono/i.test(getComputedStyle(element).fontFamily)), 'failure explanations must use the interface font; raw logs stay monospace')
   check(await page.getByRole('button', { name: 'Compare again', exact: true }).isVisible(), 'English failures must offer repeating the same requirement')

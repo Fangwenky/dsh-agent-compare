@@ -20,14 +20,14 @@
 
 <p align="center"><a href="#install">安装 / Install</a> · <a href="#demo">真实演示 / Recorded demo</a></p>
 
-> **2.1.0 · Versão estável.** DSH Desktop e Web, com interface em chinês e inglês. Compare respostas, arquivos ou páginas web na conversa principal a partir de qualquer pasta, reutilizando os modelos configurados.
+> **3.0.0 · Versão estável.** DSH Desktop e Web, com interface em chinês e inglês. Compare 2–4 versões de respostas, arquivos ou páginas web na conversa principal; abra o raciocínio e as chamadas de ferramentas de cada versão e leia a resposta ao lado do que ela construiu.
 
-**Novidades da versão 2.1.0:**
-- **Uma saudação ou uma pergunta recebe respostas.** Quem decide o tipo de resultado é o pedido, não a pasta: cumprimente ou pergunte dentro de um projeto que pode ser compilado e cada versão responde no próprio estilo para comparação lado a lado, sem construir uma página; um pedido de mudança no projeto continua sendo implementado.
-- **Vidro líquido mais claro e luminoso.** O azul ficou mais claro; a área de trabalho fica um nível abaixo do vidro, com luz suave vinda de cima. O vidro tem três espessuras (fino, grosso e quase sólido), com borda brilhante e um toque de ciano e lilás nas arestas; só a barra de ações flutuante e a barra de configurações desfocam o que está atrás.
-- **Botões e texto mais leves.** O azul sólido fica reservado para a ação principal, a opção escolhida e as letras das versões; os demais botões são de vidro azul-claro com texto azul em peso normal.
-- **Controles que deslizam.** O filtro "Needs attention only" do histórico é um interruptor deslizante; os controles segmentados ficam em uma ranhura, e escolher uma opção não desloca mais as vizinhas. Caixas de seleção e listas usam o mesmo estilo de vidro.
-- **Legível em todo lugar.** Contraste medido glifo a glifo em 19 estados da interface por tema: todo texto tem pelo menos 4.5:1. Versões lado a lado têm a mesma altura.
+**Novidades da versão 3.0.0:**
+- **Cada passo à vista.** Cada cartão tem um botão **Steps**. Ao abrir, o trabalho da versão aparece em ordem: os raciocínios com o tempo de cada um, as chamadas de ferramentas (ler ou editar um arquivo, executar um comando…; cada uma abre com entrada e saída) e o que ela escreveu entre os passos. Atualiza ao vivo e, mesmo fechado, diz o que a versão está fazendo agora. Numa comparação às cegas, palavras que nomeiam um estilo aparecem como ▒▒.
+- **A resposta, direto na tela.** Uma versão que só responde mostra apenas a resposta. Uma versão que construiu uma página ou escreveu arquivos mostra a resposta com o mesmo peso: acima da página lado a lado e à esquerda da página quando essa versão está em foco. A resposta aparece assim que a versão termina, antes da página.
+- **Resultados mais cedo.** Uma versão conta como pronta quando seu turno termina, sem esperar outros plugins que mantenham a sessão ocupada. As dependências são instaladas a partir do lockfile enquanto as versões trabalham, e uma versão que não as alterou recebe a própria cópia; as verificações rodam em paralelo e a página pode ser usada assim que inicia. No ambiente de gravação com candidatos fixos, quatro versões Vite foram do envio a quatro páginas utilizáveis em cerca de 24–30 segundos.
+- **Esperar ficou divertido.** Cada versão em andamento tem uma pequena baleia: a água sobe a cada etapa, ela solta um esguicho a cada passo, os olhos seguem o ponteiro e, com um toque, ela solta bolhas. Dois cometas percorrem a borda de uma comparação em andamento, sobre uma luz azul que flui devagar.
+- **Inclui também a 2.1.0, que não foi publicada separadamente:** uma saudação ou uma pergunta recebe respostas em vez de páginas; vidro líquido mais claro e luminoso, botões mais leves e controles que deslizam; nos dois temas, todo texto em 21 estados da interface tem pelo menos 4.5:1.
 
 **Novidades da versão 2.0.0:** compare **2, 3 ou 4 versões** de uma vez. Cada versão pode ter um **estilo** (alcance: conservador, ousado; aparência: minimalista, refinado, vibrante; prioridade: amigável, rigoroso, leve; ou uma linha própria). Compare **às cegas** (estilos revelados na escolha) ou **abertamente** (estilos visíveis desde o início). Com três ou quatro versões, **deixe de lado** as que descartou para comparar o restante lado a lado; no cartão, as teclas 1–4 focam uma versão.
 - **Nova interface de vidro líquido azul.** Aurora e poeira estelar atrás de painéis de vidro, uma lente de vidro que desliza entre as opções e progresso líquido; um brilho ao escolher e uma faixa de luz ao revelar. Suporta modo escuro, movimento reduzido e alto contraste.
@@ -100,7 +100,7 @@ A referência de desenvolvimento é Node 26.13.0 com npm 12.2.2. As verificaçõ
 Instale o pacote npm no perfil Web padrão. O selo do npm indica o estado de publicação:
 
 ```bash
-dsh plugin --profile web add dsh-agent-compare@2.1.0
+dsh plugin --profile web add dsh-agent-compare@3.0.0
 ```
 
 Para outro perfil gerenciado por você, substitua `web` pelo nome real.
@@ -117,7 +117,7 @@ npm pack
 Substitua `<your-profile>` pelo nome real do seu perfil:
 
 ```bash
-dsh plugin --profile <your-profile> add ./dsh-agent-compare-2.1.0.tgz
+dsh plugin --profile <your-profile> add ./dsh-agent-compare-3.0.0.tgz
 ```
 
 Reinicie o DSH. Antes de atualizar, finalize as comparações ativas e feche instâncias antigas que usam os mesmos registros. Não há suporte a alterações simultâneas por versões diferentes do plugin.

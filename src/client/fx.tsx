@@ -1,11 +1,99 @@
 /**
  * Light, flow and particles over the plain interface: a glass lens that slides
  * between the options of a segmented control, light that follows the pointer
- * on glass surfaces, a liquid meter for progress and a short burst of light
- * when a pick lands. Nothing here carries information the text does not, the
- * interface works without it, and reduced motion keeps everything still.
+ * on glass surfaces, slow liquid light behind the workspace, a liquid meter
+ * for progress and a short burst of light when a pick lands. Nothing here
+ * carries information the text does not, the interface works without it, and
+ * reduced motion keeps everything still.
  */
-import React from 'react'
+import React, { useEffect, useId, useLayoutEffect, useRef, useState } from 'react'
+
+/**
+ * Two comets that race around their container's edge while a comparison runs.
+ * Drawn as dashes along a rounded rectangle, so they travel at an even speed
+ * on a wide bar as on a square card. The stylesheet decides when it shows.
+ */
+export function RunRing(): React.ReactElement {
+  const svg = useRef<SVGSVGElement>(null)
+  const [radius, setRadius] = useState(16)
+  const id = `acr${useId().replace(/[^\w-]/g, '')}`
+  useLayoutEffect(() => {
+    const parent = svg.current?.parentElement
+    if (parent) setRadius(Math.max(0, (parseFloat(getComputedStyle(parent).borderTopLeftRadius) || 0) - 1.5))
+  }, [])
+  return <svg ref={svg} className="ac-run-ring" aria-hidden="true">
+    <defs><linearGradient id={id} x1="0" y1="0" x2="1" y2="1"><stop offset="0" stopColor="#4d6bfe" /><stop offset=".5" stopColor="#45b6ff" /><stop offset="1" stopColor="#7d6bff" /></linearGradient></defs>
+    <rect className="track" rx={radius} pathLength={100} />
+    {(['t1', 't2', 't3'] as const).map(name => <rect key={name} className={name} rx={radius} pathLength={100} stroke={`url(#${id})`} />)}
+    <rect className="head" rx={radius} pathLength={100} />
+  </svg>
+}
+
+interface Blob { x: number; y: number; vx: number; vy: number; tx: number; ty: number; r: number; color: readonly [number, number, number]; alpha: number; next: number }
+const AMBIENT_COLORS: ReadonlyArray<readonly [number, number, number]> = [[77, 107, 254], [69, 182, 255], [142, 164, 255], [169, 232, 255], [125, 107, 255], [96, 200, 255]]
+
+/**
+ * Soft blue light that drifts and merges like liquid behind the workspace.
+ * Six fields of colour wander towards new random places and blend where they
+ * meet. They are drawn on a tiny canvas and scaled up by the browser, so the
+ * cost stays a few hundred pixels per frame. While a comparison runs the light
+ * moves faster and brighter; reduced motion draws one still frame, and a
+ * hidden page draws nothing.
+ */
+export function Ambient({ busy }: { busy: boolean }): React.ReactElement {
+  const canvas = useRef<HTMLCanvasElement>(null)
+  const energy = useRef(busy ? 1 : 0)
+  const target = useRef(busy ? 1 : 0)
+  target.current = busy ? 1 : 0
+  useEffect(() => {
+    const el = canvas.current
+    const ctx = el?.getContext('2d')
+    if (!el || !ctx) return
+    const W = 80, H = 52
+    el.width = W; el.height = H
+    const random = (min: number, max: number): number => min + Math.random() * (max - min)
+    const blobs: Blob[] = AMBIENT_COLORS.map((color, i) => ({ x: random(0, 1), y: random(0, 1), vx: 0, vy: 0, tx: random(-.1, 1.1), ty: random(-.1, 1.1), r: random(.32, .52), color, alpha: i === 4 ? .16 : random(.22, .32), next: 0 }))
+    const dark = (): boolean => typeof matchMedia === 'function' && matchMedia('(prefers-color-scheme: dark)').matches
+    const draw = (): void => {
+      ctx.clearRect(0, 0, W, H)
+      const night = dark()
+      const boost = (night ? .55 : 1.2) * (1 + energy.current * .35)
+      // The light leans towards the ground: pastel on light, deep on dark, so text set straight
+      // on the background keeps its contrast even where fields overlap.
+      const toward = night ? [13, 20, 48] : [255, 255, 255], amount = night ? .55 : .5
+      for (const b of blobs) {
+        const g = ctx.createRadialGradient(b.x * W, b.y * H, 0, b.x * W, b.y * H, b.r * W)
+        const [r, gr, bl] = b.color.map((v, i) => Math.round(v + (toward[i]! - v) * amount)) as [number, number, number]
+        g.addColorStop(0, `rgba(${r},${gr},${bl},${Math.min(.55, b.alpha * boost)})`)
+        g.addColorStop(.55, `rgba(${r},${gr},${bl},${Math.min(.3, b.alpha * boost * .45)})`)
+        g.addColorStop(1, `rgba(${r},${gr},${bl},0)`)
+        ctx.fillStyle = g
+        ctx.fillRect(0, 0, W, H)
+      }
+    }
+    if (reduced()) { draw(); return }
+    let frame = 0, last = 0
+    const step = (now: number): void => {
+      frame = requestAnimationFrame(step)
+      if (document.hidden || now - last < 40) return
+      const dt = Math.min(.1, (now - last) / 1000 || .04)
+      last = now
+      energy.current += (target.current - energy.current) * Math.min(1, dt * 1.5)
+      const speed = 1 + energy.current * 1.6
+      for (const b of blobs) {
+        if (now > b.next) { b.tx = random(-.15, 1.15); b.ty = random(-.15, 1.15); b.next = now + random(5000, 11000) / speed }
+        // A spring towards a wandering target: smooth, never still, never fast.
+        b.vx += ((b.tx - b.x) * .35 - b.vx * .9) * dt * speed
+        b.vy += ((b.ty - b.y) * .35 - b.vy * .9) * dt * speed
+        b.x += b.vx * dt * speed; b.y += b.vy * dt * speed
+      }
+      draw()
+    }
+    frame = requestAnimationFrame(step)
+    return () => cancelAnimationFrame(frame)
+  }, [])
+  return <canvas ref={canvas} className="ac-ambient" aria-hidden="true" />
+}
 
 const reduced = (): boolean => typeof matchMedia === 'function' && matchMedia('(prefers-reduced-motion: reduce)').matches
 const attached = new WeakSet<Element>()
@@ -94,7 +182,6 @@ export function burst(from: Element): void {
     const size = 3 + Math.random() * 4
     spark.style.width = spark.style.height = `${size.toFixed(1)}px`
     spark.style.background = SPARKS[i % SPARKS.length]!
-    if (i % 4 === 0) spark.classList.add('star')
     layer.appendChild(spark)
     const x = Math.cos(angle) * distance, y = Math.sin(angle) * distance
     spark.animate([
@@ -105,12 +192,4 @@ export function burst(from: Element): void {
   }
   host.appendChild(layer)
   setTimeout(() => layer.remove(), 1200)
-}
-
-/** Progress as a liquid level in a glass sphere; the waves keep moving while work goes on. */
-export function LiquidMeter({ level, busy }: { level: number; busy: boolean }): React.ReactElement {
-  const percent = Math.round(Math.max(0.12, Math.min(1, level)) * 100)
-  return <div className={`ac-liquid${busy ? ' busy' : ''}`} style={{ '--ac-level': `${percent}%` } as React.CSSProperties} aria-hidden="true">
-    <i className="ac-liquid-wave back" /><i className="ac-liquid-wave" /><b /><b /><b /><b /><em />
-  </div>
 }

@@ -20,14 +20,14 @@
 
 <p align="center"><a href="#install">安装 / Install</a> · <a href="#demo">真实演示 / Recorded demo</a></p>
 
-> **2.1.0 · Version stable.** DSH Desktop et Web, avec interface en chinois et en anglais. Comparez réponses, fichiers ou pages web dans la conversation principale depuis tout dossier, avec vos modèles configurés.
+> **3.0.0 · Version stable.** DSH Desktop et Web, avec interface en chinois et en anglais. Comparez 2 à 4 versions de réponses, de fichiers ou de pages web dans la conversation principale ; ouvrez le raisonnement et les appels d'outils de chaque version, et lisez sa réponse à côté de ce qu'elle a construit.
 
-**Nouveautés de la version 2.1.0 :**
-- **Un bonjour ou une question reçoit des réponses.** C'est la demande qui décide du type de résultat, pas le dossier : dites bonjour ou posez une question dans un projet qui peut être compilé, et chaque version répond dans son propre style pour une comparaison côte à côte, sans construire de page ; une demande de modification du projet est toujours implémentée.
-- **Un verre liquide plus clair et plus lumineux.** Le bleu est plus clair ; l'espace de travail se situe un niveau sous le verre, avec une lumière douce venue du haut. Le verre existe en trois épaisseurs (fin, épais et presque opaque), avec un liseré brillant et une touche de cyan et de lilas sur les arêtes ; seules la barre d'actions flottante et la barre de réglages floutent ce qui se trouve derrière elles.
-- **Des boutons et un texte plus légers.** Le bleu plein est réservé à l'action principale, à l'option choisie et aux lettres de version ; les autres boutons sont en verre bleu pâle avec un texte bleu en graisse normale.
-- **Des contrôles qui glissent.** Le filtre « Needs attention only » de l'historique est un interrupteur à glissière ; les contrôles segmentés reposent dans une rainure et choisir une option ne décale plus ses voisines. Cases à cocher et listes partagent le même style de verre.
-- **Lisible partout.** Contraste mesuré glyphe par glyphe dans 19 états de l'interface par thème : tout le texte atteint au moins 4.5:1. Les versions côte à côte ont la même hauteur.
+**Nouveautés de la version 3.0.0 :**
+- **Chaque étape sous les yeux.** Chaque carte a un bouton **Steps**. Ouvert, il montre le travail de la version dans l'ordre : ses réflexions avec leur durée, ses appels d'outils (lire ou modifier un fichier, lancer une commande… chacun s'ouvre sur son entrée et sa sortie) et ce qu'elle a écrit entre deux étapes. La liste se met à jour en direct et, même fermée, indique ce que fait la version à l'instant. Dans une comparaison à l'aveugle, les mots qui nomment un style s'affichent en ▒▒.
+- **La réponse, directement affichée.** Une version qui ne fait que répondre n'affiche que sa réponse. Une version qui a construit une page ou écrit des fichiers affiche sa réponse avec le même poids : au-dessus de la page côte à côte, et à gauche de la page quand cette version est mise en avant. La réponse apparaît dès que la version a terminé, avant sa page.
+- **Des résultats plus tôt.** Une version est considérée comme terminée dès la fin de son tour, sans attendre d'autres extensions qui occupent sa session. Les dépendances sont installées depuis le fichier de verrouillage pendant que les versions travaillent, et une version qui ne les a pas modifiées en reçoit sa propre copie ; les vérifications tournent en parallèle et la page est utilisable dès son démarrage. Dans l'environnement d'enregistrement à candidats fixes, quatre versions Vite sont passées de l'envoi à quatre pages utilisables en 24 à 30 secondes environ.
+- **L'attente devient amusante.** Chaque version en cours a une petite baleine : l'eau monte à chaque étape, elle souffle un jet à chaque pas, ses yeux suivent le pointeur et, d'une pichenette, elle lâche des bulles. Deux comètes font le tour d'une comparaison en cours, sur une lumière bleue qui s'écoule lentement.
+- **Inclut aussi la 2.1.0, qui n'a pas été publiée seule :** un bonjour ou une question reçoit des réponses plutôt que des pages ; un verre liquide plus clair et plus lumineux, des boutons plus légers et des contrôles qui glissent ; dans les deux thèmes, tout le texte de 21 états de l'interface atteint au moins 4.5:1.
 
 **Nouveautés de la version 2.0.0 :** comparez **2, 3 ou 4 versions** à la fois. Chaque version peut recevoir un **style** (ampleur : prudent, audacieux ; apparence : minimaliste, soigné, vivant ; priorité : accessible, rigoureux, léger ; ou une ligne personnalisée). Comparez **à l'aveugle** (styles révélés au choix) ou **à découvert** (styles affichés dès le début). Avec trois ou quatre versions, **mettez de côté** celles que vous écartez pour comparer les autres côte à côte ; dans la carte, les touches 1 à 4 mettent une version au premier plan.
 - **Nouvelle interface en verre liquide bleu.** Aurore et poussière d'étoiles derrière des panneaux de verre, une lentille de verre qui glisse entre les options et une progression liquide ; un éclat de lumière au choix et un balayage lumineux à la révélation. Mode sombre, mouvement réduit et contraste élevé pris en charge.
@@ -100,7 +100,7 @@ La référence de développement est Node 26.13.0 et npm 12.2.2. Les vérificati
 Installez le paquet npm dans le profil Web par défaut. Le badge npm indique son état de publication :
 
 ```bash
-dsh plugin --profile web add dsh-agent-compare@2.1.0
+dsh plugin --profile web add dsh-agent-compare@3.0.0
 ```
 
 Pour un autre profil autogéré, remplacez `web` par son nom réel.
@@ -117,7 +117,7 @@ npm pack
 Remplacez `<your-profile>` par le nom réel de votre profil :
 
 ```bash
-dsh plugin --profile <your-profile> add ./dsh-agent-compare-2.1.0.tgz
+dsh plugin --profile <your-profile> add ./dsh-agent-compare-3.0.0.tgz
 ```
 
 Redémarrez DSH. Avant une mise à jour, terminez les comparaisons actives et fermez les anciennes instances qui partagent leurs fichiers. Les modifications simultanées par plusieurs versions de l'extension ne sont pas prises en charge.

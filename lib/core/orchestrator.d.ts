@@ -3,6 +3,7 @@ import { type CopyCleanupPlan } from './copy-resources.ts';
 import { type PrepareProjectProcess } from './project-process.ts';
 import { type WindowsProcessCompatMode } from './windows-compat.ts';
 import { RunStore } from './run-store.ts';
+import { type Trace } from './trace.ts';
 import { type PickReason, type AgentRoute, type CandidateLabel, type ChecksSpec, type RunRecord, type Strategy, type Usage } from './types.ts';
 export interface AgentRunRequest {
     readonly label: CandidateLabel;
@@ -19,6 +20,8 @@ export interface AgentProgress {
     readonly steps: number;
     readonly lastAction?: string;
     readonly tokens?: number;
+    /** Its steps so far, when the host can read them. */
+    readonly trace?: Trace;
 }
 export interface AgentRunResult {
     readonly stopReason: string;
@@ -27,6 +30,8 @@ export interface AgentRunResult {
     readonly childId?: string;
     /** The route the agent actually ran with, when the host reports it. */
     readonly actualRoute?: AgentRoute;
+    /** Every step it took, when the host can read them. */
+    readonly trace?: Trace;
 }
 /** The one seam to the agent host. DSH implements it with its own sessions; tests script it. */
 export interface AgentRunner {
@@ -118,6 +123,8 @@ export declare class Comparer {
     /** Resolve once every candidate has settled (ready, failed or cancelled). */
     wait(runId: string): Promise<RunRecord | undefined>;
     get(runId: string): Promise<RunRecord | undefined>;
+    /** What a version did while it worked, as last recorded; undefined before its first step. */
+    readTrace(runId: string, label: CandidateLabel): Promise<Trace | undefined>;
     /** Reconcile a current-protocol orphan when opened after its owner exits.
      * A foreign live owner and an unmarked older record remain untouched. */
     observe(runId: string): Promise<RunRecord | undefined>;
@@ -125,6 +132,17 @@ export declare class Comparer {
     private serial;
     private persist;
     private drive;
+    /**
+     * Start one frozen install of the baseline's npm dependencies in a private
+     * directory of the run. It runs under the same process constraints as every
+     * other project command, with its own directory as the write root.
+     */
+    private startWarmInstall;
+    /**
+     * Copy the warm install into a version's copy when its manifest files are
+     * the baseline's. Returns how long that took, or undefined to install normally.
+     */
+    private useWarmInstall;
     private driveCandidate;
     /** Freeze what the copy holds, then run the full acceptance on it. Ends in `ready` or throws. */
     private sealAndVerify;

@@ -5,18 +5,18 @@ import type { Stage, Cand, Check, Route } from './model.js'
 
 export const PIPELINE: Array<{ stage: Stage; label: string }> = [
   { stage: 'preparing', label: '隔离副本' },
-  { stage: 'generating', label: 'Agent 实现' },
+  { stage: 'generating', label: '处理请求' },
   { stage: 'sealing', label: '封存改动' },
   { stage: 'installing', label: '冻结安装' },
   { stage: 'verifying', label: '检查与构建' },
   { stage: 'previewing', label: '运行构建产物' },
 ]
 export const STAGE_TEXT: Record<Stage, string> = {
-  queued: '排队中', preparing: '准备隔离副本', generating: 'Agent 正在实现', sealing: '封存改动', installing: '安装依赖',
+  queued: '排队中', preparing: '准备隔离副本', generating: '正在处理', sealing: '封存改动', installing: '安装依赖',
   verifying: '检查与构建', previewing: '启动并验收页面', ready: '可以体验', failed: '失败', stopping: '正在停止', cancelled: '已停止', interrupted: '已中断',
 }
 export const CHECK_TEXT: Record<string, string> = { typecheck: '类型检查', lint: 'Lint', build: '构建', test: '测试', browser: '页面验收' }
-export const ERROR_STAGE: Partial<Record<Stage, string>> = { preparing: '准备副本', generating: '实现', sealing: '封存改动', installing: '安装依赖', verifying: '检查与构建', previewing: '启动与验收页面' }
+export const ERROR_STAGE: Partial<Record<Stage, string>> = { preparing: '准备副本', generating: '处理请求', sealing: '封存改动', installing: '安装依赖', verifying: '检查与构建', previewing: '启动与验收页面' }
 export const STATE_TEXT: Record<string, string> = {
   running: '进行中', judging: '待选择', revealed: '已揭晓', adopting: '采用中', adopted: '已采用', recovery: '需要处理', abandoned: '已结束', interrupted: '已中断',
 }
@@ -105,15 +105,5 @@ export function Verdict({ c }: { c: Cand }): React.ReactElement | null {
         </details>
       )}
     </>
-  )
-}
-/** A finished candidate that is no longer served: its verification screenshots, and a way to serve it again. */
-export function Activity({ p }: { p: NonNullable<Cand['progress']> }): React.ReactElement {
-  const idle = Date.now() - p.lastActivityAt
-  return (
-    <div className="ac-meta ac-activity">{t("已进行 ")}{p.steps}{t(" 轮")}{p.lastAction ? <>{t(" · 最近：")}<code>{p.lastAction}</code></> : null}
-      {p.tokens ? ` · ${p.tokens.toLocaleString(currentLocale())} tokens` : ''}
-      {idle > 90_000 ? <span className="ac-slow"> · {fmt(idle)}{t(" 没有新动作（在等模型或工具）")}</span> : null}
-    </div>
   )
 }

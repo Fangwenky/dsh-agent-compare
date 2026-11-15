@@ -220,6 +220,7 @@ export interface Candidate {
     acceptanceTouched?: string[];
     /** package.json dependencies or the lockfile changed. */
     dependencyChange?: boolean;
+    /** `prewarmed`: the same frozen command ran once for the baseline while versions generated, and this version, whose manifest files were unchanged, received its own copy of that tree. */
     install?: {
         argv: string[];
         frozen: boolean;
@@ -227,6 +228,7 @@ export interface Candidate {
         outcome?: 'passed' | 'failed' | 'timeout' | 'cancelled';
         failure?: InstallFailure;
         runtime?: VerificationRuntime;
+        prewarmed?: boolean;
     };
     /** Completed verification attempts, retained before an explicit retry. Generation is never repeated. */
     verificationHistory?: VerificationAttempt[];

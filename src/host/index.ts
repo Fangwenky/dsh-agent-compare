@@ -22,6 +22,8 @@ import {
   type PickReason, type AgentRoute, type AgentRunner, type AgentRunRequest, type AgentRunResult, type CandidateLabel, type RunRecord, type Usage,
 } from '../core/index.ts'
 import { identitiesShown } from '../core/run-view.ts'
+import { EMPTY_TRACE, traceView } from '../core/trace.ts'
+import { traceOf } from './trace.ts'
 import { commandResultText, parseAbInput } from './conversation.ts'
 import { profileProject, type ProjectProfile } from '../core/project.ts'
 import { checkEnableGit, enableGit, resolveWorkspace } from '../core/workspace.ts'
@@ -57,7 +59,7 @@ export interface Config {
   home?: string
 }
 
-const VERSION = '2.1.0'
+const VERSION = '3.0.0'
 const ROUTE = '/agent-compare/api'
 
 // Minimal structural views of the host services this plugin touches.
@@ -186,6 +188,58 @@ export function stopReasonOf(events: readonly SessionEvent[]): string {
   }
 }
 
+/** How long a finished turn must stay finished, with nothing queued, before the candidate counts as done. */
+export const SETTLE_MS = 800
+/** After a stop, how long to wait for the session to end its turn before sealing what it wrote. */
+export const STOP_GRACE_MS = 15_000
+/** How long a session may sit idle, with nothing queued, before a turn that never began counts as over. */
+export const UNSTARTED_MS = 10_000
+
+/**
+ * Wait until the candidate's work is over. That is the moment its last turn
+ * ends with nothing queued to start another, not the moment the whole session
+ * goes idle: other plugins may keep a finished session busy for minutes (for
+ * example writing memories), and the result does not depend on them. A stop
+ * waits briefly for the turn to end, then returns so what was written can be
+ * sealed even if the session never acknowledges the stop.
+ */
+export async function settled(child: Pick<AgentLike, 'session' | 'inbox' | 'whenIdle'>, start: number, signal: AbortSignal, { poll = 200, settleMs = SETTLE_MS, graceMs = STOP_GRACE_MS, unstartedMs = UNSTARTED_MS } = {}): Promise<void> {
+  const pending = (): number => (child.inbox?.nextTurn.length ?? 0) + (child.inbox?.nextStep.length ?? 0)
+  let begun = false
+  const finished = (): boolean => {
+    const events = child.session.snapshotEvents(start)
+    let ended = -1, started = -1
+    events.forEach((event, index) => { if (event.type === 'turn/end') ended = index; if (event.type === 'turn/start' || event.type === 'step/start') started = index })
+    if (started >= 0 || ended >= 0) begun = true
+    return ended >= 0 && ended > started && pending() === 0
+  }
+  // Idleness is asked afresh every poll, so a session that was idle a moment ago
+  // and has since picked up queued work never counts as idle.
+  let idle = false, asked = 0
+  const ask = (): void => {
+    const mine = ++asked
+    idle = false
+    child.whenIdle().then(() => { if (mine === asked) idle = true }, () => { if (mine === asked) idle = true })
+  }
+  let stoppedAt: number | undefined
+  let quietSince: number | undefined
+  for (;;) {
+    if (signal.aborted) stoppedAt ??= Date.now()
+    if (finished()) {
+      quietSince ??= Date.now()
+      if (idle || stoppedAt !== undefined || Date.now() - quietSince >= settleMs) return
+    } else if (idle && pending() === 0) {
+      // Idle with nothing queued and no turn end: nothing more will happen (the turn broke off,
+      // or never started; a turn about to start gets longer, since not every host reports its queue).
+      quietSince ??= Date.now()
+      if (Date.now() - quietSince >= (begun ? settleMs : unstartedMs)) return
+    } else quietSince = undefined
+    if (stoppedAt !== undefined && Date.now() - stoppedAt >= graceMs) return
+    ask()
+    await new Promise(resolve => setTimeout(resolve, poll))
+  }
+}
+
 /**
  * Runs one candidate in a fresh DSH session whose `cwd` is the candidate copy.
  * The session's sandbox mode is pinned to workspace-write and approvals to
@@ -239,23 +293,17 @@ export class IsolatedSessionRunner implements AgentRunner {
       // A stop that landed while the session was being created would otherwise never reach it.
       if (req.signal.aborted) throw new Error('cancelled before the candidate started')
       child.followup(createUserMessage({ content: [{ type: 'text', text: req.prompt }], source: { kind: 'user' } }))
-      // Report what the session is doing while it works; the agent itself says nothing until the end.
+      const startedAt = Date.now()
+      // Report what the session is doing while it works: activity, and every step so far.
       let seen = -1
       const watch = req.onProgress === undefined ? undefined : setInterval(() => {
         const events = child.session.snapshotEvents(start)
         if (events.length === seen) return
         seen = events.length
-        try { req.onProgress!(progressOf(events)) } catch { /* progress is best effort */ }
-      }, 2000)
+        try { req.onProgress!({ ...progressOf(events), trace: traceOf(events, startedAt) }) } catch { /* progress is best effort */ }
+      }, 1000)
       try {
-        // Quiescent = idle with nothing queued and at least one turn ended (or cancelled).
-        for (;;) {
-          await child.whenIdle()
-          const pending = (child.inbox?.nextTurn.length ?? 0) + (child.inbox?.nextStep.length ?? 0)
-          const ended = child.session.snapshotEvents(start).some((e) => e.type === 'turn/end')
-          if (pending === 0 && (ended || req.signal.aborted)) break
-          await new Promise((r) => setTimeout(r, 250))
-        }
+        await settled(child, start, req.signal)
       } finally {
         if (watch !== undefined) clearInterval(watch)
       }
@@ -267,6 +315,7 @@ export class IsolatedSessionRunner implements AgentRunner {
         childId: child.session.id,
         ...(summary === '' ? {} : { summary }),
         usage: usageFromEvents(events),
+        trace: traceOf(events, startedAt),
         ...(actual?.model === undefined ? {} : { actualRoute: { ...(actual.provider === undefined ? {} : { provider: actual.provider }), model: actual.model, ...(actual.reasoningEffort === undefined ? {} : { reasoningEffort: actual.reasoningEffort }) } }),
       }
     } finally {
@@ -748,6 +797,19 @@ export async function apply(ctx: HostCtx, config: Config = {}): Promise<void> {
       const file = b.mobile === true ? c?.mobileScreenshot : c?.screenshot
       if (file === undefined) throw new HttpError(404, 'no screenshot')
       return { dataUrl: `data:image/png;base64,${(await readFile(file)).toString('base64')}` }
+    },
+    /**
+     * What a version did while it worked: thinking, tool calls and their
+     * output. Before a blind pick, words that name its style are masked.
+     * `summary: true` returns the counts and only the newest step, which says
+     * what the version is doing while its steps are closed.
+     */
+    async trace(b) {
+      const runId = runIdOf(b), r = await comparer.get(runId)
+      const c = r?.candidates.find((x) => x.label === label(b.label))
+      if (r === undefined || c === undefined) throw new HttpError(404, '没有这个候选')
+      const stored = await comparer.readTrace(runId, c.label) ?? EMPTY_TRACE
+      return traceView(stored, { blind: !identitiesShown(r), ...(c.strategy ? { strategy: c.strategy } : {}), summary: b.summary === true })
     },
     async patch(b) {
       const r = await comparer.get(runIdOf(b))

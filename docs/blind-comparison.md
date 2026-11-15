@@ -6,8 +6,9 @@
 
 **盲选：**
 - 开始时，所选的风格（或模型）会被随机分配到 A–D，设置里的顺序不会透露哪一版是哪种。
-- 选择前，各版只显示这些信息：真实页面、运行阶段、耗时、共同验收结果、可否采用，以及执行边界。
-- 风格与模型、用量、改动规模、文件列表、工具名称与目标、候选自己的说明和详细日志，都在揭晓后才显示。
+- 选择前，各版显示：真实页面或回答、运行阶段、耗时、共同验收结果、可否采用、执行边界，以及这一版的**回复**和可展开的**过程**（思考、工具调用及其输入输出、中间说的话）。
+- 各版被要求不提自己拿到的风格。回复和过程里点明风格的词仍会显示为 ▒▒：例如「极简风格」「走稳妥路线」「Bold style」「went bold」，以及自定义风格的那句描述；普通用法（如 `font-weight: bold`、「一个极简的页面」）照常显示。遮挡对所有版本一视同仁，不会因为遮了哪一版而暴露它的风格。
+- 风格与模型、用量和改动规模在揭晓后才显示；揭晓后回复和过程恢复原文。
 - 完整记录始终保存在本地。
 
 **公开对比：**
@@ -35,12 +36,14 @@ A comparison is **blind** (the default) or **open**. Either runs 2–4 versions.
 
 **Blind:**
 - At the start, the chosen styles (or models) are shuffled across A–D, so the order in the settings does not tell you which is which.
-- Before the pick, each version shows only:
-  - its actual app, stage and elapsed time;
+- Before the pick, each version shows:
+  - its actual app or answer, stage and elapsed time;
   - its shared check outcomes;
   - whether it can be adopted;
-  - its execution boundaries.
-- Styles and models, usage, change scale, file lists, detailed tool activity, candidate prose and raw logs appear after the reveal.
+  - its execution boundaries;
+  - its **reply** and its **Steps** (thoughts, tool calls with their input and output, and words written in between).
+- Each version is told not to mention the style it was given. Words in the reply and the steps that would still name a style show as ▒▒: "Bold style", "went bold", "极简风格", "走稳妥路线", and a custom style's own description. Ordinary uses such as `font-weight: bold` stay readable. Masking applies to every version alike, so a mask does not itself point to a style.
+- Styles and models, usage and change scale appear after the reveal; the reply and the steps then show their original words.
 - Full local records are kept.
 
 **Open:**

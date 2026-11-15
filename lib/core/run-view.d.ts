@@ -18,6 +18,8 @@ export interface PublicCandidate {
     readonly previewNote?: string;
     /** The reply of an `answer` result. It is the result itself, so it is shown before the reveal. */
     readonly answer?: string;
+    /** The version's final reply beside a page or files. Before a blind pick, words naming its style are masked. */
+    readonly reply?: string;
     /** Paths a `files` result wrote; they are what the user judges, so they are listed before the reveal. */
     readonly resultFiles?: string[];
     readonly checks?: Candidate['checks'];
@@ -69,7 +71,7 @@ export type PublicRun = Omit<RunRecord, 'candidates' | 'baseline' | 'acceptance'
 };
 /**
  * The view the UI and the model see. Before the reveal it carries nothing
- * that names the strategy or model; summaries are withheld because agents
- * tend to describe their own approach.
+ * that names the strategy or model. Each version's reply is part of what is
+ * judged, so it is shown, with words that name its style masked.
  */
 export declare function publicView(r: RunRecord): PublicRun;

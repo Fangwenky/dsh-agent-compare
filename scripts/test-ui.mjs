@@ -538,11 +538,37 @@ try {
   const pendingReads=await page.evaluate(()=>window.__requests.filter(r=>r.method==='get').length)
   await page.waitForTimeout(1600)
   check(await page.evaluate(()=>window.__requests.filter(r=>r.method==='get').length)===pendingReads, 'polling must share a slow record read instead of cancelling and replacing it')
-  await page.getByText('已进行 777 轮',{exact:false}).waitFor({timeout:6000})
-  check(await page.getByText('已进行 777 轮',{exact:false}).isVisible(), 'a record response slower than the live polling interval must remain observable without exposing tool details')
+  await page.getByText('777 步',{exact:false}).waitFor({timeout:6000})
+  check(await page.getByText('777 步',{exact:false}).isVisible(), 'a record response slower than the live polling interval must remain observable in the step count')
+  // While versions work: a whale in each waiting area, comets around the run bar, and the steps behind one toggle.
+  check(await page.locator('.ac-sheet .ac-whale-stage').count() === 2, 'each working version must show the whale in its waiting area')
+  check(await page.locator('.ac-whale').first().evaluate(button => button.tabIndex === -1 && button.getAttribute('aria-hidden') === 'true'), 'the whale is a pointer toy kept out of the keyboard order')
+  check(await page.locator('.ac-sheet .ac-action-dock > .ac-run-ring').evaluate(ring => getComputedStyle(ring).display !== 'none' && ring.getBoundingClientRect().width > 300), 'a running comparison must show comets around its run bar')
+  const workingCard = page.getByRole('region', { name: '候选 B', exact: true })
+  const stepsToggle = workingCard.locator('button.ac-steps-toggle')
+  check(await stepsToggle.getAttribute('aria-expanded') === 'false' && (await stepsToggle.innerText()).includes('npm run typecheck'), 'closed steps must still say what the version is doing')
+  check(await page.evaluate(() => window.__requests.filter(request => request.method === 'trace').every(request => request.body.summary === true)), 'closed steps must read only a summary')
+  await stepsToggle.click()
+  await workingCard.getByRole('region', { name: '步骤', exact: true }).waitFor()
+  await page.waitForFunction(() => document.querySelectorAll('[aria-label="候选 B"] .ac-step').length === 7)
+  check(await stepsToggle.getAttribute('aria-expanded') === 'true', 'the toggle must report open steps')
+  check(await workingCard.locator('.ac-step.thinking').count() === 2 && await workingCard.locator('.ac-step.tool').count() === 4, 'opening the steps must read every thought and tool call, not only the newest')
+  await workingCard.locator('.ac-step.tool summary').first().click()
+  check(await workingCard.locator('.ac-step-io pre').first().isVisible(), 'a tool step must open to its input and output')
+  check(await workingCard.getByText('盲选中：步骤里点明风格的词显示为 ▒▒，选择后显示原文。').count() === 0, 'the blind note must appear only when something was masked')
+  await stepsToggle.click()
 
   await page.setViewportSize({ width: 1440, height: 900 })
   await open('judging')
+  // A page and a reply have equal standing: the reply sits above the page, and beside it when one version is in focus.
+  const replyA = page.getByRole('region', { name: '候选 A 的回复', exact: true })
+  check(await replyA.isVisible(), 'a version that built a page must still show its reply')
+  await page.getByRole('button', { name: '专注 A', exact: true }).click()
+  await page.waitForTimeout(300)
+  const [replyBox, pageBox] = await Promise.all([replyA.boundingBox(), page.locator('[aria-label="候选 A"] .ac-browser').boundingBox()])
+  check(replyBox.x + replyBox.width <= pageBox.x + 1 && Math.abs(replyBox.y - pageBox.y) < 80, `in focus on a wide window the reply must sit beside the page: ${JSON.stringify({ replyBox, pageBox })}`)
+  check(await page.getByRole('region', { name: '候选 B', exact: true }).count() === 0, 'the split layout must keep the other version hidden')
+  await page.getByRole('button', { name: '并排比较', exact: true }).click()
   let beforeGet = (await requests('get')).length
   await page.evaluate(() => { window.__getPlans.push({ value: window.__runSnapshot(), delayMs: 1200 }) })
   await page.waitForFunction(count => window.__requests.filter(request => request.method === 'get').length > count, beforeGet)
@@ -1127,8 +1153,13 @@ try {
   check(await three.getByRole('button', { name: '改选 A', exact: true }).isVisible() && await three.getByRole('button', { name: '改选 B', exact: true }).isVisible(), 'after the reveal any other finished version can be picked instead')
   check((await three.textContent()).includes('3 版，同一模型、不同风格。'), 'the record says how many versions were compared')
 
-  for (const theme of ['light', 'dark']) for (const state of ['compose', 'judging', 'install-failure', 'retrying', 'revealed', 'recovery', 'undo-recovery', 'history', 'history-damaged', 'foreign', 'old-owner', 'retained', 'mixed-preview', 'interrupted-peer', 'folder', 'folder-answer', 'four', 'four-open', 'three-revealed']) {
+  for (const theme of ['light', 'dark']) for (const state of ['compose', 'running', 'judging', 'install-failure', 'retrying', 'revealed', 'recovery', 'undo-recovery', 'history', 'history-damaged', 'foreign', 'old-owner', 'retained', 'mixed-preview', 'interrupted-peer', 'folder', 'folder-answer', 'project-answers', 'four', 'four-open', 'three-revealed']) {
     await open(state, `&theme=${theme}`)
+    // The steps are checked open, where most of their text is.
+    if (['running', 'judging', 'project-answers'].includes(state)) {
+      for (const toggle of await page.locator('[role="dialog"] button.ac-steps-toggle').all()) await toggle.click()
+      await page.locator('[role="dialog"] .ac-steps').first().waitFor()
+    }
     await page.addScriptTag({ path: 'node_modules/axe-core/axe.min.js' })
     const result = await page.evaluate(async () => window.axe.run(document.querySelector('[role="dialog"]') ?? document.querySelector('.ac-composer-settings'), { runOnly: { type: 'tag', values: ['wcag2a', 'wcag2aa', 'wcag21aa'] } }))
     check(result.violations.length === 0, `${state} ${theme}: ${JSON.stringify(result.violations.map(v => ({ id: v.id, elements: v.nodes.map(n => n.target) })))}`)

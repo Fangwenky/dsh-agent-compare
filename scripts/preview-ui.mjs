@@ -30,8 +30,8 @@ const base = { runId: '0a1b2c3d', rev: 1, conversationContext: { mode: 'recent',
 const reported = { kind: 'reported', totalTokens: 48210 }
 const networkFailure = { kind: 'network', summary: '包服务连接或证书检查失败', hint: '检查网络、registry、代理和证书；连接恢复后可重新验收原候选。无需因此修改锁文件。', code: 'ECONNRESET', diagnostic: 'npm error code ECONNRESET\nnpm error network connection reset' }
 const previousVerification = { recordedAt: now - 40000, durationMs: 10000, install: { argv: ['npm', 'ci'], frozen: true, durationMs: 10000, outcome: 'failed', failure: networkFailure } }
-const A = { label: 'A', stage: 'ready', install: { frozen: true, runtime: { hostNode: 'v26.13.0', platform: 'win32-x64', packageManager: 'npm', windowsProcessCompat: { mode: 'auto', observedHooks: ['esbuild-service'] } } }, execution: { enforcement: 'full' }, previewUrl: 'http://127.0.0.1:4318/a', previewKind: 'build', checks: checks(true), verdict: { eligible: true, reasons: [], warnings: [] }, patchStats: { files: 2, insertions: 48, deletions: 9, binary: 0 }, timings: done, usage: reported, hasScreenshot: false }
-const B = { label: 'B', stage: 'ready', execution: { enforcement: 'partial' }, previewUrl: 'http://127.0.0.1:4318/b', previewKind: 'build', checks: checks(false), verdict: { eligible: false, reasons: ['页面验收未通过'], warnings: ['改动了依赖（已按锁文件安装）'] }, patchStats: { files: 3, insertions: 121, deletions: 4, binary: 0 }, timings: done, usage: { kind: 'reported', totalTokens: 71533 }, hasScreenshot: false }
+const A = { label: 'A', stage: 'ready', install: { frozen: true, runtime: { hostNode: 'v26.13.0', platform: 'win32-x64', packageManager: 'npm', windowsProcessCompat: { mode: 'auto', observedHooks: ['esbuild-service'] } } }, execution: { enforcement: 'full' }, previewUrl: 'http://127.0.0.1:4318/a', previewKind: 'build', checks: checks(true), verdict: { eligible: true, reasons: [], warnings: [] }, patchStats: { files: 2, insertions: 48, deletions: 9, binary: 0 }, timings: done, usage: reported, hasScreenshot: false, reply: '在商品列表上方加了搜索框、分类按钮和「清空」：\n\n- 搜索不区分大小写，可以和分类组合\n- 手机上搜索框占满一行，清空按钮在右侧\n\n类型检查和构建都通过了。' }
+const B = { label: 'B', stage: 'ready', execution: { enforcement: 'partial' }, previewUrl: 'http://127.0.0.1:4318/b', previewKind: 'build', checks: checks(false), verdict: { eligible: false, reasons: ['页面验收未通过'], warnings: ['改动了依赖（已按锁文件安装）'] }, patchStats: { files: 3, insertions: 121, deletions: 4, binary: 0 }, timings: done, usage: { kind: 'reported', totalTokens: 71533 }, hasScreenshot: false, reply: '重做了列表顶部：分类改成可以横向滑动的标签，搜索框在滚动时吸顶。页面验收里「清空」按钮的定位还需要调整。' }
 // A folder outside Git: one version answered in Markdown, the other wrote files with no page.
 const folderRun = { ...base, runId: '0f0f0f0f', task: '写一个统计单词数的小脚本', target: { kind: 'folder', folder: 'D:\\Notes' }, baseline: { dirty: true, repoRoot: 'C:\\Users\\me\\.dsh\\agent-compare\\ws\\0f0f0f0f' }, acceptance: { source: 'defaults', checks: ['browser'], steps: 0, frozenInstall: false, sha256: 'def' }, conversationContext: undefined }
 const folderAnswer = { label: 'A', stage: 'ready', result: 'answer', answer: '## 用一行命令统计\n\n```bash\nwc -w notes.txt\n```\n\n它会输出**单词总数**。也可以分别统计：\n\n| 选项 | 统计内容 |\n|:---|:---|\n| `-w` | 单词 |\n| `-l` | 行数 |\n\n- 中文没有空格分隔，结果按空白切分\n- 多个文件会额外给出合计', timings: done, verdict: { eligible: true, reasons: [], warnings: [] }, checks: [], hasScreenshot: false }
@@ -139,6 +139,28 @@ function contextPreview(body) {
   const text = chosen.map(entry => '[' + entry.role + ']\\n' + entry.text).join('\\n\\n');
   return {mode,messages:chosen.length,chars:text.length,truncated:false,sha256:'b'.repeat(64),text};
 }
+function sampleTrace(run, label, summary) {
+  const full = sampleFullTrace(run, label);
+  return summary === true ? {...full, items: full.items.slice(-1)} : full;
+}
+function sampleFullTrace(run, label) {
+  const c = run && run.candidates.find(x => x.label === label);
+  if (!c || c.stage === 'queued' || c.stage === 'preparing') return {items:[],steps:0,tools:0,thinking:0,truncated:false,done:false,updatedAt:0};
+  const live = c.stage === 'generating';
+  const answer = c.result === 'answer';
+  const items = answer ? [
+    {kind:'thinking',at:400,ms:2200,text:'用户只是打了个招呼，不需要改动项目。按我的风格回一句话就好。'},
+  ] : [
+    {kind:'thinking',at:300,ms:3100,text:'先看看项目结构：商品列表在 src/App.tsx，样式在 src/styles.css。需求是搜索框、分类筛选和清空按钮，手机上也要好用。'},
+    {kind:'tool',at:3400,ms:180,name:'glob',target:'src/**/*',input:'{ "pattern": "src/**/*" }',output:'src/App.tsx'+String.fromCharCode(10)+'src/main.tsx'+String.fromCharCode(10)+'src/products.ts'+String.fromCharCode(10)+'src/styles.css',status:'done'},
+    {kind:'tool',at:3700,ms:90,name:'read',target:'src/App.tsx',input:'{ "file_path": "src/App.tsx" }',output:'export default function App() {'+String.fromCharCode(10)+'  return <ProductList items={products} />'+String.fromCharCode(10)+'}',status:'done'},
+    {kind:'thinking',at:9800,ms:5600,text:'搜索要不区分大小写，可以先把关键词和商品名都转成小写再比较；分类和搜索要能组合，所以两个条件同时过滤。'},
+    {kind:'tool',at:15500,ms:240,name:'edit',target:'src/App.tsx',input:'- <ProductList items={products} />'+String.fromCharCode(10)+'+ <SearchBar value={query} onChange={setQuery} />',output:'Edited src/App.tsx',status:'done'},
+    {kind:'text',at:16000,text:'搜索和分类已经接上，接下来跑一次类型检查。'},
+    {kind:'tool',at:16200,ms:live?undefined:8200,name:'pwsh',target:'npm run typecheck',input:'npm run typecheck',output:live?undefined:'> tsc --noEmit',status:live?'running':'done'},
+  ];
+  return {items,steps:live?6:answer?1:7,tools:items.filter(i=>i.kind==='tool').length,thinking:items.filter(i=>i.kind==='thinking').length,truncated:false,done:!live,updatedAt:Date.now(),masked:run.blind!==false&&!['revealed','adopting','adopted','recovery'].includes(run.state)};
+}
 function listHistory(body) {
   const scope = body.scope ?? (body.sessionId ? 'session' : 'all');
   const query = (body.search ?? '').trim();
@@ -187,6 +209,7 @@ window.fetch = async (url, init) => {
     : m[1] === 'preflight' ? {ok:true,reasons:[],rehearsal:true,...(${JSON.stringify(error)}==='old-apply-host'?{}:{protectedWorktreeApply:true})}
     : m[1] === 'copyCleanupPlan' ? {version:1,runId:body.runId,rev:runs.find(r=>r.runId===body.runId)?.rev??0,state:'revealed',allowed:true,reasons:[],bytes:15728640,token:'a'.repeat(64),otherSession:${JSON.stringify(error==='other-session-cleanup')},resources:[{label:'A',path:'D:/Comparisons/0a1b2c3d/A',bytes:7340032,files:100,links:0,stopsPreview:true},{label:'B',path:'D:/Comparisons/0a1b2c3d/B',bytes:8388608,files:120,links:2,stopsPreview:true}]}
     : m[1] === 'patch' ? {text:'diff --git a/src/App.tsx b/src/App.tsx\\n+<button>Clear</button>',sha256:'a'.repeat(64),truncated:false}
+    : m[1] === 'trace' ? sampleTrace(runs.find(r=>r.runId===body.runId) ?? history.find(r=>r.runId===body.runId), body.label, body.summary)
     : m[1] === 'contextEntries' ? {entries:contextEntries,limits:{messageChars:2000,totalChars:12000}}
     : m[1] === 'contextPreview' ? contextPreview(body)
     : m[1] === 'styleStats' ? {comparisons:8,styles:[{id:'bold',title:'大胆 · Bold',picked:5,offered:8},{id:'minimal',title:'极简 · Minimal',picked:2,offered:4},{id:'conservative',title:'稳妥 · Conservative',picked:1,offered:8}]}

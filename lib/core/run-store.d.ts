@@ -37,6 +37,8 @@ export declare class RunStore {
     artifacts(runId: string): string;
     /** Where `own-root` copies of one run live. */
     copies(runId: string): string;
+    /** Dependencies installed for a run while its versions generate; removed when verification ends. */
+    warmDeps(runId: string): string;
     /** The private repository of a run that started from a folder outside Git. */
     workspace(runId: string): string;
     /**

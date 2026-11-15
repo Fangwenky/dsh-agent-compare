@@ -20,14 +20,14 @@
 
 <p align="center"><a href="#install">安装 / Install</a> · <a href="#demo">真实演示 / Recorded demo</a></p>
 
-> **2.1.0 · Stable release.** DSH Desktop + Web, with Chinese and English interfaces. Compare 2–4 versions of answers, files or web pages in the main conversation, starting from any folder and reusing configured models.
+> **3.0.0 · Stable release.** DSH Desktop + Web, with Chinese and English interfaces. Compare 2–4 versions of answers, files or web pages in the main conversation; open each version's thinking and tool calls, and read its reply beside what it built.
 
-**New in 2.1.0:**
-- **A greeting or a question gets answers.** The request decides the result, not the folder: say hello or ask a question inside a project that can be built, and each version replies in its own style for a side-by-side comparison instead of building a page; a request to change the project is still implemented.
-- **Brighter, clearer liquid glass.** The blue is lighter; the workspace sits one step deeper than the glass on it, with soft light from the top. Glass comes thin, thick and nearly solid, with a bright rim and a breath of cyan and lilac at its edges, and only the floating action bar and settings strip blur what is behind them.
-- **Lighter buttons and text.** Solid blue is kept for the main action, the chosen option and the version letters; other buttons are pale blue glass with blue words in regular weight.
-- **Controls that slide.** **Needs attention only** in the history is a sliding switch; segmented controls sit in a groove, and choosing an option no longer shifts its neighbours. Ticks and selects share one glass style.
-- **Readable everywhere.** Measured glyph by glyph in 19 interface states of each theme: every text is at least 4.5:1. Versions beside each other share one height.
+**New in 3.0.0:**
+- **Every step in view.** Each card has a **Steps** toggle. Open it to see the version's work in order: its thoughts with their timing, its tool calls (Read file, Edit file, Run command… each opens to its input and output) and the words it wrote in between. It updates live, and even closed it says what the version is doing right now. Before a blind pick, words that name a style show as ▒▒.
+- **The reply, shown directly.** A version that only answers shows just its answer. A version that built a page or wrote files shows its reply with the same standing: above the page side by side, and to the left of the page when that version is in focus. The reply appears as soon as the version finishes, before its page.
+- **Results sooner.** A version counts as done when its turn ends, without waiting for other plugins that keep its session busy. Dependencies are installed from the lockfile while the versions work, and a version that kept them gets its own copy; checks run in parallel, and the page can be used as soon as it starts. In the controlled recording setup, four Vite versions went from sending to four usable pages in about 24–30 seconds.
+- **Waiting is fun.** Each working version has a small whale: the water rises with each stage, it spouts at every step, its eyes follow the pointer, and a poke sends up bubbles. Two comets race around a running comparison, over slowly flowing blue light.
+- **Also includes 2.1.0, which was not published on its own:** a greeting or a question gets answers instead of pages; brighter, clearer liquid glass, lighter buttons and sliding controls; in both themes, every text in 21 interface states measures at least 4.5:1.
 
 **New in 2.0.0:**
 - **A new blue liquid-glass interface.** Aurora and star dust behind glass panels, a glass lens that slides between options and liquid progress; a burst of light when you pick and a sweep of light at the reveal. Dark mode, reduced motion and high-contrast mode are supported.
@@ -118,7 +118,7 @@ These commands target a self-managed DSH Web profile. The desktop application's 
 Install the npm package into the default Web profile (the npm badge above shows registry status):
 
 ```bash
-dsh plugin --profile web add dsh-agent-compare@2.1.0
+dsh plugin --profile web add dsh-agent-compare@3.0.0
 ```
 
 For another self-managed profile, replace `web` with its actual name.
@@ -136,7 +136,7 @@ npm pack
 ```
 
 ```bash
-dsh plugin --profile <your-profile> add ./dsh-agent-compare-2.1.0.tgz
+dsh plugin --profile <your-profile> add ./dsh-agent-compare-3.0.0.tgz
 ```
 
 After restarting DSH, enable **A|B at the bottom left of the conversation composer**:
@@ -203,9 +203,10 @@ A blind comparison shuffles the chosen styles across A–D at the start and reve
 1. **Baseline** — snapshot the working tree through a private temporary index (uncommitted and untracked files included, ignored ones excluded).
 2. **Bound acceptance** — derive the checks from the baseline (`typecheck` / `lint` / `test` / `build` scripts plus a page check) and record the script bodies, content hashes of verification files (`tsconfig*`, Vite/Vitest config, lint config, existing tests, `.agent-compare.json`), the lockfile and runtime. A committed `.agent-compare.json` can add step-by-step interaction checks.
 3. **Owned copies** — one branchless `git worktree` per candidate under the plugin home (`~/.dsh/agent-compare/w/<run>/<A|B>`), with an owner mark in its git admin dir.
-4. **Candidate sessions** — each candidate is its own DSH session whose directory is its copy. The session requests `workspace-write` for that root before it runs; approvals are pinned to `never`. This uses the host's enforcement, including its platform limitations below. Each has a generation time limit (5 / 15 / 30 / 60 / 120 minutes in the interface, 30 by default). When it runs out, the agent is stopped and what it wrote is still sealed and verified; while it works, the card shows its steps, latest action and how long it has been quiet.
+4. **Candidate sessions** — each candidate is its own DSH session whose directory is its copy. The session requests `workspace-write` for that root before it runs; approvals are pinned to `never`. This uses the host's enforcement, including its platform limitations below. Each has a generation time limit (5 / 15 / 30 / 60 / 120 minutes in the interface, 30 by default). When it runs out, the agent is stopped and what it wrote is still sealed and verified. While it works, the card's **Steps** list its thoughts, tool calls and words live, and say how long it has been quiet. It is done when its turn ends with nothing queued; background work of other plugins in its session is not waited for.
 5. **Seal** — the session is closed and the change frozen as a commit plus a full binary patch (SHA-256); `node_modules` is always excluded.
-6. **Verify** — copy equals the sealed tree → **frozen install** (a failure fails; there is no unlocked retry) → acceptance commands → serve the **build output** with `vite preview` → page acceptance in a fresh headless browser context (loads, no console errors, scripted steps, desktop and phone screenshots) → the copy still equals the sealed tree. When the build fails, only a dev-server preview is offered, marked "for observation only".
+6. **Verify** — copy equals the sealed tree → **frozen install** (a failure fails; there is no unlocked retry) → acceptance commands (up to three at a time) → serve the **build output** with `vite preview` → page acceptance in a fresh headless browser context (loads, no console errors, scripted steps, desktop and phone screenshots) → the copy still equals the sealed tree. When the build fails, only a dev-server preview is offered, marked "for observation only". The page can be used in the card as soon as it is served, while acceptance continues.
+   - For an npm project with a lockfile, no root install scripts and no local packages, the baseline's manifest is installed once with the same frozen command in a private folder of the run (`~/.dsh/agent-compare/d/<run>`) while the versions generate. A version whose manifest files (`package.json`, the lockfile, `.npmrc`) are byte-identical gets its own copy of that result instead of installing again; anything else installs as before. The folder is removed once every version has been verified.
 7. **Verdict** — adoption requires recorded checks without failures or timeouts, unchanged verification definitions and a checked tree matching the sealed tree. An unrun scripted page acceptance blocks direct adoption. A skipped basic page-load check remains an explicit warning, not a verified check. Dependency changes and missing lockfiles are also disclosed.
 8. **Pick** — 2–4 iframes show the running builds. A blind comparison labels them only A–D, with the styles shuffled at the start; choosing reveals style, actual model and token usage at once. An open comparison shows them from the start. Either way, the result shows whether your pick matches what the checks favoured.
 9. **Adopt** (adoptable candidates only):

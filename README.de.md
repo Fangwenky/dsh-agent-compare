@@ -20,14 +20,14 @@
 
 <p align="center"><a href="#install">安装 / Install</a> · <a href="#demo">真实演示 / Recorded demo</a></p>
 
-> **2.1.0 · Stabile Version.** DSH Desktop und Web, mit chinesischer und englischer Oberfläche. Antworten, Dateien oder Webseiten aus jedem Ordner im Hauptgespräch vergleichen und konfigurierte Modelle weiterverwenden.
+> **3.0.0 · Stabile Version.** DSH Desktop und Web, mit chinesischer und englischer Oberfläche. 2–4 Versionen von Antworten, Dateien oder Webseiten im Hauptgespräch vergleichen; die Überlegungen und Werkzeugaufrufe jeder Version aufklappen und ihre Antwort neben dem Ergebnis lesen.
 
-**Neu in 2.1.0:**
-- **Ein Gruß oder eine Frage bekommt Antworten.** Die Anfrage bestimmt die Art des Ergebnisses, nicht der Ordner: Wer in einem baubaren Projekt grüßt oder eine Frage stellt, erhält von jeder Version eine Antwort im eigenen Stil zum Vergleich nebeneinander, statt einer gebauten Seite; eine Bitte um Änderungen am Projekt wird weiterhin umgesetzt.
-- **Helleres, klareres Flüssigglas.** Das Blau ist heller; die Arbeitsfläche liegt eine Stufe tiefer als das Glas, mit weichem Licht von oben. Glas gibt es in drei Stärken (dünn, dick und fast deckend), mit hellem Rand und einem Hauch Cyan und Flieder an den Kanten; nur die schwebende Aktionsleiste und die Einstellungsleiste zeichnen weich, was hinter ihnen liegt.
-- **Leichtere Schaltflächen und Schrift.** Volles Blau bleibt der Hauptaktion, der gewählten Option und den Versionsbuchstaben vorbehalten; andere Schaltflächen sind blassblaues Glas mit blauer Schrift in normaler Stärke.
-- **Gleitende Bedienelemente.** Der Verlaufsfilter „Needs attention only“ ist ein Schiebeschalter; Segmentschalter sitzen in einer Rille, und die Wahl einer Option verschiebt ihre Nachbarn nicht mehr. Kontrollkästchen und Auswahllisten teilen sich einen Glasstil.
-- **Überall lesbar.** Kontrast Glyphe für Glyphe in 19 Zuständen der Oberfläche je Thema gemessen: jeder Text erreicht mindestens 4.5:1. Nebeneinander stehende Versionen sind gleich hoch.
+**Neu in 3.0.0:**
+- **Jeder Schritt sichtbar.** Jede Karte hat einen Schalter **Steps**. Aufgeklappt zeigt er die Arbeit der Version der Reihe nach: ihre Überlegungen mit Dauer, ihre Werkzeugaufrufe (Datei lesen, Datei bearbeiten, Befehl ausführen …; jeder lässt sich mit Ein- und Ausgabe öffnen) und was sie zwischen den Schritten geschrieben hat. Die Liste aktualisiert sich live und sagt auch zugeklappt, was die Version gerade tut. Im Blindvergleich erscheinen Wörter, die einen Stil verraten, als ▒▒.
+- **Die Antwort, direkt sichtbar.** Eine Version, die nur antwortet, zeigt nur ihre Antwort. Eine Version, die eine Seite gebaut oder Dateien geschrieben hat, zeigt ihre Antwort gleichrangig: nebeneinander über der Seite, im Fokus links neben der Seite. Die Antwort erscheint, sobald die Version fertig ist, noch vor ihrer Seite.
+- **Ergebnisse früher.** Eine Version gilt als fertig, sobald ihr Zug endet, ohne auf andere Plugins zu warten, die ihre Sitzung beschäftigt halten. Abhängigkeiten werden aus der Lockdatei installiert, während die Versionen arbeiten, und eine Version, die sie nicht geändert hat, bekommt eine eigene Kopie; Prüfungen laufen parallel, und die Seite ist bedienbar, sobald sie startet. In der Aufnahmeumgebung mit festen Kandidaten waren vier Vite-Versionen etwa 24–30 Sekunden nach dem Senden als vier nutzbare Seiten da.
+- **Warten macht Spaß.** Jede arbeitende Version hat einen kleinen Wal: Das Wasser steigt mit jeder Phase, bei jedem Schritt bläst er eine Fontäne, seine Augen folgen dem Zeiger, und ein Stups lässt Blasen aufsteigen. Zwei Kometen jagen um einen laufenden Vergleich, über langsam fließendem blauem Licht.
+- **Enthält auch 2.1.0, die nicht einzeln veröffentlicht wurde:** Ein Gruß oder eine Frage bekommt Antworten statt Seiten; helleres, klareres Flüssigglas, leichtere Schaltflächen und gleitende Bedienelemente; in beiden Themen erreicht jeder Text in 21 Zuständen der Oberfläche mindestens 4.5:1.
 
 **Neu in 2.0.0:** Vergleiche **2, 3 oder 4 Versionen** gleichzeitig. Jede Version kann einen **Stil** erhalten (Umfang: konservativ, mutig; Wirkung: minimal, ausgefeilt, lebendig; Priorität: zugänglich, gründlich, schlank; oder eine eigene Zeile). Vergleiche **blind** (Stile nach der Wahl aufgedeckt) oder **offen** (Stile von Anfang an sichtbar). Bei drei oder vier Versionen legst du verworfene Versionen **beiseite**, damit die übrigen nebeneinander stehen; in der Karte fokussieren die Tasten 1–4 eine Version.
 - **Neue Oberfläche in blauem Flüssigglas.** Aurora und Sternenstaub hinter Glasflächen, eine Glaslinse, die zwischen Optionen gleitet, und flüssiger Fortschritt; ein Lichtfunke bei der Wahl und ein Lichtstreif beim Aufdecken. Dunkelmodus, reduzierte Bewegung und hoher Kontrast werden unterstützt.
@@ -100,7 +100,7 @@ Entwicklungsgrundlage sind Node 26.13.0 und npm 12.2.2. Die aktuellen Prüfungen
 Installiere das npm-Paket im voreingestellten Web-Profil. Das npm-Badge zeigt den Veröffentlichungsstatus:
 
 ```bash
-dsh plugin --profile web add dsh-agent-compare@2.1.0
+dsh plugin --profile web add dsh-agent-compare@3.0.0
 ```
 
 Für ein anderes selbst verwaltetes Profil ersetzt du `web` durch dessen tatsächlichen Namen.
@@ -117,7 +117,7 @@ npm pack
 Ersetze `<your-profile>` durch den tatsächlichen Profilnamen:
 
 ```bash
-dsh plugin --profile <your-profile> add ./dsh-agent-compare-2.1.0.tgz
+dsh plugin --profile <your-profile> add ./dsh-agent-compare-3.0.0.tgz
 ```
 
 Starte DSH neu. Beende vor einem Update aktive Vergleiche und schließe ältere Instanzen, die dieselben Aufzeichnungen verwenden. Gleichzeitige Änderungen durch unterschiedliche Plugin-Versionen werden nicht unterstützt.

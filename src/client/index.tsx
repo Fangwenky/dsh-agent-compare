@@ -12,7 +12,7 @@
 import React, { useCallback, useEffect, useLayoutEffect, useRef, useState, useSyncExternalStore } from 'react'
 import { CSS } from './styles.js'
 import type { Route, Setup, Cand, Run, CopyPlan, ListResult, ModelItem } from './model.js'
-import { PIPELINE, STAGE_TEXT, ERROR_STAGE, STATE_TEXT, ACTIVE, LIVE_POLL, REVEALED, fmt, elapsed, busyStage, routeText, when, StagePill, Track, Checks, Verdict, Activity } from './candidate-evidence.js'
+import { PIPELINE, STAGE_TEXT, ERROR_STAGE, STATE_TEXT, ACTIVE, LIVE_POLL, REVEALED, fmt, elapsed, busyStage, routeText, when, StagePill, Track, Checks, Verdict } from './candidate-evidence.js'
 import { t, currentLocale, localeSnapshot, subscribeLocale } from './i18n.js'
 import { LanguageControl, Diagnostic } from './language.js'
 import { runIdFromToolResult } from './tool-result.js'
@@ -22,7 +22,8 @@ import { ConversationContextControl, type ContextMode } from './conversation-con
 import { CopyButton, ProjectNotes, ResultView } from './results.js'
 import { BlindControl, MAX_VERSIONS, MIN_VERSIONS, revealedStyleName, Segmented, StyleCombos, StyleHabit, StylePicker, StyleSlots, stylesFor, VersionsControl, type StyleChoice } from './style-picker.js'
 import { LABELS, MAX_PICK_NOTE, PICK_REASONS, type Label, type PickReason, type StyleStat } from './model.js'
-import { attachFx, burst, LiquidMeter } from './fx.js'
+import { Ambient, attachFx, burst, RunRing } from './fx.js'
+import { currentAction, ReplyBlock, StepsPanel, StepsToggle, useTrace, Whale } from './agent-view.js'
 export const name = 'agent-compare-client'
 export const inject = ['slots', 'remote', 'remote.commands']
 interface SlotsLike {
@@ -288,6 +289,15 @@ function CandidateCard({ run, c, revealed, picked, busy, act, device, compact, h
   ].join(' · ')
   const live = c.previewUrl !== undefined && !['failed', 'cancelled', 'interrupted'].includes(c.stage)
   const step = busyStage(c.stage) && c.stage !== 'stopping' ? PIPELINE.findIndex((p) => p.stage === c.stage) + 1 : 0
+  const [stepsOpen, setStepsOpen] = useState(false)
+  const trace = useTrace(run, c, call, stepsOpen)
+  const stepsId = `ac-steps-${run.runId}-${c.label}`
+  // An answer is its own result; any other reply sits beside the page or files.
+  const reply = c.result === 'answer' ? undefined : c.reply ?? (revealed ? c.summary : undefined)
+  const action = currentAction(trace)
+  const waitingText = c.stage === 'cancelled' ? t("已停止") : c.stage === 'stopping' ? t("正在停止并回收资源…")
+    : step > 0 ? t("第 {0}/{1} 步 · {2}", { 0: step, 1: PIPELINE.length, 2: t(STAGE_TEXT[c.stage]) }) + (['installing', 'verifying', 'previewing'].includes(c.stage) && run.target === undefined ? t(" · 页面马上就好") : '')
+    : t(STAGE_TEXT[c.stage])
   const model = revealed ? routeText(c.actualRoute ?? c.route) : ''
   // The moment of the pick and the reveal: light sweeps the cards, the pick bursts. Only on the change, never on reload.
   const card = useRef<HTMLElement>(null)
@@ -322,12 +332,18 @@ function CandidateCard({ run, c, revealed, picked, busy, act, device, compact, h
           {revealed && c.strategy && <span className="ac-strategy">{revealedStyleName(c.strategy)}{model ? ` · ${model}` : ''}</span>}
         </div>
         {busyStage(c.stage) && <Track c={c} />}
-        {step > 0 && <div className="ac-meta">{t("第 ")}{step}/{PIPELINE.length}{t(" 步 · ")}{t(STAGE_TEXT[c.stage])}</div>}
-        {c.stage === 'generating' && c.progress && <Activity p={revealed ? c.progress : { steps: c.progress.steps, lastActivityAt: c.progress.lastActivityAt, ...(c.progress.lastAction ? { lastAction: t("正在处理项目") } : {}) }} />}
         <Checks checks={c.checks} />
       </div>
+      <div className="ac-steps-bar">
+        <StepsToggle trace={trace} open={stepsOpen} onToggle={() => setStepsOpen(v => !v)} busy={c.stage === 'generating'} id={stepsId} steps={c.progress?.steps ?? 0} />
+        {c.stage === 'generating' && c.progress && Date.now() - c.progress.lastActivityAt > 90_000 && <span className="ac-meta ac-slow">{fmt(Date.now() - c.progress.lastActivityAt)}{t(" 没有新动作（在等模型或工具）")}</span>}
+        {c.install?.prewarmed && <span className="ac-meta" title={t("依赖与基线相同，复用了比较开始时按锁文件预装的依赖")}>{t("依赖已预装")}</span>}
+      </div>
+      {stepsOpen && trace && trace.items.length > 0 && <StepsPanel trace={trace} id={stepsId} busy={c.stage === 'generating'} />}
+      {reply && <ReplyBlock text={reply} label={c.label} />}
       {live ? (
         <div className="ac-browser">
+          {c.stage === 'previewing' && <div className="ac-page-note" role="status"><span className="ac-spin" />{t("页面已可操作，验收还在进行")}</div>}
           <LivePreview c={c} device={device} compact={compact} dense={dense} />
         </div>
       ) : c.error || c.canRetryVerification ? (
@@ -348,14 +364,13 @@ function CandidateCard({ run, c, revealed, picked, busy, act, device, compact, h
       ) : c.stage === 'ready' ? (
         <Screenshots runId={run.runId} c={c} busy={busy} act={act} device={device} />
       ) : (
-        <div className="ac-empty">
-          {busyStage(c.stage) && c.stage !== 'stopping' ? <LiquidMeter level={step / PIPELINE.length} busy /> : <div className="ac-skel"><i style={{ width: '60%' }} /><i /><i style={{ width: '80%' }} /></div>}
-          <div>{c.stage === 'cancelled' ? t("已停止") : c.stage === 'stopping' ? t("正在停止并回收资源…") : run.target !== undefined || !['installing', 'verifying', 'previewing'].includes(c.stage) ? t("{0}…完成后这里会显示结果：页面、文件或回答", { 0: t(STAGE_TEXT[c.stage]) }) : t("{0}…构建产物启动后，这里会显示真实页面", { 0: t(STAGE_TEXT[c.stage]) })}</div>
+        <div className={`ac-empty${reply ? ' compact' : ''}`}>
+          <Whale stage={c.stage} level={step / PIPELINE.length} steps={trace?.steps ?? c.progress?.steps ?? 0} caption={waitingText} />
         </div>
       )}
       <div className="ac-card-evidence">
         <details className="ac-details ac-evidence"><summary>{revealed ? t("检查依据与用量") : t("检查依据 · 盲选中")}{c.verdict ? c.verdict.eligible ? c.result !== undefined && !c.checks?.length ? t(" · 没有可运行的检查") : t(" · 已通过配置检查") : t(" · 存在采用阻碍") : ''}</summary><Verdict c={c} />
-        {!revealed && <div className="ac-meta">{t("风格、模型、用量、改动规模和详细日志在选择后显示。")}</div>}
+        {!revealed && <div className="ac-meta">{t("风格、模型、用量、改动规模和安装日志在选择后显示。")}</div>}
         {c.execution && <div className="ac-meta">{t("项目命令：")}{c.execution.enforcement === 'full' ? t("宿主报告完整文件写入约束") : c.execution.enforcement === 'partial' ? t("宿主报告部分文件写入约束") : t("约束完整性未知")}{t("。不包含文件读取与网络隔离。")}</div>}
         {c.install?.runtime && <div className="ac-meta">{t("验收宿主 Node ")}{c.install.runtime.hostNode} · {c.install.runtime.platform} · {c.install.runtime.packageManager} {c.install.runtime.packageManagerVersion ?? t("版本未记录")}</div>}
         {revealed && <WindowsProcessEvidence value={c.install?.runtime?.windowsProcessCompat} failed={c.stage === 'failed'} />}
@@ -366,7 +381,7 @@ function CandidateCard({ run, c, revealed, picked, busy, act, device, compact, h
             {c.patchStats && usage ? ' · ' : ''}{usage}
           </div>
         )}
-        {revealed && c.summary && <div className="ac-summary"><small>{t("候选说明（原文）")}</small>{c.summary}</div>}</details>
+        </details>
         {!!c.verificationHistory?.length && <details className="ac-details"><summary>{t("先前验收记录 · ")}{c.verificationHistory.length}{t(" 次")}</summary><ol>{c.verificationHistory.map((attempt, index) => <li key={index}><b>{attempt.install?.failure?.summary ?? attempt.error?.message.split('\n')[0] ?? t("先前验收未完成")}</b><div className="ac-meta">{t("重试前归档于 ")}{when(attempt.recordedAt)} · {attempt.durationMs === undefined ? t("耗时未知") : fmt(attempt.durationMs)}{attempt.install?.failure?.code ? ` · ${attempt.install.failure.code}` : ''}</div><Checks checks={attempt.checks} /></li>)}</ol></details>}
         {revealed && c.patchStats && c.result !== 'answer' && <PatchReview runId={run.runId} label={c.label} />}
       </div>
@@ -508,7 +523,7 @@ function ComposerDockState({ sessionId, session }: { sessionId: string; session?
   useEffect(() => { setCollapsed(!blank && latest?.state === 'adopted' && latest.adoption?.state === 'adopted') }, [runId])
   return <>
     {capabilityError && <div lang={currentLocale()} className="ac-root"><Styles /><div className="ac-feedback ac-prerequisite" role="alert"><span><Diagnostic text={capabilityError} /></span><div className="ac-prerequisite-actions"><button className="ac-text-btn" onClick={() => { void loadMode(sessionId) }}>{t("重新检查接口")}</button><button className="ac-text-btn" onClick={() => setOpen(sessionId)}>{t("比较记录")}</button></div></div></div>}
-    {runId && <section lang={currentLocale()} className="ac-root ac-conversation-run" aria-label={t("本对话的 A|B 结果")}><Styles />
+    {runId && <section lang={currentLocale()} className="ac-root ac-conversation-run" aria-label={t("本对话的 A|B 结果")}><Styles /><RunRing />
       {collapsed && <div className="ac-conversation-run-head"><b>{t("本次比较")}</b><span className="ac-meta">{runId}</span><span className="ac-spacer" /><button className="ac-text-btn" onClick={() => setOpen(sessionId)}>{t("记录与教程")}</button><button className="ac-text-btn" onClick={() => setCollapsed(false)}>{t("展开结果")}</button></div>}
       <div className="ac-conversation-run-scroll" hidden={collapsed}><RunView key={runId} runId={runId} sessionId={sessionId} compact {...(latest?.runId === runId ? { initial: latest } : {})} onExpand={() => setOpen(sessionId, runId)} onCollapse={() => setCollapsed(true)} /></div>
     </section>}
@@ -554,7 +569,7 @@ function ActionBar({ run, sessionId, busy, pending, act, onDone, onContinue, exc
   switch (run.state) {
     case 'running':
       return (
-        <div className="ac-bar">
+        <div className="ac-bar running">
           <span className="ac-bar-text">{retrying.length ? t("正在重新验收 {0} · 本次已用 ", { 0: retrying.map(c => c.label).join('、') }) : t("{0} 个版本并行进行中 · 已用 ", { 0: run.candidates.length })}<strong>{fmt(total)}</strong>{ready ? t(" · {0} 个已可体验", { 0: ready }) : ''}</span>
           <button className="ac-btn danger" disabled={busy} onClick={() => act('cancel')}>{retrying.length ? t("停止验收") : t("全部停止")}</button>
         </div>
@@ -964,7 +979,7 @@ function RunView({ runId, sessionId, initial, compact, onDone, onExpand, onColla
     <>
       {(err || readErr) && <div className="ac-error" role="alert" style={{ marginTop: 12 }}><Diagnostic text={err ?? readErr} /></div>}
       {confirmation && <div ref={confirmationBox} tabIndex={-1} className="ac-review" role="region" aria-label={t("跨对话操作确认")} onKeyDown={event => { if (event.key === 'Escape') { event.preventDefault(); event.stopPropagation(); setConfirmation(undefined) } }}><div><b>{t("这次比较来自另一个对话")}</b><p>{t("请确认要操作的项目：")}{run.baseline.repoRoot ?? t("记录中未提供项目路径")}</p><p>{t("运行编号：")}<code>{runId}</code>{t(" · 将执行：")}{confirmationLabel ?? ({ choose: t("选择并揭晓"), reviewAdoption: t("审查采用"), adopt: t("采用候选"), revert: t("撤销采用"), recover: t("恢复文件"), cancel: t("停止比较"), cancelAdoption: t("停止采用预演"), salvage: t("验收已有改动"), retryVerification: t("重新验收"), reopenPreview: t("重新打开预览") } as Record<string, string>)[confirmation.method] ?? t("更新这次比较")}</p><p>{t("确认仅适用于这一次操作，仍会重新核验项目、候选与归属。")}</p></div><div className="ac-row"><button className="ac-btn" onClick={() => setConfirmation(undefined)}>{t("取消操作")}</button><button className="ac-btn primary" disabled={cancelBusy || (confirmation.method === 'cancelAdoption' ? run.control?.allowed === false : operationBlocked)} onClick={() => { const next = confirmation; setConfirmation(undefined); act(next.method, { ...next.extra, confirmOtherSession: true }) }}>{t("确认本次操作")}</button></div></div>}
-      <div className="ac-action-dock"><ActionBar run={run} {...(sessionId ? { sessionId } : {})} busy={busy || copyBusy || !!confirmation} pending={confirmation ? 'confirmation' : cancelBusy ? 'cancelAdoption' : pending} act={act} excluded={judging ? excluded : new Set()} {...(onDone ? { onDone } : {})} {...(continueConversation ? { onContinue: continueConversation } : {})} /></div>
+      <div className="ac-action-dock">{run.state === 'running' && !compact && <RunRing />}<ActionBar run={run} {...(sessionId ? { sessionId } : {})} busy={busy || copyBusy || !!confirmation} pending={confirmation ? 'confirmation' : cancelBusy ? 'cancelAdoption' : pending} act={act} excluded={judging ? excluded : new Set()} {...(onDone ? { onDone } : {})} {...(continueConversation ? { onContinue: continueConversation } : {})} /></div>
       {!!run.leftovers?.length && <section className="ac-banner warn" role="status" aria-label={t("资源清理状态")}><div><b>{run.state === 'adopted' ? t("采用已完成，仍有资源等待清理") : t("仍有资源等待清理")}</b><p>{t("可以重试清理。清理只处理本次比较拥有的资源。")}</p><ul>{run.leftovers.map((detail, index) => <li key={index}>{detail}</li>)}</ul><button className="ac-btn" disabled={blocked} onClick={() => act('cleanup')}>{t("重试清理")}</button></div></section>}
       {preflight && <section className="ac-review" aria-label={t("采用前审查")} role="region"><div><b>{preflight.ok ? t("目标核验通过，请确认采用") : t("当前无法采用")}</b><p className="ac-project-path">{t("目标：")}{run.baseline.repoRoot ?? t("本次比较的项目")}</p><p>{preflight.ok ? preflight.rehearsal ? t("项目有新改动，将先合并到临时副本中重新验收。") : t("将写入选中版本；不自动提交，保留暂存状态。") : preflight.reasons.join('；')}</p>{preflight.ok && <p>{t("先保留原始文件，再交接候选。交接时出现新编辑会停止并保留双方内容；请等操作完成后再继续编辑涉及的文件。")}</p>}{preflight.overlapping?.length ? <code>{preflight.overlapping.join('、')}</code> : null}</div><div className="ac-row"><button className="ac-btn" onClick={() => setPreflight(undefined)}>{t("返回审查")}</button><button className="ac-btn primary" disabled={blocked || !preflight.ok} onClick={() => act('adopt', { mode: 'worktree' })}>{t("确认采用 ")}{run.choice?.pick}</button></div></section>}
       <Banners run={run} />
@@ -986,6 +1001,7 @@ function RunView({ runId, sessionId, initial, compact, onDone, onExpand, onColla
   return (
     <div lang={currentLocale()} className="ac-root ac-inline" data-state={run.state} aria-label={t("A|B 比较 {0}", { 0: run.runId })}>
       <Styles />
+      {run.state === 'running' && <RunRing />}
       <div className="ac-inline-head">
         <span className="ac-logo">A|B</span>
         <span className="ac-task" title={run.task}>{run.task}</span>
@@ -1216,6 +1232,7 @@ function Sheet({ sessionId, runId, tab, trigger }: { sessionId: string; runId?: 
           if (backdropPointer.current && event.target === event.currentTarget && outside) setOpen(undefined)
           backdropPointer.current = false
         }}>
+        <Ambient busy={current?.state === 'running'} />
         <header className="ac-head"><span className="ac-logo">A|B</span><span className="ac-title">AgentCompare</span><span className="ac-header-caption">{t("跑过再选")}</span><span className="ac-spacer" /><LanguageControl compact />
           <nav className="ac-tabs" aria-label={t("比较工作区")}>{(['history', 'guide'] as const).map((item) => { const text = { history: t("历史记录"), guide: t("使用教程") }[item]; return <button key={item} className={`ac-tab${view === item && !selected ? ' on' : ''}`} aria-current={view === item && !selected ? 'page' : undefined} data-text={text} onClick={() => navigate(item)}>{text}</button> })}</nav>
           <button className="ac-icon-btn" onClick={() => setOpen(undefined)} aria-label={t("关闭（Esc）")} title={t("关闭（Esc）")}><IconClose /></button>
