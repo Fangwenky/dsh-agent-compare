@@ -4,7 +4,7 @@
   "packageVersion": "3.1.0",
   "sourceCommit": "782b8911b823936ca2d3cc15c0ce54a18e9a1f22",
   "packageArchiveSha256": "b55d69fab55e817e9a27083f49f42931d88e485222a7167df62bcf2fe87dc898",
-  "archiveNote": "Recorded from this commit's build, packed as a uniquely versioned development archive and installed in an isolated test profile; all 153 installed files other than package.json, which carries the development version, matched the commit byte for byte. Later commits update documentation and media, plus one interface fix made after these captures: a whale's thought names only a tool the version is running, so it no longer reads 「正在：正在思考下一步」 (src/client/agent-view.tsx).",
+  "archiveNote": "Recorded from this commit's build, packed as a uniquely versioned development archive and installed in an isolated test profile; all 153 installed files other than package.json, which carries the development version, matched the commit byte for byte. These recordings demonstrate the interface and workflow at the recorded commit. Fixes made after them are verified by tests, not by these recordings: a whale's thought names only a tool the version is running, so it no longer reads 「正在：正在思考下一步」; static previews answer only at their assigned local address, in the plugin's process as in the helper; English actions keep more room at phone width.",
   "hostVersion": "0.2.2-rc.1",
   "scenario": "Controlled candidates; four independently interactive pages with their replies and the steps of A, in a blind comparison; the picked version in focus with its reply beside its page, saved into a new folder with reasons. No external model request.",
   "privatePathsHidden": true,

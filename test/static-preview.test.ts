@@ -43,7 +43,53 @@ async function expectOnlyFolderFiles(preview: Preview, outside: string, linked: 
   expect(await post(preview.port)).toBe(405)
 }
 
+const hostRequest = (port: number, host: string | string[] | undefined, forwarded?: string, method = 'GET'): Promise<{ status: number; body: string }> => new Promise((resolve, reject) => {
+  const headers = (host === undefined ? [] : Array.isArray(host) ? host : [host]).flatMap(value => ['Host', value])
+  if (forwarded) headers.push('X-Forwarded-Host', forwarded)
+  const req = request({ host: '127.0.0.1', port, path: '/', method, setHost: false, headers }, res => {
+    let body = ''
+    res.setEncoding('utf8').on('data', chunk => { body += chunk }).on('end', () => resolve({ status: res.statusCode ?? 0, body }))
+  })
+  req.on('error', reject); req.end()
+})
+
 describe('static preview', () => {
+  // The same authority rules hold in this process and in the helper fallback.
+  for (const [where, start] of [['in this process', startStaticPreview], ['through the helper', startStaticHelperPreview]] as const) {
+    it(`serves only its assigned browser authority and explicit local aliases (${where})`, async () => {
+      const root = await tmp('ac-static-authority')
+      await writeFile(path.join(root, 'index.html'), 'private preview fixture')
+      const preview = await start(root, 'index.html', { timeoutMs: 30_000 })
+      try {
+        const url = new URL(preview.url), wrongPort = preview.port === 65535 ? 65534 : preview.port + 1
+        for (const host of [url.host, url.host.toUpperCase(), `127.0.0.1:${preview.port}`, `localhost:${preview.port}`]) {
+          expect(await hostRequest(preview.port, host)).toEqual({ status: 200, body: 'private preview fixture' })
+        }
+        const other = `ac-${(url.hostname.startsWith('ac-0') ? '1' : '0').repeat(32)}.localhost:${preview.port}`
+        for (const host of [`unexpected.example:${preview.port}`, other, `${url.hostname}:${wrongPort}`, `127.0.0.1:${wrongPort}`, `${url.hostname}.example:${preview.port}`, url.hostname]) {
+          expect(await hostRequest(preview.port, host)).toEqual({ status: 403, body: 'Forbidden host' })
+        }
+        for (const host of [undefined, [url.host, `unexpected.example:${preview.port}`]]) {
+          const response = await hostRequest(preview.port, host)
+          expect([400, 403]).toContain(response.status)
+          expect(response.body).not.toContain('private preview fixture')
+        }
+        expect(await hostRequest(preview.port, `unexpected.example:${preview.port}`, undefined, 'HEAD')).toEqual({ status: 403, body: '' })
+      } finally { await preview.stop() }
+    }, T)
+
+    it(`does not use forwarded headers to authorize file access (${where})`, async () => {
+      const root = await tmp('ac-static-forwarded')
+      await writeFile(path.join(root, 'index.html'), 'preview fixture')
+      const preview = await start(root, 'index.html', { timeoutMs: 30_000 })
+      try {
+        const host = new URL(preview.url).host
+        expect(await hostRequest(preview.port, `unexpected.example:${preview.port}`, host)).toEqual({ status: 403, body: 'Forbidden host' })
+        expect(await hostRequest(preview.port, host, 'unexpected.example')).toEqual({ status: 200, body: 'preview fixture' })
+      } finally { await preview.stop() }
+    }, T)
+  }
+
   it('serves only regular files inside its folder from this process, at once, and stops cleanly', async () => {
     const { root, outside, linked } = await staticFixture()
     const started = Date.now()

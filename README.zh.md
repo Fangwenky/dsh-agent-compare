@@ -6,9 +6,9 @@
 
 以下保留原章节入口，点击链接即可打开完整说明。
 
-<a id="鲸挑细选--agentcompare"></a>
+<a id="鲸挑细选--agent-compare-dsh-agent-compare"></a>
 
-[鲸挑细选 · AgentCompare](README.md#%E9%B2%B8%E6%8C%91%E7%BB%86%E9%80%89--agentcompare)
+[鲸挑细选 · Agent Compare (dsh-agent-compare)](README.md#%E9%B2%B8%E6%8C%91%E7%BB%86%E9%80%89--agent-compare-dsh-agent-compare)
 
 <a id="看一场完整的大肥鱼赛马"></a>
 
@@ -77,6 +77,10 @@
 <a id="项目增长"></a>
 
 [项目增长](README.md#%E9%A1%B9%E7%9B%AE%E5%A2%9E%E9%95%BF)
+
+<a id="agentcompare"></a>
+
+[agentcompare](README.md#agentcompare)
 
 <a id="demo"></a>
 

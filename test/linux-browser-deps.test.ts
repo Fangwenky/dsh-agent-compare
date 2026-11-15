@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { configureUbuntuBrowserSources, selectUbuntuBrowserMirror } from '../scripts/ubuntu-browser-sources.mjs'
+import { configureUbuntuBrowserSources, installUbuntuBrowserDependencies, selectUbuntuBrowserMirror } from '../scripts/ubuntu-browser-sources.mjs'
 
 function fixture(entries: Record<string, string>, unsafe?: string) {
   const files = new Map(Object.entries(entries)), writes: string[] = []
@@ -114,5 +114,64 @@ describe('Ubuntu browser dependency sources', () => {
     await expect(selectUbuntuBrowserMirror({ codename: 'noble', probe, timeoutMs: 0 })).rejects.toThrow()
     await expect(selectUbuntuBrowserMirror({ codename: 'noble', probe, timeoutMs: 10001 })).rejects.toThrow()
     expect(calls).toBe(0)
+  })
+
+  it('excludes a previously failed archive before probing another origin', async () => {
+    const hosts: string[] = []
+    const selected = await selectUbuntuBrowserMirror({ codename: 'noble', excludedMirrors: ['https://mirrors.edge.kernel.org/ubuntu'], probe: async (url: string) => { hosts.push(new URL(url).hostname); return true } })
+    expect(selected.mirror).toBe('https://archive.ubuntu.com/ubuntu')
+    expect(hosts).toEqual(['archive.ubuntu.com'])
+    await expect(selectUbuntuBrowserMirror({ codename: 'noble', excludedMirrors: ['https://unapproved.example/ubuntu'] })).rejects.toThrow('Unsupported excluded archive origin')
+  })
+})
+
+describe('Ubuntu browser dependency download recovery', () => {
+  const networkFailure = 'E: Failed to fetch https://mirrors.edge.kernel.org/ubuntu/pool/main/f/fonts-freefont/fixture.deb Cannot initiate the connection: Network is unreachable; connection timed out'
+  const source = '/etc/apt/sources.list.d/ubuntu.sources'
+  const signed = 'Types: deb\nURIs: https://archive.ubuntu.com/ubuntu\nSuites: noble noble-updates noble-security\nComponents: main universe\nSigned-By: /usr/share/keyrings/ubuntu-archive-keyring.gpg\n'
+
+  it('does not repeat a successful dependency installation', async () => {
+    const f = fixture({ [source]: signed }), browsers: string[] = []
+    const result = await installUbuntuBrowserDependencies({ codename: 'noble', browser: 'webkit', io: f.io, probe: async () => true, run: async (browser: string) => { browsers.push(browser); return { status: 0, output: '' } } })
+    expect(result.installed).toBe(true)
+    expect(result.attempts).toHaveLength(1)
+    expect(browsers).toEqual(['webkit'])
+  })
+
+  it('changes signed origin once when indexes work but actual package downloads fail', async () => {
+    const f = fixture({ [source]: signed }), origins: string[] = []
+    const result = await installUbuntuBrowserDependencies({ codename: 'noble', browser: 'chromium', io: f.io, probe: async () => true, run: async () => {
+      origins.push(f.files.get(source)!)
+      return origins.length === 1 ? { status: 100, output: networkFailure } : { status: 0, output: '' }
+    } })
+    expect(result.attempts.map((attempt: { mirror: string }) => attempt.mirror)).toEqual(['https://mirrors.edge.kernel.org/ubuntu', 'https://archive.ubuntu.com/ubuntu'])
+    expect(origins).toEqual([signed.replace('archive.ubuntu.com', 'mirrors.edge.kernel.org'), signed])
+    expect(result.attempts[0].transportFailure).toBe(true)
+    expect(result.attempts[1].status).toBe(0)
+  })
+
+  it('stops after two failed downloads without cycling through more origins', async () => {
+    const f = fixture({ [source]: signed }); let calls = 0
+    await expect(installUbuntuBrowserDependencies({ codename: 'noble', browser: 'chromium', io: f.io, probe: async () => true, run: async () => { calls++; return { status: 100, output: networkFailure } } })).rejects.toThrow('bounded archive fallback')
+    expect(calls).toBe(2)
+  })
+
+  it.each([0, 100].flatMap(status => ['NO_PUBKEY', 'Hash Sum mismatch', 'Unable to locate package', 'Unmet dependencies'].map(failure => ({ status, failure }))))('does not retry $failure at exit $status even alongside a connection error', async ({ status, failure }) => {
+    const f = fixture({ [source]: signed }); let calls = 0
+    await expect(installUbuntuBrowserDependencies({ codename: 'noble', browser: 'webkit', io: f.io, probe: async () => true, run: async () => { calls++; return { status, output: networkFailure + '\n' + failure } } })).rejects.toThrow('no eligible archive transport fallback')
+    expect(calls).toBe(1)
+  })
+
+  it.each([{ status: 1, output: 'unknown installation error' }, { status: null, signal: 'SIGTERM', output: networkFailure }])('does not retry unknown or interrupted installations: %j', async outcome => {
+    const f = fixture({ [source]: signed }); let calls = 0
+    await expect(installUbuntuBrowserDependencies({ codename: 'noble', browser: 'webkit', io: f.io, probe: async () => true, run: async () => { calls++; return outcome } })).rejects.toThrow()
+    expect(calls).toBe(1)
+  })
+
+  it('validates the browser before changing sources or starting a command', async () => {
+    const f = fixture({ [source]: signed }); let calls = 0
+    await expect(installUbuntuBrowserDependencies({ codename: 'noble', browser: 'unknown', io: f.io, run: async () => { calls++; return { status: 0 } } })).rejects.toThrow('Unsupported CI browser')
+    expect(calls).toBe(0)
+    expect(f.writes).toEqual([])
   })
 })

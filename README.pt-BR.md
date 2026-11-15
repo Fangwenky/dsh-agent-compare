@@ -1,9 +1,11 @@
-[![鲸挑细选 · AgentCompare（大肥鱼赛马）：在主对话里比较 2–4 版回答、文件与网页。Desktop + Web，中英双语，选择后继续对话 / Compare 2–4 answers, files and live pages in the main conversation. Styles, blind or open comparison, reasons for the pick, reviewed adoption and conversation memory, in a blue liquid-glass interface. Product illustration.](https://raw.githubusercontent.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/main/assets/readme/hero-bilingual.webp)](#install)
+[![鲸挑细选 · Agent Compare（大肥鱼赛马）：在主对话里比较 2–4 版回答、文件与网页。Desktop + Web，中英双语，选择后继续对话 / Compare 2–4 answers, files and live pages in the main conversation. Styles, blind or open comparison, reasons for the pick, reviewed adoption and conversation memory, in a blue liquid-glass interface. Product illustration.](https://raw.githubusercontent.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/main/assets/readme/hero-bilingual.webp)](#install)
 
-# AgentCompare · 鲸挑细选
+<a id="agentcompare"></a>
 
-[![GitHub stars](https://img.shields.io/github/stars/lijiaqi-AI-Product-Manager/dsh-agent-compare?label=GitHub%20Stars&color=3657f5&style=flat&labelColor=0b1b4f)](https://github.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/stargazers)
-[![npm total download requests](https://raw.githubusercontent.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/main/assets/statistics/npm-total-badge.svg)](https://www.npmjs.com/package/dsh-agent-compare)
+# Agent Compare (dsh-agent-compare) · 鲸挑细选
+
+[![GitHub stars](https://img.shields.io/github/stars/lijiaqi-AI-Product-Manager/dsh-agent-compare?label=GitHub%20Stars&color=3657f5&style=flat&labelColor=0b1b4f&cacheSeconds=300)](https://github.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/stargazers)
+[![npm download/下载量](https://raw.githubusercontent.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/main/assets/statistics/npm-total-badge.svg)](https://www.npmjs.com/package/dsh-agent-compare)
 
 [![Source version](https://img.shields.io/github/package-json/v/lijiaqi-AI-Product-Manager/dsh-agent-compare?label=source&color=3657f5&style=flat&labelColor=0b1b4f)](https://github.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/blob/main/package.json)
 [![npm version](https://img.shields.io/npm/v/dsh-agent-compare?label=npm&color=3657f5&style=flat&labelColor=0b1b4f&logo=npm&logoColor=white)](https://www.npmjs.com/package/dsh-agent-compare)
@@ -22,7 +24,7 @@ O nome em chinês é **鲸挑细选** (*jīng tiāo xì xuǎn*), um trocadilho c
 
 <p align="center"><a href="#demo">真实演示 / Recorded demo</a> · <a href="#ui">界面与体验 / Interface</a> · <a href="#install">安装 / Install</a> · <a href="#whats-new">版本更新 / What's new</a></p>
 
-> **3.1.0 · Versão estável.** DSH Desktop e Web, com interface em chinês e inglês. Compare 2–4 versões de respostas, arquivos ou páginas web na conversa principal; abra o raciocínio e as chamadas de ferramentas de cada versão e leia a resposta ao lado do que ela construiu.
+> **npm estável 2.0.0 · Código de main 3.1.0.** DSH Desktop e Web, com interface em chinês e inglês. Compare 2–4 versões de respostas, arquivos ou páginas web na conversa principal; abra o raciocínio e as chamadas de ferramentas de cada versão e leia a resposta ao lado do que ela construiu.
 
 <a id="demo"></a>
 
@@ -91,7 +93,7 @@ A referência de desenvolvimento é Node 26.13.0 com npm 12.2.2. As verificaçõ
 Instale o pacote npm no perfil Web padrão. O selo do npm indica o estado de publicação:
 
 ```bash
-dsh plugin --profile web add dsh-agent-compare@3.1.0
+dsh plugin --profile web add dsh-agent-compare
 ```
 
 Para outro perfil gerenciado por você, substitua `web` pelo nome real.
@@ -220,5 +222,7 @@ Licença [MIT](https://github.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/b
 Solicitações acumuladas do npm desde a primeira publicação, em todas as versões públicas. O cartão informa a data de corte; pode incluir acessos repetidos ou automatizados.
 
 [Definição do total e atualização automática](https://github.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/blob/main/docs/npm-total-downloads.md)
+
+O selo Star consulta o GitHub com cerca de cinco minutos de cache. As solicitações acumuladas do npm são atualizadas diariamente às 19h na China (UTC+8); a execução pode atrasar.
 
 <!-- project-growth:end -->

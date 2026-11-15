@@ -31,7 +31,9 @@ for (const [file, source] of contents) {
     const current = file === 'README.zh.md' ? 'README.md' : file
     for (const target of canonical) if (target !== current) assert.ok(source.includes(`](${target})`) || source.includes(`](${repositoryFiles}${target})`), `${file}: missing language link ${target}`)
     assert.ok(source.includes(manifest.version), `${file}: missing current version`)
-    assert.ok(source.includes(`add ${manifest.name}@${manifest.version}`), `${file}: missing the current pinned npm installation target`)
+    // Source branches may be ahead of npm. The default command must install
+    // the public latest; source archives remain pinned and checked below.
+    assert.ok(source.split('\n').some(line => line.trim() === `dsh plugin --profile web add ${manifest.name}`), `${file}: missing the public npm latest installation target`)
     assert.ok(source.includes(`${repository}/issues/4`), `${file}: missing listing and review status records`)
     assert.ok(source.includes('img.shields.io/github/stars/lijiaqi-AI-Product-Manager/dsh-agent-compare?'), `${file}: missing live Star badge`)
     assert.ok(source.includes(repositoryMedia + 'assets/statistics/npm-total-badge.svg'), `${file}: missing cumulative npm download badge`)

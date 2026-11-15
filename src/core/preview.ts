@@ -152,8 +152,8 @@ export async function startStaticPreview(dir: string, entry: string, opts: { tim
 /** The same files served by the helper process: the fallback when this process cannot listen. */
 export function startStaticHelperPreview(dir: string, entry: string, opts: { timeoutMs?: number; signal?: AbortSignal } = {}): Promise<Preview> {
   if (!entry || path.isAbsolute(entry) || entry.split(/[\\/]/).includes('..')) return Promise.reject(new PreviewError('静态页面入口无效', ''))
-  return startHelperPreview(dir, opts, async port => ({
-    argv: [process.execPath, PREVIEW_RUNNER, 'static', '--port', String(port), '--cwd', dir, '--entry', entry],
+  return startHelperPreview(dir, opts, async (port, host) => ({
+    argv: [process.execPath, PREVIEW_RUNNER, 'static', '--port', String(port), '--cwd', dir, '--entry', entry, '--browser-host', host],
     env: helperEnvironment(),
   }))
 }
@@ -199,8 +199,19 @@ function serveStaticHere(dir: string, entry: string): Promise<Preview> {
   const root = realpathSync.native(dir)
   const log = new DiagnosticLog(2000)
   const sockets = new Set<import('node:net').Socket>()
+  const host = `ac-${randomBytes(16).toString('hex')}.localhost`
+  // Set once the port is known; until then nothing is served.
+  let allowedHosts: ReadonlySet<string> = new Set()
   const server = createHttpServer((request, response: ServerResponse) => {
     const headers = { 'cache-control': 'no-store', 'x-content-type-options': 'nosniff' }
+    // A loopback listener alone does not reject requests sent through another
+    // domain. Bind file access to this preview's authority, never forwarded
+    // data: the same rule as the helper's static server.
+    const hosts = request.rawHeaders.filter((value, index) => index % 2 === 0 && value.toLowerCase() === 'host')
+    if (hosts.length !== 1 || typeof request.headers.host !== 'string' || !allowedHosts.has(request.headers.host.toLowerCase())) {
+      response.writeHead(403, { ...headers, 'content-type': 'text/plain; charset=utf-8' }).end('Forbidden host')
+      return
+    }
     if (request.method !== 'GET' && request.method !== 'HEAD') { response.writeHead(405, { ...headers, allow: 'GET, HEAD' }).end(); return }
     let pathname = '/'
     try { pathname = new URL(request.url ?? '/', 'http://preview.invalid').pathname } catch { /* keep the entry */ }
@@ -220,7 +231,7 @@ function serveStaticHere(dir: string, entry: string): Promise<Preview> {
       if (!address || typeof address !== 'object') { server.close(); reject(new Error('no port')); return }
       server.off('error', reject)
       server.on('error', error => log.push(`preview server error: ${error.message}\n`))
-      const host = `ac-${randomBytes(16).toString('hex')}.localhost`
+      allowedHosts = new Set(['127.0.0.1', 'localhost', host].map(name => `${name}:${address.port}`))
       log.push(`serving http://127.0.0.1:${address.port}/ in process\n`)
       let stopping: Promise<void> | undefined
       resolve({
@@ -258,7 +269,7 @@ function helperEnvironment(): NodeJS.ProcessEnv {
 }
 
 async function startHelperPreview(dir: string, opts: { timeoutMs?: number; signal?: AbortSignal },
-  launch: (port: number) => Promise<{ argv: string[]; env: NodeJS.ProcessEnv; observeStderr?: (chunk: string) => void }>): Promise<Preview> {
+  launch: (port: number, host: string) => Promise<{ argv: string[]; env: NodeJS.ProcessEnv; observeStderr?: (chunk: string) => void }>): Promise<Preview> {
   if (!existsSync(PREVIEW_RUNNER)) throw new PreviewError('预览辅助进程缺失，请重新安装插件', '')
   const timeoutMs = opts.timeoutMs ?? 60_000
   const host = `ac-${randomBytes(16).toString('hex')}.localhost`
@@ -266,7 +277,7 @@ async function startHelperPreview(dir: string, opts: { timeoutMs?: number; signa
   for (let attempt = 0; attempt < 3; attempt++) {
     opts.signal?.throwIfAborted()
     const port = await freePort()
-    const launched = await launch(port)
+    const launched = await launch(port, host)
     const child = startLongRunning(launched.argv, { cwd: dir, env: launched.env })
     const log = new DiagnosticLog(6000)
     let closed = false

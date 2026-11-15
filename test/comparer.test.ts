@@ -17,7 +17,7 @@ import { fixtureRepo, prepareFixtureProcess, tmp } from './fixture.ts'
 type Edit = (dir: string, req: AgentRunRequest) => Promise<void>
 
 /** Plays both agents: A and B get their own edit function. `hang` agents never finish (after their edit, if any). */
-function scripted(edits: { A?: Edit; B?: Edit }, opts: { hang?: 'A' | 'B'; editThenHang?: boolean; silent?: 'A' | 'B' } = {}): AgentRunner {
+function scripted(edits: { A?: Edit; B?: Edit }, opts: { hang?: 'A' | 'B'; editThenHang?: boolean; silent?: 'A' | 'B'; stopped?: 'A' | 'B' } = {}): AgentRunner {
   return {
     isolation: 'own-root',
     async run(req) {
@@ -30,17 +30,17 @@ function scripted(edits: { A?: Edit; B?: Edit }, opts: { hang?: 'A' | 'B'; editT
         return { stopReason: 'aborted', usage: { kind: 'unknown', reason: 'scripted' } }
       }
       await (edits[req.label] ?? defaultEdit)(req.cwd, req)
-      return { stopReason: 'completed', summary: opts.silent === req.label ? '' : `scripted ${req.label}`, usage: { kind: 'reported', inputTokens: 10, outputTokens: 5, totalTokens: 15 } }
+      return { stopReason: opts.stopped === req.label ? 'aborted' : 'completed', summary: opts.silent === req.label ? '' : `scripted ${req.label}`, usage: { kind: 'reported', inputTokens: 10, outputTokens: 5, totalTokens: 15 } }
     },
   }
 }
 const defaultEdit: Edit = async (dir, req) => writeFile(path.join(dir, 'index.html'), `<h1>shop ${req.label}</h1>\n`)
 
-async function setup(edits: { A?: Edit; B?: Edit }, opts: { hang?: 'A' | 'B'; editThenHang?: boolean; silent?: 'A' | 'B'; generationMs?: number; onUpdate?: ComparerOptions['onUpdate']; prepareProjectProcess?: ComparerOptions['prepareProjectProcess'] } = {}) {
+async function setup(edits: { A?: Edit; B?: Edit }, opts: { hang?: 'A' | 'B'; editThenHang?: boolean; silent?: 'A' | 'B'; stopped?: 'A' | 'B'; task?: string; generationMs?: number; onUpdate?: ComparerOptions['onUpdate']; prepareProjectProcess?: ComparerOptions['prepareProjectProcess'] } = {}) {
   const repo = await fixtureRepo()
   const store = new RunStore(await tmp('ac-home'))
   const comparer = new Comparer({ prepareProjectProcess: opts.prepareProjectProcess ?? prepareFixtureProcess, store, runner: scripted(edits, opts), version: 'test', browserChecks: false, previewTimeoutMs: 120_000, ...(opts.generationMs ? { generationMs: opts.generationMs } : {}), ...(opts.onUpdate ? { onUpdate: opts.onUpdate } : {}) })
-  const started = await comparer.start({ repo, task: 'make the shop nicer', assignment: 'fixed' })
+  const started = await comparer.start({ repo, task: opts.task ?? 'make the shop nicer', assignment: 'fixed' })
   const done = (await comparer.wait(started.runId))!
   const failedPreparation = done.candidates.filter(c => c.error?.stage === 'preparing')
   if (failedPreparation.length) {
@@ -229,9 +229,10 @@ describe.concurrent('comparison run', () => {
   it('a greeting inside a project that can be built is answered, not built', async () => {
     const prompts: string[] = []
     // A replies and changes nothing; B changes the page as before.
-    const { repo, comparer, runId, done } = await setup({ A: async (_dir, req) => { prompts.push(req.prompt) } })
+    const { repo, comparer, runId, done } = await setup({ A: async (_dir, req) => { prompts.push(req.prompt) } }, { task: '你好' })
     try {
       const [a, b] = done.candidates
+      expect(done.task).toBe('你好')
       expect(prompts[0]).toContain('reply with the complete answer and change no files')
       expect(a).toMatchObject({ stage: 'ready', result: 'answer', summary: 'scripted A', checks: [], touchedFiles: [], generation: { ended: 'completed' } })
       // Nothing is installed, checked or served for a reply.
@@ -252,6 +253,16 @@ describe.concurrent('comparison run', () => {
     try {
       expect(done.candidates[0]).toMatchObject({ stage: 'failed', error: { stage: 'sealing', message: expect.stringContaining('没有改动任何文件') } })
       expect(done.candidates[0]!.result).toBeUndefined()
+      expect(done.candidates[1]!.stage).toBe('ready')
+    } finally { await comparer.cleanup(runId) }
+  }, T)
+
+  it('an interrupted reply in a runnable project is not a completed answer', async () => {
+    const { comparer, runId, done } = await setup({ A: async () => {} }, { stopped: 'A', task: '解释当前项目' })
+    try {
+      expect(done.candidates[0]).toMatchObject({ stage: 'failed', generation: { ended: 'agent-stopped' }, summary: 'scripted A', error: { stage: 'sealing' } })
+      expect(done.candidates[0]!.result).toBeUndefined()
+      expect(done.candidates[0]!.install).toBeUndefined()
       expect(done.candidates[1]!.stage).toBe('ready')
     } finally { await comparer.cleanup(runId) }
   }, T)
@@ -328,7 +339,8 @@ describe.concurrent('comparison run', () => {
 })
 
 describe.concurrent('adoption', () => {
-  it('a preview stopped by a host restart can be opened again from its copy', async () => {
+  // Keep native Windows ownership queries separate from concurrent fixture builds.
+  it('a preview stopped by a host restart can be opened again from its copy', { concurrent: process.platform !== 'win32', timeout: T }, async () => {
     const { store, comparer, runId, done } = await setup({})
     const previous = done.candidates[0]!.preview!
     await comparer.dispose()
@@ -373,7 +385,7 @@ describe.concurrent('adoption', () => {
     } finally {
       if (!cleanupFinished) await after.cleanup(runId)
     }
-  }, T)
+  })
 
   it('writes exactly the checked tree, keeps index and HEAD, then releases copies and previews', async () => {
     const { repo, store, comparer, runId, done } = await setup({})

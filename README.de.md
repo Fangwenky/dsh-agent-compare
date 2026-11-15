@@ -1,9 +1,11 @@
-[![鲸挑细选 · AgentCompare（大肥鱼赛马）：在主对话里比较 2–4 版回答、文件与网页。Desktop + Web，中英双语，选择后继续对话 / Compare 2–4 answers, files and live pages in the main conversation. Styles, blind or open comparison, reasons for the pick, reviewed adoption and conversation memory, in a blue liquid-glass interface. Product illustration.](https://raw.githubusercontent.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/main/assets/readme/hero-bilingual.webp)](#install)
+[![鲸挑细选 · Agent Compare（大肥鱼赛马）：在主对话里比较 2–4 版回答、文件与网页。Desktop + Web，中英双语，选择后继续对话 / Compare 2–4 answers, files and live pages in the main conversation. Styles, blind or open comparison, reasons for the pick, reviewed adoption and conversation memory, in a blue liquid-glass interface. Product illustration.](https://raw.githubusercontent.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/main/assets/readme/hero-bilingual.webp)](#install)
 
-# AgentCompare · 鲸挑细选
+<a id="agentcompare"></a>
 
-[![GitHub stars](https://img.shields.io/github/stars/lijiaqi-AI-Product-Manager/dsh-agent-compare?label=GitHub%20Stars&color=3657f5&style=flat&labelColor=0b1b4f)](https://github.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/stargazers)
-[![npm total download requests](https://raw.githubusercontent.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/main/assets/statistics/npm-total-badge.svg)](https://www.npmjs.com/package/dsh-agent-compare)
+# Agent Compare (dsh-agent-compare) · 鲸挑细选
+
+[![GitHub stars](https://img.shields.io/github/stars/lijiaqi-AI-Product-Manager/dsh-agent-compare?label=GitHub%20Stars&color=3657f5&style=flat&labelColor=0b1b4f&cacheSeconds=300)](https://github.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/stargazers)
+[![npm download/下载量](https://raw.githubusercontent.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/main/assets/statistics/npm-total-badge.svg)](https://www.npmjs.com/package/dsh-agent-compare)
 
 [![Source version](https://img.shields.io/github/package-json/v/lijiaqi-AI-Product-Manager/dsh-agent-compare?label=source&color=3657f5&style=flat&labelColor=0b1b4f)](https://github.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/blob/main/package.json)
 [![npm version](https://img.shields.io/npm/v/dsh-agent-compare?label=npm&color=3657f5&style=flat&labelColor=0b1b4f&logo=npm&logoColor=white)](https://www.npmjs.com/package/dsh-agent-compare)
@@ -22,7 +24,7 @@ Der chinesische Name ist **鲸挑细选** (*jīng tiāo xì xuǎn*), ein Wortspi
 
 <p align="center"><a href="#demo">真实演示 / Recorded demo</a> · <a href="#ui">界面与体验 / Interface</a> · <a href="#install">安装 / Install</a> · <a href="#whats-new">版本更新 / What's new</a></p>
 
-> **3.1.0 · Stabile Version.** DSH Desktop und Web, mit chinesischer und englischer Oberfläche. 2–4 Versionen von Antworten, Dateien oder Webseiten im Hauptgespräch vergleichen; die Überlegungen und Werkzeugaufrufe jeder Version aufklappen und ihre Antwort neben dem Ergebnis lesen.
+> **npm stabil 2.0.0 · main-Quellcode 3.1.0.** DSH Desktop und Web, mit chinesischer und englischer Oberfläche. 2–4 Versionen von Antworten, Dateien oder Webseiten im Hauptgespräch vergleichen; die Überlegungen und Werkzeugaufrufe jeder Version aufklappen und ihre Antwort neben dem Ergebnis lesen.
 
 <a id="demo"></a>
 
@@ -91,7 +93,7 @@ Entwicklungsgrundlage sind Node 26.13.0 und npm 12.2.2. Die aktuellen Prüfungen
 Installiere das npm-Paket im voreingestellten Web-Profil. Das npm-Badge zeigt den Veröffentlichungsstatus:
 
 ```bash
-dsh plugin --profile web add dsh-agent-compare@3.1.0
+dsh plugin --profile web add dsh-agent-compare
 ```
 
 Für ein anderes selbst verwaltetes Profil ersetzt du `web` durch dessen tatsächlichen Namen.
@@ -220,5 +222,7 @@ Lizenz: [MIT](https://github.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/bl
 Kumulierte npm-Downloadanfragen seit der ersten Veröffentlichung, über alle öffentlichen Versionen. Die Karte nennt den Datenstand; wiederholte und automatisierte Zugriffe können enthalten sein.
 
 [Gesamtzählung und automatische Aktualisierung](https://github.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/blob/main/docs/npm-total-downloads.md)
+
+Der Star-Badge liest GitHub mit etwa fünf Minuten Cache. Die kumulierten npm-Anfragen werden täglich um 19:00 Uhr in China (UTC+8) aktualisiert; die Ausführung kann sich verzögern.
 
 <!-- project-growth:end -->

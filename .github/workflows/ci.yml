@@ -70,8 +70,9 @@ jobs:
       - run: npm ci
       - name: Configure bounded Ubuntu browser downloads
         if: runner.os == 'Linux'
-        run: sudo -n env GITHUB_ACTIONS=true "$(command -v node)" scripts/prepare-linux-browser-deps.mjs
-      - run: npx playwright-core install --with-deps --only-shell chromium
+        timeout-minutes: 8
+        run: sudo -n env GITHUB_ACTIONS=true "$(command -v node)" scripts/prepare-linux-browser-deps.mjs chromium
+      - run: npx playwright-core install --only-shell chromium
         if: runner.os == 'Linux'
       - run: npx playwright-core install --only-shell chromium
         if: runner.os != 'Linux'
@@ -119,8 +120,9 @@ jobs:
       - run: npm install --global npm@12.2.2 --ignore-scripts
       - run: npm ci
       - name: Configure bounded Ubuntu browser downloads
-        run: sudo -n env GITHUB_ACTIONS=true "$(command -v node)" scripts/prepare-linux-browser-deps.mjs
-      - run: npx playwright-core install --with-deps ${{ matrix.engine }}
+        timeout-minutes: 8
+        run: sudo -n env GITHUB_ACTIONS=true "$(command -v node)" scripts/prepare-linux-browser-deps.mjs ${{ matrix.engine }}
+      - run: npx playwright-core install ${{ matrix.engine }}
         timeout-minutes: 8
       - name: Exercise current WebKit interaction and language layouts
         timeout-minutes: 8
@@ -196,8 +198,9 @@ jobs:
       - run: npm install --prefix .runtime-checks/host-sdk --ignore-scripts --no-audit --no-fund @deepseek-ai/dsh@0.2.2-rc.1
       - name: Configure bounded Ubuntu browser downloads
         if: runner.os == 'Linux'
-        run: sudo -n env GITHUB_ACTIONS=true "$(command -v node)" scripts/prepare-linux-browser-deps.mjs
-      - run: npx playwright-core install --with-deps --only-shell chromium
+        timeout-minutes: 8
+        run: sudo -n env GITHUB_ACTIONS=true "$(command -v node)" scripts/prepare-linux-browser-deps.mjs chromium
+      - run: npx playwright-core install --only-shell chromium
         if: runner.os == 'Linux'
       - run: npx playwright-core install --only-shell chromium
         if: runner.os != 'Linux'

@@ -1,9 +1,11 @@
-[![鲸挑细选 · AgentCompare（大肥鱼赛马）：在主对话里比较 2–4 版回答、文件与网页。Desktop + Web，中英双语，选择后继续对话 / Compare 2–4 answers, files and live pages in the main conversation. Styles, blind or open comparison, reasons for the pick, reviewed adoption and conversation memory, in a blue liquid-glass interface. Product illustration.](https://raw.githubusercontent.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/main/assets/readme/hero-bilingual.webp)](#install)
+[![鲸挑细选 · Agent Compare（大肥鱼赛马）：在主对话里比较 2–4 版回答、文件与网页。Desktop + Web，中英双语，选择后继续对话 / Compare 2–4 answers, files and live pages in the main conversation. Styles, blind or open comparison, reasons for the pick, reviewed adoption and conversation memory, in a blue liquid-glass interface. Product illustration.](https://raw.githubusercontent.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/main/assets/readme/hero-bilingual.webp)](#install)
 
-# AgentCompare · 鲸挑细选
+<a id="agentcompare"></a>
 
-[![GitHub stars](https://img.shields.io/github/stars/lijiaqi-AI-Product-Manager/dsh-agent-compare?label=GitHub%20Stars&color=3657f5&style=flat&labelColor=0b1b4f)](https://github.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/stargazers)
-[![npm total download requests](https://raw.githubusercontent.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/main/assets/statistics/npm-total-badge.svg)](https://www.npmjs.com/package/dsh-agent-compare)
+# Agent Compare (dsh-agent-compare) · 鲸挑细选
+
+[![GitHub stars](https://img.shields.io/github/stars/lijiaqi-AI-Product-Manager/dsh-agent-compare?label=GitHub%20Stars&color=3657f5&style=flat&labelColor=0b1b4f&cacheSeconds=300)](https://github.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/stargazers)
+[![npm download/下载量](https://raw.githubusercontent.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/main/assets/statistics/npm-total-badge.svg)](https://www.npmjs.com/package/dsh-agent-compare)
 
 [![Source version](https://img.shields.io/github/package-json/v/lijiaqi-AI-Product-Manager/dsh-agent-compare?label=source&color=3657f5&style=flat&labelColor=0b1b4f)](https://github.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/blob/main/package.json)
 [![npm version](https://img.shields.io/npm/v/dsh-agent-compare?label=npm&color=3657f5&style=flat&labelColor=0b1b4f&logo=npm&logoColor=white)](https://www.npmjs.com/package/dsh-agent-compare)
@@ -22,7 +24,7 @@
 
 <p align="center"><a href="#demo">真实演示 / Recorded demo</a> · <a href="#ui">界面与体验 / Interface</a> · <a href="#install">安装 / Install</a> · <a href="#whats-new">版本更新 / What's new</a></p>
 
-> **3.1.0 · 正式版。** DSH Desktop と Web、中国語・英語の画面に対応。メイン会話内で 2〜4 バージョンの回答・ファイル・Web ページを比較できます。各バージョンの思考とツール呼び出しを開いて確認でき、返信は成果物と並べて表示されます。
+> **npm 正式版 2.0.0 · main ソース 3.1.0。** DSH Desktop と Web、中国語・英語の画面に対応。メイン会話内で 2〜4 バージョンの回答・ファイル・Web ページを比較できます。各バージョンの思考とツール呼び出しを開いて確認でき、返信は成果物と並べて表示されます。
 
 <a id="demo"></a>
 
@@ -91,7 +93,7 @@ Node 26.13.0 と npm 12.2.2 が開発基準です。公式の最新 DSH パッ�
 npm パッケージを既定の Web プロファイルに追加します。公開状態は上部の npm バッジで確認できます。
 
 ```bash
-dsh plugin --profile web add dsh-agent-compare@3.1.0
+dsh plugin --profile web add dsh-agent-compare
 ```
 
 別の自己管理プロファイルを使う場合は、`web` を実際の名前に置き換えてください。
@@ -218,5 +220,7 @@ npm run test:ui
 初回公開から全公開バージョンを対象とした npm 累計ダウンロードリクエストです。集計終了日は画像に記載。重複・自動アクセスを含む場合があります。
 
 [累計の定義と自動更新](https://github.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/blob/main/docs/npm-total-downloads.md)
+
+Star バッジは GitHub の値を約 5 分キャッシュします。npm の累計リクエスト数は毎日中国時間 19:00 に更新し、実行が遅れる場合があります。
 
 <!-- project-growth:end -->
