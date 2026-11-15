@@ -142,9 +142,12 @@
     },
     {
       "path": "social-preview.png",
-      "bytes": 604795,
-      "sha256": "e0c46b49002f047171e04b5999f8c3fe6e9479107e7198d6216029eadde85262",
-      "note": "Product illustration rendered from HTML and CSS, not a screenshot."
+      "bytes": 806973,
+      "sha256": "0c0e1e9ff65b6e8321b34b911a9139beb7368525a7d2914c19b9b413d4fc48ed",
+      "note": "Blue-glass product illustration, not a screenshot. Exported at 1280 × 640; the repository social-preview setting is separate from this file.",
+      "width": 1280,
+      "height": 640,
+      "updatedAt": "2026-11-15T16:06:53.619Z"
     }
   ],
   "closeup": {

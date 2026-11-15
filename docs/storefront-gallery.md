@@ -1,8 +1,10 @@
-# AgentCompare 3.0 · 图片与界面 / Gallery
+# 鲸挑细选 · AgentCompare 3.1 · 图片与界面 / Gallery
 
 在 DSH Desktop 与 Web 的主对话里比较 2–4 版回答、文件或网页。每版的思考和工具调用可展开查看，回复与成品同等显示。选择风格、盲选或公开对比，选完说明理由，再继续主对话；文件写回前先审查，保留撤销与恢复入口。
 
 Compare 2–4 answers, files or live pages in the main conversation on DSH Desktop and Web. Open each version's thinking and tool calls, and read its reply beside what it built. Choose styles, compare blind or openly, keep reasons for the pick, and review before adoption. Chinese and English interfaces are included.
+
+主图与流程图已使用「鲸挑细选」中文名、A–D 四种蓝和实时步骤示意；真实截图保留各自的录制来源。/ The overview and workflow use the current name, four blues and live-step illustrations; runtime captures retain their recorded source.
 
 图库按“是什么 → 实际比较 → 主对话 → 设置 → 保存与撤销 → English → 历史 → 流程”排列。前两张用于小卡片展示。首图和流程图是功能示意，另外六张为固定候选在真实 DSH Web 宿主中的桌面尺寸界面，不代表外部模型的生成质量或速度。
 

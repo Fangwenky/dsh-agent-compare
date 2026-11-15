@@ -1,7 +1,7 @@
 {
   "schema": "agentcompare.gallery/v1",
   "packageVersion": "3.1.0",
-  "updatedAt": "2026-11-15T11:34:47.012Z",
+  "updatedAt": "2026-11-15T16:06:53.593Z",
   "runtimeSource": "782b8911b823936ca2d3cc15c0ce54a18e9a1f22",
   "hostVersion": "0.2.2-rc.1",
   "browser": "Microsoft Edge 157",
@@ -15,10 +15,10 @@
       "url": "https://raw.githubusercontent.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/main/assets/readme/gallery-2.0/01-overview.png",
       "kind": "illustration",
       "title": "同一需求，2–4 版真跑 / One task, 2–4 versions",
-      "width": 1922,
-      "height": 818,
-      "bytes": 1594956,
-      "sha256": "cd2b6974139ba290c22ffa3055bf99d837e94ceb94c8126a2133c2cfb0b4ff44"
+      "width": 1921,
+      "height": 819,
+      "bytes": 1593898,
+      "sha256": "907a702447e1c3c9405201f138ae1cf2e848eb88030495b4ed4d3db55c994f76"
     },
     {
       "path": "assets/readme/gallery-2.0/02-live-comparison.png",
@@ -87,8 +87,10 @@
       "title": "设定、实跑、选择、采用 / Set up, run, choose and adopt",
       "width": 2022,
       "height": 778,
-      "bytes": 1586960,
-      "sha256": "ce65381ed60152d8546282d28d941267b3531a59b0f3fde7445ba4007f6f9b3b"
+      "bytes": 1669368,
+      "sha256": "58bc9a56b51d0666f2c21112fa5e94b5cdf462855ce08ff1829c24a6d31e5b33"
     }
-  ]
+  ],
+  "illustrationUpdatedAt": "2026-11-15T16:06:53.593Z",
+  "illustrationNote": "Blue-glass product illustrations show the current name, four blue versions, live steps and reviewed continuation. Illustrations are separate from the six runtime captures and do not change their recorded source."
 }
