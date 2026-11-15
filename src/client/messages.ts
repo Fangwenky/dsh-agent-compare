@@ -731,16 +731,7 @@ export const messages: Readonly<Record<string, string>> = {
   "更新待办": "Update to-dos",
   "子任务": "Subtask",
   "使用技能": "Use skill",
-  "在想怎么写": "Working out how",
-  "先看看项目": "Looking around first",
-  "在铺一份副本": "Laying out a copy",
-  "这个有意思": "Ooh, interesting",
-  "写着呢": "Writing away",
-  "马上就好": "Almost there",
-  "在跑检查": "Running the checks",
-  "快到了": "Nearly done",
   "嘿！": "Hey!",
   "收到～": "Got it~",
-  "再戳就吐泡泡了": "Poke again for bubbles",
-  "先休息一下": "Taking a break"
+  "再戳就吐泡泡了": "Poke again for bubbles"
 }

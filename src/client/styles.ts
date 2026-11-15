@@ -280,7 +280,6 @@ const VISUAL = `
 @media(max-width:600px){.ac-files{grid-template-columns:1fr}.ac-file-list{max-height:140px}}
 .ac-combos{display:flex;flex-wrap:wrap;align-items:center;gap:6px 8px}
 .ac-combo{display:inline-flex;align-items:baseline;gap:5px}.ac-combo small{font-size:11px;font-weight:500;color:var(--ac-fg2)}.ac-combo.on small{color:#fff}
-@keyframes ac-v-wave{to{transform:rotate(360deg)}}
 .ac-empty{gap:14px}
 /* the pick lands: a ring and sparks of light */
 .ac-burst{position:absolute;width:0;height:0;z-index:40;pointer-events:none}
@@ -404,31 +403,42 @@ const AGENT = `
 .ac-empty:has(>.ac-whale-stage){justify-content:flex-start}
 .ac-whale-stage{position:relative;isolation:isolate;display:grid;justify-items:center;gap:8px;width:100%;min-height:230px;padding:30px 12px 18px;overflow:hidden;border-radius:16px;background:linear-gradient(180deg,rgba(255,255,255,.35),rgba(233,241,255,.55))}
 .ac-empty.compact .ac-whale-stage{min-height:150px;padding:22px 12px 12px}.ac-empty.compact .ac-whale svg{width:112px}
-.ac-whale-sea{position:absolute;left:0;right:0;bottom:0;z-index:-1;height:var(--ac-level);transition:height 1.4s var(--ac-v-expo);pointer-events:none}
-.ac-whale-sea i{position:absolute;left:50%;top:0;width:3000px;height:3000px;margin-left:-1500px;border-radius:46%;background:linear-gradient(180deg,rgba(125,155,255,.30),rgba(77,107,254,.16) 6%,rgba(77,107,254,.10));animation:ac-v-wave 16s linear infinite}
-.ac-whale-sea i+i{border-radius:40%;margin-top:-6px;background:rgba(169,232,255,.28);animation-duration:22s;animation-direction:reverse}
-.ac-whale{position:relative;border:0;padding:0;background:none;cursor:pointer;transform-origin:50% 80%;animation:ac-whale-bob 3.4s ease-in-out infinite}
+.ac-whale{position:relative;border:0;padding:0;background:none;cursor:pointer;transform-origin:50% 70%;animation:ac-whale-bob 3.6s ease-in-out infinite}
 .ac-whale:focus-visible{outline:2px solid var(--ac-v-ink);outline-offset:6px;border-radius:24px}
-.ac-whale svg{display:block;width:148px;height:auto;overflow:visible;filter:drop-shadow(0 12px 14px rgba(54,87,245,.24))}
-.ac-whale-tail{transform-box:view-box;transform-origin:128px 66px;animation:ac-whale-tail 1.8s ease-in-out infinite}
-.ac-whale-eyes{transition:transform .28s var(--ac-v-out)}
-.ac-whale-blink{transform-box:fill-box;transform-origin:50% 50%;animation:ac-whale-blink 4.8s infinite}
-.ac-whale-eye{fill:#fff;transform-box:fill-box;transform-origin:50% 50%;transition:transform .3s var(--ac-v-spring)}
-.mood-think .ac-whale-eye{transform:scaleY(.82) translateY(-1px)}.mood-work .ac-whale-eye{transform:scaleY(.62)}
-.mood-happy .ac-whale-eye{transform:scaleY(.28)}.mood-sleep .ac-whale-eye{transform:scaleY(.14)}.mood-sleep .ac-whale{animation-duration:6s}
-.mood-happy .ac-whale-mouth{d:path("M51 75q6 6 12 0")}
-.ac-whale-spout circle{fill:#9fe0ff;opacity:0;transform-box:fill-box;transform-origin:50% 100%;animation:ac-whale-puff 1.2s var(--ac-v-out)}
-.ac-whale-spout circle:nth-child(2){animation-delay:.08s}.ac-whale-spout circle:nth-child(3){animation-delay:.16s}
-.mood-work .ac-whale-spout circle{animation:ac-whale-puff 1.8s var(--ac-v-out) infinite}
+.ac-whale-lean{display:block;transition:transform .5s var(--ac-v-out)}
+.ac-whale svg{display:block;width:150px;height:auto;overflow:visible;filter:drop-shadow(0 10px 14px rgba(54,87,245,.2))}
+.ac-whale-glass{fill:rgba(77,107,254,.07)}
+.ac-whale-line{fill:none;stroke:#4d6bfe;stroke-width:.3;stroke-linejoin:round}
+.ac-whale-water{transition:transform 1.3s var(--ac-v-expo)}
+.ac-whale-wave{transform-box:view-box}
+.ac-whale-wave.back{fill:#9fb3ff;opacity:.55;--ac-p:5.2px;animation:ac-whale-drift 3.4s linear infinite}
+.ac-whale-wave.front{--ac-p:-6.4px;animation:ac-whale-drift 2.6s linear infinite}
+.ac-whale-rise circle{fill:#fff;opacity:0;transform-box:fill-box;animation:ac-whale-rise 3.2s ease-in infinite}
+.ac-whale-rise circle:nth-child(2){animation-delay:.9s}.ac-whale-rise circle:nth-child(3){animation-delay:1.7s}.ac-whale-rise circle:nth-child(4){animation-delay:2.4s}
+.ac-whale-trail,.ac-whale-head,.ac-whale-flash{fill:none;stroke-linecap:round;stroke-linejoin:round}
+.ac-whale-trail{stroke:#4d6bfe;stroke-width:.62;stroke-dasharray:22 78;animation:ac-whale-trace 2.8s linear infinite}
+.ac-whale-head{stroke:#5fd4ff;stroke-width:.85;stroke-dasharray:2.2 97.8;stroke-dashoffset:-19.8;filter:drop-shadow(0 0 .6px #7fe0ff);animation:ac-whale-trace-head 2.8s linear infinite}
+.ac-whale-stage .two{animation-delay:-1.4s}
+.ac-whale-flash{stroke:#7fd0ff;stroke-width:.9;opacity:0;animation:ac-whale-flash 1.1s var(--ac-v-out)}
+.ac-whale-spout circle{fill:#7fd0ff;opacity:0;transform-box:fill-box;transform-origin:50% 100%;animation:ac-whale-puff 1.2s var(--ac-v-out)}
+.ac-whale-spout circle:nth-child(2){animation-delay:.07s}.ac-whale-spout circle:nth-child(3){animation-delay:.14s}
+.ac-whale-stage.poked .ac-whale-lean{animation:ac-whale-jiggle .9s var(--ac-v-out)}
+.ac-whale-stage.poked .ac-whale-wave.front{animation-duration:.8s}
+.ac-whale-stage.full .ac-whale-line{stroke-width:0}.ac-whale-stage.full :is(.ac-whale-trail,.ac-whale-head,.ac-whale-rise){display:none}
+.ac-whale-stage.asleep .ac-whale{animation-duration:6s}.ac-whale-stage.asleep :is(.ac-whale-trail,.ac-whale-head){display:none}.ac-whale-stage.asleep .ac-whale-wave{animation-duration:9s}
 .ac-whale-bubble{position:absolute;left:62%;top:-22px;padding:3px 10px;border-radius:12px 12px 12px 4px;background:#fff;color:var(--ac-fg);font-size:12px;line-height:1.6;white-space:nowrap;box-shadow:0 0 0 1px rgba(52,84,180,.1),0 6px 14px -8px rgba(28,48,120,.35);animation:ac-whale-say .5s var(--ac-v-spring) both}
 .ac-whale-pops{position:absolute;left:50%;top:50%;width:0;height:0;pointer-events:none}
 .ac-whale-pops i{position:absolute;width:9px;height:9px;border-radius:50%;background:radial-gradient(circle at 35% 30%,#fff,rgba(169,232,255,.5) 60%,rgba(77,107,254,.2));box-shadow:inset 0 0 0 1px rgba(255,255,255,.8);animation:ac-whale-pop 1.2s var(--ac-v-out) forwards}
 .ac-whale-pops i:nth-child(1){--x:-46px}.ac-whale-pops i:nth-child(2){--x:-18px;animation-delay:.06s}.ac-whale-pops i:nth-child(3){--x:8px;width:6px;height:6px;animation-delay:.12s}.ac-whale-pops i:nth-child(4){--x:30px;animation-delay:.04s}.ac-whale-pops i:nth-child(5){--x:52px;width:5px;height:5px;animation-delay:.18s}
 .ac-whale-caption{position:relative;max-width:min(92%,460px);text-align:center;font-size:12.5px;line-height:1.6;color:var(--ac-fg2);font-variant-numeric:tabular-nums;overflow-wrap:anywhere}
-@keyframes ac-whale-bob{50%{transform:translateY(-6px) rotate(-1.5deg)}}
-@keyframes ac-whale-tail{50%{transform:rotate(-13deg)}}
-@keyframes ac-whale-blink{0%,93%,100%{transform:scaleY(1)}96%{transform:scaleY(.08)}}
-@keyframes ac-whale-puff{0%{opacity:0;transform:translateY(8px) scale(.4)}35%{opacity:.95}100%{opacity:0;transform:translateY(-16px) scale(1.15)}}
+@keyframes ac-whale-bob{50%{transform:translateY(-5px) rotate(-1.2deg)}}
+@keyframes ac-whale-drift{to{transform:translateX(var(--ac-p))}}
+@keyframes ac-whale-rise{0%{opacity:0;transform:translateY(0)}20%{opacity:.75}100%{opacity:0;transform:translateY(-2.6px)}}
+@keyframes ac-whale-trace{to{stroke-dashoffset:-100}}
+@keyframes ac-whale-trace-head{from{stroke-dashoffset:-19.8}to{stroke-dashoffset:-119.8}}
+@keyframes ac-whale-flash{30%{opacity:.9}100%{opacity:0}}
+@keyframes ac-whale-jiggle{25%{transform:scale(1.08,.9) translateY(3px)}55%{transform:scale(.95,1.07) translateY(-8px) rotate(-3deg)}80%{transform:scale(1.02,.98)}}
+@keyframes ac-whale-puff{0%{opacity:0;transform:translateY(1.4px) scale(.4)}35%{opacity:1}100%{opacity:0;transform:translateY(-2.6px) scale(1.15)}}
 @keyframes ac-whale-say{from{opacity:0;transform:translateY(6px) scale(.85)}}
 @keyframes ac-whale-pop{0%{opacity:0;transform:translate(0,0) scale(.4)}20%{opacity:1}100%{opacity:0;transform:translate(var(--x),-90px) scale(1.1)}}
 /* crisper controls: real buttons are rounded rectangles; chips, tabs and toggles stay pills */
@@ -442,13 +452,13 @@ const AGENT = `
 .ac-step-thinking{border-left-color:rgba(143,162,255,.28)}
 .ac-reply{background:rgba(24,30,58,.72);box-shadow:inset 0 1px 0 rgba(255,255,255,.06),0 0 0 1px rgba(123,147,255,.16)}
 .ac-whale-stage{background:linear-gradient(180deg,rgba(20,26,50,.3),rgba(28,36,72,.5))}
-.ac-whale-sea i{background:linear-gradient(180deg,rgba(112,137,255,.32),rgba(77,107,254,.18) 6%,rgba(77,107,254,.12))}.ac-whale-sea i+i{background:rgba(69,182,255,.16)}
+.ac-whale-glass{fill:rgba(143,162,255,.08)}.ac-whale-line{stroke:#8fa2ff}.ac-whale-wave.back{fill:#5a74ff;opacity:.45}
 .ac-whale-bubble{background:#1e2648;color:var(--ac-fg);box-shadow:0 0 0 1px rgba(143,162,255,.3),0 6px 14px -8px rgba(0,0,0,.6)}
 .ac-whale-caption{color:var(--ac-fg)}
 .ac-shimmer{background-image:linear-gradient(90deg,var(--ac-fg2) 0 38%,#c0caff 50%,var(--ac-fg2) 62% 100%)}
 }
-@media(prefers-reduced-motion:reduce){.ac-shimmer{animation:none;-webkit-text-fill-color:currentColor;background:none}}
-@media(forced-colors:active){.ac-shimmer{-webkit-text-fill-color:currentColor;background:none}.ac-whale-sea{display:none}}
+@media(prefers-reduced-motion:reduce){.ac-shimmer{animation:none;-webkit-text-fill-color:currentColor;background:none}.ac-whale-stage :is(.ac-whale-trail,.ac-whale-head,.ac-whale-rise){display:none}}
+@media(forced-colors:active){.ac-shimmer{-webkit-text-fill-color:currentColor;background:none}.ac-whale-stage :is(.ac-whale-water,.ac-whale-glass,.ac-whale-trail,.ac-whale-head){display:none}.ac-whale-line{stroke:CanvasText}}
 `
 
 /** Scoped styles shared by the conversation, composer and history sheet. */

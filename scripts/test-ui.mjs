@@ -543,6 +543,16 @@ try {
   // While versions work: a whale in each waiting area, comets around the run bar, and the steps behind one toggle.
   check(await page.locator('.ac-sheet .ac-whale-stage').count() === 2, 'each working version must show the whale in its waiting area')
   check(await page.locator('.ac-whale').first().evaluate(button => button.tabIndex === -1 && button.getAttribute('aria-hidden') === 'true'), 'the whale is a pointer toy kept out of the keyboard order')
+  // DSH's own mark, hollow while it fills: the outline, water clipped to the mark, and two lights on its edge.
+  const whaleParts = await page.locator('.ac-whale-stage').first().evaluate(stage => ({
+    line: stage.querySelectorAll('.ac-whale-line').length,
+    clipped: Boolean(stage.querySelector('[clip-path] .ac-whale-water')),
+    lights: [...stage.querySelectorAll('.ac-whale-trail, .ac-whale-head')].filter(p => p.getAttribute('pathLength') === '100').length,
+    ids: new Set([...document.querySelectorAll('.ac-whale-stage clipPath')].map(c => c.id)).size === document.querySelectorAll('.ac-whale-stage clipPath').length,
+  }))
+  check(whaleParts.line === 1 && whaleParts.clipped && whaleParts.lights === 4 && whaleParts.ids, 'the whale must be the outlined mark with water inside and two lights on its edge, each with its own clip id')
+  const crests = await page.locator('.ac-whale-water').evaluateAll(nodes => nodes.map(n => parseFloat(n.style.transform.replace(/[^\d.]+/, ''))))
+  check(crests.length === 2 && crests[0] < crests[1], 'a version further along must show more water in its whale')
   check(await page.locator('.ac-sheet .ac-action-dock > .ac-run-ring').evaluate(ring => getComputedStyle(ring).display !== 'none' && ring.getBoundingClientRect().width > 300), 'a running comparison must show comets around its run bar')
   const workingCard = page.getByRole('region', { name: '候选 B', exact: true })
   const stepsToggle = workingCard.locator('button.ac-steps-toggle')

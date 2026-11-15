@@ -365,7 +365,7 @@ function CandidateCard({ run, c, revealed, picked, busy, act, device, compact, h
         <Screenshots runId={run.runId} c={c} busy={busy} act={act} device={device} />
       ) : (
         <div className={`ac-empty${reply ? ' compact' : ''}`}>
-          <Whale stage={c.stage} level={step / PIPELINE.length} steps={trace?.steps ?? c.progress?.steps ?? 0} caption={waitingText} />
+          <Whale stage={c.stage} level={(step + (c.stage === 'generating' ? Math.min(trace?.steps ?? c.progress?.steps ?? 0, 30) / 30 * 0.9 : 0)) / PIPELINE.length} steps={trace?.steps ?? c.progress?.steps ?? 0} caption={waitingText} />
         </div>
       )}
       <div className="ac-card-evidence">
