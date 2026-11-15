@@ -1,50 +1,66 @@
 {
   "schema": "agentcompare.demo/v1",
   "source": {
-    "version": "2.1.0 release candidate",
-    "commit": "2b5c9920378b8414dfa1449033808385c30f55c8",
-    "archiveSha256": "804d302ce8e4d018664d5c5744b09eb4d78ec0ed1c1222e33fa44ffbcb363e8b",
-    "archiveNote": "Recorded from this commit's build, packed as a uniquely versioned development archive and installed in an isolated test profile; all 95 installed runtime files matched that captured build byte for byte. These recordings demonstrate the interface and workflow at the recorded commit. Later static-preview authority and English phone-action layout fixes are verified separately and are not evidenced by this recording.",
+    "version": "3.1.0 release candidate",
+    "commit": "782b8911b823936ca2d3cc15c0ce54a18e9a1f22",
+    "archiveSha256": "b55d69fab55e817e9a27083f49f42931d88e485222a7167df62bcf2fe87dc898",
+    "archiveNote": "Recorded from this commit's build, packed as a uniquely versioned development archive and installed in an isolated test profile; all 153 installed files other than package.json, which carries the development version, matched the commit byte for byte. These recordings demonstrate the interface and workflow at the recorded commit. Fixes made after them are verified by tests, not by these recordings: a whale's thought names only a tool the version is running, so it no longer reads 「正在：正在思考下一步」; static previews answer only at their assigned local address, in the plugin's process as in the helper; English actions keep more room at phone width.",
     "host": "0.2.2-rc.1",
-    "browser": "Microsoft Edge 157.0.4341.42 (headless)",
+    "browser": "Microsoft Edge 157.0.4341.60 (headless)",
     "os": "Windows",
-    "capturedAt": "2026-11-14T14:57:37.542Z",
+    "capturedAt": "2026-11-15T11:21:54.509Z",
     "ffmpeg": "ffmpeg version 9.0.2-full_build-www.gyan.dev Copyright (c) 2000-2026 the FFmpeg developers",
     "candidate": "Local controlled model uses the native DSH write tool. No external model request.",
-    "task": "Four pomodoro pages in a folder outside Git, compared blind: two set aside, C picked with two reasons, saved into a new folder. In the same session: a greeting sent from a Vite repository answered by four versions in their styles with nothing built, and three open English answers from a quick set."
+    "task": "Four pomodoro pages in a folder outside Git, compared blind and served by the plugin itself. The large window is opened while the versions work (DeepSeek's blue whale per version filling as it goes, thoughts over its head, one poked, the live steps of A), replies arrive before the pages, two versions are set aside, C is shown in focus with its reply beside its page and picked with two reasons, then saved into a new folder. In the same session: a greeting sent from a Vite repository answered by four versions in their styles with nothing built, and three open English answers from a quick set."
   },
   "editing": {
-    "rawSeconds": 69.68,
-    "workflowSeconds": 28.2,
+    "rawSeconds": 67.67,
+    "workflowSeconds": 44.83,
     "workflowSegments": [
       [
-        10.77,
-        16.32
+        8.89,
+        14.4
       ],
       [
-        44.47,
-        67.08
+        15.78,
+        25.48
+      ],
+      [
+        26.53,
+        27.93
+      ],
+      [
+        37.53,
+        65.34
       ]
     ],
     "workflowPlaybackRate": 1,
-    "previewSeconds": 13.9,
+    "previewSeconds": 14.8,
     "previewSegments": [
       [
-        44.57,
-        46.17
+        18.27,
+        21.68
       ],
       [
-        49.36,
-        58.34
+        23.88,
+        25.18
       ],
       [
-        60.26,
-        63.56
+        37.63,
+        39.03
+      ],
+      [
+        49.67,
+        55.77
+      ],
+      [
+        59.13,
+        61.33
       ]
     ],
     "previewPlaybackRate": 1,
-    "previewFps": 6,
-    "previewWidth": 720,
+    "previewFps": 5,
+    "previewWidth": 640,
     "previewCrop": {
       "x": 12,
       "y": 48,
@@ -58,11 +74,16 @@
   },
   "proof": {
     "assignment": {
-      "A": "活力 · Vibrant",
+      "A": "稳妥 · Conservative",
       "B": "大胆 · Bold",
-      "C": "稳妥 · Conservative",
+      "C": "活力 · Vibrant",
       "D": "极简 · Minimal"
     },
+    "stepsShownWhileWorking": true,
+    "liveStepsUnderWhale": true,
+    "repliesBeforePages": true,
+    "focusWithReplyBesidePage": true,
+    "pagesServedInProcess": true,
     "setAside": [
       "B",
       "D"
@@ -111,19 +132,62 @@
   "files": [
     {
       "path": "comparison-workflow.mp4",
-      "bytes": 711872,
-      "sha256": "a8e03f964f21ae142dbab93e116c0f1d90dcff8827b7346b73f8f586d75a0550"
+      "bytes": 1610063,
+      "sha256": "2e6a6d94af2bf9b9f6c26848d84ec56a85788b5fcc6fb5057a412e90dd75a682"
     },
     {
       "path": "comparison-preview.gif",
-      "bytes": 2162132,
-      "sha256": "b0791d80a1f9b1c0a196ee53f77e058da096d847976f635fe8e22be2a017bde4"
+      "bytes": 2939233,
+      "sha256": "26d3866b7f0c411ac6e59a66ee77cb5557355b3620e4661f315e39e679ceca12"
     },
     {
       "path": "social-preview.png",
-      "bytes": 604795,
-      "sha256": "e0c46b49002f047171e04b5999f8c3fe6e9479107e7198d6216029eadde85262",
-      "note": "Product illustration rendered from HTML and CSS, not a screenshot."
+      "bytes": 806973,
+      "sha256": "0c0e1e9ff65b6e8321b34b911a9139beb7368525a7d2914c19b9b413d4fc48ed",
+      "note": "Blue-glass product illustration, not a screenshot. Exported at 1280 × 640; the repository social-preview setting is separate from this file.",
+      "width": 1280,
+      "height": 640,
+      "updatedAt": "2026-11-15T16:06:53.619Z"
     }
-  ]
+  ],
+  "closeup": {
+    "path": "assets/readme/whale-closeup.webp",
+    "bytes": 3369340,
+    "sha256": "fe6fb9d340e2c43641f644d923dd05b32c7ad23b4a0af4fe76c0da93ca967af7",
+    "capturedAt": "2026-11-15T12:13:11.186Z",
+    "source": "The same commit, archive, host and browser as the demo above.",
+    "task": "Two pomodoro pages compared blind, shown in the large window while the versions work.",
+    "candidate": "The same local controlled model, waiting 9 seconds before each step so the versions work long enough to watch. No external model request.",
+    "shows": [
+      "thoughts rising over both whales on their own",
+      "the whales leaning toward the pointer",
+      "five pokes in a row on A: a jump, two more lines, a spin, a wobble and a splash",
+      "B's Steps opened while it works",
+      "live steps under the whales",
+      "replies arriving as the whales fill up"
+    ],
+    "editing": {
+      "rawSeconds": 32.2,
+      "segments": [
+        [
+          1,
+          13.2
+        ],
+        [
+          17,
+          28
+        ]
+      ],
+      "seconds": 23.2,
+      "playbackRate": 1,
+      "fps": 12,
+      "width": 994,
+      "height": 610,
+      "format": "animated WebP, quality 70",
+      "crop": "the two cards and the run bar above them",
+      "localPathsHidden": true,
+      "visibleCaption": true,
+      "visiblePointer": true
+    }
+  }
 }

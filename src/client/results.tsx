@@ -102,9 +102,13 @@ export function ResultView({ run, c, call }: { run: Run; c: Cand; call: Call }):
   return <FilesView run={run} c={c} call={call} />
 }
 
+const isPage = (file: string | undefined): boolean => /\.html?$/i.test(file ?? '')
+
 function FilesView({ run, c, call }: { run: Run; c: Cand; call: Call }): React.ReactElement {
   const files = c.resultFiles ?? c.touchedFiles ?? []
-  const [open, setOpen] = useState<string | undefined>(files[0])
+  // A page opens first, shown as a page: an HTML file read as code is no way to judge it.
+  const [open, setOpen] = useState<string | undefined>(files.find(file => /(^|[\\/])index\.html?$/i.test(file)) ?? files.find(isPage) ?? files[0])
+  const [asCode, setAsCode] = useState(false)
   const [content, setContent] = useState<FileContent>()
   const [error, setError] = useState<string>()
   useEffect(() => {
@@ -116,7 +120,7 @@ function FilesView({ run, c, call }: { run: Run; c: Cand; call: Call }): React.R
     return () => controller.abort()
   }, [run.runId, c.label, open])
   return <div className="ac-result" role="region" aria-label={t("候选 {0} 写出的文件", { 0: c.label })}>
-    <div className="ac-result-head"><b>{t("写出的文件")}</b><span className="ac-meta">{t("{0} 个文件 · 没有可以直接打开的页面", { 0: files.length })}</span>{content?.text !== undefined && !content.truncated && <CopyButton text={content.text} label={t("复制文件内容")} title={t("复制当前打开的文件")} />}</div>
+    <div className="ac-result-head"><b>{t("写出的文件")}</b><span className="ac-meta">{files.some(isPage) ? t("{0} 个文件 · 页面在这里直接显示", { 0: files.length }) : t("{0} 个文件 · 没有可以直接打开的页面", { 0: files.length })}</span>{content?.text !== undefined && !content.truncated && <CopyButton text={content.text} label={t("复制文件内容")} title={t("复制当前打开的文件")} />}</div>
     {c.previewNote && <p className="ac-meta"><Diagnostic text={c.previewNote} /></p>}
     <div className="ac-files">
       <ul className="ac-file-list" aria-label={t("文件列表")}>
@@ -127,6 +131,16 @@ function FilesView({ run, c, call }: { run: Run; c: Cand; call: Call }): React.R
           : content === undefined ? <p className="ac-meta" role="status">{open ? t("正在读取文件…") : t("这一版没有写文件")}</p>
           : content.deleted ? <p className="ac-meta">{t("这一版删除了这个文件")}</p>
           : content.binary || content.text === undefined ? <p className="ac-meta">{t("二进制或过大的文件（{0}），不在这里显示", { 0: bytes(content.size) })}</p>
+          : isPage(open) && !content.truncated ? <>
+            <div className="ac-file-mode" role="group" aria-label={t("显示方式")}>
+              <button type="button" className={asCode ? '' : 'on'} aria-pressed={!asCode} onClick={() => setAsCode(false)}>{t("页面")}</button>
+              <button type="button" className={asCode ? 'on' : ''} aria-pressed={asCode} onClick={() => setAsCode(true)}>{t("源码")}</button>
+            </div>
+            {asCode
+              ? <pre className="ac-file-text" tabIndex={0}>{content.text}</pre>
+              // Sandboxed with an opaque origin: the page's scripts run but cannot reach this window.
+              : <iframe className="ac-file-page" sandbox="allow-scripts allow-forms allow-modals" srcDoc={content.text} title={t("{0} 的页面", { 0: open ?? '' })} />}
+          </>
           : <><pre className="ac-file-text" tabIndex={0}>{content.text}</pre>{content.truncated && <p className="ac-meta">{t("只显示前 64 KB，共 {0}", { 0: bytes(content.size) })}</p>}</>}
       </div>
     </div>

@@ -2,6 +2,7 @@ import { existsSync } from 'node:fs'
 import { blindEvidence } from './blind-view.ts'
 import { checksScore } from './checks.ts'
 import { fileTransferDirectory } from './file-transfer.ts'
+import { maskStyle } from './trace.ts'
 import type { Acceptance, AgentRoute, Candidate, CandidateLabel, CandidateStage, CheckResult, PreviewInfo, RunRecord, Strategy, Usage, Verdict } from './types.ts'
 
 const REVEALED_STATES = new Set(['revealed', 'adopting', 'adopted', 'recovery'])
@@ -77,6 +78,8 @@ export interface PublicCandidate {
   readonly previewNote?: string
   /** The reply of an `answer` result. It is the result itself, so it is shown before the reveal. */
   readonly answer?: string
+  /** The version's final reply beside a page or files. Before a blind pick, words naming its style are masked. */
+  readonly reply?: string
   /** Paths a `files` result wrote; they are what the user judges, so they are listed before the reveal. */
   readonly resultFiles?: string[]
   readonly checks?: Candidate['checks']
@@ -114,8 +117,8 @@ export type PublicRun = Omit<RunRecord, 'candidates' | 'baseline' | 'acceptance'
 
 /**
  * The view the UI and the model see. Before the reveal it carries nothing
- * that names the strategy or model; summaries are withheld because agents
- * tend to describe their own approach.
+ * that names the strategy or model. Each version's reply is part of what is
+ * judged, so it is shown, with words that name its style masked.
  */
 export function publicView(r: RunRecord): PublicRun {
   // An open comparison shows identities from the start; a blind one after the pick.
@@ -149,6 +152,7 @@ export function publicView(r: RunRecord): PublicRun {
     }),
     candidates: candidates.map((candidate) => {
       const c = revealed ? candidate : { ...candidate, ...blindEvidence(candidate) }
+      const shownText = (text: string): string => revealed ? text : maskStyle(text, candidate.strategy)
       return {
       label: c.label,
       stage: c.stage,
@@ -162,7 +166,9 @@ export function publicView(r: RunRecord): PublicRun {
       canReopenPreview: c.stage === 'ready' && c.preview === undefined && c.result === undefined && c.dir !== undefined && existsSync(c.dir),
       ...(candidate.result === undefined || c.stage !== 'ready' ? {} : { result: candidate.result }),
       ...(candidate.previewNote === undefined ? {} : { previewNote: candidate.previewNote }),
-      ...(candidate.result === 'answer' && c.stage === 'ready' && candidate.summary ? { answer: candidate.summary } : {}),
+      ...(candidate.result === 'answer' && c.stage === 'ready' && candidate.summary ? { answer: shownText(candidate.summary) } : {}),
+      // The reply is part of the result: shown as soon as generation ends, beside whatever was built.
+      ...(candidate.result !== 'answer' && candidate.summary && c.stage !== 'generating' && c.stage !== 'queued' && c.stage !== 'preparing' ? { reply: shownText(candidate.summary) } : {}),
       ...(candidate.result === 'files' && c.stage === 'ready' && candidate.touchedFiles ? { resultFiles: candidate.touchedFiles.slice(0, 500) } : {}),
       canRetryVerification: canRetryVerification(r, c),
       ...(c.install === undefined ? {} : { install: c.install }),

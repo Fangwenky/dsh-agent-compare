@@ -91,6 +91,12 @@ export class RunStore {
     return path.join(this.worktreesDir, runId)
   }
 
+  /** Dependencies installed for a run while its versions generate; removed when verification ends. */
+  warmDeps(runId: string): string {
+    requireRunId(runId)
+    return path.join(this.home, 'd', runId)
+  }
+
   /** The private repository of a run that started from a folder outside Git. */
   workspace(runId: string): string {
     requireRunId(runId)

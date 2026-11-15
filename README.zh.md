@@ -6,17 +6,17 @@
 
 以下保留原章节入口，点击链接即可打开完整说明。
 
-<a id="agent-compare-dsh-agent-compare"></a>
+<a id="鲸挑细选--agent-compare-dsh-agent-compare"></a>
 
-[Agent Compare (dsh-agent-compare)](README.md#agent-compare-dsh-agent-compare)
+[鲸挑细选 · Agent Compare (dsh-agent-compare)](README.md#%E9%B2%B8%E6%8C%91%E7%BB%86%E9%80%89--agent-compare-dsh-agent-compare)
 
-<a id="新版界面速览"></a>
+<a id="看一场完整的大肥鱼赛马"></a>
 
-[新版界面速览](README.md#%E6%96%B0%E7%89%88%E7%95%8C%E9%9D%A2%E9%80%9F%E8%A7%88)
+[看一场完整的大肥鱼赛马](README.md#%E7%9C%8B%E4%B8%80%E5%9C%BA%E5%AE%8C%E6%95%B4%E7%9A%84%E5%A4%A7%E8%82%A5%E9%B1%BC%E8%B5%9B%E9%A9%AC)
 
-<a id="看一次完整流程"></a>
+<a id="界面与体验"></a>
 
-[看一次完整流程](README.md#%E7%9C%8B%E4%B8%80%E6%AC%A1%E5%AE%8C%E6%95%B4%E6%B5%81%E7%A8%8B)
+[界面与体验](README.md#%E7%95%8C%E9%9D%A2%E4%B8%8E%E4%BD%93%E9%AA%8C)
 
 <a id="安装"></a>
 
@@ -29,6 +29,10 @@
 <a id="它替你做掉的那部分"></a>
 
 [它替你做掉的那部分](README.md#%E5%AE%83%E6%9B%BF%E4%BD%A0%E5%81%9A%E6%8E%89%E7%9A%84%E9%82%A3%E9%83%A8%E5%88%86)
+
+<a id="版本更新"></a>
+
+[版本更新](README.md#%E7%89%88%E6%9C%AC%E6%9B%B4%E6%96%B0)
 
 <a id="工作流程"></a>
 
@@ -78,13 +82,17 @@
 
 [agentcompare](README.md#agentcompare)
 
-<a id="gallery"></a>
-
-[gallery](README.md#gallery)
-
 <a id="demo"></a>
 
 [真实演示](README.md#demo)
+
+<a id="ui"></a>
+
+[ui](README.md#ui)
+
+<a id="gallery"></a>
+
+[gallery](README.md#gallery)
 
 <a id="install"></a>
 
@@ -101,6 +109,10 @@
 <a id="what-it-does-for-you"></a>
 
 [what-it-does-for-you](README.md#what-it-does-for-you)
+
+<a id="whats-new"></a>
+
+[whats-new](README.md#whats-new)
 
 <a id="how-it-works"></a>
 

@@ -9,7 +9,7 @@ import { createUiHarness } from './preview-ui.mjs'
 const harness = await createUiHarness({ port: 0, demoPort: 0 })
 const output = process.env.AGENT_COMPARE_UI_ARTIFACTS ?? await mkdtemp(path.join(os.tmpdir(), 'agent-compare-ui-'))
 await mkdir(output, { recursive: true })
-let browser, page, embeddedCookies
+let browser, page, embeddedCookies, navigationProbeState
 const errors = []
 const expectedBrowserDenials = []
 let assertions = 0
@@ -538,11 +538,88 @@ try {
   const pendingReads=await page.evaluate(()=>window.__requests.filter(r=>r.method==='get').length)
   await page.waitForTimeout(1600)
   check(await page.evaluate(()=>window.__requests.filter(r=>r.method==='get').length)===pendingReads, 'polling must share a slow record read instead of cancelling and replacing it')
-  await page.getByText('已进行 777 轮',{exact:false}).waitFor({timeout:6000})
-  check(await page.getByText('已进行 777 轮',{exact:false}).isVisible(), 'a record response slower than the live polling interval must remain observable without exposing tool details')
+  await page.getByText('777 步',{exact:false}).waitFor({timeout:6000})
+  check(await page.getByText('777 步',{exact:false}).isVisible(), 'a record response slower than the live polling interval must remain observable in the step count')
+  // While versions work: a whale in each waiting area, comets around the run bar, and the steps behind one toggle.
+  check(await page.locator('.ac-sheet .ac-whale-stage').count() === 2, 'each working version must show the whale in its waiting area')
+  check(await page.locator('.ac-whale').first().evaluate(button => button.tabIndex === -1 && button.getAttribute('aria-hidden') === 'true'), 'the whale is a pointer toy kept out of the keyboard order')
+  // DSH's own mark, hollow while it fills: the outline, water clipped to the mark, and two lights on its edge.
+  const whaleParts = await page.locator('.ac-whale-stage').first().evaluate(stage => ({
+    line: stage.querySelectorAll('.ac-whale-line').length,
+    clipped: Boolean(stage.querySelector('[clip-path] .ac-whale-water')),
+    lights: [...stage.querySelectorAll('.ac-whale-trail, .ac-whale-head')].filter(p => p.getAttribute('pathLength') === '100').length,
+    ids: new Set([...document.querySelectorAll('.ac-whale-stage clipPath')].map(c => c.id)).size === document.querySelectorAll('.ac-whale-stage clipPath').length,
+  }))
+  check(whaleParts.line === 1 && whaleParts.clipped && whaleParts.lights === 4 && whaleParts.ids, 'the whale must be the outlined mark with water inside and two lights on its edge, each with its own clip id')
+  const crests = await page.locator('.ac-whale-water').evaluateAll(nodes => nodes.map(n => parseFloat(n.style.transform.replace(/[^\d.]+/, ''))))
+  check(crests.length === 2 && crests[0] < crests[1], 'a version further along must show more water in its whale')
+  check(await page.locator('.ac-sheet .ac-action-dock > .ac-run-ring').evaluate(ring => getComputedStyle(ring).display !== 'none' && ring.getBoundingClientRect().width > 300), 'a running comparison must show comets around its run bar')
+  // The comets move on plain keyframes with staggered starts, which older Chromium also runs.
+  // (This page runs with reduced motion, which hides the comets; the stylesheet itself is checked.)
+  check(await page.evaluate(() => {
+    const rules = [...document.styleSheets].flatMap(s => { try { return [...s.cssRules] } catch { return [] } })
+    const flat = rules.flatMap(rule => rule.cssRules ? [rule, ...rule.cssRules] : [rule])
+    const keyframes = flat.find(rule => rule.type === CSSRule.KEYFRAMES_RULE && rule.name === 'ac-ring-run')
+    const head = flat.find(rule => rule.selectorText === '.ac-run-ring .head' && rule.style.animationDelay)
+    return keyframes !== undefined && !/var\(|calc\(/.test(keyframes.cssText) && parseFloat(head?.style.animationDelay ?? '0') < 0
+  }), 'the comets must animate without custom-property arithmetic in their keyframes')
+  // Every label a different blue: no purple, no green.
+  const labelHues = await page.evaluate(() => ['A', 'B', 'C', 'D'].map(label => {
+    const probe = document.createElement('section'); probe.dataset.label = label; probe.className = 'ac-card'
+    const chip = document.createElement('span'); chip.className = 'ac-label'; probe.append(chip); document.querySelector('.ac-sheet')?.append(probe)
+    const [r, g, b] = getComputedStyle(chip).backgroundColor.match(/\d+(\.\d+)?/g).map(Number); probe.remove()
+    const max = Math.max(r, g, b), min = Math.min(r, g, b), d = max - min
+    const hue = d === 0 ? 0 : max === r ? 60 * (((g - b) / d) % 6) : max === g ? 60 * ((b - r) / d + 2) : 60 * ((r - g) / d + 4)
+    return { label, hue: (hue + 360) % 360, color: `${r},${g},${b}` }
+  }))
+  check(labelHues.every(item => item.hue >= 195 && item.hue <= 235) && new Set(labelHues.map(item => item.color)).size === 4, `version labels must be four different blues: ${JSON.stringify(labelHues)}`)
+  const workingCard = page.getByRole('region', { name: '候选 B', exact: true })
+  const stepsToggle = workingCard.locator('button.ac-steps-toggle')
+  check(await stepsToggle.getAttribute('aria-expanded') === 'false' && (await stepsToggle.innerText()).includes('过程'), 'a working version must offer a steps button')
+  check((await workingCard.locator('.ac-live-steps').innerText()).includes('npm run typecheck') && await workingCard.locator('.ac-live-step').count() >= 2, 'the newest steps must show live under the whale without opening anything')
+  await workingCard.locator('.ac-whale-bubble.think').waitFor({ timeout: 9000 })
+  check(await workingCard.locator('.ac-whale-bubble.think').getAttribute('aria-hidden') === 'true', 'a thought rises over a working whale on its own, away from screen readers')
+  for (let poke = 0; poke < 3; poke++) { const box = await workingCard.locator('.ac-whale').boundingBox(); await page.mouse.click(box.x + box.width / 2, box.y + box.height / 2); await page.waitForTimeout(120) }
+  check(await workingCard.locator('.ac-whale-stage.spin').count() === 1 && (await workingCard.locator('.ac-whale-bubble.say').innerText()).length > 0, 'three pokes in a row make the whale spin and answer')
+  check(await page.evaluate(() => window.__requests.filter(request => request.method === 'trace').every(request => request.body.summary === true)), 'closed steps must read only a summary')
+  await stepsToggle.click()
+  await workingCard.getByRole('region', { name: '步骤', exact: true }).waitFor()
+  await page.waitForFunction(() => document.querySelectorAll('[aria-label="候选 B"] .ac-step').length === 7)
+  check(await stepsToggle.getAttribute('aria-expanded') === 'true', 'the toggle must report open steps')
+  check(await workingCard.locator('.ac-step.thinking').count() === 2 && await workingCard.locator('.ac-step.tool').count() === 4, 'opening the steps must read every thought and tool call, not only the newest')
+  await workingCard.locator('.ac-step.tool summary').first().click()
+  check(await workingCard.locator('.ac-step-io pre').first().isVisible(), 'a tool step must open to its input and output')
+  check(await workingCard.getByText('盲选中：步骤里点明风格的词显示为 ▒▒，选择后显示原文。').count() === 0, 'the blind note must appear only when something was masked')
+  await stepsToggle.click()
+
+  // A newer interface on an older backend says so plainly; a matching backend says nothing.
+  check(await page.locator('.ac-stale-backend').count() === 0, 'a matching backend must not raise the restart notice')
+  for (const [error, expected] of [['stale-backend', '3.0.0'], ['old-backend', '3.1.0 之前的版本']]) {
+    await open('running', `&error=${error}`)
+    await page.locator('.ac-sheet .ac-stale-backend').waitFor({ timeout: 6000 })
+    check((await page.locator('.ac-sheet .ac-stale-backend').innerText()).includes(expected), `an older backend (${error}) must ask for a DSH restart and name what runs`)
+  }
+
+  // A version that wrote an HTML file shows it as a page even when no preview could start.
+  await open('folder-files-running')
+  const filesCard = page.getByRole('region', { name: '候选 B', exact: true })
+  await filesCard.locator('iframe.ac-file-page').waitFor({ timeout: 6000 })
+  check(await filesCard.locator('iframe.ac-file-page').getAttribute('sandbox') === 'allow-scripts allow-forms allow-modals', 'an HTML result shows as a sandboxed page')
+  await filesCard.getByRole('button', { name: '源码', exact: true }).click()
+  check(await filesCard.locator('.ac-file-text').isVisible(), 'its source is one click away')
+  check(await filesCard.getByRole('region', { name: '候选 B 的回复', exact: true }).isVisible(), 'the reply sits beside the files')
 
   await page.setViewportSize({ width: 1440, height: 900 })
   await open('judging')
+  // A page and a reply have equal standing: the reply sits above the page, and beside it when one version is in focus.
+  const replyA = page.getByRole('region', { name: '候选 A 的回复', exact: true })
+  check(await replyA.isVisible(), 'a version that built a page must still show its reply')
+  await page.getByRole('button', { name: '专注 A', exact: true }).click()
+  await page.waitForTimeout(300)
+  const [replyBox, pageBox] = await Promise.all([replyA.boundingBox(), page.locator('[aria-label="候选 A"] .ac-browser').boundingBox()])
+  check(replyBox.x + replyBox.width <= pageBox.x + 1 && Math.abs(replyBox.y - pageBox.y) < 80, `in focus on a wide window the reply must sit beside the page: ${JSON.stringify({ replyBox, pageBox })}`)
+  check(await page.getByRole('region', { name: '候选 B', exact: true }).count() === 0, 'the split layout must keep the other version hidden')
+  await page.getByRole('button', { name: '并排比较', exact: true }).click()
   let beforeGet = (await requests('get')).length
   await page.evaluate(() => { window.__getPlans.push({ value: window.__runSnapshot(), delayMs: 1200 }) })
   await page.waitForFunction(count => window.__requests.filter(request => request.method === 'get').length > count, beforeGet)
@@ -706,6 +783,9 @@ try {
     await cookieTab.goto(await page.locator('.ac-card iframe').nth(1).getAttribute('src'))
     check(await cookieTab.evaluate(() => !document.cookie.includes('ac_top=')), 'a direct-preview cookie must not cross to the other candidate')
   } finally { await cookieTab.close() }
+  await page.bringToFront()
+  navigationProbeState = { foreground: await page.evaluate(() => ({ focused: document.hasFocus(), visibility: document.visibilityState })) }
+  check(navigationProbeState.foreground.focused && navigationProbeState.foreground.visibility === 'visible', 'the comparison must be active again after closing the direct preview')
   await storageA.locator('body').evaluate(async () => {
     const db = await new Promise((resolve,reject) => {const request=indexedDB.open('ac_candidate_state',1);request.onupgradeneeded=()=>request.result.createObjectStore('values');request.onsuccess=()=>resolve(request.result);request.onerror=()=>reject(request.error)})
     await new Promise((resolve,reject)=>{const transaction=db.transaction('values','readwrite');transaction.objectStore('values').put('only_a','key');transaction.oncomplete=resolve;transaction.onerror=()=>reject(transaction.error)})
@@ -714,8 +794,38 @@ try {
   check(await storageB.locator('body').evaluate(async () => !(await indexedDB.databases()).some(db=>db.name==='ac_candidate_state') && !(await caches.keys()).includes('ac_candidate_cache')), 'IndexedDB and CacheStorage must remain specific to each candidate')
   const initialUrl = page.url()
   const denialStart = errors.length
-  await storageA.locator('body').evaluate(target => { const button=document.createElement('button');button.textContent='Controlled navigation probe';button.onclick=()=>{try{window.top.location.href=target}catch{document.body.dataset.topBlocked='true'}};document.body.append(button) }, harness.url + '/controlled-escape')
-  await storageA.getByRole('button', { name: 'Controlled navigation probe', exact: true }).click()
+  await storageA.locator('body').evaluate((body, target) => { const button=document.createElement('button');button.textContent='Controlled navigation probe';button.onpointerdown=event=>{body.dataset.probePointer=event.isTrusted?'trusted':'synthetic'};button.onclick=event=>{body.dataset.probeClick=event.isTrusted?'trusted':'synthetic';body.dataset.probeClicked='true';try{window.top.location.href=target}catch{body.dataset.topBlocked='true'}};body.append(button) }, harness.url + '/controlled-escape')
+  // The nested page is scaled and sits below its reply. Move out of the old
+  // frame's hit region and back in along a real pointer path after scrolling,
+  // then send one normal trusted click. Do not retry or synthesize activation.
+  await page.locator('.ac-card iframe').nth(0).scrollIntoViewIfNeeded()
+  const navigationProbe = storageA.getByRole('button', { name: 'Controlled navigation probe', exact: true })
+  await navigationProbe.scrollIntoViewIfNeeded()
+  const probeBox = await navigationProbe.boundingBox()
+  assert.ok(probeBox && probeBox.width > 0 && probeBox.height > 0, 'the navigation probe must have a rendered pointer target')
+  const probePoint = { x: probeBox.x + probeBox.width / 2, y: probeBox.y + probeBox.height / 2 }
+  await page.mouse.move(0, 0)
+  for (let segment = 1; segment <= 8; segment++) {
+    await page.evaluate(() => new Promise(resolve => requestAnimationFrame(() => resolve())))
+    await page.mouse.move(probePoint.x * segment / 8, probePoint.y * segment / 8)
+  }
+  navigationProbeState.hit = await page.evaluate(point => { const element=document.elementFromPoint(point.x,point.y);return { point, tag:element?.tagName, className:element?.className, title:element?.getAttribute('title'), focused:document.hasFocus(), visibility:document.visibilityState } }, probePoint)
+  navigationProbeState.frame = await navigationProbe.evaluate(button => { const box=button.getBoundingClientRect(),hit=document.elementFromPoint(box.x+box.width/2,box.y+box.height/2);return { box:{x:box.x,y:box.y,width:box.width,height:box.height},hitTag:hit?.tagName,hitIsProbe:hit===button,hovered:button.matches(':hover'),visibility:document.visibilityState,pointerEvents:getComputedStyle(button).pointerEvents } })
+  navigationProbeState.hovered = await navigationProbe.evaluate(button => new Promise(resolve => {
+    const deadline = performance.now() + 1000
+    let stable = 0
+    const frame = () => {
+      stable = button.matches(':hover') && document.visibilityState === 'visible' ? stable + 1 : 0
+      if (stable >= 2) resolve(true)
+      else if (performance.now() >= deadline) resolve(false)
+      else requestAnimationFrame(frame)
+    }
+    requestAnimationFrame(frame)
+  }))
+  check(navigationProbeState.hovered, 'the real pointer must reach the preview probe before activation')
+  await navigationProbe.click()
+  navigationProbeState.activation = await storageA.locator('body').evaluate(body => ({ clicked: body.dataset.probeClicked, pointer: body.dataset.probePointer, click: body.dataset.probeClick, blocked: body.dataset.topBlocked, focused: document.hasFocus(), visibility: document.visibilityState }))
+  check(navigationProbeState.activation.clicked === 'true' && navigationProbeState.activation.pointer === 'trusted' && navigationProbeState.activation.click === 'trusted', 'the navigation probe must receive a trusted pointer click inside the preview')
   check(page.url() === initialUrl && await storageA.locator('body').getAttribute('data-top-blocked') === 'true', 'an activated preview must not navigate the comparison host')
   // WebKit emits this browser-owned error even when the deliberate denial is
   // caught by the fixture. Admit only the exact controlled frame and flag.
@@ -1127,8 +1237,13 @@ try {
   check(await three.getByRole('button', { name: '改选 A', exact: true }).isVisible() && await three.getByRole('button', { name: '改选 B', exact: true }).isVisible(), 'after the reveal any other finished version can be picked instead')
   check((await three.textContent()).includes('3 版，同一模型、不同风格。'), 'the record says how many versions were compared')
 
-  for (const theme of ['light', 'dark']) for (const state of ['compose', 'judging', 'install-failure', 'retrying', 'revealed', 'recovery', 'undo-recovery', 'history', 'history-damaged', 'foreign', 'old-owner', 'retained', 'mixed-preview', 'interrupted-peer', 'folder', 'folder-answer', 'four', 'four-open', 'three-revealed']) {
+  for (const theme of ['light', 'dark']) for (const state of ['compose', 'running', 'judging', 'install-failure', 'retrying', 'revealed', 'recovery', 'undo-recovery', 'history', 'history-damaged', 'foreign', 'old-owner', 'retained', 'mixed-preview', 'interrupted-peer', 'folder', 'folder-answer', 'project-answers', 'four', 'four-open', 'three-revealed']) {
     await open(state, `&theme=${theme}`)
+    // The steps are checked open, where most of their text is.
+    if (['running', 'judging', 'project-answers'].includes(state)) {
+      for (const toggle of await page.locator('[role="dialog"] button.ac-steps-toggle').all()) await toggle.click()
+      await page.locator('[role="dialog"] .ac-steps').first().waitFor()
+    }
     await page.addScriptTag({ path: 'node_modules/axe-core/axe.min.js' })
     const result = await page.evaluate(async () => window.axe.run(document.querySelector('[role="dialog"]') ?? document.querySelector('.ac-composer-settings'), { runOnly: { type: 'tag', values: ['wcag2a', 'wcag2aa', 'wcag21aa'] } }))
     check(result.violations.length === 0, `${state} ${theme}: ${JSON.stringify(result.violations.map(v => ({ id: v.id, elements: v.nodes.map(n => n.target) })))}`)
@@ -1149,7 +1264,7 @@ try {
   await page?.screenshot({ path: path.join(output, 'interface-failure.png') }).catch(() => {})
   await page?.context().tracing.stop({ path: path.join(output, 'interface-failure-trace.zip') }).catch(() => {})
   const documentState = await page?.evaluate(() => ({ errors: window.__harnessErrors, settings: document.querySelector('.ac-composer-settings')?.innerText, mode: document.querySelector('.ac-mode-btn')?.outerHTML, input: window.__input?.(), requests: window.__requests?.slice(-8) })).catch(() => undefined)
-  await writeFile(path.join(output, 'interface-failure.json'), JSON.stringify({ assertions, message: error.message, browser: browser?.version(), pageErrors: errors, documentState }, null, 2))
+  await writeFile(path.join(output, 'interface-failure.json'), JSON.stringify({ assertions, message: error.message, browser: browser?.version(), pageErrors: errors, navigationProbeState, documentState }, null, 2))
   throw error
 } finally {
   await browser?.close()

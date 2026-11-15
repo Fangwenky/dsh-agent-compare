@@ -1,6 +1,8 @@
-[![AgentCompare 2.0：在主对话里比较 2–4 版回答、文件与网页。Desktop + Web，中英双语，选择后继续对话 / Compare 2–4 answers, files and live pages in the main conversation. Styles, blind or open comparison, reasons for the pick, reviewed adoption and conversation memory, in a blue liquid-glass interface. Product illustration.](https://raw.githubusercontent.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/main/assets/readme/hero-bilingual.webp)](#install)
+[![鲸挑细选 · AgentCompare : quatre minuteurs dans des cartes de verre bleu, C sélectionné ; Desktop et Web, chinois et anglais, étapes en direct. Illustration du produit.](https://raw.githubusercontent.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/main/assets/readme/hero-bilingual.webp)](#install)
 
-# AgentCompare
+<a id="agentcompare"></a>
+
+# Agent Compare (dsh-agent-compare) · 鲸挑细选
 
 [![GitHub stars](https://img.shields.io/github/stars/lijiaqi-AI-Product-Manager/dsh-agent-compare?label=GitHub%20Stars&color=3657f5&style=flat&labelColor=0b1b4f&cacheSeconds=300)](https://github.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/stargazers)
 [![npm download/下载量](https://raw.githubusercontent.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/main/assets/statistics/npm-total-badge.svg)](https://www.npmjs.com/package/dsh-agent-compare)
@@ -9,85 +11,76 @@
 [![npm version](https://img.shields.io/npm/v/dsh-agent-compare?label=npm&color=3657f5&style=flat&labelColor=0b1b4f&logo=npm&logoColor=white)](https://www.npmjs.com/package/dsh-agent-compare)
 [![CI](https://img.shields.io/github/actions/workflow/status/lijiaqi-AI-Product-Manager/dsh-agent-compare/ci.yml?branch=main&label=CI&logo=github&logoColor=white&style=flat&labelColor=0b1b4f)](https://github.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/actions/workflows/ci.yml)
 [![Node.js ^22.22.2 || ^24.15.0 || >=26.0.0](https://img.shields.io/badge/Node.js-22%20%2F%2024%20%2F%2026%2B-238636?style=flat&labelColor=0b1b4f&logo=nodedotjs&logoColor=white)](https://github.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/blob/main/package.json)
-[![Tested on DSH 0.2.1-rc.5](https://img.shields.io/badge/DSH%20tested-0.2.1--rc.5-4d6bfe?style=flat&labelColor=0b1b4f)](https://github.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/blob/main/docs/demo.md)
+[![Tested on DSH 0.2.1-rc.5 and 0.2.2-rc.1](https://img.shields.io/badge/DSH%20tested-0.2.1--rc.5%20%2F%200.2.2--rc.1-4d6bfe?style=flat&labelColor=0b1b4f)](https://github.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/blob/main/docs/demo.md)
 [![License: MIT](https://img.shields.io/badge/license-MIT-4d6bfe?style=flat&labelColor=0b1b4f)](https://github.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/blob/main/LICENSE)
 
 [中文](https://github.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/blob/main/README.md) · [English](https://github.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/blob/main/README.en.md) · [日本語](https://github.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/blob/main/README.ja.md) · [한국어](https://github.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/blob/main/README.ko.md) · [Español](https://github.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/blob/main/README.es.md) · [Português (Brasil)](https://github.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/blob/main/README.pt-BR.md) · **Français** · [Deutsch](https://github.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/blob/main/README.de.md)
 
-**Une demande. De 2 à 4 réalisations exécutées. Choisissez des styles, comparez à l'aveugle ou à découvert, puis adoptez.**
+**Une demande, 2 à 4 versions : réponses, fichiers ou pages. Choisissez les styles, comparez et décidez.**
+
+Son nom chinois est **鲸挑细选** (*jīng tiāo xì xuǎn*), un jeu de mots sur 精挑细选, « trié sur le volet », où 鲸 veut dire baleine : 2 à 4 baleines DeepSeek s'attaquent à la même tâche et vous gardez la meilleure. Son surnom est **大肥鱼赛马**, « la course des gros poissons » : en Chine, on surnomme la baleine de DeepSeek « le gros poisson », et ici plusieurs courent sur la même piste pendant que vous désignez le gagnant.
 
 **DSH 桌面端 + 浏览器 / Desktop + Web**
 
-<p align="center"><a href="#install">安装 / Install</a> · <a href="#demo">真实演示 / Recorded demo</a></p>
+<p align="center"><a href="#demo">真实演示 / Recorded demo</a> · <a href="#ui">界面与体验 / Interface</a> · <a href="#install">安装 / Install</a> · <a href="#whats-new">版本更新 / What's new</a></p>
 
-> **npm stable 2.0.0 · Source main 2.1.0.** DSH Desktop et Web, avec interface en chinois et en anglais. Comparez réponses, fichiers ou pages web dans la conversation principale depuis tout dossier, avec vos modèles configurés.
+> **Ce guide couvre la version 3.1.0. Le badge npm ci-dessus indique la version publiée.** DSH Desktop et Web, avec interface en chinois et en anglais. Comparez 2 à 4 versions de réponses, de fichiers ou de pages web dans la conversation principale ; ouvrez le raisonnement et les appels d'outils de chaque version, et lisez sa réponse à côté de ce qu'elle a construit.
 
-> **Aperçu de développement :** [3.0.0 · Animation de chargement de la baleine bleue](https://github.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/tree/release/3.0.0) · Pas encore publié sur npm.
+<a id="demo"></a>
 
-**Nouveautés de la version 2.1.0 :**
-- **Un bonjour ou une question reçoit des réponses.** C'est la demande qui décide du type de résultat, pas le dossier : dites bonjour ou posez une question dans un projet qui peut être compilé, et chaque version répond dans son propre style pour une comparaison côte à côte, sans construire de page ; une demande de modification du projet est toujours implémentée.
-- **Un verre liquide plus clair et plus lumineux.** Le bleu est plus clair ; l'espace de travail se situe un niveau sous le verre, avec une lumière douce venue du haut. Le verre existe en trois épaisseurs (fin, épais et presque opaque), avec un liseré brillant et une touche de cyan et de lilas sur les arêtes ; seules la barre d'actions flottante et la barre de réglages floutent ce qui se trouve derrière elles.
-- **Des boutons et un texte plus légers.** Le bleu plein est réservé à l'action principale, à l'option choisie et aux lettres de version ; les autres boutons sont en verre bleu pâle avec un texte bleu en graisse normale.
-- **Des contrôles qui glissent.** Le filtre « Needs attention only » de l'historique est un interrupteur à glissière ; les contrôles segmentés reposent dans une rainure et choisir une option ne décale plus ses voisines. Cases à cocher et listes partagent le même style de verre.
-- **Lisible partout.** Contraste mesuré glyphe par glyphe dans 19 états de l'interface par thème : tout le texte atteint au moins 4.5:1. Les versions côte à côte ont la même hauteur.
+## Voir une course des gros poissons en entier
 
-**Nouveautés de la version 2.0.0 :** comparez **2, 3 ou 4 versions** à la fois. Chaque version peut recevoir un **style** (ampleur : prudent, audacieux ; apparence : minimaliste, soigné, vivant ; priorité : accessible, rigoureux, léger ; ou une ligne personnalisée). Comparez **à l'aveugle** (styles révélés au choix) ou **à découvert** (styles affichés dès le début). Avec trois ou quatre versions, **mettez de côté** celles que vous écartez pour comparer les autres côte à côte ; dans la carte, les touches 1 à 4 mettent une version au premier plan.
-- **Nouvelle interface en verre liquide bleu.** Aurore et poussière d'étoiles derrière des panneaux de verre, une lentille de verre qui glisse entre les options et une progression liquide ; un éclat de lumière au choix et un balayage lumineux à la révélation. Mode sombre, mouvement réduit et contraste élevé pris en charge.
-- **Dites pourquoi elle l'emporte.** Après le choix, cochez quelques raisons (mise en page, couleurs et matière, sensation d'usage…) ou ajoutez une ligne ; les modifications suivantes dans la conversation principale conservent ces qualités.
-- **Ensembles rapides.** Un geste règle le nombre de versions et leurs styles : Duo classique, Trois apparences, Trois priorités, Quatre directions.
-- **2 à 4 versions avec des styles.** Huit préréglages ou une description en une ligne ; plusieurs modèles peuvent partager un style.
-- **Comparaison aveugle ou ouverte.** Essayez chaque version, écartez-la puis restaurez-la ; 1–4 isole une version et 0 les affiche toutes.
-- **Réponses, fichiers et pages actives.** Lisez le Markdown et copiez réponses, code, fichiers ou chemins. Votre choix est clairement indiqué.
-- **Poursuivez dans la conversation.** Comparaisons, choix, adoption et annulation restent dans la mémoire de la conversation actuelle.
-- **Desktop + Web, interface chinoise et anglaise.** Réutilisez les modèles configurés et examinez les changements avant l'adoption, avec annulation et récupération.
+[![Exemple à candidats fixes : une baleine par version en cours et les étapes en direct, quatre pages pomodoro en direct, C mise en avant avec sa réponse à côté de sa page, puis choisie](https://raw.githubusercontent.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/main/docs/media/comparison-preview.gif)](https://github.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/blob/main/docs/media/comparison-workflow.mp4)
 
-AgentCompare est une extension de [DeepSeek Harness](https://github.com/deepseek-ai/deepseek-harness), ou DSH. De 2 à 4 agents réalisent la même tâche dans des copies indépendantes du projet. L'extension installe les dépendances, compile, sert chaque application et leur applique des critères communs. Vous manipulez les pages avant d'en choisir une ou aucune ; à l'aveugle, le modèle et le style sont révélés au choix. Avant l'adoption, la proposition est vérifiée avec l'état actuel de votre projet.
+Quatre gros poissons, quatre pages pomodoro : enregistrement à candidats fixes dans un hôte DSH réel, à partir du code candidat de la 3.1.0, avec l'interface chinoise. Quatre versions créent une page pomodoro dans un dossier ordinaire pendant que deux comètes font le tour de la carte de comparaison. La grande fenêtre s'ouvre pendant qu'elles travaillent : une baleine bleue DeepSeek par version, avec des pensées au-dessus de la tête et ses dernières étapes en direct en dessous, qui répond à une pichenette, et les **Steps** ouverts sur la réflexion et l'écriture du fichier en direct. Les réponses arrivent avant les pages, puis les quatre pages en direct sont utilisables. Deux sont mises de côté, C est mise en avant avec sa réponse à gauche de sa page, le choix révèle chaque style et le résultat est enregistré dans un nouveau dossier avant de reprendre la conversation. La vidéo coupe les attentes et garde le reste à vitesse normale. Les chemins locaux sont masqués.
+
+Après le choix, deux raisons (mise en page, plus simple) sont cochées ; elles parviennent à la requête suivante de la conversation principale.
+
+[Vidéo complète (45 secondes)](https://github.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/blob/main/docs/media/comparison-workflow.mp4) · [Conditions et résultats](https://github.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/blob/main/docs/demo.md)
+
+[![Configurer 2–4 versions et styles, exécuter en parallèle, essayer et choisir, puis vérifier et poursuivre la conversation. Illustration du produit.](https://raw.githubusercontent.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/main/assets/readme/comparison-workflow.webp)](https://raw.githubusercontent.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/main/assets/readme/comparison-workflow.webp)
+
+<p align="center"><sub>功能示意 / Product illustration</sub></p>
+
+AgentCompare est une extension de [DeepSeek Harness](https://github.com/deepseek-ai/deepseek-harness), ou DSH, qui compare 2 à 4 versions d’une même demande : réponses, fichiers ou pages web. Les pages exécutables sont directement manipulables ; les réponses et fichiers se comparent par leur contenu. À l’aveugle, modèle et style sont révélés après le choix ; à découvert, dès le début. Les modifications du projet sont examinées avec leurs vérifications avant application.
 
 [插件目录与安装](https://github.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/blob/main/docs/distribution.md) · [Plugin directories and installation](https://github.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/blob/main/docs/distribution.en.md) · [Listing status / 收录状态](https://github.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/issues/4)
 
-[![设定 2–4 版与风格，并行实跑，体验后选择并说明理由，审查并继续主对话 / Set up, run, choose and say why, review and continue. Answers, files, live pages and conversation memory. Product illustration.](https://raw.githubusercontent.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/main/assets/readme/comparison-workflow.webp)](https://raw.githubusercontent.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/main/assets/readme/comparison-workflow.webp)
-
-<p align="center"><sub>功能示意 / Product illustrations · <a href="#demo">查看真实演示 / Watch the recorded workflow</a></sub></p>
-
+<a id="ui"></a>
 <a id="gallery"></a>
 
-## Découvrez l’interface actuelle
+## Interface et expérience
 
-Captures réelles de DSH avec des candidats contrôlés. La couverture et le parcours sont des illustrations du produit.
+L'attente, la comparaison et le choix : tout se voit et se touche. L'animation et les deux images ci-dessous montrent des candidats fixes dans un hôte DSH réel.
 
-<details>
-<summary>Open four interface views / 展开实际界面</summary>
+- **Verre liquide bleu.** Des panneaux de verre translucide et des sélecteurs qui glissent, sur une lumière bleue qui s'écoule lentement, en thème clair et sombre ; avec les animations réduites, tout reste immobile. Le texte du produit dans les états d’interface vérifiés a été mesuré glyphe par glyphe dans les deux thèmes, avec un contraste d’au moins 4.5:1.
+- **Un gros poisson vous tient compagnie.** Une baleine bleue DeepSeek par version se remplit d'eau bleue à mesure qu'elle avance, pendant que deux lumières parcourent son bord. Des pensées montent au-dessus de sa tête ; une pichenette et elle répond, encore et elle tourne, vacille et éclabousse.
+- **Chaque étape sous les yeux.** Le bouton **Steps** liste réflexions, appels d'outils et modifications ; pendant le travail, les trois dernières étapes défilent en direct sous la baleine.
+- **Réponse et résultat à égalité.** Une réponse s'affiche seule ; une page partage la carte avec sa réponse, et quand une version est mise en avant, la réponse est à gauche de la page.
+- **Quatre bleus pour A–D.** À l'aveugle, vous ne voyez que A–D ; styles et modèles sont révélés après le choix, avec un balayage de lumière sur les cartes.
+- **On voit que ça tourne.** Deux comètes font le tour d'une comparaison en cours, et chaque page est utilisable dès son démarrage.
+- **Bureau, navigateur et largeur de téléphone**, avec une interface en chinois et en anglais.
+
+Les étapes affichent les informations fournies par le modèle et l’hôte. Les longs journaux gardent leur début et leur fin, avec les coupures signalées ; les noms de styles sont masqués avant un choix à l’aveugle. Le niveau d’eau représente une étape, pas une note de qualité ni un pourcentage exact.
+
+![大肥鱼特写：两版同时工作，头上冒出想法，连戳五下会跳、转圈、晕头、溅水花，展开「过程」看实时步骤，回复出现后水注满 / Whale close-up: thoughts, a five-poke combo, live steps and the Steps panel, then replies as the whales fill up; controlled candidates in a real DSH host](https://raw.githubusercontent.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/main/assets/readme/whale-closeup.webp)
+
+<p align="center"><sub>Gros plan sur les baleines : candidats fixes ; le modèle scripté attend 9 s par étape pour laisser le temps de voir ; avec des coupes, le reste à vitesse normale.</sub></p>
 
 ![四版页面直接操作 / Four independently interactive pages; controlled candidates in a real DSH host](https://raw.githubusercontent.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/main/assets/readme/gallery-2.0/02-live-comparison.png)
 
 ![打招呼得到四种回答 / A greeting answered four ways; controlled candidates in a real DSH host](https://raw.githubusercontent.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/main/assets/readme/gallery-2.0/03-main-conversation.png)
 
-![版本、风格与上下文 / Versions, styles and context; controlled candidates in a real DSH host](https://raw.githubusercontent.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/main/assets/readme/gallery-2.0/04-comparison-settings.png)
-
-![英文回答并排比较 / Compare English answers; controlled candidates in a real DSH host](https://raw.githubusercontent.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/main/assets/readme/gallery-2.0/06-english-answers.png)
-
-</details>
-
-[Les 8 images et les conditions de capture](https://github.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/blob/main/docs/storefront-gallery.md)
-
-<a id="demo"></a>
-
-## Voir le parcours complet
-
-[![Exemple à candidats fixes : quatre pages pomodoro en direct, deux mises de côté, C choisie et les styles révélés](https://raw.githubusercontent.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/main/docs/media/comparison-preview.gif)](https://github.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/blob/main/docs/media/comparison-workflow.mp4)
-
-Enregistrement à candidats fixes dans un hôte DSH réel, à partir du code candidat de la 2.1.0, avec l'interface chinoise. Quatre versions créent une page pomodoro dans un dossier ordinaire, et les quatre pages en direct sont utilisables. Deux sont mises de côté, les autres se comparent côte à côte, le choix révèle chaque style et le résultat est enregistré dans un nouveau dossier avant de reprendre la conversation. La vidéo coupe les attentes et garde le reste à vitesse normale. Les chemins locaux sont masqués.
-
-Après le choix, deux raisons (mise en page, plus simple) sont cochées ; elles parviennent à la requête suivante de la conversation principale.
-
-[Vidéo complète (28 secondes)](https://github.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/blob/main/docs/media/comparison-workflow.mp4) · [Conditions et résultats](https://github.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/blob/main/docs/demo.md)
-
 <details>
-<summary>English answers · 390 px</summary>
+<summary>Plus de vues : réglages, réponses en anglais, largeur de téléphone</summary>
+
+![版本、风格与上下文 / Versions, styles and context; controlled candidates in a real DSH host](https://raw.githubusercontent.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/main/assets/readme/gallery-2.0/04-comparison-settings.png)
 
 <p align="center"><img src="https://raw.githubusercontent.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/main/assets/readme/13-english-answers.webp" width="840" alt="Three open English answers from the Three looks quick set: B is the pick, with Layout and More complete as its reasons; controlled candidates in a real DSH host."> <img src="https://raw.githubusercontent.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/main/assets/readme/14-phone-answer.webp" width="260" alt="390-pixel English answer result in the blue glass interface, with the chosen version and a visible Continue conversation action; controlled candidates in a real DSH host."></p>
 
 </details>
+
+[Les 8 images et les conditions de capture](https://github.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/blob/main/docs/storefront-gallery.md)
 
 <a id="install"></a>
 
@@ -97,7 +90,7 @@ L’interface est disponible en chinois simplifié et en anglais, au choix dans 
 
 Les commandes ci-dessous concernent un profil DSH Web géré par l’utilisateur. Le profil `desktop` est géré par l’application de bureau ; utilisez sa page de plugins.
 
-La référence de développement est Node 26.13.0 et npm 12.2.2. Les vérifications actuelles utilisent le paquet officiel DSH 0.2.1-rc.5. Repérez le profil DSH que vous utilisez déjà.
+La référence de développement est Node 26.13.0 et npm 12.2.2. Les vérifications actuelles utilisent le paquet officiel DSH 0.2.1-rc.5 / 0.2.2-rc.1. Repérez le profil DSH que vous utilisez déjà.
 
 Installez le paquet npm dans le profil Web par défaut. Le badge npm indique son état de publication :
 
@@ -106,6 +99,8 @@ dsh plugin --profile web add dsh-agent-compare
 ```
 
 Pour un autre profil autogéré, remplacez `web` par son nom réel.
+
+**Redémarrez complètement après la mise à jour.** Quittez entièrement DSH Desktop, puis rouvrez-le. Pour Web, redémarrez le service DSH concerné et rechargez la page. Un simple rechargement peut conserver l’ancien backend ; un écart de versions déclenche désormais un message.
 
 Vous pouvez aussi compiler et installer depuis les sources :
 
@@ -119,19 +114,19 @@ npm pack
 Remplacez `<your-profile>` par le nom réel de votre profil :
 
 ```bash
-dsh plugin --profile <your-profile> add ./dsh-agent-compare-2.1.0.tgz
+dsh plugin --profile <your-profile> add ./dsh-agent-compare-3.1.0.tgz
 ```
 
 Redémarrez DSH. Avant une mise à jour, terminez les comparaisons actives et fermez les anciennes instances qui partagent leurs fichiers. Les modifications simultanées par plusieurs versions de l'extension ne sont pas prises en charge.
 
 ## Première comparaison
 
-1. Cliquez sur **A|B**, en bas à gauche du champ de conversation. Les réglages s'ouvrent au-dessus du champ existant.
-2. Le mode par défaut réutilise le modèle courant avec deux stratégies ; aucun second compte n'est nécessaire. Le mode à deux modèles propose ceux déjà configurés dans DSH.
-3. Choisissez à l'écran la durée maximale de génération par proposition : 5 à 120 minutes, 30 par défaut. Saisissez uniquement votre demande et envoyez-la, sans paramètres à mémoriser.
-4. La carte de conversation affiche la progression et deux applications interactives. Des vues bureau et mobile, un affichage centré sur A ou B et une grande fenêtre sont disponibles.
-5. Choisissez avec `选 A`, `选 B` ou `都不满意` — A, B ou aucune. La stratégie ou le modèle réel, les résultats et l'usage disponible sont révélés après le choix.
-6. `审查并采用` ouvre l'examen du dépôt cible et des conditions préalables. Une confirmation distincte écrit les fichiers. `继续主对话` quitte le mode de comparaison et rend le focus au champ initial.
+1. Cliquez sur **A|B**, en bas à gauche du champ de conversation. Les réglages s’ouvrent au-dessus du champ existant.
+2. Choisissez 2 à 4 versions. Le mode par défaut réutilise le modèle courant avec des styles différents ; choisissez chaque style ou décrivez-le en une ligne. Pour des modèles différents, utilisez ceux déjà configurés dans DSH.
+3. Réglez le mode aveugle ou ouvert, la limite par version (5 à 120 minutes) et le contexte partagé. Saisissez votre demande dans le champ habituel, puis envoyez-la.
+4. Chaque carte affiche la progression et une réponse, des fichiers ou une page. Les pages en cours sont manipulables. Choisissez une largeur bureau/mobile, utilisez 1–4 pour cibler une version et 0 pour toutes ; avec 3–4 versions, mettez de côté celles écartées.
+5. Utilisez « Choose A », par exemple, ou « None of these » pour n’en choisir aucune. À l’aveugle, modèles et styles se révèlent au choix ; à découvert, ils sont visibles dès le début.
+6. Pour modifier le projet, « Review and adopt » présente les différences et vérifications avant une confirmation distincte. Hors Git, enregistrez dans un nouveau dossier. Une réponse seule ne nécessite aucune application de fichiers. « Continue conversation » revient au dialogue en conservant le choix.
 
 `试跑内置示例` crée une boutique dans un dépôt distinct et ne touche pas à votre projet. L'adoption vise ce dépôt d'exemple. Les commandes `比较记录` — historique — et `使用教程` — guide — sont présentes dans les nouvelles conversations comme dans les anciennes.
 
@@ -140,6 +135,31 @@ Redémarrez DSH. Avant une mise à jour, terminez les comparaisons actives et fe
 Recherche, filtres, formulaires, pages de présentation, tableaux de bord et refontes de composants : des tâches dont la qualité se juge aussi à l'usage. Pour un défaut à réponse précise ou une transformation mécanique, un seul agent avec des tests est généralement préférable.
 
 Avec un modèle, une stratégie conserve davantage l'existant et l'autre repense l'interaction. Avec deux modèles, demande, instructions et critères restent communs. Les deux partent du même état de code. Un choix ne constitue pas un classement général des modèles.
+
+<a id="whats-new"></a>
+
+## Nouveautés par version
+
+**Nouveautés de la version 3.1.0 :**
+- **Chaque étape sous les yeux, en direct et après coup.** Dès qu'une version commence, sa carte a un bouton **Steps**. Ouvert, il montre le travail dans l'ordre : réflexions avec leur durée, appels d'outils (lire ou modifier un fichier, lancer une commande… chacun s'ouvre sur son entrée et sa sortie) et ce qui a été écrit entre deux étapes. Pendant le travail, les trois dernières étapes défilent aussi en direct sous la baleine, et une fois la version terminée, chaque étape reste à un clic. Dans une comparaison à l'aveugle, les mots qui nomment un style s'affichent en ▒▒.
+- **La réponse, directement affichée.** Une version qui ne fait que répondre n'affiche que sa réponse. Une version qui a construit une page ou écrit des fichiers affiche sa réponse avec le même poids : au-dessus de la page côte à côte, et à gauche de la page quand cette version est mise en avant. La réponse apparaît dès que la version a terminé, avant sa page.
+- **Les pages, directement affichées.** Les pages statiques sont servies par l'extension elle-même : elles s'ouvrent dès qu'elles sont écrites, sans processus séparé que l'application de bureau pourrait arrêter. Si une page ne peut toujours pas être servie, un résultat HTML s'affiche quand même comme une page, son code source à un clic.
+- **Des résultats plus tôt.** Une version est considérée comme terminée moins d'une seconde après la fin de son tour ; auparavant, la comparaison attendait que d'autres extensions (de mémoire, par exemple) libèrent la session, environ 40 secondes sur un poste de bureau typique. Les dépendances sont installées depuis le fichier de verrouillage pendant que les versions travaillent, et une version qui ne les a pas modifiées en reçoit sa propre copie ; les vérifications tournent en parallèle et la page est utilisable dès son démarrage. Dans l'environnement d'enregistrement à candidats fixes, quatre versions Vite sont passées de l'envoi à quatre pages utilisables en 24 à 30 secondes environ.
+- **L'attente devient amusante.** Chaque version en cours affiche la baleine bleue de DeepSeek, pâle au début, qui se remplit d'eau bleue à mesure que la version avance pendant que deux lumières parcourent son bord. De temps en temps, une pensée monte au-dessus de sa tête : ce qu'elle fait, une idée, ou une invitation à la taquiner. Elle souffle un jet à chaque pas et se tourne vers le pointeur ; plusieurs pichenettes d'affilée la font sauter, tourner, vaciller et éclabousser, avec une nouvelle réplique à chaque fois. Deux comètes font le tour d'une comparaison en cours (même sur les moteurs plus anciens et avec les thèmes qui arrêtent les animations), sur une lumière bleue qui s'écoule lentement.
+- **Quatre bleus pour A–D.** Les étiquettes des versions sont quatre bleus différents.
+- **Un rappel pour redémarrer DSH.** DSH remplace aussitôt l'interface d'une extension mais garde le serveur chargé au démarrage. Quand les deux diffèrent, AgentCompare vous demande de quitter puis de rouvrir DSH, au lieu de perdre en silence les étapes et les réponses.
+- **Un nom chinois.** Le nom officiel est « 鲸挑细选 », le surnom « 大肥鱼赛马 ».
+- **Inclut aussi la 2.1.0, qui n'a pas été publiée seule :** un bonjour ou une question reçoit des réponses plutôt que des pages ; un verre liquide plus clair et plus lumineux, des boutons plus légers et des contrôles qui glissent ; dans les deux thèmes, tout le texte de 21 états de l'interface atteint au moins 4.5:1.
+
+**Nouveautés de la version 2.0.0 :** comparez **2, 3 ou 4 versions** à la fois. Chaque version peut recevoir un **style** (ampleur : prudent, audacieux ; apparence : minimaliste, soigné, vivant ; priorité : accessible, rigoureux, léger ; ou une ligne personnalisée). Comparez **à l'aveugle** (styles révélés au choix) ou **à découvert** (styles affichés dès le début). Avec trois ou quatre versions, **mettez de côté** celles que vous écartez pour comparer les autres côte à côte ; dans la carte, les touches 1 à 4 mettent une version au premier plan.
+- **Nouvelle interface en verre liquide bleu.** Aurore et poussière d'étoiles derrière des panneaux de verre, une lentille de verre qui glisse entre les options et une progression liquide ; un éclat de lumière au choix et un balayage lumineux à la révélation. Mode sombre, mouvement réduit et contraste élevé pris en charge.
+- **Dites pourquoi elle l'emporte.** Après le choix, cochez quelques raisons (mise en page, couleurs et matière, sensation d'usage…) ou ajoutez une ligne ; les modifications suivantes dans la conversation principale conservent ces qualités.
+- **Ensembles rapides.** Un geste règle le nombre de versions et leurs styles : Duo classique, Trois apparences, Trois priorités, Quatre directions.
+- **2 à 4 versions avec des styles.** Huit préréglages ou une description en une ligne ; plusieurs modèles peuvent partager un style.
+- **Comparaison aveugle ou ouverte.** Essayez chaque version, écartez-la puis restaurez-la ; 1–4 isole une version et 0 les affiche toutes.
+- **Réponses, fichiers et pages actives.** Lisez le Markdown et copiez réponses, code, fichiers ou chemins. Votre choix est clairement indiqué.
+- **Poursuivez dans la conversation.** Comparaisons, choix, adoption et annulation restent dans la mémoire de la conversation actuelle.
+- **Desktop + Web, interface chinoise et anglaise.** Réutilisez les modèles configurés et examinez les changements avant l'adoption, avec annulation et récupération.
 
 ## Exécution et critères communs
 

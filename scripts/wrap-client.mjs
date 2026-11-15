@@ -3,9 +3,11 @@
 // The DSH web boot concatenates plugin client files into one classic script;
 // a raw ES module there throws "Cannot use import statement outside a module",
 // and a single entry that fails to activate makes the whole boot fatal.
-import { writeFile, mkdir } from 'node:fs/promises'
+import { writeFile, mkdir, readFile } from 'node:fs/promises'
 import { build } from 'esbuild'
 
+// The interface carries its own version, so it can notice an older backend still running in DSH.
+const { version } = JSON.parse(await readFile('package.json', 'utf8'))
 const result = await build({
   entryPoints: ['src/client/index.tsx'],
   bundle: true,
@@ -13,6 +15,7 @@ const result = await build({
   format: 'cjs',
   target: 'es2022',
   charset: 'utf8',
+  define: { __AC_CLIENT_VERSION__: JSON.stringify(version) },
   external: ['react'],
   minifyWhitespace: true,
   minifySyntax: true,

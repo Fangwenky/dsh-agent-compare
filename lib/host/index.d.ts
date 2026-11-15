@@ -117,6 +117,26 @@ export declare function progressOf(events: readonly SessionEvent[]): {
 };
 /** Map the epoch's last turn ending onto the subagent stop-reason vocabulary. */
 export declare function stopReasonOf(events: readonly SessionEvent[]): string;
+/** How long a finished turn must stay finished, with nothing queued, before the candidate counts as done. */
+export declare const SETTLE_MS = 800;
+/** After a stop, how long to wait for the session to end its turn before sealing what it wrote. */
+export declare const STOP_GRACE_MS = 15000;
+/** How long a session may sit idle, with nothing queued, before a turn that never began counts as over. */
+export declare const UNSTARTED_MS = 10000;
+/**
+ * Wait until the candidate's work is over. That is the moment its last turn
+ * ends with nothing queued to start another, not the moment the whole session
+ * goes idle: other plugins may keep a finished session busy for minutes (for
+ * example writing memories), and the result does not depend on them. A stop
+ * waits briefly for the turn to end, then returns so what was written can be
+ * sealed even if the session never acknowledges the stop.
+ */
+export declare function settled(child: Pick<AgentLike, 'session' | 'inbox' | 'whenIdle'>, start: number, signal: AbortSignal, { poll, settleMs, graceMs, unstartedMs }?: {
+    graceMs?: number | undefined;
+    poll?: number | undefined;
+    settleMs?: number | undefined;
+    unstartedMs?: number | undefined;
+}): Promise<void>;
 /**
  * Runs one candidate in a fresh DSH session whose `cwd` is the candidate copy.
  * The session's sandbox mode is pinned to workspace-write and approvals to

@@ -168,6 +168,8 @@ export interface PreviewInfo {
     readonly cwd: string;
     /** Modern Yarn starts Vite through its project-aware dependency loader. */
     readonly launcher?: 'yarn';
+    /** Static files served by the host process itself: there is no process to stop, and it ends with the host. */
+    readonly inProcess?: true;
 }
 /** Why a candidate may or may not be written into the user's checkout. */
 export interface Verdict {
@@ -220,6 +222,7 @@ export interface Candidate {
     acceptanceTouched?: string[];
     /** package.json dependencies or the lockfile changed. */
     dependencyChange?: boolean;
+    /** `prewarmed`: the same frozen command ran once for the baseline while versions generated, and this version, whose manifest files were unchanged, received its own copy of that tree. */
     install?: {
         argv: string[];
         frozen: boolean;
@@ -227,6 +230,7 @@ export interface Candidate {
         outcome?: 'passed' | 'failed' | 'timeout' | 'cancelled';
         failure?: InstallFailure;
         runtime?: VerificationRuntime;
+        prewarmed?: boolean;
     };
     /** Completed verification attempts, retained before an explicit retry. Generation is never repeated. */
     verificationHistory?: VerificationAttempt[];

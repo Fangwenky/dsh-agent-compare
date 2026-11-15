@@ -1,5 +1,11 @@
 import { type PrepareProjectProcess } from './project-process.ts';
 import type { BrowserCheck, CheckResult, ChecksSpec } from './types.ts';
+/** How many of one version's check commands run at the same time. */
+export declare const CHECK_CONCURRENCY = 3;
+/**
+ * Run the shared check commands. They are independent of each other, so up
+ * to CHECK_CONCURRENCY run at once; results keep the configured order.
+ */
 export declare function runCommandChecks(dir: string, spec: ChecksSpec, signal?: AbortSignal, prepare?: PrepareProjectProcess): Promise<CheckResult[]>;
 /**
  * Load the running app in a fresh, private browser context: it must render,

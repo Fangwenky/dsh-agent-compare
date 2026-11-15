@@ -1,24 +1,24 @@
 {
   "schema": "agentcompare.screenshots/v1",
-  "capturedAt": "2026-11-14T14:57:37.542Z",
-  "packageVersion": "2.1.0",
-  "sourceCommit": "2b5c9920378b8414dfa1449033808385c30f55c8",
-  "packageArchiveSha256": "804d302ce8e4d018664d5c5744b09eb4d78ec0ed1c1222e33fa44ffbcb363e8b",
-  "archiveNote": "Recorded from this commit's build, packed as a uniquely versioned development archive and installed in an isolated test profile; all 95 installed runtime files matched that captured build byte for byte. These captures demonstrate the interface at the recorded commit. Later static-preview authority and English phone-action layout fixes are verified separately and are not evidenced by these images.",
+  "capturedAt": "2026-11-15T11:21:54.509Z",
+  "packageVersion": "3.1.0",
+  "sourceCommit": "782b8911b823936ca2d3cc15c0ce54a18e9a1f22",
+  "packageArchiveSha256": "b55d69fab55e817e9a27083f49f42931d88e485222a7167df62bcf2fe87dc898",
+  "archiveNote": "Recorded from this commit's build, packed as a uniquely versioned development archive and installed in an isolated test profile; all 153 installed files other than package.json, which carries the development version, matched the commit byte for byte. These recordings demonstrate the interface and workflow at the recorded commit. Fixes made after them are verified by tests, not by these recordings: a whale's thought names only a tool the version is running, so it no longer reads 「正在：正在思考下一步」; static previews answer only at their assigned local address, in the plugin's process as in the helper; English actions keep more room at phone width.",
   "hostVersion": "0.2.2-rc.1",
-  "scenario": "Controlled candidates; four independently interactive pages in a blind comparison, two set aside, a pick with reasons and a save into a new folder. No external model request.",
+  "scenario": "Controlled candidates; four independently interactive pages with their replies and the steps of A, in a blind comparison; the picked version in focus with its reply beside its page, saved into a new folder with reasons. No external model request.",
   "privatePathsHidden": true,
   "captionsAdded": true,
   "files": [
     {
       "path": "docs/media/screenshots/11-live-comparison.png",
-      "bytes": 88608,
-      "sha256": "8a629093db8dad8f8af578001427ea750346bf97ce5bbebd12c343bfc919a9c7"
+      "bytes": 98212,
+      "sha256": "aa08cfeee4e2ffcf8364cbab3f58f2fc39c13dbbcf823580e049c0487a2a4633"
     },
     {
       "path": "docs/media/screenshots/12-reviewed-adoption.png",
-      "bytes": 105013,
-      "sha256": "305bb434d80274f4aad68ef44641a641625b5c48f0dfe728701e75696c6ddcbe"
+      "bytes": 92922,
+      "sha256": "b028e2a576dea1f46a60f96ecc1e3bde9b41e1e4d90f25532fa093907711dec0"
     }
   ]
 }

@@ -4,7 +4,7 @@ import { planCopyCleanup, type CopyCleanupPlan } from './copy-resources.ts'
 import path from 'node:path'
 import { randomBytes, randomInt } from 'node:crypto'
 import { existsSync } from 'node:fs'
-import { mkdir, rm, rmdir } from 'node:fs/promises'
+import { mkdir, readdir, rm, rmdir } from 'node:fs/promises'
 import { addOwnedWorktree, ALWAYS_EXCLUDED, YARN_RUNTIME_FILES, captureChange, changedPaths, commitTree, dropRefs, ensureWorktreePool, git, gitTry, headCommit, ownedCopyTree, ownedWorktreeAdmin, pinRef, readPatchSha, removeOwnedWorktree, snapshotTree, treeOf, withRepositoryWrite, writePatch, type OwnedCopy } from './git.ts'
 import { adoptAsBranch, AdoptError, CandidateWriteError, checkWritten, pinPreAdopt, preflight, targetChanges, undoAdoption, writeCandidate, type NameStatus } from './adopt.ts'
 import { newFileTransferRef } from './file-transfer.ts'
@@ -21,6 +21,8 @@ import { BusyError, newRunId, RunStore, StaleRecordError } from './run-store.ts'
 import type { FileLease } from './file-lock.ts'
 import { isRunId } from './record-validation.ts'
 import { BALANCED, candidatePrompt, DEFAULT_STRATEGIES } from './strategies.ts'
+import { readTrace, traceFile, writeTrace, type Trace } from './trace.ts'
+import { copyTree, manifestDigests, removeTree, sameManifests, stageManifests, warmable } from './deps-warm.ts'
 import { CANDIDATE_LABELS, MAX_CANDIDATES, MAX_PICK_NOTE, MIN_CANDIDATES, PICK_REASONS, RUN_COORDINATION, RUN_SCHEMA, type PickReason, type Acceptance, type AgentRoute, type Candidate, type CandidateLabel, type CandidateStage, type CheckResult, type ChecksSpec, type FolderTarget, type PreviewInfo, type RunRecord, type Strategy, type Usage, type Verdict } from './types.ts'
 
 export interface AgentRunRequest {
@@ -39,6 +41,8 @@ export interface AgentProgress {
   readonly steps: number
   readonly lastAction?: string
   readonly tokens?: number
+  /** Its steps so far, when the host can read them. */
+  readonly trace?: Trace
 }
 
 export interface AgentRunResult {
@@ -48,6 +52,8 @@ export interface AgentRunResult {
   readonly childId?: string
   /** The route the agent actually ran with, when the host reports it. */
   readonly actualRoute?: AgentRoute
+  /** Every step it took, when the host can read them. */
+  readonly trace?: Trace
 }
 
 /** The one seam to the agent host. DSH implements it with its own sessions; tests script it. */
@@ -106,8 +112,19 @@ export interface ComparerOptions {
   readonly prepareProjectProcess?: PrepareProjectProcess
 }
 
+/** A frozen install of the baseline's dependencies, made while the versions generate. */
+interface WarmInstall {
+  readonly dir: string
+  readonly manifests: Readonly<Record<string, string | null>>
+  /** Resolves true when the install succeeded; never rejects. */
+  readonly ready: Promise<boolean>
+  readonly stop: () => void
+}
+
 interface LiveRun {
   managerFailure?: string
+  warm?: WarmInstall
+  warmStarted?: boolean
   readonly record: RunRecord
   readonly hostContext: unknown
   readonly controller: AbortController
@@ -289,6 +306,12 @@ export class Comparer {
     return this.live.get(runId)?.record ?? this.store.load(runId)
   }
 
+  /** What a version did while it worked, as last recorded; undefined before its first step. */
+  async readTrace(runId: string, label: CandidateLabel): Promise<Trace | undefined> {
+    if (!isRunId(runId)) return undefined
+    return readTrace(traceFile(this.store.artifacts(runId), label))
+  }
+
   /** Reconcile a current-protocol orphan when opened after its owner exits.
    * A foreign live owner and an unmarked older record remain untouched. */
   async observe(runId: string): Promise<RunRecord | undefined> {
@@ -332,6 +355,8 @@ export class Comparer {
       try { await this.driveCandidate(lr, c, preparation[i]!.complete, allPrepared) }
       catch (error) { lr.controller.abort(error); throw error }
     }))
+    // Every version has installed or failed; the shared warm install is no longer needed.
+    if (lr.warm) { const warm = lr.warm; delete lr.warm; warm.stop(); await warm.ready; await removeTree(warm.dir).catch(() => {}) }
     if (settled.some(result => result.status === 'rejected')) {
       record.state = 'interrupted'
     } else if (record.state === 'running') {
@@ -339,6 +364,48 @@ export class Comparer {
       record.checksFavoured = favoured(record.candidates)
     }
     await this.persist(record)
+  }
+
+  /**
+   * Start one frozen install of the baseline's npm dependencies in a private
+   * directory of the run. It runs under the same process constraints as every
+   * other project command, with its own directory as the write root.
+   */
+  private async startWarmInstall(lr: LiveRun, projectDir: string, project: Awaited<ReturnType<typeof inspectProject>>): Promise<void> {
+    const record = lr.record
+    if (record.isolation !== 'own-root' || project.packageManager !== 'npm' || project.lockfile !== 'package-lock.json') return
+    if (!(project.kind === 'vite' || (project.node && (record.acceptance.checks.commands.length > 0 || project.scripts.dev !== undefined || project.scripts.start !== undefined)))) return
+    if (!(await warmable(projectDir)).ok) return
+    const dir = this.store.warmDeps(record.runId)
+    await removeTree(dir)
+    const plan = await stageManifests(projectDir, dir)
+    const stopper = new AbortController()
+    const signal = AbortSignal.any([lr.controller.signal, stopper.signal, this.lifetime.signal])
+    const prepare: PrepareProjectProcess = request => prepareProjectProcess({ ...request, windowsProcessCompat: record.acceptance.runtime.windowsProcessCompat ?? 'auto' }, this.opts.prepareProjectProcess)
+    const ready = runProjectProcess(installArgv(project).argv, { cwd: dir, timeoutMs: 600_000, signal, env: { CI: '1' } }, prepare)
+      .then(r => r.code === 0 && !r.aborted && !r.timedOut && existsSync(path.join(dir, 'node_modules')), () => false)
+    lr.warm = { dir, manifests: plan.manifests, ready, stop: () => stopper.abort() }
+  }
+
+  /**
+   * Copy the warm install into a version's copy when its manifest files are
+   * the baseline's. Returns how long that took, or undefined to install normally.
+   */
+  private async useWarmInstall(warm: WarmInstall | undefined, projectDir: string): Promise<number | undefined> {
+    if (!warm) return undefined
+    const t0 = Date.now()
+    if (!sameManifests(warm.manifests, await manifestDigests(projectDir))) return undefined
+    if (!(await warm.ready)) return undefined
+    const target = path.join(projectDir, 'node_modules')
+    try {
+      // Whatever the version left in its own node_modules is replaced, as a fresh install would.
+      await removeTree(target)
+      await copyTree(path.join(warm.dir, 'node_modules'), target)
+      return Date.now() - t0
+    } catch {
+      await removeTree(target).catch(() => {})
+      return undefined
+    }
   }
 
   private async driveCandidate(lr: LiveRun, c: Candidate, prepared: () => void, allPrepared: Promise<void>): Promise<void> {
@@ -375,6 +442,8 @@ export class Comparer {
           if (issue) throw new StageFailure('preparing', issue)
         } catch (error) { if (!signal.aborted) lr.managerFailure = (error as Error).message; throw error }
       }
+      // The first finished copy is still the untouched baseline: install its dependencies while everyone generates.
+      if (!lr.warmStarted) { lr.warmStarted = true; await this.startWarmInstall(lr, projectDirectory(dir, record.baseline.projectPath), project).catch(() => {}) }
       prepared()
       // Candidate tools may invoke Git too. Finish both copies' shared Git
       // metadata before either candidate can run a command in its copy.
@@ -386,6 +455,10 @@ export class Comparer {
       signal.throwIfAborted()
       const budget = AbortSignal.timeout(record.budget.generationMs)
       let lastSave = 0
+      // Steps are written in order, each write replacing the last; a reader sees the latest whole trace.
+      const traceTarget = traceFile(this.store.artifacts(record.runId), c.label)
+      let traceWrites: Promise<void> = Promise.resolve()
+      const saveTrace = (trace: Trace): void => { traceWrites = traceWrites.then(() => writeTrace(traceTarget, trace)).catch(() => {}) }
       const result = await this.opts.runner.run({
         label: c.label,
         cwd: dir,
@@ -397,6 +470,7 @@ export class Comparer {
         hostContext: lr.hostContext,
         onProgress: (p) => {
           c.progress = { steps: p.steps, lastActivityAt: Date.now(), ...(p.lastAction === undefined ? {} : { lastAction: p.lastAction.slice(0, 160) }), ...(p.tokens === undefined ? {} : { tokens: p.tokens }) }
+          if (p.trace) saveTrace(p.trace)
           if (Date.now() - lastSave > 3000) {
             lastSave = Date.now()
             void this.persist(record).catch(() => {})
@@ -408,6 +482,8 @@ export class Comparer {
       if (result.childId !== undefined) c.childId = result.childId
       if (result.actualRoute !== undefined) c.actualRoute = result.actualRoute
       if (result.summary !== undefined) c.summary = result.summary.slice(0, SUMMARY_MAX)
+      if (result.trace) saveTrace(result.trace)
+      await traceWrites
       await this.noteOutsideChanges(record)
       signal.throwIfAborted()
       // How generation ended is a fact to show, not a verdict: whatever the
@@ -485,7 +561,7 @@ export class Comparer {
     const v = await this.verifyCopy(record.acceptance, dir, copy, c.candidateTree, path.join(artifacts, c.label), signal, enter, async evidence => {
       Object.assign(c, evidence)
       await this.persist(record)
-    }, { projectPath: record.baseline.projectPath, answerOnly: c.result === 'answer' })
+    }, { projectPath: record.baseline.projectPath, answerOnly: c.result === 'answer', warm: lr.warm })
     if (v.preview) lr.previews.set(c.label, v.preview.handle)
     if (v.install) c.install = v.install
     if (v.execution) c.execution = v.execution
@@ -634,7 +710,7 @@ export class Comparer {
    * an HTML page is served as files; anything else has no live page. A result
    * without a live page is judged by its files, or by the answer alone.
    */
-  private async verifyCopy(acceptance: Acceptance, dir: string, copy: OwnedCopy, sealedTree: string, shotBase: string, signal: AbortSignal, enter?: (s: CandidateStage) => Promise<void>, onEvidence?: (facts: Partial<Pick<Candidate, 'install' | 'checks' | 'execution'>>) => Promise<void>, scope: { projectPath?: string; answerOnly?: boolean } = {}): Promise<{
+  private async verifyCopy(acceptance: Acceptance, dir: string, copy: OwnedCopy, sealedTree: string, shotBase: string, signal: AbortSignal, enter?: (s: CandidateStage) => Promise<void>, onEvidence?: (facts: Partial<Pick<Candidate, 'install' | 'checks' | 'execution' | 'preview'>>) => Promise<void>, scope: { projectPath?: string; answerOnly?: boolean; warm?: WarmInstall } = {}): Promise<{
     install?: NonNullable<Candidate['install']>
     execution?: NonNullable<Candidate['execution']>
     checks: CheckResult[]
@@ -663,7 +739,7 @@ export class Comparer {
     if (!usable || !(sharedCommands || project.profile === 'vite' || project.profile === 'node-web')) {
       return this.serveFiles(acceptance, projectDir, dir, project, shotBase, signal, driftOf, checkedTree, enter, project.note)
     }
-    return this.verifyNodeCopy(acceptance, dir, projectDir, copy, project, shotBase, signal, driftOf, checkedTree, enter, onEvidence)
+    return this.verifyNodeCopy(acceptance, dir, projectDir, copy, project, shotBase, signal, driftOf, checkedTree, enter, onEvidence, scope.warm)
   }
 
   /** No installation: serve an HTML page as files when there is one, otherwise keep the files as the result. */
@@ -677,14 +753,16 @@ export class Comparer {
     try { handle = await startStaticPreview(projectDir, entry, { timeoutMs: this.opts.previewTimeoutMs ?? 60_000, signal }) }
     catch (error) {
       if (signal.aborted) throw error
-      return { checks: [], checkedTree, drift: await driftOf(), result: 'files', previewNote: `页面服务没有启动：${(error as Error).message}` }
+      // Keep the helper's last words: they say why it stopped.
+      const said = error instanceof PreviewError ? error.log.trim().split('\n').filter(Boolean).at(-1)?.slice(0, 200) : undefined
+      return { checks: [], checkedTree, drift: await driftOf(), result: 'files', previewNote: `页面服务没有启动：${(error as Error).message}${said ? `（${said}）` : ''}` }
     }
-    const preview = { handle, info: { url: handle.url, port: handle.port, pid: handle.pid, kind: 'static' as const, cwd: projectDir } }
+    const preview = { handle, info: { url: handle.url, port: handle.port, pid: handle.pid, kind: 'static' as const, cwd: projectDir, ...(handle.inProcess ? { inProcess: true as const } : {}) } }
     return this.finishPreview(acceptance, [], preview, shotBase, signal, driftOf, checkedTree, note)
   }
 
   /** Install, run the shared commands, then serve: Vite's build, or the project's server script. */
-  private async verifyNodeCopy(acceptance: Acceptance, dir: string, projectDir: string, copy: OwnedCopy, project: ProfiledProject, shotBase: string, signal: AbortSignal, driftOf: () => Promise<string[]>, checkedTree: string, enter?: (s: CandidateStage) => Promise<void>, onEvidence?: (facts: Partial<Pick<Candidate, 'install' | 'checks' | 'execution'>>) => Promise<void>): Promise<{
+  private async verifyNodeCopy(acceptance: Acceptance, dir: string, projectDir: string, copy: OwnedCopy, project: ProfiledProject, shotBase: string, signal: AbortSignal, driftOf: () => Promise<string[]>, checkedTree: string, enter?: (s: CandidateStage) => Promise<void>, onEvidence?: (facts: Partial<Pick<Candidate, 'install' | 'checks' | 'execution' | 'preview'>>) => Promise<void>, warm?: WarmInstall): Promise<{
     install?: NonNullable<Candidate['install']>
     execution?: NonNullable<Candidate['execution']>
     checks: CheckResult[]
@@ -740,9 +818,14 @@ export class Comparer {
     }
     const runtime = { hostNode: process.version, platform: `${process.platform}-${process.arch}`, packageManager: inst.argv[0]!, ...(packageManagerVersion ? { packageManagerVersion } : {}) }
     const t0 = Date.now()
-    const r = await runProjectProcess(inst.argv, { cwd: projectDir, timeoutMs: 600_000, signal, env: { CI: '1' } }, prepare)
+    // The baseline's dependencies were installed while the versions generated; reuse them when this version kept the same manifest.
+    const prewarmedMs = info.packageManager === 'npm' && inst.frozen ? await this.useWarmInstall(warm, projectDir) : undefined
+    signal.throwIfAborted()
+    const r = prewarmedMs !== undefined
+      ? { code: 0, aborted: false, timedOut: false, stdout: '', stderr: '', truncated: false }
+      : await runProjectProcess(inst.argv, { cwd: projectDir, timeoutMs: 600_000, signal, env: { CI: '1' } }, prepare)
     const failure = r.code !== 0 || r.aborted || r.timedOut ? installFailure(r) : undefined
-    const install: NonNullable<Candidate['install']> = { argv: inst.argv, frozen: inst.frozen, durationMs: Date.now() - t0, outcome: r.timedOut ? 'timeout' : r.aborted ? 'cancelled' : r.code === 0 ? 'passed' : 'failed', runtime, ...(failure ? { failure } : {}) }
+    const install: NonNullable<Candidate['install']> = { argv: inst.argv, frozen: inst.frozen, durationMs: Date.now() - t0, outcome: r.timedOut ? 'timeout' : r.aborted ? 'cancelled' : r.code === 0 ? 'passed' : 'failed', runtime, ...(failure ? { failure } : {}), ...(prewarmedMs !== undefined ? { prewarmed: true } : {}) }
     const currentInstall = (): NonNullable<Candidate['install']> => ({ ...install, runtime: { ...runtime, windowsProcessCompat: compatibility.snapshot() } })
     await onEvidence?.({ install: currentInstall() })
     signal.throwIfAborted()
@@ -790,6 +873,8 @@ export class Comparer {
       const served = await this.serveFiles(acceptance, projectDir, dir, project, shotBase, signal, driftOf, checkedTree, undefined, previewNote ?? project.note)
       return { ...served, checks: [...checks, ...served.checks], install: currentInstall(), execution: { enforcement } }
     }
+    // The page can be tried while its acceptance still runs.
+    await onEvidence?.({ preview: preview.info })
     const finished = await this.finishPreview(acceptance, checks, preview, shotBase, signal, driftOf, checkedTree, previewNote)
     return { ...finished, install: currentInstall(), execution: { enforcement } }
   }
@@ -937,7 +1022,7 @@ export class Comparer {
         handle = await startStaticPreview(projectDir, entry, { timeoutMs, signal: this.lifetime.signal })
       }
       lr.previews.set(label, handle)
-      c.preview = { url: handle.url, port: handle.port, pid: handle.pid, kind, cwd: projectDir, ...(handle.launcher ? { launcher: handle.launcher } : {}) }
+      c.preview = { url: handle.url, port: handle.port, pid: handle.pid, kind, cwd: projectDir, ...(handle.launcher ? { launcher: handle.launcher } : {}), ...(handle.inProcess ? { inProcess: true as const } : {}) }
       await this.save(lr.record)
       return lr.record
     })
@@ -1444,6 +1529,9 @@ export class Comparer {
 
   private async recoverRuns(): Promise<string[]> {
     const touched: string[] = []
+    // A warm install left by a host that stopped mid-run is never reused; only this store's own folder is cleared.
+    const warmRoot = path.dirname(this.store.warmDeps('00000000'))
+    for (const entry of existsSync(warmRoot) ? await readdir(warmRoot) : []) if (isRunId(entry) && !this.live.has(entry)) await removeTree(path.join(warmRoot, entry)).catch(() => {})
     for (const summary of await this.store.list()) {
       if (this.closing) break
       const runId = summary.runId
@@ -1694,6 +1782,8 @@ class StageFailure extends Error {
 
 /** Kill a recorded preview only when its process provably is that preview. */
 async function stopOwnedPreview(p: PreviewInfo): Promise<void> {
+  // A page served by an earlier host process ended with that process; its pid is not a preview's.
+  if (p.inProcess) return
   const observed = await observeProcess(p.pid)
   if (observed.state === 'unavailable') throw new Error(`无法确认进程 ${p.pid} 的归属：${observed.reason}`)
   if (observed.state === 'observed' && isPreviewProcess(p, observed.commandLine)) {

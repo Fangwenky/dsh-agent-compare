@@ -1,9 +1,57 @@
 # Changelog
 
-## 2.1.0
+## 3.1.0
 
-- **Static-preview authority validation.** The built-in read-only server accepts its assigned local hostname and port, plus explicit loopback aliases, and rejects unrelated, missing or duplicate Host headers. Forwarded-host headers do not bypass it; project-provided servers retain their own policies.
-- **Upgrade notes.** Records, settings and routes are unchanged; everything written by 2.0.0 opens as before. One behaviour changes: inside a project that can be built, a version that replies without changing files is now a finished answer instead of a failure. The rest of this release changes how the interface looks and reads, and fixes the problems listed below.
+- **Current product illustrations.** The overview, four-step workflow, gallery illustrations and sharing card now use the Chinese name, four blue versions, whale and live-step details. README image descriptions are localized in all eight languages; actual recordings keep their original source identity.
+
+- **Independent dependency copies.** Reusing a warm installation now relocates links into each candidate's own copy. A link that escapes the warm tree, a dangling link, a redirected root or an existing destination instead falls back to that candidate's normal frozen installation; it never preserves a shared mutable link as a successful prewarm. Failed copies stop queued work and finish all in-flight writes before fallback begins.
+- **Clearer first-run guides.** All eight README languages now describe 2–4 answers, files and pages, blind or open choices, full restarts after updating, and the separate adoption or folder-save flows. The published version comes from the npm badge. Rejecting several versions reads “None of these” in English instead of the two-option “Neither”.
+
+3.0.0 was prepared but not published; its changes (and those of 2.1.0) are part of this release and listed after the new ones.
+
+- **Upgrade notes.**
+  - After installing, quit DSH completely and open it again. DSH swaps in a plugin's new interface at once but keeps running the backend it loaded when it started. Until it restarts, the new interface shows a notice that says which backend is running.
+  - A static page is now served by the plugin's own process, and its record carries `preview.inProcess`. Releases before 3.1.0 cannot read a record that has it; they list it as read-only history.
+  - The new read-only `version` route reports the backend's version.
+- **Steps you can always open.** A version's card has a **Steps** button as soon as the version starts work, and it stays after the version finishes, for answers as well as pages and files. While a version works, its newest three steps scroll by live under the whale; one click opens them all. Steps that cannot be read say so instead of loading forever. A closed card's summary now carries the newest three steps instead of one.
+- **Pages show in the desktop app.** Static pages were served by a helper process that the desktop app stopped before it could answer, so a written page showed as "the preview service exited before responding", with its HTML as code. The plugin now serves static pages itself, and they are up the moment they are written; the helper remains the fallback. If a page still cannot be served, an HTML result opens as a sandboxed page with its source one click away, and the note keeps the helper's last line.
+- **Finished means finished.** On the desktop app with the 2.1.0 backend, versions were marked done 41–44 seconds after DSH ended their turns, while a memory plugin kept the sessions busy. With this backend the gap is under a second (0.4–0.6 seconds in the recorded setup). While a comparison runs, the conversation's card also checks for the end every 2 seconds instead of every 5.
+- **A livelier whale.** Every few seconds a thought rises over its head on its own: what the version is doing, an idea, or an invitation to poke it. Pokes in a row build up: a jump, a spin on the third, a wobble on the fourth and a splash after that, each with its own line. It leans toward the pointer without a 3D tilt, so the logo stays sharp.
+- **Comets that always move.** The ring's keyframes no longer compute offsets from custom properties, which the desktop app's engine (Chromium 152) dropped, freezing the comets. If the comets still do not move (under a theme that stops animations, for example), a script moves them at the same speed.
+- **Four blues.** Labels A–D are four different blues (indigo, azure, navy and ocean) instead of including purple and teal. Step markers, the comet trail and the background light no longer use violet either.
+- **Static pages answer only at their own address.** The plugin's static server, in its own process and in the helper fallback, accepts its assigned local hostname and port plus explicit loopback aliases, and rejects unrelated, missing or duplicate Host headers. Forwarded-host headers do not bypass it; project-provided servers keep their own policies.
+- **A Chinese name.** The project's Chinese name is 鲸挑细选, a pun on 精挑细选 ("picked with care") with 鲸, whale; its nickname is 大肥鱼赛马, "the Big Fat Fish race".
+
+## 3.0.0
+
+2.1.0 was prepared but not published; its changes are part of this release and listed after the new ones.
+
+- **Upgrade notes.** Everything written by 2.0.0 opens as before, and nothing is migrated.
+  - A record in which a version received preinstalled dependencies carries `install.prewarmed`. Releases before 3.0.0 cannot read such a record; they list it as read-only history with an explanation and do not change it.
+  - Each version's steps are kept beside the run's other files (`a/<runId>/<label>.trace.json`), not in the record. Older runs have no steps to show.
+  - Three behaviours change. A version's reply is shown before a blind pick, with words that name its style masked. Inside a project that can be built, a version that replies without changing files is a finished answer instead of a failure. A version counts as done when its turn ends, without waiting for other plugins that keep its session busy.
+  - The new `trace` route reads a version's steps. It is read-only and follows the same blind rules as the record.
+- **See what each version did.** Every card has a **Steps** toggle with a count of thoughts, tool calls and steps. Opened, it lists the version's work in order, the way the session ran it:
+  - each thought, with how long it took; open one to read it in full;
+  - each tool call, named in plain words (Read file, Edit file, Run command…) with what it touched; open one to see its input and output, or that it is still running or failed;
+  - words the version wrote between steps.
+
+  While a version works, the closed toggle names what it is doing right now, and the open list follows the newest step unless you scroll back. A long session keeps its first 40 and latest 280 items and says how many in between were left out; very long texts are shortened. Before a blind pick, words in the steps that would name a style show as ▒▒, and a note says so only when something was masked.
+- **The reply is shown on its own, never hidden behind the steps.**
+  - A version that only answers shows just its answer.
+  - A version that built a page or wrote files shows its reply as well, with the same standing: above the page in the grid, and beside it, at full length, when that version is in focus on a wide window. On a phone the page comes first, then the steps and the reply.
+  - The reply appears as soon as the version finishes, before its page is built. Long replies fold and open on request; a button copies the text as written.
+- **Results arrive sooner.** The wait between a version finishing and its page showing is much shorter:
+  - A version counts as done as soon as its turn ends with nothing queued. Before, the run waited for the whole session to go idle, and other plugins (for example one writing memories) kept finished sessions busy for 30 seconds or more; a stopped version whose session never confirmed the stop could wait for hours. After a stop, the version now gets 15 seconds to end its turn before its work is sealed. A session that goes idle without ever starting or ending a turn is treated as finished instead of waiting out the time limit.
+  - Dependencies are installed while the versions are still working. For an npm project with a lockfile, no root install scripts and no local packages, the baseline's frozen install runs once in a private folder of the run. A version whose manifest files are unchanged gets its own copy of that tree instead of installing again; anything else installs as before. In the recorded setup, a version's install took 1–4 seconds instead of 9–11.
+  - Configured check commands run three at a time, and results keep their order.
+  - The live page is shown as soon as it is served, with a note that page acceptance is still running.
+  - In the controlled recording setup (four Vite versions, local model), the first four live pages appeared 24–30 seconds after sending.
+- **DeepSeek's blue whale while you wait.** A working version shows DeepSeek's blue whale logo, drawn from the mark DSH ships, instead of a progress bubble: pale at first, it fills with DeepSeek blue as the version gets further, while two lights run around its edge at an even speed. Its belly and eye stay white as on the logo, in both themes. It spouts at every new step, leans toward the pointer, and a poke sends up bubbles and a short line. The caption under it says the stage. It is decorative: it stays out of the keyboard order and away from screen readers, reduced motion keeps it still with the water at its level, and forced colours draw the outline only.
+- **A running comparison is easy to see.** Two comets with white heads race around the comparison at an even speed while the frame breathes light, in the conversation and around the run bar of the large window. The earlier light was a conic gradient and nearly vanished along long edges.
+- **Living background.** Six fields of blue light drift, meet and blend behind the workspace, moving faster and brighter while a comparison runs. The light is pastel on the light theme and deep on the dark theme, so text set straight on the background keeps its contrast where the fields overlap. Reduced motion draws one still frame, a hidden page draws nothing, and reduced transparency or forced colours remove it. It replaces the aurora and the star dust.
+- **Quieter details.** The sparkle on the logo, the stars in the pick burst and the highlight under headings are gone; buttons are flatter with 10 px corners. The working stage reads **Working** (正在处理) instead of naming an agent.
+- **Blind comparisons stay blind.** Style masking also catches a style name used to describe the version's own approach ("went bold", "a minimal take", "走稳妥路线", "偏大胆"), not only "Bold style" or "极简风格".
 - **A greeting or a question gets answers, not pages.** The request decides the kind of result, not the folder it was sent from.
   - Before, every request sent from a repository with a runnable project was treated as a change to that project. Sending "你好" there made each version build a greeting into the app, and a version that only replied was marked as failed.
   - Now each version first decides what the request needs. A greeting, a question, or a request to explain, advise, compare or review is answered in that version's style and changes no files; nothing is installed, built or served for it. A request to build, change or fix something is implemented as before.
@@ -23,11 +71,10 @@
   - The lens of a segmented control sits in a visible groove. Choosing an option or a tab no longer shifts its neighbours.
   - Message ticks and every select share one glass style and one chevron.
 - **Tidier comparison.** Versions beside each other share one height, and their evidence lines sit on the same row. The action bar floats above the versions as a capsule and catches the light under the pointer. Hairlines between sections are gone; spacing and surfaces separate them.
-- **Readable everywhere.** Text contrast was measured on the rendered interface, glyph by glyph, in 19 interface states of the light theme and of the dark theme, and on the action bar with black, white and red candidate pages scrolled beneath it; every text is at least 4.5:1. This fixes white text on the version letters and the logo, which measured as low as 3.1:1, the Star link in the action bar, small main buttons and the selected tab in the dark theme.
-- **Dark theme.** Glass turns deep blue and the drifting light patches are removed, because on a dark ground they read as smudges. The opacity of the star dust now follows the theme; its animation used to override it.
-- **Phone width.** The workspace sheet is rounded only at the top, so no backdrop shows at its bottom corners.
+- **Readable everywhere.** Text contrast is measured on the rendered interface, glyph by glyph, against the pixels painted behind each glyph. For 3.0.0 that covers 21 interface states of each theme with every version's steps open (1,812 texts per theme), nine of them in twelve more sweeps across both themes with the background light in new positions, and the action bar with black, white and red candidate pages scrolled beneath it. Every text is at least 4.5:1. This fixes white text on the version letters and the logo, which measured as low as 3.1:1, the Star link in the action bar, small main buttons and the selected tab in the dark theme. Automated accessibility checks now also cover a running comparison and answers, with the steps open.
+- **Dark theme.** Glass turns deep blue, and bright patches of light are kept off the dark ground, where they read as smudges.
+- **Phone width.** The workspace sheet is rounded only at the top, so no backdrop shows at its bottom corners. The steps and the reply sit after the page, so the first screen shows what was built.
 - **English phone actions.** The primary action gets more horizontal room beside secondary actions. Wider platform fonts no longer push "Review and adopt A" onto a third line and hide the initial application pixels in restored history. Full labels, status facts and the 120-pixel first-view check are retained.
-- The progress sphere is clearer and holds a lighter liquid.
 - Reduced transparency makes every surface solid, and forced colours fall back to system checkboxes and selects.
 - The settings strip keeps its height while the conversation context preview loads, so its controls no longer jump.
 - Retry a preview on a new port when its startup exits with a raw address-in-use error. The existing three-attempt limit still applies; unrelated startup failures are reported immediately.

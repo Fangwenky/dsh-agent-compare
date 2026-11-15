@@ -72,6 +72,11 @@ for (const asset of recorded.files) {
   assert.equal(bytes.length, asset.bytes, `${asset.path}: recorded size differs`)
   assert.equal(createHash('sha256').update(bytes).digest('hex'), asset.sha256, `${asset.path}: recorded content differs`)
 }
+if (recorded.closeup) {
+  const bytes = await readFile(path.join(root, recorded.closeup.path))
+  assert.equal(bytes.length, recorded.closeup.bytes, `${recorded.closeup.path}: recorded size differs`)
+  assert.equal(createHash('sha256').update(bytes).digest('hex'), recorded.closeup.sha256, `${recorded.closeup.path}: recorded content differs`)
+}
 
 const firstUse = JSON.parse(await readFile(path.join(root, 'docs/measurements/first-use-2026-11-05.json'), 'utf8'))
 assert.equal(firstUse.schema, 'agentcompare.first-use/v1')

@@ -1,44 +1,44 @@
 {
   "schema": "agentcompare.gallery/v1",
-  "packageVersion": "2.1.0",
-  "updatedAt": "2026-11-14T15:03:46.603Z",
-  "runtimeSource": "2b5c9920378b8414dfa1449033808385c30f55c8",
+  "packageVersion": "3.1.0",
+  "updatedAt": "2026-11-15T16:06:53.593Z",
+  "runtimeSource": "782b8911b823936ca2d3cc15c0ce54a18e9a1f22",
   "hostVersion": "0.2.2-rc.1",
   "browser": "Microsoft Edge 157",
-  "runtimeFilesMatched": 95,
+  "runtimeFilesMatched": 153,
   "privatePathsHidden": true,
   "captionsAdded": true,
-  "scenario": "Two product illustrations and six actual interface captures. The captures use controlled candidates in an isolated DSH Web profile at desktop window sizes, recorded on 2026-11-14 (local date) from the source named here; the installed runtime matched it byte for byte. They show real application execution, answers and saved history, not external-model generation. The conversation view shows a greeting sent from a Vite repository and answered by four versions with nothing built. No user Desktop profile was changed.",
+  "scenario": "Two product illustrations and six actual interface captures. The captures use controlled candidates in an isolated DSH Web profile at desktop window sizes, recorded on 2026-11-15 from the source named here; every installed file other than package.json matched it byte for byte. They show real application execution, steps, replies, answers and saved history, not external-model generation. The conversation view shows a greeting sent from a Vite repository and answered by four versions with nothing built, with the steps of one version open. No user Desktop profile was changed.",
   "files": [
     {
       "path": "assets/readme/gallery-2.0/01-overview.png",
       "url": "https://raw.githubusercontent.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/main/assets/readme/gallery-2.0/01-overview.png",
       "kind": "illustration",
       "title": "同一需求，2–4 版真跑 / One task, 2–4 versions",
-      "width": 1922,
-      "height": 818,
-      "bytes": 1594956,
-      "sha256": "cd2b6974139ba290c22ffa3055bf99d837e94ceb94c8126a2133c2cfb0b4ff44"
+      "width": 1921,
+      "height": 819,
+      "bytes": 1593898,
+      "sha256": "907a702447e1c3c9405201f138ae1cf2e848eb88030495b4ed4d3db55c994f76"
     },
     {
       "path": "assets/readme/gallery-2.0/02-live-comparison.png",
       "url": "https://raw.githubusercontent.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/main/assets/readme/gallery-2.0/02-live-comparison.png",
       "kind": "screenshot",
-      "title": "四版页面直接操作 / Four independently interactive pages",
+      "title": "四版实时页面、过程与回复 / Four live pages with steps and replies",
       "width": 1576,
       "height": 1140,
-      "bytes": 624347,
-      "sha256": "0d2a576ee3b5b3d04ece8aff437ae73d07e3165bc89e742b47b8cfba08ebf1ab"
+      "bytes": 996240,
+      "sha256": "df9edd9e5152a931bf2908b843627a95de01ac30a25d057c760e3b950e646b1d"
     },
     {
       "path": "assets/readme/gallery-2.0/03-main-conversation.png",
       "url": "https://raw.githubusercontent.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/main/assets/readme/gallery-2.0/03-main-conversation.png",
       "kind": "screenshot",
-      "title": "打招呼得到四种回答 / A greeting answered four ways",
+      "title": "打招呼得到四种回答，过程可展开 / A greeting answered four ways, with steps",
       "width": 1600,
       "height": 1200,
-      "bytes": 306255,
-      "sha256": "9096ab4f5836fe348739c1779eaf184842ea9b273991fe1eb40115f2842fdcb9"
+      "bytes": 325146,
+      "sha256": "5fa063fa78494e766428ef712c927ff7a6d501c70ac3744346e63df041313617"
     },
     {
       "path": "assets/readme/gallery-2.0/04-comparison-settings.png",
@@ -46,19 +46,19 @@
       "kind": "screenshot",
       "title": "版本、风格与上下文 / Versions, styles and context",
       "width": 988,
-      "height": 426,
-      "bytes": 164404,
-      "sha256": "7aeddc41e31c6198d7c16be87e743b4acc948be0c75325307d8f65088fbf5737"
+      "height": 438,
+      "bytes": 162679,
+      "sha256": "3947bcb8b6141c76c4c9e9b0a45098a164b7cfcf9714484f700458a2219d1f5a"
     },
     {
       "path": "assets/readme/gallery-2.0/05-saved-result.png",
       "url": "https://raw.githubusercontent.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/main/assets/readme/gallery-2.0/05-saved-result.png",
       "kind": "screenshot",
-      "title": "保存、撤销和选择理由 / Save, undo and reasons for the pick",
+      "title": "回复与页面并排，保存并说明理由 / Reply beside the page, saved with reasons",
       "width": 1576,
       "height": 1140,
-      "bytes": 480610,
-      "sha256": "4c0c95ceed32c8e690eb51406540e6565ad00d937ff146e913518e6e99188c7c"
+      "bytes": 1059207,
+      "sha256": "a0fa27b34a1c0edce7c6361a3eec26246787036452f8f8d6587ca03d899a8d9b"
     },
     {
       "path": "assets/readme/gallery-2.0/06-english-answers.png",
@@ -67,8 +67,8 @@
       "title": "英文回答并排比较 / Compare English answers",
       "width": 1576,
       "height": 1140,
-      "bytes": 586653,
-      "sha256": "018518f76a76221a3b094bb1664809694f72de4a69c8643653eac282e9570774"
+      "bytes": 1164302,
+      "sha256": "36e7b87dd0f7e5f26589c83fce1bc0926343eaf54aa3bc27e026fd5b197369fb"
     },
     {
       "path": "assets/readme/gallery-2.0/07-history.png",
@@ -77,8 +77,8 @@
       "title": "查找历史，保留选择与理由 / Find history, picks and reasons",
       "width": 1576,
       "height": 520,
-      "bytes": 402995,
-      "sha256": "dd5f2542e329f570ec0ace209862802d25ed521bb746a90e878c06dda8bab6f6"
+      "bytes": 628111,
+      "sha256": "60085be96f7ce3131b2c1781d3b265d23d1734619f35ab687aaf9cd82f2e7f10"
     },
     {
       "path": "assets/readme/gallery-2.0/08-workflow.png",
@@ -87,8 +87,10 @@
       "title": "设定、实跑、选择、采用 / Set up, run, choose and adopt",
       "width": 2022,
       "height": 778,
-      "bytes": 1586960,
-      "sha256": "ce65381ed60152d8546282d28d941267b3531a59b0f3fde7445ba4007f6f9b3b"
+      "bytes": 1669368,
+      "sha256": "58bc9a56b51d0666f2c21112fa5e94b5cdf462855ce08ff1829c24a6d31e5b33"
     }
-  ]
+  ],
+  "illustrationUpdatedAt": "2026-11-15T16:06:53.593Z",
+  "illustrationNote": "Blue-glass product illustrations show the current name, four blue versions, live steps and reviewed continuation. Illustrations are separate from the six runtime captures and do not change their recorded source."
 }

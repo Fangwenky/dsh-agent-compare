@@ -6,13 +6,21 @@ import type { BrowserCheck, BrowserStep, CheckResult, ChecksSpec } from './types
 
 const tailOf = (s: string, n = 1500): string => (s.length > n ? s.slice(-n) : s)
 
+/** How many of one version's check commands run at the same time. */
+export const CHECK_CONCURRENCY = 3
+
+/**
+ * Run the shared check commands. They are independent of each other, so up
+ * to CHECK_CONCURRENCY run at once; results keep the configured order.
+ */
 export async function runCommandChecks(dir: string, spec: ChecksSpec, signal?: AbortSignal, prepare?: PrepareProjectProcess): Promise<CheckResult[]> {
-  const results: CheckResult[] = []
-  for (const cmd of spec.commands) {
+  const results: CheckResult[] = new Array(spec.commands.length)
+  const one = async (index: number): Promise<void> => {
+    const cmd = spec.commands[index]!
     const started = Date.now()
     if (signal?.aborted) {
-      results.push({ name: cmd.name, outcome: 'skipped', durationMs: 0, tail: '', reason: 'cancelled' })
-      continue
+      results[index] = { name: cmd.name, outcome: 'skipped', durationMs: 0, tail: '', reason: 'cancelled' }
+      return
     }
     try {
       const r = await runProjectProcess(cmd.argv, {
@@ -22,12 +30,15 @@ export async function runCommandChecks(dir: string, spec: ChecksSpec, signal?: A
         ...(signal === undefined ? {} : { signal }),
       }, prepare)
       const outcome = r.timedOut ? 'timeout' : r.aborted ? 'skipped' : r.code === 0 ? 'passed' : 'failed'
-      results.push({ name: cmd.name, outcome, durationMs: Date.now() - started, tail: diagnosticText((r.code === 0 ? `${r.stdout}\n${r.stderr}` : `${r.stderr}\n${r.stdout}`).trim()), ...(r.aborted ? { reason: 'cancelled' } : {}) })
+      results[index] = { name: cmd.name, outcome, durationMs: Date.now() - started, tail: diagnosticText((r.code === 0 ? `${r.stdout}\n${r.stderr}` : `${r.stderr}\n${r.stdout}`).trim()), ...(r.aborted ? { reason: 'cancelled' } : {}) }
     } catch (error) {
       if (error instanceof ProcessStopError) throw error
-      results.push({ name: cmd.name, outcome: 'failed', durationMs: Date.now() - started, tail: '', reason: (error as Error).message })
+      results[index] = { name: cmd.name, outcome: 'failed', durationMs: Date.now() - started, tail: '', reason: (error as Error).message }
     }
   }
+  let next = 0
+  const worker = async (): Promise<void> => { while (next < spec.commands.length) await one(next++) }
+  await Promise.all(Array.from({ length: Math.min(CHECK_CONCURRENCY, spec.commands.length) }, worker))
   return results
 }
 

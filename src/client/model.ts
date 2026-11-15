@@ -40,6 +40,8 @@ export interface Cand {
   result?: 'answer' | 'files'
   previewNote?: string
   answer?: string
+  /** The final reply beside a page or files; style names are masked before a blind pick. */
+  reply?: string
   resultFiles?: string[]
   touchedFiles?: string[]
   checks?: Check[]
@@ -55,7 +57,7 @@ export interface Cand {
   progress?: { steps: number; lastAction?: string; lastActivityAt: number; tokens?: number }
   salvageable?: boolean
   canRetryVerification?: boolean
-  install?: { failure?: InstallFailure; frozen: boolean; runtime?: VerificationRuntime }
+  install?: { failure?: InstallFailure; frozen: boolean; runtime?: VerificationRuntime; prewarmed?: boolean; durationMs?: number }
   verificationHistory?: VerificationAttempt[]
   canReopenPreview?: boolean
   strategy?: { id: string; title: string }
@@ -63,6 +65,9 @@ export interface Cand {
   actualRoute?: Route
   summary?: string
 }
+/** What a version did while it worked, as the host reads it from its session. */
+export interface TraceItem { kind: 'thinking' | 'text' | 'tool'; at: number; ms?: number; text?: string; name?: string; target?: string; input?: string; output?: string; status?: 'running' | 'done' | 'error' }
+export interface Trace { items: TraceItem[]; steps: number; tools: number; thinking: number; truncated: boolean; omitted?: number; done: boolean; updatedAt: number; masked?: boolean }
 export interface Adoption { state: string; mode: string; message?: string; branch?: string; exportPath?: string; writtenPaths?: string[]; attention?: string[]; rehearsed?: boolean; rehearsalChecks?: Check[]; transferDirection?: 'apply' | 'undo'; retainedDirectory?: string; retainedDirectories?: string[] }
 export interface Run {
   rev?: number

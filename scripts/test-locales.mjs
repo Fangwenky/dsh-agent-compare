@@ -160,9 +160,21 @@ try {
   await open('install-failure')
   check(await page.getByText('Package registry connection or certificate check failed', { exact: true }).isVisible(), 'English installation failures must explain the actual failure category')
   check(await page.getByText(/Check the network, registry, proxy and certificates/).isVisible(), 'English installation failures must provide an actionable recovery hint')
+  await open('project-answers')
+  const traceSummary = async () => {
+    const toggle = page.locator('[role="dialog"] button.ac-steps-toggle').first()
+    // The card is mounted before its separate trace request finishes. Wait
+    // for trace data, not merely for the candidate region or step total.
+    await toggle.locator('.ac-steps-count').filter({ hasText: /\b(?:thoughts?|tools?)\b/ }).waitFor()
+    return toggle.innerText()
+  }
+  const answerSteps = await traceSummary()
+  check(answerSteps.includes('1 thought') && !answerSteps.includes('1 thoughts') && answerSteps.includes('1 step') && !answerSteps.includes('1 steps'), `English step counts must use the singular for one: ${answerSteps}`)
+  await open('judging')
+  check((await traceSummary()).includes('2 thoughts'), 'English step counts must use the plural for more than one')
   await open('allfailed')
   const failedCandidate = page.getByRole('region', { name: 'Candidate B', exact: true })
-  check(await failedCandidate.getByText('Implementation failed', { exact: true }).isVisible(), 'English failure titles must keep the stage and outcome as separate words')
+  check(await failedCandidate.getByText('Handling the request failed', { exact: true }).isVisible(), 'English failure titles must keep the stage and outcome as separate words')
   check((await page.locator('.ac-bar-text').first().innerText()).includes('usable preview. Changes'), 'English sentences assembled from separate strings must keep their spacing')
   check(await failedCandidate.locator('.ac-fail').evaluate(element => !/mono/i.test(getComputedStyle(element).fontFamily)), 'failure explanations must use the interface font; raw logs stay monospace')
   check(await page.getByRole('button', { name: 'Compare again', exact: true }).isVisible(), 'English failures must offer repeating the same requirement')
@@ -210,6 +222,7 @@ try {
   check(!/[㐀-鿿]/.test(await settings.locator('.ac-style-row').innerText()), 'the style row must have no untranslated copy')
   await page.screenshot({ path: path.join(output, 'settings-versions-en.png') })
   await open('four')
+  check(await page.getByRole('button', { name: 'None of these', exact: true }).isVisible(), 'rejecting all four versions must not use the two-option word Neither')
   check(await page.getByRole('button', { name: 'All side by side', exact: true }).isVisible() && await page.getByRole('button', { name: 'Focus D', exact: true }).isVisible(), 'layout choices for four versions must be translated')
   await page.getByRole('region', { name: 'Candidate B', exact: true }).getByRole('button', { name: 'Set aside', exact: true }).click()
   check(await page.getByRole('button', { name: 'Restore B', exact: true }).isVisible() && (await page.locator('.ac-bar').innerText()).includes('(B set aside)'), 'narrowing down must be translated')
@@ -221,6 +234,7 @@ try {
   console.log(JSON.stringify({ localeAssertions: assertions, screenshots: output, browser: browser.version(), engine, channel, locale: 'en-GB', languages: ['zh-CN', 'en'] }))
 } catch (error) {
   await page?.screenshot({ path: path.join(output, 'language-failure.png') }).catch(() => {})
-  await writeFile(path.join(output, 'language-failure.json'), JSON.stringify({ localeAssertions: assertions, message: error.message, browser: browser?.version(), pageErrors: errors }, null, 2))
+  const stepSummaries = await page?.locator('[role="dialog"] button.ac-steps-toggle').allTextContents().catch(() => [])
+  await writeFile(path.join(output, 'language-failure.json'), JSON.stringify({ localeAssertions: assertions, message: error.message, browser: browser?.version(), pageErrors: errors, stepSummaries }, null, 2))
   throw error
 } finally { await browser?.close(); await harness.close() }
