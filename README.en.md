@@ -2,7 +2,7 @@
 
 # AgentCompare
 
-[![GitHub stars](https://img.shields.io/github/stars/lijiaqi-AI-Product-Manager/dsh-agent-compare?label=GitHub%20Stars&color=3657f5&style=flat&labelColor=0b1b4f)](https://github.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/stargazers)
+[![GitHub stars](https://img.shields.io/github/stars/lijiaqi-AI-Product-Manager/dsh-agent-compare?label=GitHub%20Stars&color=3657f5&style=flat&labelColor=0b1b4f&cacheSeconds=300)](https://github.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/stargazers)
 [![npm download/下载量](https://raw.githubusercontent.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/main/assets/statistics/npm-total-badge.svg)](https://www.npmjs.com/package/dsh-agent-compare)
 
 [![Source version](https://img.shields.io/github/package-json/v/lijiaqi-AI-Product-Manager/dsh-agent-compare?label=source&color=3657f5&style=flat&labelColor=0b1b4f)](https://github.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/blob/main/package.json)
@@ -20,7 +20,9 @@
 
 <p align="center"><a href="#install">安装 / Install</a> · <a href="#demo">真实演示 / Recorded demo</a></p>
 
-> **2.1.0 · Stable release.** DSH Desktop + Web, with Chinese and English interfaces. Compare 2–4 versions of answers, files or web pages in the main conversation, starting from any folder and reusing configured models.
+> **npm stable 2.0.0 · Main source 2.1.0.** DSH Desktop + Web, with Chinese and English interfaces. Compare 2–4 versions of answers, files or web pages in the main conversation, starting from any folder and reusing configured models.
+
+> **Development preview:** [3.0.0 · Blue whale loading animation](https://github.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/tree/release/3.0.0) · Not yet published to npm.
 
 **New in 2.1.0:**
 - **A greeting or a question gets answers.** The request decides the result, not the folder: say hello or ask a question inside a project that can be built, and each version replies in its own style for a side-by-side comparison instead of building a page; a request to change the project is still implemented.
@@ -118,7 +120,7 @@ These commands target a self-managed DSH Web profile. The desktop application's 
 Install the npm package into the default Web profile (the npm badge above shows registry status):
 
 ```bash
-dsh plugin --profile web add dsh-agent-compare@2.1.0
+dsh plugin --profile web add dsh-agent-compare
 ```
 
 For another self-managed profile, replace `web` with its actual name.
@@ -387,5 +389,7 @@ MIT
 Lifetime official npm download requests across all public versions, starting at first publication. The card states the available cutoff; repeated and automated requests may be included.
 
 [Lifetime definition and automatic refresh](https://github.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/blob/main/docs/npm-total-downloads.md)
+
+The Star badge reads GitHub with about five minutes of caching. Cumulative npm requests refresh daily at 19:00 Asia/Shanghai; execution may be delayed.
 
 <!-- project-growth:end -->

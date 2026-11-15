@@ -2,7 +2,7 @@
 
 # AgentCompare
 
-[![GitHub stars](https://img.shields.io/github/stars/lijiaqi-AI-Product-Manager/dsh-agent-compare?label=GitHub%20Stars&color=3657f5&style=flat&labelColor=0b1b4f)](https://github.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/stargazers)
+[![GitHub stars](https://img.shields.io/github/stars/lijiaqi-AI-Product-Manager/dsh-agent-compare?label=GitHub%20Stars&color=3657f5&style=flat&labelColor=0b1b4f&cacheSeconds=300)](https://github.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/stargazers)
 [![npm download/下载量](https://raw.githubusercontent.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/main/assets/statistics/npm-total-badge.svg)](https://www.npmjs.com/package/dsh-agent-compare)
 
 [![Source version](https://img.shields.io/github/package-json/v/lijiaqi-AI-Product-Manager/dsh-agent-compare?label=source&color=3657f5&style=flat&labelColor=0b1b4f)](https://github.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/blob/main/package.json)
@@ -20,7 +20,9 @@
 
 <p align="center"><a href="#install">安装 / Install</a> · <a href="#demo">真实演示 / Recorded demo</a></p>
 
-> **2.1.0 · 정식 버전.** DSH Desktop과 Web, 중국어·영어 인터페이스를 지원합니다. 어느 폴더에서든 기본 대화 안에서 답변, 파일 또는 웹 페이지를 비교하고 설정된 모델을 재사용합니다.
+> **npm 정식 버전 2.0.0 · main 소스 2.1.0.** DSH Desktop과 Web, 중국어·영어 인터페이스를 지원합니다. 어느 폴더에서든 기본 대화 안에서 답변, 파일 또는 웹 페이지를 비교하고 설정된 모델을 재사용합니다.
+
+> **개발 미리보기:** [3.0.0 · 파란 고래 로딩 애니메이션](https://github.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/tree/release/3.0.0) · 아직 npm에 게시되지 않았습니다.
 
 **2.1.0의 새로운 기능:**
 - **인사나 질문에는 답변이 돌아옵니다.** 결과의 종류는 폴더가 아니라 요청 내용이 정합니다. 빌드할 수 있는 프로젝트 안에서 인사하거나 질문하면 각 버전이 자기 스타일로 답하고, 페이지를 만들지 않고 나란히 비교합니다. 프로젝트 변경을 요청하면 이전처럼 구현합니다.
@@ -100,7 +102,7 @@ AgentCompare는 [DeepSeek Harness](https://github.com/deepseek-ai/deepseek-harne
 npm 패키지를 기본 Web 프로필에 추가합니다. 공개 상태는 위의 npm 배지에서 확인하세요.
 
 ```bash
-dsh plugin --profile web add dsh-agent-compare@2.1.0
+dsh plugin --profile web add dsh-agent-compare
 ```
 
 다른 자체 관리 프로필을 쓰면 `web`을 실제 이름으로 바꾸세요.
@@ -204,5 +206,7 @@ npm run test:ui
 최초 게시일부터 모든 공개 버전의 npm 다운로드 요청을 누적합니다. 집계 종료일은 카드에 표시하며 반복·자동 요청이 포함될 수 있습니다.
 
 [누적 집계 기준 및 자동 갱신](https://github.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/blob/main/docs/npm-total-downloads.md)
+
+Star 배지는 GitHub 값을 약 5분간 캐시합니다. npm 누적 요청 수는 매일 중국 시간 19:00에 갱신하며 실행이 지연될 수 있습니다.
 
 <!-- project-growth:end -->

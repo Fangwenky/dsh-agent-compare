@@ -2,7 +2,7 @@
 
 # AgentCompare
 
-[![GitHub stars](https://img.shields.io/github/stars/lijiaqi-AI-Product-Manager/dsh-agent-compare?label=GitHub%20Stars&color=3657f5&style=flat&labelColor=0b1b4f)](https://github.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/stargazers)
+[![GitHub stars](https://img.shields.io/github/stars/lijiaqi-AI-Product-Manager/dsh-agent-compare?label=GitHub%20Stars&color=3657f5&style=flat&labelColor=0b1b4f&cacheSeconds=300)](https://github.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/stargazers)
 [![npm download/下载量](https://raw.githubusercontent.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/main/assets/statistics/npm-total-badge.svg)](https://www.npmjs.com/package/dsh-agent-compare)
 
 [![Source version](https://img.shields.io/github/package-json/v/lijiaqi-AI-Product-Manager/dsh-agent-compare?label=source&color=3657f5&style=flat&labelColor=0b1b4f)](https://github.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/blob/main/package.json)
@@ -20,7 +20,9 @@
 
 <p align="center"><a href="#install">安装 / Install</a> · <a href="#demo">真实演示 / Recorded demo</a></p>
 
-> **2.1.0 · 正式版。** DSH 桌面端与 Web 端，中英双语。在主对话内比较 2–4 版回答、文件或网页；普通文件夹也能开始，复用已配置模型。
+> **npm 正式版 2.0.0 · 主分支源码 2.1.0。** DSH 桌面端与 Web 端，中英双语。在主对话内比较 2–4 版回答、文件或网页；普通文件夹也能开始，复用已配置模型。
+
+> **开发预览：** [3.0.0 · 蓝鲸加载动效](https://github.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/tree/release/3.0.0) · 尚未发布到 npm。
 
 **2.1.0 新增：**
 - **打招呼和提问，得到的是回答。** 要什么结果由请求决定，不由目录决定：在能构建的项目里发「你好」或提一个问题，各版按自己的风格直接回答、并排比较，不再把它做成页面；要它改项目时照常实现。
@@ -116,7 +118,7 @@ AgentCompare 是 [DeepSeek Harness](https://github.com/deepseek-ai/deepseek-harn
 安装 npm 包到默认 Web profile（公开发布状态见顶部 npm 徽章）：
 
 ```bash
-dsh plugin --profile web add dsh-agent-compare@2.1.0
+dsh plugin --profile web add dsh-agent-compare
 ```
 
 如使用其他自行运行的 profile，请将 `web` 换成实际名称。
@@ -427,5 +429,7 @@ MIT
 以下为本包首次发布以来、全部公开版本的累计 npm 下载请求。统计截止日标在图中；请求量可能包含重复与自动化访问。
 
 [累计统计口径与自动刷新](https://github.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/blob/main/docs/npm-total-downloads.md)
+
+Star 徽章读取 GitHub，缓存约 5 分钟。npm 累计数每天北京时间 19:00 刷新；实际执行可能因排队延迟。
 
 <!-- project-growth:end -->
