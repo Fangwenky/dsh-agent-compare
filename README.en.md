@@ -67,7 +67,7 @@ AgentCompare is a [DeepSeek Harness](https://github.com/deepseek-ai/deepseek-har
 
 ## Interface and experience
 
-Waiting, comparing and picking are all visible and clickable. The two images below are controlled candidates in a real DSH host.
+Waiting, comparing and picking are all visible and clickable. The animation and the two images below are controlled candidates in a real DSH host.
 
 - **Blue liquid glass.** Translucent glass panels and sliding selectors over slowly flowing blue light, in light and dark themes; with reduced motion on, everything holds still. Every text is measured glyph by glyph in both themes at 4.5:1 contrast or better.
 - **A Big Fat Fish keeps you company.** One blue DeepSeek whale per version fills with blue water as it goes while two lights trace its edge. Thoughts rise over its head; poke it and it answers, keep poking and it spins, wobbles and splashes.
@@ -76,6 +76,10 @@ Waiting, comparing and picking are all visible and clickable. The two images bel
 - **Four blues for A–D.** In a blind comparison you only see A–D; styles and models are revealed after the pick, with a sweep of light across the cards.
 - **Easy to tell it's running.** Two comets race around a running comparison, and each page can be used the moment it starts.
 - **Desktop, browser and phone widths**, with Chinese and English interfaces.
+
+![大肥鱼特写：两版同时工作，头上冒出想法，连戳五下会跳、转圈、晕头、溅水花，展开「过程」看实时步骤，回复出现后水注满 / Whale close-up: thoughts, a five-poke combo, live steps and the Steps panel, then replies as the whales fill up; controlled candidates in a real DSH host](https://raw.githubusercontent.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/main/assets/readme/whale-closeup.webp)
+
+<p align="center"><sub>Whale close-up: controlled candidates; the scripted model waits 9 s per step so there is time to watch; cut, otherwise original speed.</sub></p>
 
 ![四版页面直接操作 / Four independently interactive pages; controlled candidates in a real DSH host](https://raw.githubusercontent.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/main/assets/readme/gallery-2.0/02-live-comparison.png)
 

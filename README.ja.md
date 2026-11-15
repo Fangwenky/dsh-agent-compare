@@ -49,7 +49,7 @@ AgentCompare は [DeepSeek Harness](https://github.com/deepseek-ai/deepseek-harn
 
 ## 画面と体験
 
-待ち時間も、比較も、選択も、すべて目に見えて操作できます。下の 2 枚は実際の DSH ホストで固定候補を比較した画面です。
+待ち時間も、比較も、選択も、すべて目に見えて操作できます。下のアニメーションと 2 枚の画像は、実際の DSH ホストで固定候補を比較した画面です。
 
 - **青いリキッドグラス。** 半透明のガラスパネルとスライドする選択部品、その後ろでゆっくり流れて溶け合う青い光。ライトとダークに対応し、視差効果を減らす設定では静止します。両テーマですべての文字をグリフ単位で測定し、コントラスト比は 4.5:1 以上です。
 - **太っちょ魚が付き添います。** バージョンごとに DeepSeek の青いクジラが 1 頭。進むにつれて青い水が満ち、2 つの光が輪郭を走ります。頭の上に考えごとが浮かび、つつくと返事をし、続けてつつくと回ったり、ふらついたり、水しぶきを上げたりします。
@@ -58,6 +58,10 @@ AgentCompare は [DeepSeek Harness](https://github.com/deepseek-ai/deepseek-harn
 - **A〜D は 4 つの青。** ブラインド比較では A〜D だけが見え、スタイルとモデルは選んだ後に公開され、カードに光が走ります。
 - **動いているのがひと目でわかる。** 実行中の比較の周りを 2 つの彗星が走り、ページは起動した瞬間から操作できます。
 - **デスクトップ・ブラウザー・スマホ幅**に対応し、中国語と英語の画面を切り替えられます。
+
+![大肥鱼特写：两版同时工作，头上冒出想法，连戳五下会跳、转圈、晕头、溅水花，展开「过程」看实时步骤，回复出现后水注满 / Whale close-up: thoughts, a five-poke combo, live steps and the Steps panel, then replies as the whales fill up; controlled candidates in a real DSH host](https://raw.githubusercontent.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/main/assets/readme/whale-closeup.webp)
+
+<p align="center"><sub>クジラのクローズアップ：固定候補。見やすいよう台本モデルは各ステップで 9 秒待ちます。編集あり、それ以外は等速。</sub></p>
 
 ![四版页面直接操作 / Four independently interactive pages; controlled candidates in a real DSH host](https://raw.githubusercontent.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/main/assets/readme/gallery-2.0/02-live-comparison.png)
 

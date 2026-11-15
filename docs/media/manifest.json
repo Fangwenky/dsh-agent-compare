@@ -146,5 +146,45 @@
       "sha256": "e0c46b49002f047171e04b5999f8c3fe6e9479107e7198d6216029eadde85262",
       "note": "Product illustration rendered from HTML and CSS, not a screenshot."
     }
-  ]
+  ],
+  "closeup": {
+    "path": "assets/readme/whale-closeup.webp",
+    "bytes": 3369340,
+    "sha256": "fe6fb9d340e2c43641f644d923dd05b32c7ad23b4a0af4fe76c0da93ca967af7",
+    "capturedAt": "2026-11-15T12:13:11.186Z",
+    "source": "The same commit, archive, host and browser as the demo above.",
+    "task": "Two pomodoro pages compared blind, shown in the large window while the versions work.",
+    "candidate": "The same local controlled model, waiting 9 seconds before each step so the versions work long enough to watch. No external model request.",
+    "shows": [
+      "thoughts rising over both whales on their own",
+      "the whales leaning toward the pointer",
+      "five pokes in a row on A: a jump, two more lines, a spin, a wobble and a splash",
+      "B's Steps opened while it works",
+      "live steps under the whales",
+      "replies arriving as the whales fill up"
+    ],
+    "editing": {
+      "rawSeconds": 32.2,
+      "segments": [
+        [
+          1,
+          13.2
+        ],
+        [
+          17,
+          28
+        ]
+      ],
+      "seconds": 23.2,
+      "playbackRate": 1,
+      "fps": 12,
+      "width": 994,
+      "height": 610,
+      "format": "animated WebP, quality 70",
+      "crop": "the two cards and the run bar above them",
+      "localPathsHidden": true,
+      "visibleCaption": true,
+      "visiblePointer": true
+    }
+  }
 }

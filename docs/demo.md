@@ -28,6 +28,8 @@
 
 原始录制 **67.67 秒**；流程短片 **44.8 秒**，保留设置与发送、各版工作时的大窗口（鲸鱼、戳一下、A 的实时过程）、回复出现，以及四版页面的操作、排除、专注、选择、理由和保存，剪去等待，保留片段均按原速播放。GIF **14.8 秒、5 帧/秒、640 像素宽**，截取工作中的鲸鱼与戳一下、实时过程、四版实时页面、专注与选择揭晓和理由；画面加入可见的固定候选标签。它不把生成时间压缩成性能承诺。区间、哈希与处理方式见[素材清单](media/manifest.json)。
 
+**大肥鱼特写**（README「界面与体验」里的动图）：同一构建、同一宿主，盲选比较两版番茄钟页面。为了让各版工作得久一些、看得清，脚本模型在每一步前等 9 秒。各版工作时打开大窗口：两只鲸鱼头上自己冒出想法，指针经过时朝它转身；连戳 A 五下，依次跳起回话、再回一句、转圈、晕头、溅水花；展开 B 的「过程」，下方实时滚动最新的步骤，回复出现后水逐渐注满。原始录制 32.2 秒，保留 1.0–13.2 秒和 17.0–28.0 秒，共 23.2 秒，原速播放；动态 WebP，12 帧/秒、994 像素宽。
+
 本地路径已隐藏；顶部主图、流程图和社交预览图标为功能示意，不是实际截图。界面截图只做了裁剪和缩小，打包进插件的两张 PNG 另做了颜色压缩，没有改写操作结果。[1.1.0 历史演示](media/history/1.1.0/manifest.json)、[更早的演示](media/history/0.2.0-alpha.17/manifest.json)和[真实模型的首次体验测量](first-use.md)继续保留。
 
 ## English
@@ -44,5 +46,7 @@ The same host and build ran two more checks, shown in the [gallery](storefront-g
 - **English interface.** The Three looks quick set gives an open comparison of Minimal, Polished and Vibrant answers; B is picked with Layout and More complete. The 390-pixel image comes from this check.
 
 The raw recording lasts **67.67 seconds**. The **44.8-second** workflow clip keeps the setup and sending, the large window while the versions work (whales, a poke, A's live steps), the replies arriving, and the interaction with the four pages, setting two aside, focus, the pick, the reasons and the save, cutting waits and playing retained footage at the original speed. The **14.8-second GIF at 5 fps and 640 pixels** shows the whales at work and a poke, the live steps, the four live pages, focus with the pick and its reveal, and the reasons, with a visible controlled-candidate caption. Neither clip is a generation-time promise. [The manifest](media/manifest.json) records the intervals, hashes and edits.
+
+**Whale close-up** (the animation in the README's interface section): the same build and host, two pomodoro pages compared blind. So that the versions work long enough to watch, the scripted model waits 9 seconds before each step. The large window is opened while they work: thoughts rise over both whales on their own, and each leans toward the pointer as it passes; A is poked five times in a row and jumps with a line, answers again, spins, wobbles and splashes; B's **Steps** are opened, the newest steps run live under the whales, and the whales fill up as the replies arrive. The raw recording lasts 32.2 seconds; 1.0–13.2 s and 17.0–28.0 s are kept, 23.2 seconds at the original speed, as an animated WebP at 12 fps and 994 pixels wide.
 
 Local paths are hidden. The header, workflow graphic and social preview are labelled product illustrations, not screenshots. Interface captures are only cropped and resized; the two PNGs packaged with the plugin are also palette-compressed, without changing outcomes. [The 1.1.0 recording](media/history/1.1.0/manifest.json), [earlier recordings](media/history/0.2.0-alpha.17/manifest.json) and [real-model first-use measurements](first-use.md) remain separate evidence.

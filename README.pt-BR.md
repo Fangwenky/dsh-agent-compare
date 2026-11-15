@@ -49,7 +49,7 @@ AgentCompare é um plugin do [DeepSeek Harness](https://github.com/deepseek-ai/d
 
 ## Interface e experiência
 
-Esperar, comparar e escolher: tudo fica visível e clicável. As duas imagens abaixo mostram candidatos fixos num host DSH real.
+Esperar, comparar e escolher: tudo fica visível e clicável. A animação e as duas imagens abaixo mostram candidatos fixos num host DSH real.
 
 - **Vidro líquido azul.** Painéis de vidro translúcido e seletores que deslizam sobre uma luz azul que flui devagar, nos temas claro e escuro; com movimento reduzido ativado, tudo fica parado. Cada texto é medido glifo a glifo nos dois temas, com contraste de 4.5:1 ou mais.
 - **Um peixe gordo faz companhia.** Uma baleia azul do DeepSeek por versão se enche de água azul conforme avança, enquanto duas luzes percorrem a borda. Pensamentos sobem acima da cabeça; toque e ela responde, continue tocando e ela gira, cambaleia e espirra água.
@@ -58,6 +58,10 @@ Esperar, comparar e escolher: tudo fica visível e clicável. As duas imagens ab
 - **Quatro azuis para A–D.** Numa comparação às cegas você só vê A–D; estilos e modelos são revelados depois da escolha, com um feixe de luz passando pelos cartões.
 - **Dá para ver que está rodando.** Dois cometas percorrem a borda de uma comparação em andamento, e cada página pode ser usada assim que inicia.
 - **Desktop, navegador e largura de celular**, com interface em chinês e inglês.
+
+![大肥鱼特写：两版同时工作，头上冒出想法，连戳五下会跳、转圈、晕头、溅水花，展开「过程」看实时步骤，回复出现后水注满 / Whale close-up: thoughts, a five-poke combo, live steps and the Steps panel, then replies as the whales fill up; controlled candidates in a real DSH host](https://raw.githubusercontent.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/main/assets/readme/whale-closeup.webp)
+
+<p align="center"><sub>Close das baleias: candidatos fixos; o modelo roteirizado espera 9 s por passo para dar tempo de ver; com cortes, o resto em velocidade normal.</sub></p>
 
 ![四版页面直接操作 / Four independently interactive pages; controlled candidates in a real DSH host](https://raw.githubusercontent.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/main/assets/readme/gallery-2.0/02-live-comparison.png)
 

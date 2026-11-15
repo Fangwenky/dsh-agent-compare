@@ -49,7 +49,7 @@ AgentCompare est une extension de [DeepSeek Harness](https://github.com/deepseek
 
 ## Interface et expérience
 
-L'attente, la comparaison et le choix : tout se voit et se touche. Les deux images ci-dessous montrent des candidats fixes dans un hôte DSH réel.
+L'attente, la comparaison et le choix : tout se voit et se touche. L'animation et les deux images ci-dessous montrent des candidats fixes dans un hôte DSH réel.
 
 - **Verre liquide bleu.** Des panneaux de verre translucide et des sélecteurs qui glissent, sur une lumière bleue qui s'écoule lentement, en thème clair et sombre ; avec les animations réduites, tout reste immobile. Chaque texte est mesuré glyphe par glyphe dans les deux thèmes, avec un contraste d'au moins 4.5:1.
 - **Un gros poisson vous tient compagnie.** Une baleine bleue DeepSeek par version se remplit d'eau bleue à mesure qu'elle avance, pendant que deux lumières parcourent son bord. Des pensées montent au-dessus de sa tête ; une pichenette et elle répond, encore et elle tourne, vacille et éclabousse.
@@ -58,6 +58,10 @@ L'attente, la comparaison et le choix : tout se voit et se touche. Les deux imag
 - **Quatre bleus pour A–D.** À l'aveugle, vous ne voyez que A–D ; styles et modèles sont révélés après le choix, avec un balayage de lumière sur les cartes.
 - **On voit que ça tourne.** Deux comètes font le tour d'une comparaison en cours, et chaque page est utilisable dès son démarrage.
 - **Bureau, navigateur et largeur de téléphone**, avec une interface en chinois et en anglais.
+
+![大肥鱼特写：两版同时工作，头上冒出想法，连戳五下会跳、转圈、晕头、溅水花，展开「过程」看实时步骤，回复出现后水注满 / Whale close-up: thoughts, a five-poke combo, live steps and the Steps panel, then replies as the whales fill up; controlled candidates in a real DSH host](https://raw.githubusercontent.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/main/assets/readme/whale-closeup.webp)
+
+<p align="center"><sub>Gros plan sur les baleines : candidats fixes ; le modèle scripté attend 9 s par étape pour laisser le temps de voir ; avec des coupes, le reste à vitesse normale.</sub></p>
 
 ![四版页面直接操作 / Four independently interactive pages; controlled candidates in a real DSH host](https://raw.githubusercontent.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/main/assets/readme/gallery-2.0/02-live-comparison.png)
 

@@ -67,7 +67,7 @@ AgentCompare 是 [DeepSeek Harness](https://github.com/deepseek-ai/deepseek-harn
 
 ## 界面与体验
 
-等待、比较、选择，每一步都看得见、点得到。下面两张图是固定候选在真实 DSH 宿主中的界面。
+等待、比较、选择，每一步都看得见、点得到。下面的动图和两张截图，都是固定候选在真实 DSH 宿主中的界面。
 
 - **蓝色液态玻璃。** 半透明玻璃面板、会滑动的选择器，背后是缓慢流动、彼此交融的蓝色光；浅色与深色两套主题，开启「减弱动态效果」后画面保持静止。所有文字在两种主题下逐字实测，对比度不低于 4.5:1。
 - **大肥鱼陪你等。** 每版一条 DeepSeek 蓝鲸，随进度注入蓝色的水，两道光沿轮廓奔跑；头上不时冒出想法，戳一下会回话，连戳会转圈、晕头、溅水花。
@@ -76,6 +76,10 @@ AgentCompare 是 [DeepSeek Harness](https://github.com/deepseek-ai/deepseek-harn
 - **A–D 四种蓝。** 每版一种蓝色标签；盲选时只看 A–D，选完才揭晓风格和模型，揭晓时光束扫过卡片。
 - **一眼看出在跑。** 运行中的比较有两颗彗星绕边框奔跑；页面一启动就能直接点、直接输入。
 - **桌面、浏览器和手机宽度都能用**，中英文界面随时切换。
+
+![大肥鱼特写：两版同时工作，头上冒出想法，连戳五下会跳、转圈、晕头、溅水花，展开「过程」看实时步骤，回复出现后水注满 / Whale close-up: thoughts, a five-poke combo, live steps and the Steps panel, then replies as the whales fill up; controlled candidates in a real DSH host](https://raw.githubusercontent.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/main/assets/readme/whale-closeup.webp)
+
+<p align="center"><sub>大肥鱼特写：固定候选，脚本模型每步等 9 秒，方便看清；有剪辑，其余原速。</sub></p>
 
 ![四版页面直接操作 / Four independently interactive pages; controlled candidates in a real DSH host](https://raw.githubusercontent.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/main/assets/readme/gallery-2.0/02-live-comparison.png)
 
