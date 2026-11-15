@@ -6,9 +6,9 @@
 
 以下保留原章节入口，点击链接即可打开完整说明。
 
-<a id="agentcompare"></a>
+<a id="agent-compare-dsh-agent-compare"></a>
 
-[AgentCompare](README.md#agentcompare)
+[Agent Compare (dsh-agent-compare)](README.md#agent-compare-dsh-agent-compare)
 
 <a id="新版界面速览"></a>
 
@@ -73,6 +73,10 @@
 <a id="项目增长"></a>
 
 [项目增长](README.md#%E9%A1%B9%E7%9B%AE%E5%A2%9E%E9%95%BF)
+
+<a id="agentcompare"></a>
+
+[agentcompare](README.md#agentcompare)
 
 <a id="gallery"></a>
 
