@@ -2,60 +2,60 @@
   "schema": "agentcompare.demo/v1",
   "source": {
     "version": "3.0.0 release candidate",
-    "commit": "72c03e8295e6d51bebef57677179e19c1d3f8871",
-    "archiveSha256": "d926663c8353f5afd15c640c44ecb5798583154a10d95d4f0c1d7aeede19d734",
+    "commit": "aab78977f1406a99db92aa41501f78de7c5e2c2b",
+    "archiveSha256": "da2c074b4b872addfbe1aa37d2d32eb64568b726c6eb220bd330849fa29d1c24",
     "archiveNote": "Recorded from this commit's build, packed as a uniquely versioned development archive and installed in an isolated test profile; all 153 installed files other than package.json, which carries the development version, matched the commit byte for byte. Later commits update documentation and media only.",
     "host": "0.2.2-rc.1",
-    "browser": "Microsoft Edge 157.0.4341.42 (headless)",
+    "browser": "Microsoft Edge 157.0.4341.60 (headless)",
     "os": "Windows",
-    "capturedAt": "2026-11-15T05:06:39.926Z",
+    "capturedAt": "2026-11-15T08:45:23.234Z",
     "ffmpeg": "ffmpeg version 9.0.2-full_build-www.gyan.dev Copyright (c) 2000-2026 the FFmpeg developers",
     "candidate": "Local controlled model uses the native DSH write tool. No external model request.",
-    "task": "Four pomodoro pages in a folder outside Git, compared blind. The large window is opened while the versions work (a whale per version, one poked, the live steps of A), replies arrive before the pages, two versions are set aside, C is shown in focus with its reply beside its page and picked with two reasons, then saved into a new folder. In the same session: a greeting sent from a Vite repository answered by four versions in their styles with nothing built, and three open English answers from a quick set."
+    "task": "Four pomodoro pages in a folder outside Git, compared blind. The large window is opened while the versions work (DSH's whale per version filling as it goes, one poked, the live steps of A), replies arrive before the pages, two versions are set aside, C is shown in focus with its reply beside its page and picked with two reasons, then saved into a new folder."
   },
   "editing": {
-    "rawSeconds": 74.47,
-    "workflowSeconds": 46.11,
+    "rawSeconds": 69.22,
+    "workflowSeconds": 45.06,
     "workflowSegments": [
       [
-        9.71,
-        15.25
+        8.8,
+        14.3
       ],
       [
-        17.02,
-        27.82
+        15.67,
+        25.15
       ],
       [
-        28.56,
-        29.96
+        25.85,
+        27.25
       ],
       [
-        43.46,
-        71.66
+        39.05,
+        66.89
       ]
     ],
     "workflowPlaybackRate": 1,
-    "previewSeconds": 14.56,
+    "previewSeconds": 14.3,
     "previewSegments": [
       [
-        19.66,
-        23.19
+        18.14,
+        21.42
       ],
       [
-        26.22,
-        27.52
+        23.55,
+        24.85
       ],
       [
-        43.56,
-        44.96
+        39.15,
+        40.55
       ],
       [
-        56,
-        62.13
+        51.27,
+        57.32
       ],
       [
-        65.48,
-        67.68
+        60.68,
+        62.88
       ]
     ],
     "previewPlaybackRate": 1,
@@ -75,9 +75,9 @@
   "proof": {
     "assignment": {
       "A": "大胆 · Bold",
-      "B": "活力 · Vibrant",
-      "C": "稳妥 · Conservative",
-      "D": "极简 · Minimal"
+      "B": "极简 · Minimal",
+      "C": "活力 · Vibrant",
+      "D": "稳妥 · Conservative"
     },
     "stepsShownWhileWorking": true,
     "repliesBeforePages": true,
@@ -99,44 +99,47 @@
     },
     "savedToNewFolder": true,
     "existingFileUnchanged": "notes.txt",
-    "greetingInRepository": {
-      "task": "你好",
-      "versions": 4,
-      "results": "answer",
-      "filesChanged": 0,
-      "installs": 0,
-      "previews": 0,
-      "repositoryUnchanged": true
-    },
-    "englishAnswers": {
-      "versions": 3,
-      "comparison": "open",
-      "quickSet": "Three looks",
-      "styles": [
-        "Minimal",
-        "Polished",
-        "Vibrant"
-      ],
-      "picked": "B",
-      "pickReasons": [
-        "layout",
-        "complete"
-      ]
-    },
     "phoneWidth": 390,
     "pageErrors": 0,
-    "controlledProvider": true
+    "controlledProvider": true,
+    "galleryCaptures": {
+      "commit": "72c03e8295e6d51bebef57677179e19c1d3f8871",
+      "greetingInRepository": {
+        "task": "你好",
+        "versions": 4,
+        "results": "answer",
+        "filesChanged": 0,
+        "installs": 0,
+        "previews": 0,
+        "repositoryUnchanged": true
+      },
+      "englishAnswers": {
+        "versions": 3,
+        "comparison": "open",
+        "quickSet": "Three looks",
+        "styles": [
+          "Minimal",
+          "Polished",
+          "Vibrant"
+        ],
+        "picked": "B",
+        "pickReasons": [
+          "layout",
+          "complete"
+        ]
+      }
+    }
   },
   "files": [
     {
       "path": "comparison-workflow.mp4",
-      "bytes": 1711543,
-      "sha256": "1c59f4f9100e737b7916d579f1f0d395e64ae254937e1ac216129782b4be5cdc"
+      "bytes": 1648862,
+      "sha256": "b751709003e88d583e611b287d07f0c081b0cb05c429ee63b1f1bb3a30df639e"
     },
     {
       "path": "comparison-preview.gif",
-      "bytes": 3192964,
-      "sha256": "8080530525313a51a2457efff23b90238dfe32b2937e15f77adb341818a437cf"
+      "bytes": 3050235,
+      "sha256": "7df3cc040ef8cad660234f2e7ff3d96772cae0a321837535f778f079ebbace9d"
     },
     {
       "path": "social-preview.png",

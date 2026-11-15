@@ -85,11 +85,11 @@ Try the live pages, compare in the conversation, choose styles and keep your rea
 
 ## Watch the complete workflow
 
-[![Fixed-candidate workflow: a whale per working version and live steps, four live pomodoro pages, C in focus with its reply beside its page, C picked and the reasons given](https://raw.githubusercontent.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/main/docs/media/comparison-preview.gif)](https://github.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/blob/main/docs/media/comparison-workflow.mp4)
+[![Fixed-candidate workflow: DSH's whale filling per working version and live steps, four live pomodoro pages, C in focus with its reply beside its page, C picked and the reasons given](https://raw.githubusercontent.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/main/docs/media/comparison-preview.gif)](https://github.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/blob/main/docs/media/comparison-workflow.mp4)
 
 A controlled-candidate recording in a real DSH host, from the 3.0.0 release-candidate source with the Chinese interface:
 - Four versions each build a pomodoro page in a plain folder, while two comets race around the comparison card.
-- The large window opens while they work: a whale per version, which blows bubbles when poked, and **Steps** opened to show thinking and a file write live.
+- The large window opens while they work: DSH's whale per version, filling with water as it goes and blowing bubbles when poked, and **Steps** opened to show thinking and a file write live.
 - The replies arrive before the pages; then all four live pages can be used.
 - Two are set aside, C is shown in focus with its reply beside its page, and the pick reveals every style.
 - Two reasons are tapped (layout, simpler), which the next request in the main conversation carries; the pick is saved into a new folder, and the conversation continues.

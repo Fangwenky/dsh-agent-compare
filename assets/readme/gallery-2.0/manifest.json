@@ -6,6 +6,7 @@
   "hostVersion": "0.2.2-rc.1",
   "browser": "Microsoft Edge 157",
   "runtimeFilesMatched": 153,
+  "laterChanges": "Later commits change only the waiting animation, which these captures do not show, and update documentation and media; the demo recording comes from aab7897.",
   "privatePathsHidden": true,
   "captionsAdded": true,
   "scenario": "Two product illustrations and six actual interface captures. The captures use controlled candidates in an isolated DSH Web profile at desktop window sizes, recorded on 2026-11-15 (local date) from the source named here; every installed file other than package.json matched it byte for byte. They show real application execution, steps, replies, answers and saved history, not external-model generation. The conversation view shows a greeting sent from a Vite repository and answered by four versions with nothing built, with the steps of one version open. No user Desktop profile was changed.",
