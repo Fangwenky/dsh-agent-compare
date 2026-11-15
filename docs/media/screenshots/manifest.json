@@ -1,10 +1,10 @@
 {
   "schema": "agentcompare.screenshots/v1",
-  "capturedAt": "2026-11-15T05:06:39.926Z",
-  "packageVersion": "3.0.0",
-  "sourceCommit": "72c03e8295e6d51bebef57677179e19c1d3f8871",
-  "packageArchiveSha256": "d926663c8353f5afd15c640c44ecb5798583154a10d95d4f0c1d7aeede19d734",
-  "archiveNote": "Recorded from this commit's build, packed as a uniquely versioned development archive and installed in an isolated test profile; all 153 installed files other than package.json, which carries the development version, matched the commit byte for byte. Later commits change only the waiting animation, which these captures do not show, and update documentation and media; the demo recording comes from 9bb5652.",
+  "capturedAt": "2026-11-15T11:21:54.509Z",
+  "packageVersion": "3.1.0",
+  "sourceCommit": "782b8911b823936ca2d3cc15c0ce54a18e9a1f22",
+  "packageArchiveSha256": "b55d69fab55e817e9a27083f49f42931d88e485222a7167df62bcf2fe87dc898",
+  "archiveNote": "Recorded from this commit's build, packed as a uniquely versioned development archive and installed in an isolated test profile; all 153 installed files other than package.json, which carries the development version, matched the commit byte for byte. Later commits update documentation and media only.",
   "hostVersion": "0.2.2-rc.1",
   "scenario": "Controlled candidates; four independently interactive pages with their replies and the steps of A, in a blind comparison; the picked version in focus with its reply beside its page, saved into a new folder with reasons. No external model request.",
   "privatePathsHidden": true,
@@ -12,13 +12,13 @@
   "files": [
     {
       "path": "docs/media/screenshots/11-live-comparison.png",
-      "bytes": 98735,
-      "sha256": "3e25b502d0529e03a40549e81adf32368e8e367b5da57e6ca0b0e524e5ff4eb7"
+      "bytes": 116318,
+      "sha256": "090818a1d2d34bc5801f1d59b78bd78b29b748c7b8ce95c63444b26ae058d354"
     },
     {
       "path": "docs/media/screenshots/12-reviewed-adoption.png",
-      "bytes": 96291,
-      "sha256": "9c85488034f33c4152e9ed695bb075ca4eafb24540421d4482d40816e322583d"
+      "bytes": 92922,
+      "sha256": "b028e2a576dea1f46a60f96ecc1e3bde9b41e1e4d90f25532fa093907711dec0"
     }
   ]
 }
