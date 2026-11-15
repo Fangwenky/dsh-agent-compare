@@ -795,11 +795,22 @@ try {
   const initialUrl = page.url()
   const denialStart = errors.length
   await storageA.locator('body').evaluate((body, target) => { const button=document.createElement('button');button.textContent='Controlled navigation probe';button.onpointerdown=event=>{body.dataset.probePointer=event.isTrusted?'trusted':'synthetic'};button.onclick=event=>{body.dataset.probeClick=event.isTrusted?'trusted':'synthetic';body.dataset.probeClicked='true';try{window.top.location.href=target}catch{body.dataset.topBlocked='true'}};body.append(button) }, harness.url + '/controlled-escape')
-  // The nested page is scaled and sits below its reply. Establish actual
-  // pointer readiness after scrolling, then send one normal trusted click.
+  // The nested page is scaled and sits below its reply. Move out of the old
+  // frame's hit region and back in along a real pointer path after scrolling,
+  // then send one normal trusted click. Do not retry or synthesize activation.
   await page.locator('.ac-card iframe').nth(0).scrollIntoViewIfNeeded()
   const navigationProbe = storageA.getByRole('button', { name: 'Controlled navigation probe', exact: true })
-  await navigationProbe.hover()
+  await navigationProbe.scrollIntoViewIfNeeded()
+  const probeBox = await navigationProbe.boundingBox()
+  assert.ok(probeBox && probeBox.width > 0 && probeBox.height > 0, 'the navigation probe must have a rendered pointer target')
+  const probePoint = { x: probeBox.x + probeBox.width / 2, y: probeBox.y + probeBox.height / 2 }
+  await page.mouse.move(0, 0)
+  for (let segment = 1; segment <= 8; segment++) {
+    await page.evaluate(() => new Promise(resolve => requestAnimationFrame(() => resolve())))
+    await page.mouse.move(probePoint.x * segment / 8, probePoint.y * segment / 8)
+  }
+  navigationProbeState.hit = await page.evaluate(point => { const element=document.elementFromPoint(point.x,point.y);return { point, tag:element?.tagName, className:element?.className, title:element?.getAttribute('title'), focused:document.hasFocus(), visibility:document.visibilityState } }, probePoint)
+  navigationProbeState.frame = await navigationProbe.evaluate(button => { const box=button.getBoundingClientRect(),hit=document.elementFromPoint(box.x+box.width/2,box.y+box.height/2);return { box:{x:box.x,y:box.y,width:box.width,height:box.height},hitTag:hit?.tagName,hitIsProbe:hit===button,hovered:button.matches(':hover'),visibility:document.visibilityState,pointerEvents:getComputedStyle(button).pointerEvents } })
   navigationProbeState.hovered = await navigationProbe.evaluate(button => new Promise(resolve => {
     const deadline = performance.now() + 1000
     let stable = 0
