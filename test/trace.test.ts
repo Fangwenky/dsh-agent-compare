@@ -1,6 +1,6 @@
 /** Steps, replies and fast completion of a version's session. */
 import { describe, expect, it } from 'vitest'
-import { mkdir, readFile, writeFile } from 'node:fs/promises'
+import { mkdir, readFile, realpath, symlink, writeFile } from 'node:fs/promises'
 import path from 'node:path'
 import { settled } from '../src/host/index.ts'
 import { toolTarget, traceOf } from '../src/host/trace.ts'
@@ -167,6 +167,8 @@ describe('masking style names before a blind pick', () => {
 })
 
 describe('dependencies installed while versions generate', () => {
+  const directoryLink = (target: string, link: string) => symlink(target, link, process.platform === 'win32' ? 'junction' : 'dir')
+
   it('only for npm lockfiles without root install scripts or local packages', async () => {
     const dir = await tmp('ac-warm')
     await writeFile(path.join(dir, 'package.json'), JSON.stringify({ name: 'x', dependencies: { a: '1.0.0' } }))
@@ -199,5 +201,71 @@ describe('dependencies installed while versions generate', () => {
     await writeFile(path.join(target, 'a', 'lib', 'index.js'), 'module.exports = 2')
     await expect(readFile(path.join(warm, 'node_modules', '.vite', 'cache.json'))).rejects.toThrow()
     expect(await readFile(path.join(warm, 'node_modules', 'a', 'lib', 'index.js'), 'utf8')).toBe('module.exports = 1')
+  })
+
+  it('relocates internal directory links so writes stay in the candidate', async () => {
+    const dir = await tmp('ac-warm-internal-link'), warm = path.join(dir, 'warm'), target = path.join(dir, 'candidate')
+    await mkdir(path.join(warm, 'pkg'), { recursive: true })
+    await writeFile(path.join(warm, 'pkg', 'state.txt'), 'baseline')
+    await directoryLink(process.platform === 'win32' ? path.join(warm, 'pkg') : 'pkg', path.join(warm, 'alias'))
+    expect(await copyTree(warm, target)).toBe(1)
+    expect(await realpath(path.join(target, 'alias'))).toBe(await realpath(path.join(target, 'pkg')))
+    await writeFile(path.join(target, 'alias', 'state.txt'), 'candidate')
+    expect(await readFile(path.join(warm, 'pkg', 'state.txt'), 'utf8')).toBe('baseline')
+  })
+
+  it('rejects links to mutable files outside the warm tree', async () => {
+    const dir = await tmp('ac-warm-escaping-link'), warm = path.join(dir, 'warm'), target = path.join(dir, 'candidate'), outside = path.join(dir, 'outside')
+    await mkdir(warm)
+    await mkdir(outside)
+    await writeFile(path.join(outside, 'state.txt'), 'baseline')
+    await directoryLink(outside, path.join(warm, 'shared'))
+    await expect(copyTree(warm, target)).rejects.toThrow(/outside.*dependency tree/i)
+    expect(await readFile(path.join(outside, 'state.txt'), 'utf8')).toBe('baseline')
+  })
+
+  it('rejects a link whose apparently internal target resolves outside the tree', async () => {
+    const dir = await tmp('ac-warm-indirect-link'), warm = path.join(dir, 'warm'), outside = path.join(dir, 'outside')
+    await mkdir(warm)
+    await mkdir(outside)
+    await directoryLink(outside, path.join(warm, 'external'))
+    await directoryLink(path.join(warm, 'external'), path.join(warm, 'alias'))
+    await expect(copyTree(warm, path.join(dir, 'candidate'))).rejects.toThrow(/outside.*dependency tree/i)
+  })
+
+  it('rejects a redirected source root', async () => {
+    const dir = await tmp('ac-warm-source-root'), outside = path.join(dir, 'outside'), warm = path.join(dir, 'warm')
+    await mkdir(outside)
+    await writeFile(path.join(outside, 'state.txt'), 'baseline')
+    await directoryLink(outside, warm)
+    await expect(copyTree(warm, path.join(dir, 'candidate'))).rejects.toThrow(/source.*directory/i)
+  })
+
+  it('rejects a dangling dependency link so the candidate can install normally', async () => {
+    const dir = await tmp('ac-warm-dangling-link'), warm = path.join(dir, 'warm')
+    await mkdir(warm)
+    await directoryLink(path.join(warm, 'missing'), path.join(warm, 'alias'))
+    await expect(copyTree(warm, path.join(dir, 'candidate'))).rejects.toThrow()
+  })
+
+  it('rejects a redirected destination root without changing its target', async () => {
+    const dir = await tmp('ac-warm-destination-root'), warm = path.join(dir, 'warm'), target = path.join(dir, 'candidate'), outside = path.join(dir, 'outside')
+    await mkdir(warm)
+    await mkdir(outside)
+    await writeFile(path.join(warm, 'state.txt'), 'candidate')
+    await writeFile(path.join(outside, 'state.txt'), 'baseline')
+    await directoryLink(outside, target)
+    await expect(copyTree(warm, target)).rejects.toThrow(/destination.*directory/i)
+    expect(await readFile(path.join(outside, 'state.txt'), 'utf8')).toBe('baseline')
+  })
+
+  it('requires an empty destination instead of overwriting an existing tree', async () => {
+    const dir = await tmp('ac-warm-existing-target'), warm = path.join(dir, 'warm'), target = path.join(dir, 'candidate')
+    await mkdir(warm)
+    await mkdir(target)
+    await writeFile(path.join(warm, 'state.txt'), 'candidate')
+    await writeFile(path.join(target, 'state.txt'), 'existing')
+    await expect(copyTree(warm, target)).rejects.toThrow(/destination.*empty/i)
+    expect(await readFile(path.join(target, 'state.txt'), 'utf8')).toBe('existing')
   })
 })

@@ -2,6 +2,8 @@
 
 ## 3.1.0
 
+- **Independent dependency copies.** Reusing a warm installation now relocates links into each candidate's own copy. A link that escapes the warm tree, a dangling link, a redirected root or an existing destination instead falls back to that candidate's normal frozen installation; it never preserves a shared mutable link as a successful prewarm.
+
 3.0.0 was prepared but not published; its changes (and those of 2.1.0) are part of this release and listed after the new ones.
 
 - **Upgrade notes.**

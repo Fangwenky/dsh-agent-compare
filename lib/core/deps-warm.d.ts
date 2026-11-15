@@ -25,8 +25,9 @@ export declare const COPY_CONCURRENCY = 32;
  * Recreate `from` at `to` as an independent copy, so nothing a version's
  * checks write can reach the warm tree or another version. Files are copied
  * many at a time, and cloned where the file system can share blocks until a
- * write. Links inside the tree keep their relative targets; a link that
- * points elsewhere is kept as it is.
+ * write. Internal links are relocated into the copy. Escaping or dangling
+ * links, redirected roots and a nonempty destination reject the copy so
+ * the caller can use the version's own frozen install instead.
  */
 export declare function copyTree(from: string, to: string): Promise<number>;
 export declare function removeTree(dir: string): Promise<void>;

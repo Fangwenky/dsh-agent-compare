@@ -9,7 +9,7 @@ import { createUiHarness } from './preview-ui.mjs'
 const harness = await createUiHarness({ port: 0, demoPort: 0 })
 const output = process.env.AGENT_COMPARE_UI_ARTIFACTS ?? await mkdtemp(path.join(os.tmpdir(), 'agent-compare-ui-'))
 await mkdir(output, { recursive: true })
-let browser, page, embeddedCookies
+let browser, page, embeddedCookies, navigationProbeState
 const errors = []
 const expectedBrowserDenials = []
 let assertions = 0
@@ -783,6 +783,9 @@ try {
     await cookieTab.goto(await page.locator('.ac-card iframe').nth(1).getAttribute('src'))
     check(await cookieTab.evaluate(() => !document.cookie.includes('ac_top=')), 'a direct-preview cookie must not cross to the other candidate')
   } finally { await cookieTab.close() }
+  await page.bringToFront()
+  navigationProbeState = { foreground: await page.evaluate(() => ({ focused: document.hasFocus(), visibility: document.visibilityState })) }
+  check(navigationProbeState.foreground.focused && navigationProbeState.foreground.visibility === 'visible', 'the comparison must be active again after closing the direct preview')
   await storageA.locator('body').evaluate(async () => {
     const db = await new Promise((resolve,reject) => {const request=indexedDB.open('ac_candidate_state',1);request.onupgradeneeded=()=>request.result.createObjectStore('values');request.onsuccess=()=>resolve(request.result);request.onerror=()=>reject(request.error)})
     await new Promise((resolve,reject)=>{const transaction=db.transaction('values','readwrite');transaction.objectStore('values').put('only_a','key');transaction.oncomplete=resolve;transaction.onerror=()=>reject(transaction.error)})
@@ -791,12 +794,27 @@ try {
   check(await storageB.locator('body').evaluate(async () => !(await indexedDB.databases()).some(db=>db.name==='ac_candidate_state') && !(await caches.keys()).includes('ac_candidate_cache')), 'IndexedDB and CacheStorage must remain specific to each candidate')
   const initialUrl = page.url()
   const denialStart = errors.length
-  await storageA.locator('body').evaluate((body, target) => { const button=document.createElement('button');button.textContent='Controlled navigation probe';button.onclick=()=>{body.dataset.probeClicked='true';try{window.top.location.href=target}catch{body.dataset.topBlocked='true'}};body.append(button) }, harness.url + '/controlled-escape')
-  // The page sits below its reply and steps, partly under the fold. Bring it
-  // into view first: a click that scrolls the host while it lands can miss.
+  await storageA.locator('body').evaluate((body, target) => { const button=document.createElement('button');button.textContent='Controlled navigation probe';button.onpointerdown=event=>{body.dataset.probePointer=event.isTrusted?'trusted':'synthetic'};button.onclick=event=>{body.dataset.probeClick=event.isTrusted?'trusted':'synthetic';body.dataset.probeClicked='true';try{window.top.location.href=target}catch{body.dataset.topBlocked='true'}};body.append(button) }, harness.url + '/controlled-escape')
+  // The nested page is scaled and sits below its reply. Establish actual
+  // pointer readiness after scrolling, then send one normal trusted click.
   await page.locator('.ac-card iframe').nth(0).scrollIntoViewIfNeeded()
-  await storageA.getByRole('button', { name: 'Controlled navigation probe', exact: true }).click()
-  check(await storageA.locator('body').getAttribute('data-probe-clicked') === 'true', 'the navigation probe must receive the click inside the preview')
+  const navigationProbe = storageA.getByRole('button', { name: 'Controlled navigation probe', exact: true })
+  await navigationProbe.hover()
+  navigationProbeState.hovered = await navigationProbe.evaluate(button => new Promise(resolve => {
+    const deadline = performance.now() + 1000
+    let stable = 0
+    const frame = () => {
+      stable = button.matches(':hover') && document.visibilityState === 'visible' ? stable + 1 : 0
+      if (stable >= 2) resolve(true)
+      else if (performance.now() >= deadline) resolve(false)
+      else requestAnimationFrame(frame)
+    }
+    requestAnimationFrame(frame)
+  }))
+  check(navigationProbeState.hovered, 'the real pointer must reach the preview probe before activation')
+  await navigationProbe.click()
+  navigationProbeState.activation = await storageA.locator('body').evaluate(body => ({ clicked: body.dataset.probeClicked, pointer: body.dataset.probePointer, click: body.dataset.probeClick, blocked: body.dataset.topBlocked, focused: document.hasFocus(), visibility: document.visibilityState }))
+  check(navigationProbeState.activation.clicked === 'true' && navigationProbeState.activation.pointer === 'trusted' && navigationProbeState.activation.click === 'trusted', 'the navigation probe must receive a trusted pointer click inside the preview')
   check(page.url() === initialUrl && await storageA.locator('body').getAttribute('data-top-blocked') === 'true', 'an activated preview must not navigate the comparison host')
   // WebKit emits this browser-owned error even when the deliberate denial is
   // caught by the fixture. Admit only the exact controlled frame and flag.
@@ -1235,7 +1253,7 @@ try {
   await page?.screenshot({ path: path.join(output, 'interface-failure.png') }).catch(() => {})
   await page?.context().tracing.stop({ path: path.join(output, 'interface-failure-trace.zip') }).catch(() => {})
   const documentState = await page?.evaluate(() => ({ errors: window.__harnessErrors, settings: document.querySelector('.ac-composer-settings')?.innerText, mode: document.querySelector('.ac-mode-btn')?.outerHTML, input: window.__input?.(), requests: window.__requests?.slice(-8) })).catch(() => undefined)
-  await writeFile(path.join(output, 'interface-failure.json'), JSON.stringify({ assertions, message: error.message, browser: browser?.version(), pageErrors: errors, documentState }, null, 2))
+  await writeFile(path.join(output, 'interface-failure.json'), JSON.stringify({ assertions, message: error.message, browser: browser?.version(), pageErrors: errors, navigationProbeState, documentState }, null, 2))
   throw error
 } finally {
   await browser?.close()
