@@ -2,60 +2,60 @@
   "schema": "agentcompare.demo/v1",
   "source": {
     "version": "3.0.0 release candidate",
-    "commit": "aab78977f1406a99db92aa41501f78de7c5e2c2b",
-    "archiveSha256": "da2c074b4b872addfbe1aa37d2d32eb64568b726c6eb220bd330849fa29d1c24",
+    "commit": "9bb565226cde49117586e66aed92094becadfdd5",
+    "archiveSha256": "3f8d98e62291ba64802b95e838d8738fc3dd191ffa97c966a32d40e8030ccee3",
     "archiveNote": "Recorded from this commit's build, packed as a uniquely versioned development archive and installed in an isolated test profile; all 153 installed files other than package.json, which carries the development version, matched the commit byte for byte. Later commits update documentation and media only.",
     "host": "0.2.2-rc.1",
     "browser": "Microsoft Edge 157.0.4341.60 (headless)",
     "os": "Windows",
-    "capturedAt": "2026-11-15T08:45:23.234Z",
+    "capturedAt": "2026-11-15T08:56:35.488Z",
     "ffmpeg": "ffmpeg version 9.0.2-full_build-www.gyan.dev Copyright (c) 2000-2026 the FFmpeg developers",
     "candidate": "Local controlled model uses the native DSH write tool. No external model request.",
-    "task": "Four pomodoro pages in a folder outside Git, compared blind. The large window is opened while the versions work (DSH's whale per version filling as it goes, one poked, the live steps of A), replies arrive before the pages, two versions are set aside, C is shown in focus with its reply beside its page and picked with two reasons, then saved into a new folder."
+    "task": "Four pomodoro pages in a folder outside Git, compared blind. The large window is opened while the versions work (DeepSeek's blue whale per version filling as it goes, one poked, the live steps of A), replies arrive before the pages, two versions are set aside, C is shown in focus with its reply beside its page and picked with two reasons, then saved into a new folder."
   },
   "editing": {
-    "rawSeconds": 69.22,
-    "workflowSeconds": 45.06,
+    "rawSeconds": 66.55,
+    "workflowSeconds": 43.29,
     "workflowSegments": [
       [
-        8.8,
-        14.3
+        8.51,
+        13.99
       ],
       [
-        15.67,
-        25.15
+        15.32,
+        24.38
       ],
       [
-        25.85,
-        27.25
+        25.07,
+        26.47
       ],
       [
-        39.05,
-        66.89
+        36.94,
+        64.07
       ]
     ],
     "workflowPlaybackRate": 1,
-    "previewSeconds": 14.3,
+    "previewSeconds": 14.09,
     "previewSegments": [
       [
-        18.14,
-        21.42
+        17.68,
+        20.79
       ],
       [
-        23.55,
-        24.85
+        22.78,
+        24.08
       ],
       [
-        39.15,
-        40.55
+        37.04,
+        38.44
       ],
       [
-        51.27,
-        57.32
+        48.88,
+        54.81
       ],
       [
-        60.68,
-        62.88
+        57.99,
+        60.19
       ]
     ],
     "previewPlaybackRate": 1,
@@ -74,10 +74,10 @@
   },
   "proof": {
     "assignment": {
-      "A": "大胆 · Bold",
-      "B": "极简 · Minimal",
-      "C": "活力 · Vibrant",
-      "D": "稳妥 · Conservative"
+      "A": "极简 · Minimal",
+      "B": "大胆 · Bold",
+      "C": "稳妥 · Conservative",
+      "D": "活力 · Vibrant"
     },
     "stepsShownWhileWorking": true,
     "repliesBeforePages": true,
@@ -133,13 +133,13 @@
   "files": [
     {
       "path": "comparison-workflow.mp4",
-      "bytes": 1648862,
-      "sha256": "b751709003e88d583e611b287d07f0c081b0cb05c429ee63b1f1bb3a30df639e"
+      "bytes": 1512646,
+      "sha256": "2b2fe5d14abee1ad0525fffcc8d75863f01b819864bc6206ee063a9f9337bdc1"
     },
     {
       "path": "comparison-preview.gif",
-      "bytes": 3050235,
-      "sha256": "7df3cc040ef8cad660234f2e7ff3d96772cae0a321837535f778f079ebbace9d"
+      "bytes": 3341776,
+      "sha256": "ae304aa7a88773f4a95a40f7e46d7e14ef788ffbd368336df0c8fe125c0dee57"
     },
     {
       "path": "social-preview.png",
