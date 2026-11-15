@@ -2,7 +2,7 @@
 
 # AgentCompare
 
-[![GitHub stars](https://img.shields.io/github/stars/lijiaqi-AI-Product-Manager/dsh-agent-compare?label=GitHub%20Stars&color=3657f5&style=flat&labelColor=0b1b4f)](https://github.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/stargazers)
+[![GitHub stars](https://img.shields.io/github/stars/lijiaqi-AI-Product-Manager/dsh-agent-compare?label=GitHub%20Stars&color=3657f5&style=flat&labelColor=0b1b4f&cacheSeconds=300)](https://github.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/stargazers)
 [![npm download/下载量](https://raw.githubusercontent.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/main/assets/statistics/npm-total-badge.svg)](https://www.npmjs.com/package/dsh-agent-compare)
 
 [![Source version](https://img.shields.io/github/package-json/v/lijiaqi-AI-Product-Manager/dsh-agent-compare?label=source&color=3657f5&style=flat&labelColor=0b1b4f)](https://github.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/blob/main/package.json)
@@ -20,7 +20,9 @@
 
 <p align="center"><a href="#install">安装 / Install</a> · <a href="#demo">真实演示 / Recorded demo</a></p>
 
-> **2.1.0 · Stabile Version.** DSH Desktop und Web, mit chinesischer und englischer Oberfläche. Antworten, Dateien oder Webseiten aus jedem Ordner im Hauptgespräch vergleichen und konfigurierte Modelle weiterverwenden.
+> **npm stabil 2.0.0 · main-Quellcode 2.1.0.** DSH Desktop und Web, mit chinesischer und englischer Oberfläche. Antworten, Dateien oder Webseiten aus jedem Ordner im Hauptgespräch vergleichen und konfigurierte Modelle weiterverwenden.
+
+> **Entwicklungsvorschau:** [3.0.0 · Ladeanimation mit blauem Wal](https://github.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/tree/release/3.0.0) · Noch nicht auf npm veröffentlicht.
 
 **Neu in 2.1.0:**
 - **Ein Gruß oder eine Frage bekommt Antworten.** Die Anfrage bestimmt die Art des Ergebnisses, nicht der Ordner: Wer in einem baubaren Projekt grüßt oder eine Frage stellt, erhält von jeder Version eine Antwort im eigenen Stil zum Vergleich nebeneinander, statt einer gebauten Seite; eine Bitte um Änderungen am Projekt wird weiterhin umgesetzt.
@@ -100,7 +102,7 @@ Entwicklungsgrundlage sind Node 26.13.0 und npm 12.2.2. Die aktuellen Prüfungen
 Installiere das npm-Paket im voreingestellten Web-Profil. Das npm-Badge zeigt den Veröffentlichungsstatus:
 
 ```bash
-dsh plugin --profile web add dsh-agent-compare@2.1.0
+dsh plugin --profile web add dsh-agent-compare
 ```
 
 Für ein anderes selbst verwaltetes Profil ersetzt du `web` durch dessen tatsächlichen Namen.
@@ -204,5 +206,7 @@ Lizenz: [MIT](https://github.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/bl
 Kumulierte npm-Downloadanfragen seit der ersten Veröffentlichung, über alle öffentlichen Versionen. Die Karte nennt den Datenstand; wiederholte und automatisierte Zugriffe können enthalten sein.
 
 [Gesamtzählung und automatische Aktualisierung](https://github.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/blob/main/docs/npm-total-downloads.md)
+
+Der Star-Badge liest GitHub mit etwa fünf Minuten Cache. Die kumulierten npm-Anfragen werden täglich um 19:00 Uhr in China (UTC+8) aktualisiert; die Ausführung kann sich verzögern.
 
 <!-- project-growth:end -->

@@ -2,7 +2,7 @@
 
 # AgentCompare
 
-[![GitHub stars](https://img.shields.io/github/stars/lijiaqi-AI-Product-Manager/dsh-agent-compare?label=GitHub%20Stars&color=3657f5&style=flat&labelColor=0b1b4f)](https://github.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/stargazers)
+[![GitHub stars](https://img.shields.io/github/stars/lijiaqi-AI-Product-Manager/dsh-agent-compare?label=GitHub%20Stars&color=3657f5&style=flat&labelColor=0b1b4f&cacheSeconds=300)](https://github.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/stargazers)
 [![npm download/下载量](https://raw.githubusercontent.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/main/assets/statistics/npm-total-badge.svg)](https://www.npmjs.com/package/dsh-agent-compare)
 
 [![Source version](https://img.shields.io/github/package-json/v/lijiaqi-AI-Product-Manager/dsh-agent-compare?label=source&color=3657f5&style=flat&labelColor=0b1b4f)](https://github.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/blob/main/package.json)
@@ -20,7 +20,9 @@
 
 <p align="center"><a href="#install">安装 / Install</a> · <a href="#demo">真实演示 / Recorded demo</a></p>
 
-> **2.1.0 · 正式版。** DSH Desktop と Web、中国語・英語の画面に対応。どのフォルダーからでも、メイン会話内で回答・ファイル・Web ページを比較できます。設定済みモデルを再利用します。
+> **npm 正式版 2.0.0 · main ソース 2.1.0。** DSH Desktop と Web、中国語・英語の画面に対応。どのフォルダーからでも、メイン会話内で回答・ファイル・Web ページを比較できます。設定済みモデルを再利用します。
+
+> **開発プレビュー：** [3.0.0 · 青いクジラの読み込みアニメーション](https://github.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/tree/release/3.0.0) · npm には未公開です。
 
 **2.1.0 の新機能：**
 - **あいさつや質問には回答が返ります。** 結果の種類はフォルダーではなく依頼の内容で決まります。ビルドできるプロジェクトの中で「こんにちは」や質問を送ると、各バージョンがそれぞれのスタイルで回答し、ページを作らずに並べて比較できます。プロジェクトの変更を頼んだ場合は、これまでどおり実装します。
@@ -100,7 +102,7 @@ Node 26.13.0 と npm 12.2.2 が開発基準です。公式の最新 DSH パッ�
 npm パッケージを既定の Web プロファイルに追加します。公開状態は上部の npm バッジで確認できます。
 
 ```bash
-dsh plugin --profile web add dsh-agent-compare@2.1.0
+dsh plugin --profile web add dsh-agent-compare
 ```
 
 別の自己管理プロファイルを使う場合は、`web` を実際の名前に置き換えてください。
@@ -202,5 +204,7 @@ npm run test:ui
 初回公開から全公開バージョンを対象とした npm 累計ダウンロードリクエストです。集計終了日は画像に記載。重複・自動アクセスを含む場合があります。
 
 [累計の定義と自動更新](https://github.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/blob/main/docs/npm-total-downloads.md)
+
+Star バッジは GitHub の値を約 5 分キャッシュします。npm の累計リクエスト数は毎日中国時間 19:00 に更新し、実行が遅れる場合があります。
 
 <!-- project-growth:end -->
