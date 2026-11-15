@@ -83,16 +83,19 @@ function Step({ item, live }: { item: TraceItem; live: boolean }): React.ReactEl
   </li>
 }
 
+/** "N 步" with a singular form for English. */
+const stepCount = (n: number): string => n === 1 ? t('1 步') : t('{0} 步', { 0: n })
+
 /** The toggle that opens a version's steps, with a count of what is inside. */
 export function StepsToggle({ trace, open, onToggle, busy, id, steps = 0 }: { trace: Trace | undefined; open: boolean; onToggle(): void; busy: boolean; id: string; steps?: number }): React.ReactElement | null {
-  if (!trace || trace.items.length === 0) return busy ? <span className="ac-steps-toggle idle"><span className="ac-shimmer">{steps ? t('{0} 步', { 0: steps }) : t('正在启动…')}</span></span> : null
+  if (!trace || trace.items.length === 0) return busy ? <span className="ac-steps-toggle idle"><span className="ac-shimmer">{steps ? stepCount(steps) : t('正在启动…')}</span></span> : null
   const now = busy ? currentAction(trace) : undefined
   // The run record may be newer than the stored steps; count whichever has seen more.
   const count = Math.max(trace.steps, steps)
   return <button type="button" className={`ac-steps-toggle${open ? ' open' : ''}`} aria-expanded={open} aria-controls={id} onClick={onToggle}>
     <svg className="ac-steps-chevron" width="12" height="12" viewBox="0 0 12 12" aria-hidden="true"><path d="M4 2.5L7.5 6 4 9.5" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" /></svg>
     <span className="ac-steps-title">{now ? <span className="ac-shimmer">{now}</span> : t('过程')}</span>
-    <span className="ac-steps-count">{[trace.thinking ? t('思考 {0}', { 0: trace.thinking }) : '', trace.tools ? t('工具 {0}', { 0: trace.tools }) : '', t('{0} 步', { 0: count })].filter(Boolean).join(' · ')}</span>
+    <span className="ac-steps-count">{[trace.thinking ? (trace.thinking === 1 ? t('思考 1') : t('思考 {0}', { 0: trace.thinking })) : '', trace.tools ? (trace.tools === 1 ? t('工具 1') : t('工具 {0}', { 0: trace.tools })) : '', stepCount(count)].filter(Boolean).join(' · ')}</span>
   </button>
 }
 
