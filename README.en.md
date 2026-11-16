@@ -410,7 +410,7 @@ See [CONTRIBUTING.md](https://github.com/lijiaqi-AI-Product-Manager/dsh-agent-co
 - **Four blues for A–D.** Version labels are four different blues.
 - **A reminder to restart DSH.** DSH swaps in a plugin's new interface at once but keeps running the backend it loaded at start. When the two differ, AgentCompare asks you to quit and reopen DSH instead of quietly missing steps and replies.
 - **A Chinese name.** The official Chinese name is 鲸挑细选; the nickname is 大肥鱼赛马.
-- **Also includes 2.1.0, which was not published on its own:** a greeting or a question gets answers instead of pages; brighter, clearer liquid glass, lighter buttons and sliding controls; in both themes, the text in the 21 tested interface states measured at least 4.5:1.
+- **Also includes 2.1.0, which was not published on its own:** greetings and questions can be compared as replies without requiring a page; brighter, clearer liquid glass, lighter buttons and sliding controls; in both themes, the text in the 21 tested interface states measured at least 4.5:1.
 
 **New in 2.0.0:**
 - **A new blue liquid-glass interface.** Aurora and star dust behind glass panels, a glass lens that slides between options and liquid progress; a burst of light when you pick and a sweep of light at the reveal. Dark mode, reduced motion and high-contrast mode are supported.
