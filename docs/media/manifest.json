@@ -142,9 +142,9 @@
     },
     {
       "path": "social-preview.png",
-      "bytes": 806973,
-      "sha256": "0c0e1e9ff65b6e8321b34b911a9139beb7368525a7d2914c19b9b413d4fc48ed",
-      "note": "Blue-glass product illustration, not a screenshot. Exported at 1280 × 640; the repository social-preview setting is separate from this file.",
+      "bytes": 814667,
+      "sha256": "95f6c6ff7c0e86814ea7d800e424da470b3f761f6678502c08e1eaa8fc2de3fb",
+      "note": "Product illustration in the blue brand setting, with natural red/yellow/green controls and a red tomato. Chinese subtitle: 让同一想法，长出更多实现方案！ English: One idea. More ways to bring it to life. This file is prepared for sharing; committing it does not update repository Settings.",
       "width": 1280,
       "height": 640,
       "updatedAt": "2026-11-15T16:06:53.619Z"

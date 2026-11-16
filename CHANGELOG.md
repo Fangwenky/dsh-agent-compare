@@ -2,6 +2,8 @@
 
 ## 3.1.0
 
+- Reorganize all eight language guides around the demo, real interface captures, tasks and first use; move version history and technical depth later. Update the chosen slogan and illustrations, preserve natural accent colors, and correct legacy two-version wording, warm-install scope, context truncation and performance limits.
+
 - **Current product illustrations.** The overview, four-step workflow, gallery illustrations and sharing card now use the Chinese name, four blue versions, whale and live-step details. README image descriptions are localized in all eight languages; actual recordings keep their original source identity.
 
 - **Independent dependency copies.** Reusing a warm installation now relocates links into each candidate's own copy. A link that escapes the warm tree, a dangling link, a redirected root or an existing destination instead falls back to that candidate's normal frozen installation; it never preserves a shared mutable link as a successful prewarm. Failed copies stop queued work and finish all in-flight writes before fallback begins.

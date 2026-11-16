@@ -1,75 +1,51 @@
-[![鲸挑细选 · AgentCompare：冰蓝玻璃中的四版番茄钟，C 已选中；桌面与 Web、中英双语、实时步骤。功能示意。](https://raw.githubusercontent.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/main/assets/readme/hero-bilingual.webp)](#install)
+[![鲸挑细选：同一想法的四种番茄钟设计，红色番茄版本 C 已选中。功能示意。](https://raw.githubusercontent.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/main/assets/readme/hero-bilingual.webp)](#demo)
 
 <a id="agentcompare"></a>
+<a id="鲸挑细选--agent-compare-dsh-agent-compare"></a>
 
-# 鲸挑细选 · Agent Compare (dsh-agent-compare)
+# 鲸挑细选 · AgentCompare
 
 [![GitHub stars](https://img.shields.io/github/stars/lijiaqi-AI-Product-Manager/dsh-agent-compare?label=GitHub%20Stars&color=3657f5&style=flat&labelColor=0b1b4f&cacheSeconds=300)](https://github.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/stargazers)
 [![npm download/下载量](https://raw.githubusercontent.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/main/assets/statistics/npm-total-badge.svg)](https://www.npmjs.com/package/dsh-agent-compare)
-
-[![Source version](https://img.shields.io/github/package-json/v/lijiaqi-AI-Product-Manager/dsh-agent-compare?label=source&color=3657f5&style=flat&labelColor=0b1b4f)](https://github.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/blob/main/package.json)
 [![npm version](https://img.shields.io/npm/v/dsh-agent-compare?label=npm&color=3657f5&style=flat&labelColor=0b1b4f&logo=npm&logoColor=white)](https://www.npmjs.com/package/dsh-agent-compare)
 [![CI](https://img.shields.io/github/actions/workflow/status/lijiaqi-AI-Product-Manager/dsh-agent-compare/ci.yml?branch=main&label=CI&logo=github&logoColor=white&style=flat&labelColor=0b1b4f)](https://github.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/actions/workflows/ci.yml)
-[![Node.js ^22.22.2 || ^24.15.0 || >=26.0.0](https://img.shields.io/badge/Node.js-22%20%2F%2024%20%2F%2026%2B-238636?style=flat&labelColor=0b1b4f&logo=nodedotjs&logoColor=white)](https://github.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/blob/main/package.json)
-[![Tested on DSH 0.2.1-rc.5 and 0.2.2-rc.1](https://img.shields.io/badge/DSH%20tested-0.2.1--rc.5%20%2F%200.2.2--rc.1-4d6bfe?style=flat&labelColor=0b1b4f)](https://github.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/blob/main/docs/demo.md)
 [![License: MIT](https://img.shields.io/badge/license-MIT-4d6bfe?style=flat&labelColor=0b1b4f)](https://github.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/blob/main/LICENSE)
 
 **中文** · [English](https://github.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/blob/main/README.en.md) · [日本語](https://github.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/blob/main/README.ja.md) · [한국어](https://github.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/blob/main/README.ko.md) · [Español](https://github.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/blob/main/README.es.md) · [Português (Brasil)](https://github.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/blob/main/README.pt-BR.md) · [Français](https://github.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/blob/main/README.fr.md) · [Deutsch](https://github.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/blob/main/README.de.md)
 
-**同一需求，2–4 版真跑。选风格，盲选或公开对比，再采用。**
+**让同一想法，长出更多实现方案！**
 
-**鲸挑细选**，取「精挑细选」的谐音：一个需求，让 2–4 条 DeepSeek 蓝鲸同时开工，跑完再挑最好的那版。昵称 **「大肥鱼赛马」**：网友管 DeepSeek 的蓝鲸叫「大肥鱼」，这里就是几条大肥鱼在同一条赛道上比，谁做得好，你说了算。
+**鲸挑细选 · AgentCompare** 是 [DeepSeek Harness](https://github.com/deepseek-ai/deepseek-harness)（DSH）的比较插件，安装名为 `dsh-agent-compare`。在主对话里，把同一需求交给 2–4 个版本，比较回答、文件或可运行网页，再选出更符合你想法的一版。支持 **DSH Desktop + Web**，产品界面可切换中文和 English。
 
-**DSH 桌面端 + 浏览器 / Desktop + Web**
+<p align="center"><a href="#demo">看演示</a> · <a href="#ui">看界面</a> · <a href="#tasks">适合的任务</a> · <a href="#install">安装使用</a> · <a href="#support">支持与边界</a> · <a href="#whats-new">版本更新</a></p>
 
-<p align="center"><a href="#demo">真实演示 / Recorded demo</a> · <a href="#ui">界面与体验 / Interface</a> · <a href="#install">安装 / Install</a> · <a href="#whats-new">版本更新 / What's new</a></p>
-
-> **本页对应 3.1.0；npm 已发布版本见上方徽章。** DSH 桌面端与 Web 端，中英双语。在主对话内比较 2–4 版回答、文件或网页；每版的思考和工具调用都能展开查看，回复与成品同等显示。
+> 本文对应 3.1.0 源码；公开安装版本以 npm 徽章为准。2.1.0 与 3.0.0 的改进一并纳入本次更新。
 
 <a id="demo"></a>
+<a id="看一场完整的大肥鱼赛马"></a>
 
-## 看一场完整的大肥鱼赛马
+## 先看一次完整比较
 
-[![固定候选流程示例：各版工作时每版一只随进度注水的 DeepSeek 蓝鲸、实时展开过程，4 版番茄钟页面同时运行，专注 C 时回复与页面并排，选择 C 并点选理由](https://raw.githubusercontent.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/main/docs/media/comparison-preview.gif)](https://github.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/blob/main/docs/media/comparison-workflow.mp4)
+[![真实宿主固定候选演示：蓝鲸与步骤、四版页面、选择理由和保存后继续。](https://raw.githubusercontent.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/main/docs/media/comparison-preview.gif)](https://github.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/blob/main/docs/media/comparison-workflow.mp4)
 
-四条大肥鱼、四版番茄钟：在真实 DSH 宿主里录制的固定候选演示（3.1.0 发布候选源码，中文界面）：
-- 在普通文件夹里让 4 版各写一个番茄钟页面，比较卡片有两颗彗星绕边框奔跑；
-- 各版工作时打开大窗口：每版一只 DeepSeek 蓝鲸随进度注水，头上冒出想法，下方实时滚动最新的步骤；戳一下会回话；展开「过程」，看到思考和写文件；
-- 回复先于页面出现，随后 4 个实时页面都能直接操作；
-- 排除两版，专注 C：回复在左、页面在右；选择后揭晓每版的风格；
-- 点选两个理由（布局、更简洁），主对话的下一条请求会带上它们；保存到新文件夹后，继续主对话。
+真实 DSH 宿主中的固定候选演示：从蓝鲸工作、展开步骤，到体验页面、选择 C 并说明理由，再保存结果、继续主对话。视频剪去等待，其余按原速播放。
 
-视频剪去了等待，保留的部分按原速播放，本地路径已隐藏。
+[完整视频 · 45 秒](https://github.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/blob/main/docs/media/comparison-workflow.mp4) · [录制条件与结果](https://github.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/blob/main/docs/demo.md)
 
-[完整视频（45 秒）](https://github.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/blob/main/docs/media/comparison-workflow.mp4) · [演示条件与结果](https://github.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/blob/main/docs/demo.md)
+[![设置 2–4 版与风格、并行处理、体验选择、审查后继续。功能示意。](https://raw.githubusercontent.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/main/assets/readme/comparison-workflow.webp)](https://raw.githubusercontent.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/main/assets/readme/comparison-workflow.webp)
 
-[四步快速上手](docs/quickstart.md) · [运行中遇到问题](docs/runs-and-recovery.md)
-
-[![设定 2–4 版与风格，并行实跑，体验并选择，审查后继续主对话。功能示意。](https://raw.githubusercontent.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/main/assets/readme/comparison-workflow.webp)](https://raw.githubusercontent.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/main/assets/readme/comparison-workflow.webp)
-
-<p align="center"><sub>功能示意 / Product illustration</sub></p>
-
-AgentCompare 是 [DeepSeek Harness](https://github.com/deepseek-ai/deepseek-harness)（DSH）插件：同一需求，独立完成 2–4 版回答、文件或网页。有可运行页面时实际预览；没有可运行项目时按内容比较，不宣称通过功能测试。先体验再选；盲选时选后才揭晓模型和风格。采用前核对当前项目与候选改动，确认后才写回。
-
-| 你想要 | 在哪里用 | 卡片里会看到 |
-|---|---|---|
-| 网页或界面改版 | Git 仓库里的 Vite、Node 或静态网页项目，也包括子目录 | 可预览时直接操作页面，并查看各版的共同验收结果 |
-| 脚本、文档或其它文件 | 任何目录，包括 DSH 默认工作区 | 各版写出的文件，盲选前就能逐个打开 |
-| 一个回答 | 任何对话 | 排好版的回答并排，可一键复制；选中的那份进入主对话记忆 |
-
-**开始一次比较：**
-1. 桌面版在应用的「插件 → 添加插件」里安装 `dsh-agent-compare`（Web 版见[安装](#install)）。
-2. 点输入框左下角的 **A|B**，选好版本数和风格。
-3. 像平常一样写需求并发送，大肥鱼赛马就开跑了。
-
-[插件目录与安装](https://github.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/blob/main/docs/distribution.md) · [Plugin directories and installation](https://github.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/blob/main/docs/distribution.en.md) · [Listing status / 收录状态](https://github.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/issues/4)
+设定版本与风格 → 并行完成 → 体验并选择 → 审查后继续。流程图为功能示意。
 
 <a id="ui"></a>
 <a id="gallery"></a>
 
 ## 界面与体验
 
-等待、比较、选择，每一步都看得见、点得到。下面的动图和两张截图，都是固定候选在真实 DSH 宿主中的界面。
+下面的截图与动图来自真实 DSH 宿主中的固定候选。它们展示实际界面与操作流程；模型生成质量、耗时和 UI 演示分开说明。
+
+[![真实界面：四版可操作页面及各自的回复和步骤。](https://raw.githubusercontent.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/main/assets/readme/gallery-2.0/02-live-comparison.png)](https://raw.githubusercontent.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/main/assets/readme/gallery-2.0/02-live-comparison.png)
+
+四版页面可以直接操作，回复与页面同等呈现；展开「过程」还能看到思考与工具调用。
 
 - **蓝色液态玻璃。** 半透明玻璃面板、会滑动的选择器，背后是缓慢流动、彼此交融的蓝色光；浅色与深色两套主题，开启「减弱动态效果」后画面保持静止。已测界面状态中的产品文字在两种主题下逐字实测，对比度不低于 4.5:1。
 - **大肥鱼陪你等。** 每版一条 DeepSeek 蓝鲸，随进度注入蓝色的水，两道光沿轮廓奔跑；头上不时冒出想法，戳一下会回话，连戳会转圈、晕头、溅水花。
@@ -81,83 +57,42 @@ AgentCompare 是 [DeepSeek Harness](https://github.com/deepseek-ai/deepseek-harn
 
 步骤内容以模型和宿主实际提供的信息为准；长记录保留首尾，过长文本会标明截断，盲选期间遮盖风格词。鲸鱼水位表示处理阶段，不是质量评分或精确进度百分比。
 
-![大肥鱼特写：两版同时工作，头上冒出想法，连戳五下会跳、转圈、晕头、溅水花，展开「过程」看实时步骤，回复出现后水注满 / Whale close-up: thoughts, a five-poke combo, live steps and the Steps panel, then replies as the whales fill up; controlled candidates in a real DSH host](https://raw.githubusercontent.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/main/assets/readme/whale-closeup.webp)
+[![真实界面动图：蓝鲸注水、想法气泡、连续点击互动与实时步骤。](https://raw.githubusercontent.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/main/assets/readme/whale-closeup.webp)](https://raw.githubusercontent.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/main/assets/readme/whale-closeup.webp)
 
 <p align="center"><sub>大肥鱼特写：固定候选，脚本模型每步等 9 秒，方便看清；有剪辑，其余原速。</sub></p>
 
-![四版页面直接操作 / Four independently interactive pages; controlled candidates in a real DSH host](https://raw.githubusercontent.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/main/assets/readme/gallery-2.0/02-live-comparison.png)
+[![真实界面：回复与选中页面并排，保存结果并记录选择理由。](https://raw.githubusercontent.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/main/assets/readme/gallery-2.0/05-saved-result.png)](https://raw.githubusercontent.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/main/assets/readme/gallery-2.0/05-saved-result.png)
 
-![打招呼得到四种回答 / A greeting answered four ways; controlled candidates in a real DSH host](https://raw.githubusercontent.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/main/assets/readme/gallery-2.0/03-main-conversation.png)
+专注一版时，回复与页面并排；选定理由、保存或审查采用之后，继续原来的主对话。
 
 <details>
-<summary>更多界面：设置、英文回答、手机宽度 / More views</summary>
+<summary>更多真实界面：回答、设置、English 与手机宽度</summary>
 
-![版本、风格与上下文 / Versions, styles and context; controlled candidates in a real DSH host](https://raw.githubusercontent.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/main/assets/readme/gallery-2.0/04-comparison-settings.png)
+[![真实界面：在项目里打招呼，得到四种回答，没有修改或构建项目。](https://raw.githubusercontent.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/main/assets/readme/gallery-2.0/03-main-conversation.png)](https://raw.githubusercontent.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/main/assets/readme/gallery-2.0/03-main-conversation.png)
 
-<p align="center"><img src="https://raw.githubusercontent.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/main/assets/readme/13-english-answers.webp" width="840" alt="Three open English answers from the Three looks quick set: B is the pick, with Layout and More complete as its reasons; controlled candidates in a real DSH host."> <img src="https://raw.githubusercontent.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/main/assets/readme/14-phone-answer.webp" width="260" alt="390-pixel English answer result in the blue glass interface, with the chosen version and a visible Continue conversation action; controlled candidates in a real DSH host."></p>
+[![真实界面：设置版本、风格和主对话上下文。](https://raw.githubusercontent.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/main/assets/readme/gallery-2.0/04-comparison-settings.png)](https://raw.githubusercontent.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/main/assets/readme/gallery-2.0/04-comparison-settings.png)
+
+[![真实英文界面：三版回答并排，B 被选中并记录理由。](https://raw.githubusercontent.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/main/assets/readme/13-english-answers.webp)](https://raw.githubusercontent.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/main/assets/readme/13-english-answers.webp)
+
+<p align="center"><a href="https://raw.githubusercontent.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/main/assets/readme/14-phone-answer.webp"><img src="https://raw.githubusercontent.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/main/assets/readme/14-phone-answer.webp" width="260" alt="真实 390 像素英文界面：回答结果与继续主对话入口。"></a></p>
 
 </details>
 
-[全部 8 张图片与拍摄说明](https://github.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/blob/main/docs/storefront-gallery.md)
+[更多真实界面：回答、设置、English 与手机宽度](https://github.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/blob/main/docs/storefront-gallery.md)
 
-<a id="install"></a>
-
-## 安装
-
-以下命令用于自行运行的 DSH Web profile。桌面版的 `desktop` profile 由应用管理，请使用应用的插件页面。
-
-安装 npm 包到默认 Web profile（公开发布状态见顶部 npm 徽章）：
-
-```bash
-dsh plugin --profile web add dsh-agent-compare
-```
-
-如使用其他自行运行的 profile，请将 `web` 换成实际名称。
-
-**更新后请完整重启。** 桌面版需要完全退出 DSH 后重新打开；Web 版重启对应的 DSH 服务后刷新页面。只刷新界面可能仍在使用旧后台；版本不一致时界面会提示重启。
-
-也可以从源码构建并安装：
-
-```bash
-git clone https://github.com/lijiaqi-AI-Product-Manager/dsh-agent-compare.git
-```
-
-```bash
-cd dsh-agent-compare
-npm ci
-npm pack
-```
-
-```bash
-dsh plugin --profile <你的 profile> add ./dsh-agent-compare-3.1.0.tgz
-```
-
-重启 DSH 后，在**主对话输入框左下角点 A|B**：
-
-1. 输入框上方展开设置条，选择比较方式：「同一模型 · 不同风格」（默认，复用当前模型）或「不同模型 · 同一风格」（每版选一个已配置的模型，共用一种风格）。
-2. 选择版本数（2、3 或 4）和盲选或公开对比；同一模型时为每一版选一种风格，或写一句话自定义。版本越多，用量越多，设置条会提示。
-3. 选择每版生成上限（5–120 分钟），以及各版能看到的「主对话上下文」：不带、最近几轮（默认 3 轮）或手动勾选。设置条会显示各版将收到的完整内容。设置保存在当前对话，重新打开仍可读取。
-4. 在原输入框里写需求并发送。无需填写指令或参数；模式切换只操作自己的命令标记，保留草稿、引用与附件。暂不支持的附件提交会由宿主拒绝并保留原稿。
-5. 同一条对话里出现 A|B 卡片，按结果展示**回答、文件或可运行网页**；有实时页面时可直接点击和输入。新会话尚未显示聊天时间线时，同一份记录直接显示在输入框上方。默认适应窗口、直接交互，也可切换统一桌面／手机视口，或专注某一版（在卡片里按 1–4，按 0 回到全部）。3–4 版时可以「排除」暂时不考虑的版本，剩下的并排放大。「大窗口查看」用于放大检查。
-6. 选择一版或「都不满意」。盲选在选择后揭晓模型和风格，公开对比一开始就显示。项目改动通过验收后，可查看差异并点「审查并采用」；先核对目标与结果，再单独确认写入。非 Git 目录可保存到新文件夹，纯回答无需写入文件。点「继续主对话」返回原输入框，选择和恢复记录仍保留。
-
-设置条中的「试跑内置示例」可选择基础的搜索与清空，或完整的组合筛选与手机适配；选择会记住。它直接新建独立仓库并在本对话中启动，不修改已有草稿，结果只采用到示例仓库。各版分别使用真实模型并消耗用量，较小范围不保证固定耗时。[示例范围与耗时说明](https://github.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/blob/main/docs/first-use.md)。
-
-右上角的**比较记录**与**使用教程**在新建和已有对话中均可打开。历史保留需求、检查、选择、采用与撤销记录；预览停止后可查看验收截图。
-
-安装环境造成失败时，卡片会区分连接、访问权限、磁盘、运行环境、锁文件和超时，给出处理建议。修正环境后点「重新验收 A/B」即可复用已封存代码和原验收定义，不重复生成；上次失败、检查与用量继续保留。锁文件不一致需要修正后开始新的比较，不能靠反复安装或放宽条件通过。
-
-[运行记录、重启与恢复](https://github.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/blob/main/docs/runs-and-recovery.md) · [支持范围](#兼容范围) · [自定义验收](#repository-acceptance-agent-comparejson)
-
-比较结果、你的选择、采用与撤销都会写入这条对话的记忆。之后可以直接问「刚才比较的结果怎么样」，或者在采用的版本上继续改。揭晓后还没采用时可以改选另一版；都不可用时可以「再比较一次」。详见[主对话记忆与上下文](docs/conversation-memory.md)。
-
-[Windows 进程兼容设置](docs/windows-process-compat.md)提供自动与关闭选项，保留原有宿主约束，并在揭晓后显示实际观察到的钩子。
-
-1.3.0：任何目录都能用 A|B。不是 Git 仓库的目录（包括 DSH 默认工作区）会在空白目录里比较各版的页面、文件或回答，选定后保存到当前目录的新文件夹；也支持子目录项目、非 Vite 的 Node 项目和静态网页。详见[目录与项目类型](docs/workspaces-and-projects.md)。
-
-<a id="what-it-is-for"></a>
+<a id="tasks"></a>
+<a id="适合什么任务"></a>
 
 ## 适合什么任务
+
+| 你想完成 | 你会比较 |
+|---|---|
+| 回答、分析或文案 | 不同表达和思路；排好版并排阅读，一键复制。 |
+| 脚本、文档或其它文件 | 各版写出的文件与回复；选择后保存到新文件夹。 |
+| 网页与界面改动 | 可运行时直接操作各版页面，查看共同验收，再审查采用。 |
+
+<details>
+<summary>展开模型、风格与任务选择说明</summary>
 
 界面和交互类任务：好坏要靠人体验，测试只能判断「有没有做到」。比如搜索和筛选、表单流程、落地页、仪表盘布局、组件重设计。
 答案唯一的修 bug 或重构，用单个 Agent 加测试更合适。
@@ -188,53 +123,120 @@ dsh plugin --profile <你的 profile> add ./dsh-agent-compare-3.1.0.tgz
 
 盲选时，开始时会把所选风格随机分配到 A–D，选完才揭晓；公开对比按设置的顺序对应 A–D，比较时直接显示。
 
+</details>
+
+<a id="install"></a>
+
+## 安装
+
+### DSH Desktop
+
+1. 在应用的 **插件 → 添加插件** 中安装 `dsh-agent-compare`。
+2. 完全退出 DSH 后重新打开，使界面与后台一起更新。
+3. 在主对话输入框左下角点 **A|B**，选好版本与风格后直接发送需求。
+
+### 自行运行的 DSH Web
+
+以下命令用于自行运行的 DSH Web profile。桌面版的 `desktop` profile 由应用管理，请使用应用的插件页面。
+
+安装 npm 包到默认 Web profile（公开发布状态见顶部 npm 徽章）：
+
+```bash
+dsh plugin --profile web add dsh-agent-compare
+```
+
+如使用其他自行运行的 profile，请将 `web` 换成实际名称。
+
+**更新后请完整重启。** 桌面版需要完全退出 DSH 后重新打开；Web 版重启对应的 DSH 服务后刷新页面。只刷新界面可能仍在使用旧后台；版本不一致时界面会提示重启。
+
+<details>
+<summary>从源码构建并安装</summary>
+
+也可以从源码构建并安装：
+
+```bash
+git clone https://github.com/lijiaqi-AI-Product-Manager/dsh-agent-compare.git
+```
+
+```bash
+cd dsh-agent-compare
+npm ci
+npm pack
+```
+
+```bash
+dsh plugin --profile <你的 profile> add ./dsh-agent-compare-3.1.0.tgz
+```
+
+</details>
+
+<a id="use"></a>
+
+## 开始第一次比较
+
+重启 DSH 后，在**主对话输入框左下角点 A|B**：
+
+1. 输入框上方展开设置条，选择比较方式：「同一模型 · 不同风格」（默认，复用当前模型）或「不同模型 · 同一风格」（每版选一个已配置的模型，共用一种风格）。
+2. 选择版本数（2、3 或 4）和盲选或公开对比；同一模型时为每一版选一种风格，或写一句话自定义。版本越多，用量越多，设置条会提示。
+3. 选择每版生成上限（5–120 分钟），以及各版能看到的「主对话上下文」：不带、最近几轮（默认 3 轮）或手动勾选。设置条会显示各版将收到的完整内容。设置保存在当前对话，重新打开仍可读取。
+4. 在原输入框里写需求并发送。无需填写指令或参数；模式切换只操作自己的命令标记，保留草稿、引用与附件。暂不支持的附件提交会由宿主拒绝并保留原稿。
+5. 同一条对话里出现 A|B 卡片，按结果展示**回答、文件或可运行网页**；有实时页面时可直接点击和输入。新会话尚未显示聊天时间线时，同一份记录直接显示在输入框上方。默认适应窗口、直接交互，也可切换统一桌面／手机视口，或专注某一版（在卡片里按 1–4，按 0 回到全部）。3–4 版时可以「排除」暂时不考虑的版本，剩下的并排放大。「大窗口查看」用于放大检查。
+6. 选择一版或「都不满意」。盲选在选择后揭晓模型和风格，公开对比一开始就显示。项目改动通过验收后，可查看差异并点「审查并采用」；先核对目标与结果，再单独确认写入。非 Git 目录可保存到新文件夹，纯回答无需写入文件。点「继续主对话」返回原输入框，选择和恢复记录仍保留。
+
+设置条中的「试跑内置示例」可选择基础的搜索与清空，或完整的组合筛选与手机适配；选择会记住。它直接新建独立仓库并在本对话中启动，不修改已有草稿，结果只采用到示例仓库。各版分别使用真实模型并消耗用量，较小范围不保证固定耗时。[示例范围与耗时说明](https://github.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/blob/main/docs/first-use.md)。
+
+右上角的**比较记录**与**使用教程**在新建和已有对话中均可打开。历史保留需求、检查、选择、采用与撤销记录；预览停止后可查看验收截图。
+
+安装环境造成失败时，卡片会区分连接、访问权限、磁盘、运行环境、锁文件和超时，给出处理建议。修正环境后点「重新验收 A/B」即可复用已封存代码和原验收定义，不重复生成；上次失败、检查与用量继续保留。锁文件不一致需要修正后开始新的比较，不能靠反复安装或放宽条件通过。
+
+[运行记录、重启与恢复](https://github.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/blob/main/docs/runs-and-recovery.md) · [支持范围](#兼容范围) · [自定义验收](#repository-acceptance-agent-comparejson)
+
+比较结果、你的选择、采用与撤销都会写入这条对话的记忆。之后可以直接问「刚才比较的结果怎么样」，或者在采用的版本上继续改。揭晓后还没采用时可以改选另一版；都不可用时可以「再比较一次」。详见[主对话记忆与上下文](docs/conversation-memory.md)。
+
+[Windows 进程兼容设置](docs/windows-process-compat.md)提供自动与关闭选项，保留原有宿主约束，并在揭晓后显示实际观察到的钩子。
+
+
+<a id="support"></a>
+
+## 支持范围与使用须知
+
+[![Source version](https://img.shields.io/github/package-json/v/lijiaqi-AI-Product-Manager/dsh-agent-compare?label=source&color=3657f5&style=flat&labelColor=0b1b4f)](https://github.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/blob/main/package.json)
+[![Node.js ^22.22.2 || ^24.15.0 || >=26.0.0](https://img.shields.io/badge/Node.js-22%20%2F%2024%20%2F%2026%2B-238636?style=flat&labelColor=0b1b4f&logo=nodedotjs&logoColor=white)](https://github.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/blob/main/package.json)
+[![Tested on DSH 0.2.1-rc.5 and 0.2.2-rc.1](https://img.shields.io/badge/DSH%20tested-0.2.1--rc.5%20%2F%200.2.2--rc.1-4d6bfe?style=flat&labelColor=0b1b4f)](https://github.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/blob/main/docs/demo.md)
+
+- 实时页面需要可运行的网页项目；纯回答和文件也能比较。普通文件夹、Git 仓库与子目录的差别见项目类型说明。
+- 每版独立消耗模型用量，实际耗时与费用因模型和任务而异；并行不保证更便宜或更快。
+- 采用前先审查，保留撤销与恢复记录。工作副本不是完整虚拟机，文件写入约束由 DSH 提供；读取与网络不隔离，Windows 会显示实际约束范围。
+- 非 Git 目录默认从空白副本生成，不会读取已有文件；要修改已有内容，请先在设置条里启用 Git。结果保存到当前目录的新子文件夹。
+
+[项目类型与普通文件夹](https://github.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/blob/main/docs/workspaces-and-projects.md) · [包管理器执行矩阵](https://github.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/blob/main/docs/package-managers.md) · [完整兼容与 Safari 边界](https://github.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/blob/main/README.en.md#compatibility)
+
+[插件目录与安装](https://github.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/blob/main/docs/distribution.md) · [投稿与收录状态](https://github.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/issues/4)
+
+<a id="details"></a>
+
+## 深入了解：验收、恢复与高级设置
+
 <a id="what-it-does-for-you"></a>
 
-## 它替你做掉的那部分
+### 它替你做掉的那部分
 
 自己多开几个会话也能让模型写几版，真正麻烦的是后面这些，鲸挑细选把它们变成一步：
 
 - 每一版都从**同一基线**出发，包括你还没提交的改动，而你的 index 和文件一点不动；
 - 每个候选分别申请以自己副本为根的宿主写入约束，并披露宿主实际提供的约束范围；
-- 各版使用独立的依赖文件、验收与预览环境，并行处理；清单不变时可复制私有预装结果，无需重复安装；
+- 各版使用独立的依赖文件、验收与预览环境，并行处理；符合下述 npm 预装条件且清单不变时，可获得私有预装结果的独立副本；
 - 用**同一套、事先固定并绑定内容**的验收比较，候选改了验收脚本或测试就不算通过；
 - 选完以后合回项目时，先确认它和你这期间的修改能一起工作；待写入前发现目标发生变化，就停止采用。
 
-<a id="whats-new"></a>
-
-## 版本更新
-
-**3.1.0 新增：**
-- **实时查看步骤，结束后也能回看。** 每版一开始工作，卡片上就有「过程」按钮，按顺序展示模型与宿主提供的思考、工具调用和中间回复；运行中，最新三步还会在鲸鱼下方实时滚动。长记录保留最初 40 条与最近 280 条，省略或截断会明确标注；盲选时点明风格的词显示为 ▒▒。
-- **回复直接显示。** 只回答的版本只显示回答；做了网页或文件的版本，回复和成品同等显示：并排时回复在页面上方，专注某一版时回复在左、页面在右。一版结束，回复立刻出现，不必等页面。
-- **网页直接显示。** 静态网页由插件自己提供，不再依赖单独的进程（桌面版曾在它响应前将其终止）；预览就绪即可操作，HTML 文件结果也可在沙盒页面中查看，并一键切换源码。
-- **更快看到成品。** 一版的处理回合结束且没有后续排队消息后就开始确认完成，无需等待其他插件放开整条会话；在记录的测试宿主中约需 0.35–0.6 秒，旧后台的桌面案例为 41–44 秒。各版工作时依赖就按锁文件预装好，没改依赖的版本直接拿到一份独立副本；检查命令并行执行，页面一启动就能操作。在固定候选的录制环境中，四版 Vite 页面从发送到全部可用约 24–30 秒；这些数字不代表所有模型和机器的耗时。
-- **等待也有趣。** 每版显示 DeepSeek 的蓝色鲸鱼标志：开始是浅蓝的轮廓，随进度注入蓝色的水，越接近完成越满，两道光沿轮廓奔跑；头上不时冒出想法气泡（在做什么、灵感，或者邀你戳一戳）；每走一步喷一下水，鲸鱼会朝鼠标转身，连戳会跳起、转圈、晕头、溅水花，每次都有新台词。运行中的比较有两颗彗星绕着边框奔跑（在较旧的内核或关掉动画的主题里也会动），背景是缓慢流动、彼此交融的蓝色光。
-- **A–D 四种蓝。** 版本标签改为四种不同的蓝色。
-- **更新后提醒重启。** DSH 会立刻换上插件的新界面，但后台仍是启动时加载的版本；两者不一致时，AgentCompare 会提醒你完全退出并重新打开 DSH，而不是悄悄缺少过程和回复。
-- **有了中文名。** 正式中文名「鲸挑细选」，昵称「大肥鱼赛马」。
-- **同时包含 2.1.0（未单独发布）的改进：** 打招呼和提问得到的是回答而不是网页；更亮更通透的液态玻璃、更轻的按钮、会滑动的控件；浅色和深色下，21 个界面状态逐字实测，所有文字对比度不低于 4.5:1。
-
-**2.0.0 新增：**
-- **全新蓝色液态玻璃界面。** 极光与星尘背景、玻璃面板、会滑动的玻璃选择器、液体进度球；选中时光粒迸发，揭晓时光束扫过。深色模式、减弱动效与高对比模式都已适配。
-- **说出为什么选。** 选完点几个理由（布局、配色与质感、交互手感……）或补一句话；主对话接着修改时会保留这些优点。
-- **快速组合。** 一键设好版本数和风格：经典对照、三种视觉、三种取舍、四向探索。
-- **2–4 版，按风格比较。** 八种预设或一句话自定义；也可让不同模型使用同一风格。
-- **盲选或公开对比。** 逐版体验，暂时排除后可恢复，用 1–4 专注、0 回到全部。
-- **回答、文件、网页都可看。** Markdown 排版，复制回答、代码、文件内容和保存路径；明确标记你的选择。
-- **留在主对话。** 比较、选择、采用与撤销写入当前对话记忆；继续交流时可接着修改。
-- **Desktop + Web，中英双语。** 沿用已配置模型；有改动时先审查，再确认采用，并保留撤销与恢复入口。
-
-1.3.0 起，普通文件夹、项目子目录、非 Vite 的 Node 项目、静态网页都能比较，回答和文件也能比较。范围与限制见[更新记录](https://github.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/blob/main/CHANGELOG.md#200)。
-
 <a id="how-it-works"></a>
 
-## 工作流程
+### 工作流程
 
 1. **基线**：用私有临时 index 给工作区拍快照（含未提交和未跟踪文件，不含被忽略的文件），不改你的 index 和文件。
 2. **验收绑定**：从基线确定验收命令（`typecheck` / `lint` / `test` / `build` 脚本 + 页面验收），并记录这些脚本的内容、验收相关文件（`tsconfig*`、`vite`/`vitest` 配置、lint 配置、已有测试文件、`.agent-compare.json`）的内容哈希、锁文件和运行时。仓库根目录的 `.agent-compare.json` 可以加上逐步交互验收（见下文）。
-3. **隔离副本**：为每个候选建一个不带分支的 `git worktree`，放在插件目录（`~/.dsh/agent-compare/w/<run>/<A|B>`），并在副本的 git 管理目录里写入归属标记。
-4. **候选会话**：每个候选是一个独立的 DSH 会话，会话目录就是它的副本。开始前以此目录申请 `workspace-write` 约束，审批策略固定为「从不」。具体约束由宿主执行，包含下文列出的平台限制。每个候选有生成时间上限（界面可选 5 / 15 / 30 / 60 / 120 分钟，默认 30）。到时还没说完成，就停止它，照样封存并验收它已写的改动。生成期间，卡片上的「过程」实时列出它的思考、工具调用和中间说的话，并提示多久没有新动作。它的这一轮结束、且没有排队的消息，就算完成，不等其他插件在会话里的后台工作。
+3. **隔离副本**：为每个候选建一个不带分支的 `git worktree`，放在插件目录（`~/.dsh/agent-compare/w/<run>/<candidate>`），并在副本的 git 管理目录里写入归属标记。
+4. **候选会话**：每个候选是一个独立的 DSH 会话，会话目录就是它的副本。开始前以此目录申请 `workspace-write` 约束，审批策略固定为「从不」。具体约束由宿主执行，包含下文列出的平台限制。每个候选有生成时间上限（界面可选 5 / 15 / 30 / 60 / 90 / 120 分钟，默认 30）。到时还没说完成，就停止它，照样封存并验收它已写的改动。生成期间，卡片上的「过程」实时列出它的思考、工具调用和中间说的话，并提示多久没有新动作。它的这一轮结束、且没有排队的消息，就算完成，不等其他插件在会话里的后台工作。
 5. **封存**：生成结束后会话被关闭，改动被冻结为一个提交和一份完整的二进制补丁（SHA-256），永远排除 `node_modules`。
 6. **验证**：确认副本内容与封存版本一致 → 按锁文件**冻结安装**（失败就失败，不会退回非冻结安装）→ 跑验收命令（最多三条同时运行）→ 用 `vite preview` 运行**构建产物** → 在独立的无头浏览器上下文里跑页面验收（可加载、无控制台错误、逐步交互、桌面和手机截图）→ 再确认验收没有在副本里留下未封存的改动。构建没通过时只提供开发模式预览，并标明「仅供观察」。页面一启动就能在卡片里操作，验收在后台继续。
    - npm 项目有锁文件、根目录没有安装脚本、也没有本地包时，各版生成期间就在这次比较的私有目录（`~/.dsh/agent-compare/d/<run>`）里按基线清单冻结安装一次。依赖清单（`package.json`、锁文件、`.npmrc`）与基线逐字节相同的版本，复制一份属于自己的结果，不再重新安装；其余情况照常安装。各版验收结束后删除这个目录。
@@ -254,7 +256,7 @@ dsh plugin --profile <你的 profile> add ./dsh-agent-compare-3.1.0.tgz
 
 <a id="isolation-and-safety-what-is-and-is-not-guaranteed"></a>
 
-## 隔离与安全：保证什么、不保证什么
+### 隔离与安全：保证什么、不保证什么
 
 封存与验收从原仓库核对副本的 Git 管理目录、双向链接和归属标记，再显式绑定 Git 目录与工作区执行。指针被改写、链接替换、过大或缺失时，拒绝继续封存和重新打开预览；清理会保留归属不明的副本并说明原因。终端遗留的 Git 仓库、index 和配置选择变量不会重定向这些操作，内部显式创建的私有 index 仍可使用。这些检查保护插件的 Git 生命周期操作；项目进程的约束仍由宿主沙箱提供。
 
@@ -279,7 +281,7 @@ DSH 宿主没有提供会话创建接口（`ctx.agents.create`）时，会退回
 
 <a id="configuration-optional"></a>
 
-## 配置（可选）
+### 配置（可选）
 
 在 profile 的 `cordis.patch.yml` 里追加一条以插件 id 为目标的配置：
 
@@ -299,7 +301,7 @@ DSH 宿主没有提供会话创建接口（`ctx.agents.create`）时，会退回
 
 <a id="repository-acceptance-agent-comparejson"></a>
 
-## 仓库自定义验收：`.agent-compare.json`
+### 仓库自定义验收：`.agent-compare.json`
 
 放在仓库根目录、并提交（验收读取的是基线里的版本，候选改它不算数）：
 
@@ -328,7 +330,7 @@ DSH 宿主没有提供会话创建接口（`ctx.agents.create`）时，会退回
 
 <a id="compatibility"></a>
 
-## 兼容范围
+### 兼容范围
 
 | 项目 | 状态 |
 |---|---|
@@ -343,7 +345,7 @@ DSH 宿主没有提供会话创建接口（`ctx.agents.create`）时，会退回
 
 <a id="verified-maintained-through-current-ci-and-the-cases-below"></a>
 
-## 已验证（持续更新，以当前 CI 和所列案例为准）
+### 已验证（持续更新，以当前 CI 和所列案例为准）
 
 以下案例保留各自的源码与工具版本。1.2.0 的测试脚本使用上方基线，历史运行数字不作为新版重新测量的结果。
 
@@ -386,27 +388,27 @@ npm run test:runtime
 
 <a id="not-verified-yet"></a>
 
-## 尚未验证（不要当成已支持）
+### 尚未验证（不要当成已支持）
 
 - 更新后桌面壳的最终显示效果，以及最新版宿主中由外部模型完成「采用后接着提下一项需求」的完整体验。采用说明进入请求上下文已通过本地脚本化适配器检查。
 - 历史 Windows 案例记录到较长工具调用和轮间等待，一轮比较可能超过 30 分钟。各阶段开销尚未定位，不能据此归因为某个插件或服务；最新版仍需要真实外部模型的性能测量。
-- 已测 Chromium／Edge 以外的浏览器与隐私模式。当前已验证候选之间的浏览器状态分离；嵌入 Cookie 和外部标签页仍受浏览器自身策略管理，不构成完整浏览器安全边界。
+- 原生 Safari 的完整平台组合与各浏览器的隐私模式。自动化 WebKit 检查不能代替原生 Safari 验收；当前 Safari 平台结果与限制见 #115。已验证的候选状态分离仍受嵌入 Cookie 和外部标签页的浏览器策略管理，不构成完整浏览器安全边界。
 - 两个模型模式下各家 provider 的实际表现。
 
 <a id="known-limitations"></a>
 
-## 已知限制
+### 已知限制
 
 - 回答和文件按内容比较。实时预览和页面验收需要可运行的网页项目；其它语言的测试只在基线的 package 脚本里运行时才会执行。
 - 非 Git 目录里，各版从空白目录开始，不会读入已有文件。要修改已有文件，请先在设置条里「在此目录启用 Git」；用户主目录、磁盘根目录、系统目录，以及超过 5,000 个文件或 300 MB 的目录不能启用。
-- 每多一版，就多一个模型会话、一次依赖安装和一个预览；4 版的用量约为单版的 4 倍，在依赖较重的项目里也更占磁盘和内存。
+- 每版分别消耗模型用量，并占用独立副本、依赖和可能的预览资源；符合条件的 npm 项目可复用预装结果的独立副本。总用量由模型、任务和版本数共同决定，不能简单等同于单版的固定倍数；依赖较重的项目也更占磁盘和内存。
 - 1.3.0 及更早的版本读到 3–4 版的比较记录时，会把它列为「需处理」，不会据此操作；升级后可正常查看。
 - npm 12 的安装脚本策略可能拦截依赖脚本；需要原生安装步骤的项目须先按项目自身策略允许相关脚本。
 - 单次比较的结果不代表模型或风格的整体优劣。
 
 <a id="development"></a>
 
-## 开发
+### 开发
 
 使用 Node 26.13.0（`.nvmrc`）与 npm 12.2.2。编译和测试基线为 TypeScript 7、React 19.3、Vitest 5；分发的客户端复用 DSH 提供的 React 运行时。
 
@@ -426,6 +428,45 @@ node scripts/preview-ui.mjs
 ```
 
 贡献方式见 [CONTRIBUTING.md](https://github.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/blob/main/CONTRIBUTING.md)，版本变化见 [CHANGELOG.md](https://github.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/blob/main/CHANGELOG.md)。
+
+<a id="whats-new"></a>
+
+## 版本更新
+
+<details>
+<summary>展开 3.1.0 与较早版本的变化</summary>
+
+**3.1.0 新增：**
+- **实时查看步骤，结束后也能回看。** 每版一开始工作，卡片上就有「过程」按钮，按顺序展示模型与宿主提供的思考、工具调用和中间回复；运行中，最新三步还会在鲸鱼下方实时滚动。长记录保留最初 40 条与最近 280 条，省略或截断会明确标注；盲选时点明风格的词显示为 ▒▒。
+- **回复直接显示。** 只回答的版本只显示回答；做了网页或文件的版本，回复和成品同等显示：并排时回复在页面上方，专注某一版时回复在左、页面在右。一版结束，回复立刻出现，不必等页面。
+- **网页直接显示。** 静态网页由插件自己提供，不再依赖单独的进程（桌面版曾在它响应前将其终止）；预览就绪即可操作，HTML 文件结果也可在沙盒页面中查看，并一键切换源码。
+- **更快看到成品。** 一版的处理回合结束且没有后续排队消息后就开始确认完成，无需等待其他插件放开整条会话；在记录的测试宿主中约需 0.35–0.6 秒，旧后台的桌面案例为 41–44 秒。符合条件的 npm 项目可在生成期间冻结预装，清单未变的版本获得独立副本；其余版本按各自条件正常安装；检查命令并行执行，页面一启动就能操作。在固定候选的录制环境中，四版 Vite 页面从发送到全部可用约 24–30 秒；这些数字不代表所有模型和机器的耗时。
+- **等待也有趣。** 每版显示 DeepSeek 的蓝色鲸鱼标志：开始是浅蓝的轮廓，随进度注入蓝色的水，越接近完成越满，两道光沿轮廓奔跑；头上不时冒出想法气泡（在做什么、灵感，或者邀你戳一戳）；每走一步喷一下水，鲸鱼会朝鼠标转身，连戳会跳起、转圈、晕头、溅水花，每次都有新台词。运行中的比较有两颗彗星绕着边框奔跑（较旧内核也有兼容路径，开启减弱动态效果时保持静止），背景是缓慢流动、彼此交融的蓝色光。
+- **A–D 四种蓝。** 版本标签改为四种不同的蓝色。
+- **更新后提醒重启。** DSH 会立刻换上插件的新界面，但后台仍是启动时加载的版本；两者不一致时，AgentCompare 会提醒你完全退出并重新打开 DSH，而不是悄悄缺少过程和回复。
+- **有了中文名。** 正式中文名「鲸挑细选」，昵称「大肥鱼赛马」。
+- **同时包含 2.1.0（未单独发布）的改进：** 支持直接比较问候与问答回复，无需每次生成网页；更亮更通透的液态玻璃、更轻的按钮、会滑动的控件；浅色和深色下，所测 21 个界面状态逐字核对，所有文字对比度不低于 4.5:1。
+
+**2.0.0 新增：**
+- **全新蓝色液态玻璃界面。** 极光与星尘背景、玻璃面板、会滑动的玻璃选择器、液体进度球；选中时光粒迸发，揭晓时光束扫过。深色模式、减弱动效与高对比模式都已适配。
+- **说出为什么选。** 选完点几个理由（布局、配色与质感、交互手感……）或补一句话；主对话接着修改时会保留这些优点。
+- **快速组合。** 一键设好版本数和风格：经典对照、三种视觉、三种取舍、四向探索。
+- **2–4 版，按风格比较。** 八种预设或一句话自定义；也可让不同模型使用同一风格。
+- **盲选或公开对比。** 逐版体验，暂时排除后可恢复，用 1–4 专注、0 回到全部。
+- **回答、文件、网页都可看。** Markdown 排版，复制回答、代码、文件内容和保存路径；明确标记你的选择。
+- **留在主对话。** 比较、选择、采用与撤销写入当前对话记忆；继续交流时可接着修改。
+- **Desktop + Web，中英双语。** 沿用已配置模型；有改动时先审查，再确认采用，并保留撤销与恢复入口。
+
+1.3.0 起，普通文件夹、项目子目录、非 Vite 的 Node 项目、静态网页都能比较，回答和文件也能比较。范围与限制见[更新记录](https://github.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/blob/main/CHANGELOG.md#200)。
+
+</details>
+
+<details>
+<summary>名字的由来</summary>
+
+**鲸挑细选**，取「精挑细选」的谐音：一个需求，让 2–4 条 DeepSeek 蓝鲸同时开工，跑完再挑最好的那版。昵称 **「大肥鱼赛马」**：网友管 DeepSeek 的蓝鲸叫「大肥鱼」，这里就是几条大肥鱼在同一条赛道上比，谁做得好，你说了算。
+
+</details>
 
 <a id="license"></a>
 
