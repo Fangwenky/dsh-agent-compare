@@ -1,7 +1,7 @@
 {
   "schema": "agentcompare.gallery/v1",
   "packageVersion": "3.1.0",
-  "updatedAt": "2026-11-15T16:06:53.593Z",
+  "updatedAt": "2026-11-16T03:46:51.323Z",
   "runtimeSource": "782b8911b823936ca2d3cc15c0ce54a18e9a1f22",
   "hostVersion": "0.2.2-rc.1",
   "browser": "Microsoft Edge 157",
@@ -14,11 +14,11 @@
       "path": "assets/readme/gallery-2.0/01-overview.png",
       "url": "https://raw.githubusercontent.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/main/assets/readme/gallery-2.0/01-overview.png",
       "kind": "illustration",
-      "title": "同一需求，2–4 版真跑 / One task, 2–4 versions",
-      "width": 1921,
-      "height": 819,
-      "bytes": 1593898,
-      "sha256": "907a702447e1c3c9405201f138ae1cf2e848eb88030495b4ed4d3db55c994f76"
+      "title": "让同一想法，长出更多实现方案！ / One idea. More ways to bring it to life.",
+      "width": 1922,
+      "height": 818,
+      "bytes": 1404940,
+      "sha256": "940adf17d737153f00c93707686f8895094eb42fe70e26738f6f3f9fec569d14"
     },
     {
       "path": "assets/readme/gallery-2.0/02-live-comparison.png",
@@ -87,10 +87,10 @@
       "title": "设定、实跑、选择、采用 / Set up, run, choose and adopt",
       "width": 2022,
       "height": 778,
-      "bytes": 1669368,
-      "sha256": "58bc9a56b51d0666f2c21112fa5e94b5cdf462855ce08ff1829c24a6d31e5b33"
+      "bytes": 1639190,
+      "sha256": "08a835d829984a83738f51980c92be7e56bda24ea0e33d0da371657b8725a3e5"
     }
   ],
   "illustrationUpdatedAt": "2026-11-15T16:06:53.593Z",
-  "illustrationNote": "Blue-glass product illustrations show the current name, four blue versions, live steps and reviewed continuation. Illustrations are separate from the six runtime captures and do not change their recorded source."
+  "illustrationNote": "Blue brand setting with natural object and semantic colors: red, yellow and green window controls, a red tomato with green leaves, and red/green review marks. The header slogan is 让同一想法，长出更多实现方案！ / One idea. More ways to bring it to life. Illustrations are distinct from the six unchanged real interface captures and their recorded runtime source."
 }

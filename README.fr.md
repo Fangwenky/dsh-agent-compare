@@ -1,57 +1,51 @@
-[![鲸挑细选 · AgentCompare : quatre minuteurs dans des cartes de verre bleu, C sélectionné ; Desktop et Web, chinois et anglais, étapes en direct. Illustration du produit.](https://raw.githubusercontent.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/main/assets/readme/hero-bilingual.webp)](#install)
+[![鲸挑细选 : quatre minuteurs pour une même idée, tomate rouge C sélectionnée. Illustration du produit.](https://raw.githubusercontent.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/main/assets/readme/hero-bilingual.webp)](#demo)
 
 <a id="agentcompare"></a>
+<a id="agent-compare-dsh-agent-compare--鲸挑细选"></a>
 
-# Agent Compare (dsh-agent-compare) · 鲸挑细选
+# AgentCompare · 鲸挑细选
 
 [![GitHub stars](https://img.shields.io/github/stars/lijiaqi-AI-Product-Manager/dsh-agent-compare?label=GitHub%20Stars&color=3657f5&style=flat&labelColor=0b1b4f&cacheSeconds=300)](https://github.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/stargazers)
 [![npm download/下载量](https://raw.githubusercontent.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/main/assets/statistics/npm-total-badge.svg)](https://www.npmjs.com/package/dsh-agent-compare)
-
-[![Source version](https://img.shields.io/github/package-json/v/lijiaqi-AI-Product-Manager/dsh-agent-compare?label=source&color=3657f5&style=flat&labelColor=0b1b4f)](https://github.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/blob/main/package.json)
 [![npm version](https://img.shields.io/npm/v/dsh-agent-compare?label=npm&color=3657f5&style=flat&labelColor=0b1b4f&logo=npm&logoColor=white)](https://www.npmjs.com/package/dsh-agent-compare)
 [![CI](https://img.shields.io/github/actions/workflow/status/lijiaqi-AI-Product-Manager/dsh-agent-compare/ci.yml?branch=main&label=CI&logo=github&logoColor=white&style=flat&labelColor=0b1b4f)](https://github.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/actions/workflows/ci.yml)
-[![Node.js ^22.22.2 || ^24.15.0 || >=26.0.0](https://img.shields.io/badge/Node.js-22%20%2F%2024%20%2F%2026%2B-238636?style=flat&labelColor=0b1b4f&logo=nodedotjs&logoColor=white)](https://github.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/blob/main/package.json)
-[![Tested on DSH 0.2.1-rc.5 and 0.2.2-rc.1](https://img.shields.io/badge/DSH%20tested-0.2.1--rc.5%20%2F%200.2.2--rc.1-4d6bfe?style=flat&labelColor=0b1b4f)](https://github.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/blob/main/docs/demo.md)
 [![License: MIT](https://img.shields.io/badge/license-MIT-4d6bfe?style=flat&labelColor=0b1b4f)](https://github.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/blob/main/LICENSE)
 
 [中文](https://github.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/blob/main/README.md) · [English](https://github.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/blob/main/README.en.md) · [日本語](https://github.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/blob/main/README.ja.md) · [한국어](https://github.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/blob/main/README.ko.md) · [Español](https://github.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/blob/main/README.es.md) · [Português (Brasil)](https://github.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/blob/main/README.pt-BR.md) · **Français** · [Deutsch](https://github.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/blob/main/README.de.md)
 
-**Une demande, 2 à 4 versions : réponses, fichiers ou pages. Choisissez les styles, comparez et décidez.**
+**Une même idée, plus de façons de lui donner vie !**
 
-Son nom chinois est **鲸挑细选** (*jīng tiāo xì xuǎn*), un jeu de mots sur 精挑细选, « trié sur le volet », où 鲸 veut dire baleine : 2 à 4 baleines DeepSeek s'attaquent à la même tâche et vous gardez la meilleure. Son surnom est **大肥鱼赛马**, « la course des gros poissons » : en Chine, on surnomme la baleine de DeepSeek « le gros poisson », et ici plusieurs courent sur la même piste pendant que vous désignez le gagnant.
+**鲸挑细选 · AgentCompare** est un plugin de comparaison pour [DeepSeek Harness](https://github.com/deepseek-ai/deepseek-harness) (DSH), installé sous le nom `dsh-agent-compare`. Envoyez une demande dans la conversation principale, comparez 2 à 4 réponses, fichiers ou pages exécutables, puis gardez la version qui correspond à votre idée. Il fonctionne dans **DSH Desktop + Web**, avec une interface en chinois ou en anglais.
 
-**DSH 桌面端 + 浏览器 / Desktop + Web**
+<p align="center"><a href="#demo">Voir la démo</a> · <a href="#ui">Voir l’interface</a> · <a href="#tasks">Usages</a> · <a href="#install">Installer</a> · <a href="#support">Support et limites</a> · <a href="#whats-new">Versions</a></p>
 
-<p align="center"><a href="#demo">真实演示 / Recorded demo</a> · <a href="#ui">界面与体验 / Interface</a> · <a href="#install">安装 / Install</a> · <a href="#whats-new">版本更新 / What's new</a></p>
-
-> **Ce guide couvre la version 3.1.0. Le badge npm ci-dessus indique la version publiée.** DSH Desktop et Web, avec interface en chinois et en anglais. Comparez 2 à 4 versions de réponses, de fichiers ou de pages web dans la conversation principale ; ouvrez le raisonnement et les appels d'outils de chaque version, et lisez sa réponse à côté de ce qu'elle a construit.
+> Ce guide décrit le code source 3.1.0 ; le badge npm indique la version publiée.
 
 <a id="demo"></a>
+<a id="voir-une-course-des-gros-poissons-en-entier"></a>
 
-## Voir une course des gros poissons en entier
+## Voir une comparaison en action
 
-[![Exemple à candidats fixes : une baleine par version en cours et les étapes en direct, quatre pages pomodoro en direct, C mise en avant avec sa réponse à côté de sa page, puis choisie](https://raw.githubusercontent.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/main/docs/media/comparison-preview.gif)](https://github.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/blob/main/docs/media/comparison-workflow.mp4)
+[![Candidats contrôlés dans un hôte réel : baleines, étapes, quatre pages, raisons, enregistrement et suite.](https://raw.githubusercontent.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/main/docs/media/comparison-preview.gif)](https://github.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/blob/main/docs/media/comparison-workflow.mp4)
 
-Quatre gros poissons, quatre pages pomodoro : enregistrement à candidats fixes dans un hôte DSH réel, à partir du code candidat de la 3.1.0, avec l'interface chinoise. Quatre versions créent une page pomodoro dans un dossier ordinaire pendant que deux comètes font le tour de la carte de comparaison. La grande fenêtre s'ouvre pendant qu'elles travaillent : une baleine bleue DeepSeek par version, avec des pensées au-dessus de la tête et ses dernières étapes en direct en dessous, qui répond à une pichenette, et les **Steps** ouverts sur la réflexion et l'écriture du fichier en direct. Les réponses arrivent avant les pages, puis les quatre pages en direct sont utilisables. Deux sont mises de côté, C est mise en avant avec sa réponse à gauche de sa page, le choix révèle chaque style et le résultat est enregistré dans un nouveau dossier avant de reprendre la conversation. La vidéo coupe les attentes et garde le reste à vitesse normale. Les chemins locaux sont masqués.
+Enregistrement avec des candidats contrôlés dans un véritable hôte DSH : baleines et étapes en direct, pages interactives, choix de C avec ses raisons, enregistrement puis retour à la conversation. Les attentes sont coupées ; le reste est à vitesse réelle.
 
-Après le choix, deux raisons (mise en page, plus simple) sont cochées ; elles parviennent à la requête suivante de la conversation principale.
+[Vidéo complète · 45 secondes](https://github.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/blob/main/docs/media/comparison-workflow.mp4) · [Conditions et résultats](https://github.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/blob/main/docs/demo.md)
 
-[Vidéo complète (45 secondes)](https://github.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/blob/main/docs/media/comparison-workflow.mp4) · [Conditions et résultats](https://github.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/blob/main/docs/demo.md)
+[![Configurer 2–4 versions et styles, exécuter, essayer et choisir, vérifier puis continuer. Illustration.](https://raw.githubusercontent.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/main/assets/readme/comparison-workflow.webp)](https://raw.githubusercontent.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/main/assets/readme/comparison-workflow.webp)
 
-[![Configurer 2–4 versions et styles, exécuter en parallèle, essayer et choisir, puis vérifier et poursuivre la conversation. Illustration du produit.](https://raw.githubusercontent.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/main/assets/readme/comparison-workflow.webp)](https://raw.githubusercontent.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/main/assets/readme/comparison-workflow.webp)
-
-<p align="center"><sub>功能示意 / Product illustration</sub></p>
-
-AgentCompare est une extension de [DeepSeek Harness](https://github.com/deepseek-ai/deepseek-harness), ou DSH, qui compare 2 à 4 versions d’une même demande : réponses, fichiers ou pages web. Les pages exécutables sont directement manipulables ; les réponses et fichiers se comparent par leur contenu. À l’aveugle, modèle et style sont révélés après le choix ; à découvert, dès le début. Les modifications du projet sont examinées avec leurs vérifications avant application.
-
-[插件目录与安装](https://github.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/blob/main/docs/distribution.md) · [Plugin directories and installation](https://github.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/blob/main/docs/distribution.en.md) · [Listing status / 收录状态](https://github.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/issues/4)
+Définir les versions et les styles → exécuter en parallèle → essayer et choisir → vérifier et continuer. Le schéma est une illustration du produit.
 
 <a id="ui"></a>
 <a id="gallery"></a>
 
 ## Interface et expérience
 
-L'attente, la comparaison et le choix : tout se voit et se touche. L'animation et les deux images ci-dessous montrent des candidats fixes dans un hôte DSH réel.
+Ces captures et animations montrent des candidats contrôlés dans un véritable hôte DSH. Elles présentent l’interface et le parcours réels ; qualité et durée du modèle sont décrites séparément.
+
+[![Interface réelle : quatre pages interactives avec leurs réponses et étapes.](https://raw.githubusercontent.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/main/assets/readme/gallery-2.0/02-live-comparison.png)](https://raw.githubusercontent.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/main/assets/readme/gallery-2.0/02-live-comparison.png)
+
+Utilisez directement les quatre pages et lisez chaque réponse à côté du résultat. Ouvrez Steps pour consulter les réflexions et appels d’outils fournis par l’hôte.
 
 - **Verre liquide bleu.** Des panneaux de verre translucide et des sélecteurs qui glissent, sur une lumière bleue qui s'écoule lentement, en thème clair et sombre ; avec les animations réduites, tout reste immobile. Le texte du produit dans les états d’interface vérifiés a été mesuré glyphe par glyphe dans les deux thèmes, avec un contraste d’au moins 4.5:1.
 - **Un gros poisson vous tient compagnie.** Une baleine bleue DeepSeek par version se remplit d'eau bleue à mesure qu'elle avance, pendant que deux lumières parcourent son bord. Des pensées montent au-dessus de sa tête ; une pichenette et elle répond, encore et elle tourne, vacille et éclabousse.
@@ -63,28 +57,60 @@ L'attente, la comparaison et le choix : tout se voit et se touche. L'animation e
 
 Les étapes affichent les informations fournies par le modèle et l’hôte. Les longs journaux gardent leur début et leur fin, avec les coupures signalées ; les noms de styles sont masqués avant un choix à l’aveugle. Le niveau d’eau représente une étape, pas une note de qualité ni un pourcentage exact.
 
-![大肥鱼特写：两版同时工作，头上冒出想法，连戳五下会跳、转圈、晕头、溅水花，展开「过程」看实时步骤，回复出现后水注满 / Whale close-up: thoughts, a five-poke combo, live steps and the Steps panel, then replies as the whales fill up; controlled candidates in a real DSH host](https://raw.githubusercontent.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/main/assets/readme/whale-closeup.webp)
+[![Animation de l’interface réelle : baleines qui se remplissent, bulles, clics répétés et étapes en direct.](https://raw.githubusercontent.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/main/assets/readme/whale-closeup.webp)](https://raw.githubusercontent.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/main/assets/readme/whale-closeup.webp)
 
 <p align="center"><sub>Gros plan sur les baleines : candidats fixes ; le modèle scripté attend 9 s par étape pour laisser le temps de voir ; avec des coupes, le reste à vitesse normale.</sub></p>
 
-![四版页面直接操作 / Four independently interactive pages; controlled candidates in a real DSH host](https://raw.githubusercontent.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/main/assets/readme/gallery-2.0/02-live-comparison.png)
+[![Interface réelle : réponse à côté de la page choisie, enregistrée avec les raisons du choix.](https://raw.githubusercontent.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/main/assets/readme/gallery-2.0/05-saved-result.png)](https://raw.githubusercontent.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/main/assets/readme/gallery-2.0/05-saved-result.png)
 
-![打招呼得到四种回答 / A greeting answered four ways; controlled candidates in a real DSH host](https://raw.githubusercontent.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/main/assets/readme/gallery-2.0/03-main-conversation.png)
+Au premier plan, la réponse est placée à côté de la page. Gardez les raisons du choix, enregistrez ou vérifiez les modifications, puis retrouvez la même conversation.
 
 <details>
-<summary>Plus de vues : réglages, réponses en anglais, largeur de téléphone</summary>
+<summary>Autres vues réelles : réponses, réglages, anglais et largeur mobile</summary>
 
-![版本、风格与上下文 / Versions, styles and context; controlled candidates in a real DSH host](https://raw.githubusercontent.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/main/assets/readme/gallery-2.0/04-comparison-settings.png)
+[![Interface réelle : une salutation dans un projet reçoit quatre réponses, sans modifier ni compiler.](https://raw.githubusercontent.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/main/assets/readme/gallery-2.0/03-main-conversation.png)](https://raw.githubusercontent.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/main/assets/readme/gallery-2.0/03-main-conversation.png)
 
-<p align="center"><img src="https://raw.githubusercontent.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/main/assets/readme/13-english-answers.webp" width="840" alt="Three open English answers from the Three looks quick set: B is the pick, with Layout and More complete as its reasons; controlled candidates in a real DSH host."> <img src="https://raw.githubusercontent.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/main/assets/readme/14-phone-answer.webp" width="260" alt="390-pixel English answer result in the blue glass interface, with the chosen version and a visible Continue conversation action; controlled candidates in a real DSH host."></p>
+[![Interface réelle : versions, styles et contexte de conversation.](https://raw.githubusercontent.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/main/assets/readme/gallery-2.0/04-comparison-settings.png)](https://raw.githubusercontent.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/main/assets/readme/gallery-2.0/04-comparison-settings.png)
+
+[![Interface réelle en anglais : trois réponses, B sélectionné avec des raisons.](https://raw.githubusercontent.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/main/assets/readme/13-english-answers.webp)](https://raw.githubusercontent.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/main/assets/readme/13-english-answers.webp)
+
+<p align="center"><a href="https://raw.githubusercontent.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/main/assets/readme/14-phone-answer.webp"><img src="https://raw.githubusercontent.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/main/assets/readme/14-phone-answer.webp" width="260" alt="Interface réelle en anglais sur 390 pixels : réponse et action pour poursuivre la conversation."></a></p>
 
 </details>
 
-[Les 8 images et les conditions de capture](https://github.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/blob/main/docs/storefront-gallery.md)
+[Autres vues réelles : réponses, réglages, anglais et largeur mobile](https://github.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/blob/main/docs/storefront-gallery.md)
+
+<a id="tasks"></a>
+<a id="quelles-tâches-comparer-"></a>
+
+## Quelles tâches comparer ?
+
+| Votre tâche | Ce que vous comparez |
+|---|---|
+| Réponse, analyse ou texte | Des approches et formulations différentes, mises en forme côte à côte et copiables. |
+| Scripts, documents ou autres fichiers | Les fichiers et réponses de chaque version ; enregistrez votre choix dans un nouveau dossier. |
+| Pages et modifications d’interface | Essayez les pages exécutables, consultez les critères communs et vérifiez avant adoption. |
+
+<details>
+<summary>Détails des modèles, styles et choix des tâches</summary>
+
+Recherche, filtres, formulaires, pages de présentation, tableaux de bord et refontes de composants : des tâches dont la qualité se juge aussi à l'usage. Pour un défaut à réponse précise ou une transformation mécanique, un seul agent avec des tests est généralement préférable.
+
+Avec le même modèle, attribuez des styles différents à 2–4 versions : huit préréglages ou une consigne personnelle en une ligne. Pour comparer des modèles, choisissez-en 2–4 parmi ceux configurés dans DSH, avec la même demande, le même style et les mêmes vérifications. Dans Git, ils partent du même état du code ; hors Git, de copies vides. Un choix ne constitue pas un classement général des modèles.
+
+</details>
 
 <a id="install"></a>
 
 ## Installation
+
+### DSH Desktop
+
+1. Installez `dsh-agent-compare` via **Plugins → Add plugin** dans l’application.
+2. Quittez complètement DSH, puis rouvrez-le pour actualiser l’interface et le backend.
+3. Cliquez sur **A|B** en bas à gauche de la zone de saisie principale, choisissez versions et styles, puis envoyez la demande.
+
+### DSH Web auto-hébergé
 
 L’interface est disponible en chinois simplifié et en anglais, au choix dans DSH Desktop et Web.
 
@@ -102,6 +128,9 @@ Pour un autre profil autogéré, remplacez `web` par son nom réel.
 
 **Redémarrez complètement après la mise à jour.** Quittez entièrement DSH Desktop, puis rouvrez-le. Pour Web, redémarrez le service DSH concerné et rechargez la page. Un simple rechargement peut conserver l’ancien backend ; un écart de versions déclenche désormais un message.
 
+<details>
+<summary>Compiler et installer depuis les sources</summary>
+
 Vous pouvez aussi compiler et installer depuis les sources :
 
 ```bash
@@ -117,7 +146,12 @@ Remplacez `<your-profile>` par le nom réel de votre profil :
 dsh plugin --profile <your-profile> add ./dsh-agent-compare-3.1.0.tgz
 ```
 
+</details>
+
 Redémarrez DSH. Avant une mise à jour, terminez les comparaisons actives et fermez les anciennes instances qui partagent leurs fichiers. Les modifications simultanées par plusieurs versions de l'extension ne sont pas prises en charge.
+
+<a id="use"></a>
+<a id="première-comparaison"></a>
 
 ## Première comparaison
 
@@ -130,26 +164,87 @@ Redémarrez DSH. Avant une mise à jour, terminez les comparaisons actives et fe
 
 `试跑内置示例` crée une boutique dans un dépôt distinct et ne touche pas à votre projet. L'adoption vise ce dépôt d'exemple. Les commandes `比较记录` — historique — et `使用教程` — guide — sont présentes dans les nouvelles conversations comme dans les anciennes.
 
-## Quelles tâches comparer ?
+Vous pouvez ne partager aucun contexte, inclure les échanges récents ou sélectionner des messages. Par défaut, les 3 derniers échanges sont inclus ; l’extrait est consultable avant l’envoi. Les textes longs sont tronqués avec une indication visible. Toutes les versions reçoivent le même extrait ; le résultat et les raisons du choix rejoignent la conversation d’origine.
 
-Recherche, filtres, formulaires, pages de présentation, tableaux de bord et refontes de composants : des tâches dont la qualité se juge aussi à l'usage. Pour un défaut à réponse précise ou une transformation mécanique, un seul agent avec des tests est généralement préférable.
+<a id="support"></a>
 
-Avec un modèle, une stratégie conserve davantage l'existant et l'autre repense l'interaction. Avec deux modèles, demande, instructions et critères restent communs. Les deux partent du même état de code. Un choix ne constitue pas un classement général des modèles.
+## Compatibilité et limites d’utilisation
+
+[![Source version](https://img.shields.io/github/package-json/v/lijiaqi-AI-Product-Manager/dsh-agent-compare?label=source&color=3657f5&style=flat&labelColor=0b1b4f)](https://github.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/blob/main/package.json)
+[![Node.js ^22.22.2 || ^24.15.0 || >=26.0.0](https://img.shields.io/badge/Node.js-22%20%2F%2024%20%2F%2026%2B-238636?style=flat&labelColor=0b1b4f&logo=nodedotjs&logoColor=white)](https://github.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/blob/main/package.json)
+[![Tested on DSH 0.2.1-rc.5 and 0.2.2-rc.1](https://img.shields.io/badge/DSH%20tested-0.2.1--rc.5%20%2F%200.2.2--rc.1-4d6bfe?style=flat&labelColor=0b1b4f)](https://github.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/blob/main/docs/demo.md)
+
+- Les pages en direct nécessitent un projet Web exécutable ; réponses et fichiers peuvent aussi être comparés. Le guide distingue dossiers ordinaires, dépôts et sous-dossiers.
+- Chaque version consomme de l’usage du modèle. Durée et coût varient selon la tâche et le modèle ; le parallèle ne garantit pas un coût ou une attente réduits.
+- Vérifiez avant adoption et conservez les traces d’annulation et de reprise. Une copie de travail n’est pas une machine virtuelle complète : DSH impose la limite d’écriture, lecture et réseau ne sont pas isolés, et Windows indique la restriction réelle.
+- Hors de Git, les versions démarrent dans des copies vides et ne lisent pas les fichiers existants. Pour les modifier, activez d’abord Git dans les réglages. Le résultat est enregistré dans un nouveau sous-dossier.
+
+[Projets et dossiers ordinaires](https://github.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/blob/main/docs/workspaces-and-projects.md) · [Matrice des gestionnaires](https://github.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/blob/main/docs/package-managers.md) · [Compatibilité et limites de Safari](https://github.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/blob/main/README.en.md#compatibility)
+
+[Annuaires et installation](https://github.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/blob/main/docs/distribution.en.md) · [État des demandes et évaluations](https://github.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/issues/4)
+
+<a id="details"></a>
+
+## Pour aller plus loin : vérifications, reprise et réglages avancés
+
+<details>
+<summary>Ouvrir le fonctionnement complet, les limites des plateformes et les vérifications historiques</summary>
+
+### Exécution et critères communs
+
+Dans un dépôt Git, même sans commit, un index privé capture les changements non commités et les fichiers non suivis, hors exclusions. Dans un dossier hors Git, les versions partent d'un espace de travail privé et vide, et la version choisie peut être enregistrée dans un nouveau sous-dossier. Le HEAD et l'index d'origine sont préservés. Chaque proposition possède son worktree et sa session ; sa différence est conservée sous forme de patch binaire avec empreinte.
+
+Les contrôles proviennent de la base : `typecheck`, `lint`, `test`, `build` et les vérifications de page configurées. Un fichier de verrouillage impose une installation figée ; un échec ne déclenche pas de repli vers une installation non figée. Modifier les tests ou leur configuration pour faire passer sa propre proposition n'autorise pas son adoption directe.
+
+Un [`.agent-compare.json` à la racine](https://github.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/blob/main/examples/vite-react-demo/.agent-compare.json) permet de fixer saisies, clics, texte, visibilité, nombres d'éléments et dimensions. Sa définition est validée avant la génération. Une vérification explicite d'acceptation de page non exécutée bloque l'adoption directe. Si seul le contrôle élémentaire de chargement manque, un avertissement le signale. Réponse HTTP, compilation, fonctionnalité et préférence personnelle sont des résultats distincts.
+
+L’installation anticipée concerne les projets dotés d’un fichier de verrouillage npm, sans autre gestionnaire déclaré, scripts d’installation à la racine ni dépendances locales. Seules les versions dont les manifestes correspondent à la base reçoivent leur propre copie. Sinon, en cas de modification ou d’échec de copie, chaque version effectue son installation normale sans assouplir le verrouillage.
+
+### Adoption, annulation et reprise
+
+L'adoption combine l'arbre de travail actuel et les chemins modifiés par la proposition. Les chevauchements détectés arrêtent l'opération. Si d'autres fichiers ont changé, la combinaison est répétée et vérifiée dans une copie temporaire. Le contenu, HEAD et l'index sont revérifiés avant l'écriture ; un journal de récupération est conservé.
+
+L'adoption dans l'arbre de travail ne crée pas automatiquement de commit, ne pousse rien et ne change pas de branche. Elle prend en compte ajouts, suppressions et fichiers binaires. Une proposition qui ne remplit pas les critères peut être enregistrée dans une branche d'inspection. Lors d'une annulation ou d'une reprise après interruption, les modifications ultérieures détectées restent des conflits à examiner.
+
+Le verrou du dépôt coordonne les opérations de l'extension, sans verrouiller votre éditeur. Suspendez vos modifications pendant la courte phase d'écriture.
+
+### Historique et état des pages
+
+L'historique affiche toutes les conversations par défaut, avec filtre sur la conversation courante, recherche par demande, dépôt ou identifiant et pages de 30 entrées. Résultat, choix et adoption sont conservés. Les notes sont transmises à la même conversation et réessayées si elle est indisponible. Les longs journaux ne sont pas injectés intégralement dans le contexte principal.
+
+Les anciens fichiers ou enregistrements endommagés restent en lecture seule avec une explication. Après un redémarrage, les captures sont identifiées comme des images statiques, pas des applications actives. Une copie conservée peut être relancée. Chaque ouverture utilise une nouvelle adresse `.localhost`, séparant cookies et stockage par origine entre propositions. L'état temporaire de la page est réinitialisé ; l'historique et les captures restent disponibles.
+
+### Compatibilité et limites
+
+Un worktree n'est pas une frontière de sécurité complète. La politique d'écriture de DSH est utilisée ; Windows la signale comme **partial**. Lectures de fichiers et réseau ne sont pas isolés. Les cookies intégrés suivent les politiques du navigateur ; un onglet externe peut employer un autre contexte de stockage. Connexion à un compte, services backend externes et bases partagées sont hors périmètre.
+
+Les tests natifs couvrent Windows, Linux et macOS. La [matrice détaillée](https://github.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/blob/main/README.en.md#compatibility) distingue les configurations npm, pnpm et Yarn vérifiées et les limites Windows/PnP. Safari natif est validé séparément ; les réponses contrôlées des tests ne mesurent pas la qualité ni les performances de modèles externes.
+
+### Durée, coût et preuves
+
+Chaque proposition consomme de la génération. Le parallélisme ne garantit ni gain de temps ni économie. Vous pouvez arrêter une proposition ou les deux. À l'échéance, les modifications déjà écrites sont vérifiées. Si l'usage n'est pas fourni, il est indiqué comme inconnu, jamais comme nul.
+
+La [CI](https://github.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/actions/workflows/ci.yml) couvre Windows/Linux, Node et le navigateur. Certaines intégrations actuelles exécutent de vraies sessions, outils et applications avec un adaptateur local à réponses fixes. Elles vérifient l'exécution du système, pas la qualité d'un modèle externe. Les cas historiques avec un modèle réel correspondent à DSH 0.2.1-rc.3 et ne constituent ni classement ni promesse de performance.
+
+</details>
 
 <a id="whats-new"></a>
 
 ## Nouveautés par version
 
+<details>
+<summary>Évolutions de la version 3.1.0 et des versions précédentes</summary>
+
 **Nouveautés de la version 3.1.0 :**
 - **Chaque étape sous les yeux, en direct et après coup.** Dès qu'une version commence, sa carte a un bouton **Steps**. Ouvert, il montre le travail dans l'ordre : réflexions avec leur durée, appels d'outils (lire ou modifier un fichier, lancer une commande… chacun s'ouvre sur son entrée et sa sortie) et ce qui a été écrit entre deux étapes. Pendant le travail, les trois dernières étapes défilent aussi en direct sous la baleine, et une fois la version terminée, chaque étape reste à un clic. Dans une comparaison à l'aveugle, les mots qui nomment un style s'affichent en ▒▒.
 - **La réponse, directement affichée.** Une version qui ne fait que répondre n'affiche que sa réponse. Une version qui a construit une page ou écrit des fichiers affiche sa réponse avec le même poids : au-dessus de la page côte à côte, et à gauche de la page quand cette version est mise en avant. La réponse apparaît dès que la version a terminé, avant sa page.
 - **Les pages, directement affichées.** Les pages statiques sont servies par l'extension elle-même : elles s'ouvrent dès qu'elles sont écrites, sans processus séparé que l'application de bureau pourrait arrêter. Si une page ne peut toujours pas être servie, un résultat HTML s'affiche quand même comme une page, son code source à un clic.
-- **Des résultats plus tôt.** Une version est considérée comme terminée moins d'une seconde après la fin de son tour ; auparavant, la comparaison attendait que d'autres extensions (de mémoire, par exemple) libèrent la session, environ 40 secondes sur un poste de bureau typique. Les dépendances sont installées depuis le fichier de verrouillage pendant que les versions travaillent, et une version qui ne les a pas modifiées en reçoit sa propre copie ; les vérifications tournent en parallèle et la page est utilisable dès son démarrage. Dans l'environnement d'enregistrement à candidats fixes, quatre versions Vite sont passées de l'envoi à quatre pages utilisables en 24 à 30 secondes environ.
-- **L'attente devient amusante.** Chaque version en cours affiche la baleine bleue de DeepSeek, pâle au début, qui se remplit d'eau bleue à mesure que la version avance pendant que deux lumières parcourent son bord. De temps en temps, une pensée monte au-dessus de sa tête : ce qu'elle fait, une idée, ou une invitation à la taquiner. Elle souffle un jet à chaque pas et se tourne vers le pointeur ; plusieurs pichenettes d'affilée la font sauter, tourner, vaciller et éclabousser, avec une nouvelle réplique à chaque fois. Deux comètes font le tour d'une comparaison en cours (même sur les moteurs plus anciens et avec les thèmes qui arrêtent les animations), sur une lumière bleue qui s'écoule lentement.
+- **Des résultats plus tôt.** La confirmation commence dès que le tour de chaque version se termine sans message en attente, sans attendre que les autres extensions libèrent toute la session. Sur l’hôte de test enregistré, cela prenait 0,35–0,6 s ; les cas de bureau avec l’ancien backend prenaient 41–44 s. Les projets npm éligibles peuvent préparer une installation figée pendant la génération et fournir une copie indépendante à chaque version sans changement de dépendances. Les vérifications sont parallèles et la page est utilisable dès son démarrage. Dans l’enregistrement à candidats fixes, les quatre pages Vite étaient disponibles environ 24–30 s après l’envoi. Ce n’est ni une mesure de la vitesse ou de la qualité des modèles externes ni une garantie pour d’autres machines.
+- **L'attente devient amusante.** Chaque version en cours affiche la baleine bleue de DeepSeek, pâle au début, qui se remplit d'eau bleue à mesure que la version avance pendant que deux lumières parcourent son bord. De temps en temps, une pensée monte au-dessus de sa tête : ce qu'elle fait, une idée, ou une invitation à la taquiner. Elle souffle un jet à chaque pas et se tourne vers le pointeur ; plusieurs pichenettes d'affilée la font sauter, tourner, vaciller et éclabousser, avec une nouvelle réplique à chaque fois. Deux comètes font le tour d'une comparaison en cours (un mode de repli couvre les anciens moteurs ; la réduction des animations les immobilise), sur une lumière bleue qui s'écoule lentement.
 - **Quatre bleus pour A–D.** Les étiquettes des versions sont quatre bleus différents.
 - **Un rappel pour redémarrer DSH.** DSH remplace aussitôt l'interface d'une extension mais garde le serveur chargé au démarrage. Quand les deux diffèrent, AgentCompare vous demande de quitter puis de rouvrir DSH, au lieu de perdre en silence les étapes et les réponses.
 - **Un nom chinois.** Le nom officiel est « 鲸挑细选 », le surnom « 大肥鱼赛马 ».
-- **Inclut aussi la 2.1.0, qui n'a pas été publiée seule :** un bonjour ou une question reçoit des réponses plutôt que des pages ; un verre liquide plus clair et plus lumineux, des boutons plus légers et des contrôles qui glissent ; dans les deux thèmes, tout le texte de 21 états de l'interface atteint au moins 4.5:1.
+- **Inclut aussi la 2.1.0, qui n'a pas été publiée seule :** un bonjour ou une question reçoit des réponses plutôt que des pages ; un verre liquide plus clair et plus lumineux, des boutons plus légers et des contrôles qui glissent ; dans les deux thèmes, le texte des 21 états d’interface vérifiés atteignait au moins 4.5:1.
 
 **Nouveautés de la version 2.0.0 :** comparez **2, 3 ou 4 versions** à la fois. Chaque version peut recevoir un **style** (ampleur : prudent, audacieux ; apparence : minimaliste, soigné, vivant ; priorité : accessible, rigoureux, léger ; ou une ligne personnalisée). Comparez **à l'aveugle** (styles révélés au choix) ou **à découvert** (styles affichés dès le début). Avec trois ou quatre versions, **mettez de côté** celles que vous écartez pour comparer les autres côte à côte ; dans la carte, les touches 1 à 4 mettent une version au premier plan.
 - **Nouvelle interface en verre liquide bleu.** Aurore et poussière d'étoiles derrière des panneaux de verre, une lentille de verre qui glisse entre les options et une progression liquide ; un éclat de lumière au choix et un balayage lumineux à la révélation. Mode sombre, mouvement réduit et contraste élevé pris en charge.
@@ -161,39 +256,14 @@ Avec un modèle, une stratégie conserve davantage l'existant et l'autre repense
 - **Poursuivez dans la conversation.** Comparaisons, choix, adoption et annulation restent dans la mémoire de la conversation actuelle.
 - **Desktop + Web, interface chinoise et anglaise.** Réutilisez les modèles configurés et examinez les changements avant l'adoption, avec annulation et récupération.
 
-## Exécution et critères communs
+</details>
 
-Dans un dépôt Git, même sans commit, un index privé capture les changements non commités et les fichiers non suivis, hors exclusions. Dans un dossier hors Git, les deux versions partent d'un espace de travail privé et vide, et la version choisie peut être enregistrée dans un nouveau sous-dossier. Le HEAD et l'index d'origine sont préservés. Chaque proposition possède son worktree et sa session ; sa différence est conservée sous forme de patch binaire avec empreinte.
+<details>
+<summary>À propos du nom</summary>
 
-Les contrôles proviennent de la base : `typecheck`, `lint`, `test`, `build` et les vérifications de page configurées. Un fichier de verrouillage impose une installation figée ; un échec ne déclenche pas de repli vers une installation non figée. Modifier les tests ou leur configuration pour faire passer sa propre proposition n'autorise pas son adoption directe.
+Son nom chinois est **鲸挑细选** (*jīng tiāo xì xuǎn*), un jeu de mots sur 精挑细选, « trié sur le volet », où 鲸 veut dire baleine : 2 à 4 baleines DeepSeek s'attaquent à la même tâche et vous gardez la meilleure. Son surnom est **大肥鱼赛马**, « la course des gros poissons » : en Chine, on surnomme la baleine de DeepSeek « le gros poisson », et ici plusieurs courent sur la même piste pendant que vous désignez le gagnant.
 
-Un [`.agent-compare.json` à la racine](https://github.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/blob/main/examples/vite-react-demo/.agent-compare.json) permet de fixer saisies, clics, texte, visibilité, nombres d'éléments et dimensions. Sa définition est validée avant la génération. Une vérification explicite d'acceptation de page non exécutée bloque l'adoption directe. Si seul le contrôle élémentaire de chargement manque, un avertissement le signale. Réponse HTTP, compilation, fonctionnalité et préférence personnelle sont des résultats distincts.
-
-## Adoption, annulation et reprise
-
-L'adoption combine l'arbre de travail actuel et les chemins modifiés par la proposition. Les chevauchements détectés arrêtent l'opération. Si d'autres fichiers ont changé, la combinaison est répétée et vérifiée dans une copie temporaire. Le contenu, HEAD et l'index sont revérifiés avant l'écriture ; un journal de récupération est conservé.
-
-L'adoption dans l'arbre de travail ne crée pas automatiquement de commit, ne pousse rien et ne change pas de branche. Elle prend en compte ajouts, suppressions et fichiers binaires. Une proposition qui ne remplit pas les critères peut être enregistrée dans une branche d'inspection. Lors d'une annulation ou d'une reprise après interruption, les modifications ultérieures détectées restent des conflits à examiner.
-
-Le verrou du dépôt coordonne les opérations de l'extension, sans verrouiller votre éditeur. Suspendez vos modifications pendant la courte phase d'écriture.
-
-## Historique et état des pages
-
-L'historique affiche toutes les conversations par défaut, avec filtre sur la conversation courante, recherche par demande, dépôt ou identifiant et pages de 30 entrées. Résultat, choix et adoption sont conservés. Les notes sont transmises à la même conversation et réessayées si elle est indisponible. Les longs journaux ne sont pas injectés intégralement dans le contexte principal.
-
-Les anciens fichiers ou enregistrements endommagés restent en lecture seule avec une explication. Après un redémarrage, les captures sont identifiées comme des images statiques, pas des applications actives. Une copie conservée peut être relancée. Chaque ouverture utilise une nouvelle adresse `.localhost`, séparant cookies et stockage par origine entre propositions. L'état temporaire de la page est réinitialisé ; l'historique et les captures restent disponibles.
-
-## Compatibilité et limites
-
-Un worktree n'est pas une frontière de sécurité complète. La politique d'écriture de DSH est utilisée ; Windows la signale comme **partial**. Lectures de fichiers et réseau ne sont pas isolés. Les cookies intégrés suivent les politiques du navigateur ; un onglet externe peut employer un autre contexte de stockage. Connexion à un compte, services backend externes et bases partagées sont hors périmètre.
-
-Les tests natifs couvrent Windows, Linux et macOS. La [matrice détaillée](https://github.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/blob/main/README.en.md#compatibility) distingue les configurations npm, pnpm et Yarn vérifiées et les limites Windows/PnP. Safari natif est validé séparément ; les réponses contrôlées des tests ne mesurent pas la qualité ni les performances de modèles externes.
-
-## Durée, coût et preuves
-
-Chaque proposition consomme de la génération. Le parallélisme ne garantit ni gain de temps ni économie. Vous pouvez arrêter une proposition ou les deux. À l'échéance, les modifications déjà écrites sont vérifiées. Si l'usage n'est pas fourni, il est indiqué comme inconnu, jamais comme nul.
-
-La [CI](https://github.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/actions/workflows/ci.yml) couvre Windows/Linux, Node et le navigateur. Certaines intégrations actuelles exécutent de vraies sessions, outils et applications avec un adaptateur local à réponses fixes. Elles vérifient l'exécution du système, pas la qualité d'un modèle externe. Les cas historiques avec un modèle réel correspondent à DSH 0.2.1-rc.3 et ne constituent ni classement ni promesse de performance.
+</details>
 
 ## Contribution et licence
 

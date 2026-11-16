@@ -10,9 +10,9 @@ Compare 2–4 answers, files or live pages in the main conversation on DSH Deskt
 
 The first and last images are product illustrations. The six interface captures use controlled candidates in an isolated DSH Web profile at desktop window sizes. They show real pages, answers and persisted records, not an external-model benchmark. No user Desktop profile was used for these captures.
 
-## 1. 同一需求，2–4 版真跑 / One task, 2–4 versions
+## 1. 让同一想法，长出更多实现方案！ / One idea. More ways to bring it to life.
 
-![同一需求，2–4 版真跑 / One task, 2–4 versions](https://raw.githubusercontent.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/main/assets/readme/gallery-2.0/01-overview.png)
+![让同一想法，长出更多实现方案！ / One idea. More ways to bring it to life.](https://raw.githubusercontent.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/main/assets/readme/gallery-2.0/01-overview.png)
 
 ## 2. 四版实时页面、过程与回复 / Four live pages with steps and replies
 
