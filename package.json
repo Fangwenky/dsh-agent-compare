@@ -1,6 +1,6 @@
 {
   "name": "dsh-agent-compare",
-  "version": "3.1.0",
+  "version": "3.1.1",
   "description": "让同一想法，长出更多实现方案！在 DSH 主对话里比较回答、文件与网页，选风格，盲选或公开对比，再审查采用。Compare 2–4 answers, files or live pages in DeepSeek Harness (DSH) Desktop and Web, then review and adopt.",
   "type": "module",
   "packageManager": "npm@12.2.2",
@@ -56,6 +56,7 @@
     "build": "node -e \"require('node:fs').rmSync('lib',{recursive:true,force:true})\" && tsc -p tsconfig.json && tsc -p tsconfig.client.json && node scripts/wrap-client.mjs",
     "typecheck": "tsc -p tsconfig.json --noEmit && tsc -p tsconfig.client.json --noEmit",
     "check:docs": "node scripts/check-docs.mjs",
+    "check:publish-readme": "node scripts/check-publish-readme.mjs",
     "test": "npm run build && vitest run",
     "test:coverage": "npm run build && vitest run --coverage",
     "test:ui": "npm run build && node scripts/test-ui.mjs && node scripts/test-locales.mjs",

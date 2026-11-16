@@ -21,7 +21,7 @@ const repositoryFiles = `${repository}/blob/main/`
 const repositoryMedia = repository.replace('https://github.com/', 'https://raw.githubusercontent.com/') + '/main/'
 const expectedTarball = `${manifest.name}-${manifest.version}.tgz`
 const contents = new Map(await Promise.all([...guides, ...referenceDocs].map(async file => [file, await readFile(path.join(root, file), 'utf8')])))
-assert.equal(contents.get('README.zh.md'), chineseGuideAlias(contents.get('README.md')), 'Run node scripts/sync-chinese-guide.mjs to update the Chinese section entry points')
+assert.equal(contents.get('README.zh.md'), chineseGuideAlias(contents.get('README.md')), 'Run node scripts/sync-chinese-guide.mjs to update the complete Chinese compatibility guide')
 
 const withoutCode = source => source.replace(/^```[^\n]*\n[\s\S]*?^```[^\n]*$/gm, '')
 const slug = heading => heading.toLowerCase().replace(/<[^>]*>/g, '').replace(/[^\p{L}\p{N}_\-\s]/gu, '').replace(/\s/g, '-')
@@ -109,5 +109,6 @@ const files = new Set(packages[0].files.map(file => file.path))
 for (const file of [...guides, ...referenceDocs.filter(file => !repositoryOnlyDocs.has(file)), ...packagedMedia, 'CONTRIBUTING.md', 'LICENSE']) assert.ok(files.has(file), `Package omits ${file}`)
 for (const file of repositoryOnlyDocs) assert.ok(!files.has(file), `Package repeats repository-only evidence or distribution notes: ${file}`)
 for (const file of files) assert.ok(!repositoryOnlyMedia.has(file) && !file.startsWith('assets/readme/') && !file.startsWith('docs/measurements/'), 'Presentation-only media and research evidence must stay out of the runtime package')
-assert.ok(packages[0].size <= 650_000, 'Compressed runtime package exceeds the 650 kB distribution budget')
+assert.ok(packages[0].size <= 675_000, 'Compressed runtime package exceeds the 675 kB distribution budget')
+execFileSync(process.execPath, [path.join(root, 'scripts/check-publish-readme.mjs')], { cwd: root, stdio: 'inherit' })
 console.log(JSON.stringify({ languages: canonical.length, guides: guides.length, referenceDocs: referenceDocs.length, localLinks, version: manifest.version, sourceInstallArchivesCurrent: true, packagedGuides: guides.length, recordedAssetsVerified: recorded.files.length, packageBytes: packages[0].size }))

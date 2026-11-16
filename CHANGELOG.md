@@ -1,5 +1,10 @@
 # Changelog
 
+## 3.1.1
+
+- Keep the Chinese compatibility README as a complete synchronized guide. npm can select a localized Markdown README when publishing an archive; this prevents the short section index from replacing the package landing page.
+- Check the actual npm-selected archive README against the canonical guide before publication. The complete mirror adds about 17 kB compressed documentation; the package budget is now 675 kB. Runtime behavior is unchanged.
+
 ## 3.1.0
 
 - Reorganize all eight language guides around the demo, real interface captures, tasks and first use; move version history and technical depth later. Update the chosen slogan and illustrations, preserve natural accent colors, and correct legacy two-version wording, warm-install scope, context truncation and performance limits.
