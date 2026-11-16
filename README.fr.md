@@ -19,7 +19,7 @@
 
 <p align="center"><a href="#demo">Voir la démo</a> · <a href="#ui">Voir l’interface</a> · <a href="#tasks">Usages</a> · <a href="#install">Installer</a> · <a href="#support">Support et limites</a> · <a href="#whats-new">Versions</a></p>
 
-> Ce guide décrit le code source 3.1.0 ; le badge npm indique la version publiée.
+> Ce guide décrit le code source 3.1.1 ; le badge npm indique la version publiée.
 
 <a id="demo"></a>
 <a id="voir-une-course-des-gros-poissons-en-entier"></a>
@@ -143,7 +143,7 @@ npm pack
 Remplacez `<your-profile>` par le nom réel de votre profil :
 
 ```bash
-dsh plugin --profile <your-profile> add ./dsh-agent-compare-3.1.0.tgz
+dsh plugin --profile <your-profile> add ./dsh-agent-compare-3.1.1.tgz
 ```
 
 </details>
@@ -228,7 +228,10 @@ La [CI](https://github.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/actions/
 ## Nouveautés par version
 
 <details>
-<summary>Évolutions de la version 3.1.0 et des versions précédentes</summary>
+<summary>Évolutions de la version 3.1.1 et des versions précédentes</summary>
+
+**3.1.1 :** L’entrée de compatibilité en chinois reprend le guide complet. Un contrôle hors ligne vérifie le README choisi par npm dans l’archive réelle, pour éviter une page de paquet limitée à un sommaire. La comparaison et l’adoption restent identiques.
+
 
 **Nouveautés de la version 3.1.0 :**
 - **Chaque étape sous les yeux, en direct et après coup.** Dès qu'une version commence, sa carte a un bouton **Steps**. Ouvert, il montre le travail dans l'ordre : réflexions avec leur durée, appels d'outils (lire ou modifier un fichier, lancer une commande… chacun s'ouvre sur son entrée et sa sortie) et ce qui a été écrit entre deux étapes. Pendant le travail, les trois dernières étapes défilent aussi en direct sous la baleine, et une fois la version terminée, chaque étape reste à un clic. Dans une comparaison à l'aveugle, les mots qui nomment un style s'affichent en ▒▒.

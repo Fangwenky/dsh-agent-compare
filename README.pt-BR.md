@@ -19,7 +19,7 @@
 
 <p align="center"><a href="#demo">Ver demonstração</a> · <a href="#ui">Ver interface</a> · <a href="#tasks">Tarefas</a> · <a href="#install">Instalar</a> · <a href="#support">Suporte e limites</a> · <a href="#whats-new">Versões</a></p>
 
-> Este guia descreve o código-fonte 3.1.0; o selo npm mostra a versão publicada.
+> Este guia descreve o código-fonte 3.1.1; o selo npm mostra a versão publicada.
 
 <a id="demo"></a>
 <a id="veja-uma-corrida-do-peixe-gordo-inteira"></a>
@@ -143,7 +143,7 @@ npm pack
 Substitua `<your-profile>` pelo nome real do seu perfil:
 
 ```bash
-dsh plugin --profile <your-profile> add ./dsh-agent-compare-3.1.0.tgz
+dsh plugin --profile <your-profile> add ./dsh-agent-compare-3.1.1.tgz
 ```
 
 </details>
@@ -228,7 +228,10 @@ A [CI](https://github.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/actions/w
 ## Novidades por versão
 
 <details>
-<summary>Mudanças da 3.1.0 e de versões anteriores</summary>
+<summary>Mudanças da 3.1.1 e de versões anteriores</summary>
+
+**3.1.1:** A entrada de compatibilidade em chinês espelha o guia completo. Uma verificação offline confere o README que o npm escolhe do arquivo real, evitando que só um índice apareça na página do pacote. Comparação e aplicação não mudam.
+
 
 **Novidades da versão 3.1.0:**
 - **Cada passo à vista, ao vivo e depois.** Assim que uma versão começa, o cartão ganha um botão **Steps**. Ao abrir, o trabalho aparece em ordem: raciocínios com o tempo de cada um, chamadas de ferramentas (ler ou editar um arquivo, executar um comando…; cada uma abre com entrada e saída) e o que foi escrito entre os passos. Enquanto trabalha, os três passos mais recentes também passam ao vivo sob a baleia, e depois de terminar cada passo fica a um clique. Numa comparação às cegas, palavras que nomeiam um estilo aparecem como ▒▒.

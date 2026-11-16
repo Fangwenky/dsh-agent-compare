@@ -1,6 +1,7 @@
 [![鲸挑细选：同一想法的四种番茄钟设计，红色番茄版本 C 已选中。功能示意。](https://raw.githubusercontent.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/main/assets/readme/hero-bilingual.webp)](#demo)
 
 <a id="agentcompare"></a>
+<a id="agentcompare-中文指南"></a>
 <a id="鲸挑细选--agent-compare-dsh-agent-compare"></a>
 
 # 鲸挑细选 · AgentCompare
@@ -19,7 +20,7 @@
 
 <p align="center"><a href="#demo">看演示</a> · <a href="#ui">看界面</a> · <a href="#tasks">适合的任务</a> · <a href="#install">安装使用</a> · <a href="#support">支持与边界</a> · <a href="#whats-new">版本更新</a></p>
 
-> 本文对应 3.1.0 源码；公开安装版本以 npm 徽章为准。2.1.0 与 3.0.0 的改进一并纳入本次更新。
+> 本文对应 3.1.1 源码；公开安装版本以 npm 徽章为准。3.1.0 已包含 2.1.0 与 3.0.0 的改进。
 
 <a id="demo"></a>
 <a id="看一场完整的大肥鱼赛马"></a>
@@ -165,7 +166,7 @@ npm pack
 ```
 
 ```bash
-dsh plugin --profile <你的 profile> add ./dsh-agent-compare-3.1.0.tgz
+dsh plugin --profile <你的 profile> add ./dsh-agent-compare-3.1.1.tgz
 ```
 
 </details>
@@ -434,7 +435,10 @@ node scripts/preview-ui.mjs
 ## 版本更新
 
 <details>
-<summary>展开 3.1.0 与较早版本的变化</summary>
+<summary>展开 3.1.1 与较早版本的变化</summary>
+
+**3.1.1：** 中文兼容地址同步完整指南；发布前检查 npm 从实际安装包选取的说明正文，避免官网只出现章节目录。此补丁不改变比较和采用行为。
+
 
 **3.1.0 新增：**
 - **实时查看步骤，结束后也能回看。** 每版一开始工作，卡片上就有「过程」按钮，按顺序展示模型与宿主提供的思考、工具调用和中间回复；运行中，最新三步还会在鲸鱼下方实时滚动。长记录保留最初 40 条与最近 280 条，省略或截断会明确标注；盲选时点明风格的词显示为 ▒▒。

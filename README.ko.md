@@ -19,7 +19,7 @@
 
 <p align="center"><a href="#demo">데모</a> · <a href="#ui">UI 보기</a> · <a href="#tasks">적합한 작업</a> · <a href="#install">설치</a> · <a href="#support">지원과 제한</a> · <a href="#whats-new">버전 기록</a></p>
 
-> 이 가이드는 3.1.0 소스를 설명합니다. 공개된 버전은 npm 배지에서 확인하세요.
+> 이 가이드는 3.1.1 소스를 설명합니다. 공개된 버전은 npm 배지에서 확인하세요.
 
 <a id="demo"></a>
 <a id="大肥鱼赛马-한-판-전체-보기"></a>
@@ -143,7 +143,7 @@ npm pack
 `<your-profile>`을 실제 프로필 이름으로 바꿉니다.
 
 ```bash
-dsh plugin --profile <your-profile> add ./dsh-agent-compare-3.1.0.tgz
+dsh plugin --profile <your-profile> add ./dsh-agent-compare-3.1.1.tgz
 ```
 
 </details>
@@ -228,7 +228,10 @@ Windows, Linux, macOS에서 네이티브 검증을 실행합니다. npm, pnpm, Y
 ## 업데이트 내역
 
 <details>
-<summary>3.1.0과 이전 버전의 변경 사항</summary>
+<summary>3.1.1과 이전 버전의 변경 사항</summary>
+
+**3.1.1:** 중국어 호환 주소에 전체 가이드를 동기화합니다. 게시 전 실제 패키지에서 npm이 선택하는 README를 검사해 목차만 소개 페이지에 표시되는 문제를 방지합니다. 비교와 적용 동작은 바뀌지 않습니다.
+
 
 **3.1.0의 새로운 기능:**
 - **모든 단계를, 실행 중에도 끝난 뒤에도.** 버전이 작업을 시작하면 카드에 「Steps」 버튼이 생깁니다. 펼치면 한 일이 순서대로 나옵니다. 걸린 시간이 붙은 생각, 도구 호출(파일 읽기, 파일 편집, 명령 실행 등, 펼치면 입력과 출력이 보입니다), 그 사이에 쓴 말입니다. 작업 중에는 최신 3단계가 고래 아래에서 실시간으로 흐르고, 끝난 뒤에도 모든 단계를 클릭 한 번으로 다시 볼 수 있습니다. 블라인드 비교에서는 스타일을 드러내는 말이 ▒▒로 표시됩니다.

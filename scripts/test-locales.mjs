@@ -104,8 +104,15 @@ try {
     for (const state of ['compose', 'judging', 'history', 'recovery', 'retained', 'mixed-preview']) {
       await open(state)
       if (state === 'compose') {
-        await page.locator('.ac-composer-settings details > summary').filter({ hasText: 'Advanced Windows settings' }).click()
+        // The conversation preview resolves separately and can move the next
+        // disclosure while a pointer click is being dispatched on narrow screens.
+        await page.locator('.ac-context-summary > details > summary').filter({ hasText: 'See what is included' }).waitFor()
+        const summary = page.locator('.ac-composer-settings details > summary').filter({ hasText: 'Advanced Windows settings' })
+        // A native disclosure may already be open after browser state restoration.
+        // Open it when needed instead of blindly toggling it closed.
+        if (!await summary.locator('..').evaluate(details => details.open)) await summary.click()
         const control = page.getByRole('combobox', { name: 'Windows process compatibility', exact: true })
+        await control.waitFor({ state: 'visible' })
         const label = await control.locator('..').evaluate(element => [...element.childNodes].filter(node => node.nodeType === Node.TEXT_NODE).map(node => node.textContent).join('').trim())
         check(label === 'Process compatibility', `visible advanced-setting label must be English at ${width}px: ${label}`)
       }

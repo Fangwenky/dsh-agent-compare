@@ -19,7 +19,7 @@
 
 <p align="center"><a href="#demo">Watch the demo</a> · <a href="#ui">Explore the UI</a> · <a href="#tasks">Tasks</a> · <a href="#install">Install</a> · <a href="#support">Support and limits</a> · <a href="#whats-new">Version history</a></p>
 
-> This guide describes the 3.1.0 source; the npm badge shows the published version.
+> This guide describes the 3.1.1 source; the npm badge shows the published version.
 
 <a id="demo"></a>
 <a id="watch-a-whole-big-fat-fish-race"></a>
@@ -166,7 +166,7 @@ npm pack
 ```
 
 ```bash
-dsh plugin --profile <your-profile> add ./dsh-agent-compare-3.1.0.tgz
+dsh plugin --profile <your-profile> add ./dsh-agent-compare-3.1.1.tgz
 ```
 
 </details>
@@ -399,7 +399,10 @@ See [CONTRIBUTING.md](https://github.com/lijiaqi-AI-Product-Manager/dsh-agent-co
 ## What's new
 
 <details>
-<summary>Changes in 3.1.0 and earlier releases</summary>
+<summary>Changes in 3.1.1 and earlier releases</summary>
+
+**3.1.1:** The Chinese compatibility entry mirrors the complete guide. An offline check verifies the README npm selects from the actual archive, preventing a section index from becoming the package landing page. Comparison and adoption behavior is unchanged.
+
 
 **New in 3.1.0:**
 - **Steps, live and afterwards.** Each version has a **Steps** button from the start, showing thoughts, tool calls and replies provided by the model and host. Its newest three steps also scroll under the whale while it works. Long records retain the first 40 and latest 280 items and mark omissions or shortened text. Before a blind pick, words that name a style show as ▒▒.
