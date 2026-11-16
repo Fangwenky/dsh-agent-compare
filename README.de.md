@@ -187,9 +187,6 @@ Teilen Sie keinen Kontext, die letzten Gesprächsrunden oder ausgewählte Nachri
 
 ## Mehr erfahren: Prüfungen, Wiederherstellung und erweiterte Einstellungen
 
-<details>
-<summary>Vollständiges Verhalten, Plattformgrenzen und historische Prüfungen öffnen</summary>
-
 ### Ausführung und gemeinsame Prüfungen
 
 In einem Git-Repository, auch ohne Commit, erfasst ein privater Index uncommittete Änderungen und nicht verfolgte Dateien, mit den vorgesehenen Ausschlüssen. In einem Ordner außerhalb von Git beginnen alle Versionen in einem leeren, privaten Arbeitsbereich; die gewählte Version lässt sich in einem neuen Unterordner speichern. Ursprünglicher HEAD und Index bleiben erhalten. Jede Implementierung verwendet einen eigenen Worktree und eine eigene Sitzung; die Änderung wird als binärer Patch mit Hash gespeichert.
@@ -225,8 +222,6 @@ Native Prüfungen decken Windows, Linux und macOS ab. Die [Kompatibilitätsmatri
 Beide Vorschläge verbrauchen Generierung. Parallele Ausführung garantiert weder geringere Kosten noch kürzere Dauer. Du kannst einen Vorschlag oder beide stoppen. Nach Ablauf der Grenze werden bereits geschriebene Änderungen geprüft. Nicht gemeldeter Verbrauch wird als unbekannt und niemals als null dargestellt.
 
 Die [CI](https://github.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/actions/workflows/ci.yml) prüft Windows/Linux, Node und den Browser. Ein Teil der aktuellen Integrationstests nutzt echte Sitzungen, Werkzeuge und Anwendungen mit einem lokalen Adapter mit festen Antworten. Das belegt die Ausführung, nicht die Qualität eines externen Modells. Historische Fälle mit echten Modellen stammen aus DSH 0.2.1-rc.3; sie sind weder Modellranking noch allgemeines Leistungsversprechen.
-
-</details>
 
 <a id="whats-new"></a>
 

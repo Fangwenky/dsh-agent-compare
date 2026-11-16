@@ -217,9 +217,6 @@ dsh plugin --profile <你的 profile> add ./dsh-agent-compare-3.1.0.tgz
 
 ## 深入了解：验收、恢复与高级设置
 
-<details>
-<summary>展开完整说明、平台边界与历史验证记录</summary>
-
 <a id="what-it-does-for-you"></a>
 
 ### 它替你做掉的那部分
@@ -431,8 +428,6 @@ node scripts/preview-ui.mjs
 ```
 
 贡献方式见 [CONTRIBUTING.md](https://github.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/blob/main/CONTRIBUTING.md)，版本变化见 [CHANGELOG.md](https://github.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/blob/main/CHANGELOG.md)。
-
-</details>
 
 <a id="whats-new"></a>
 

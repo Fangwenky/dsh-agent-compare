@@ -187,9 +187,6 @@ Escolha não compartilhar contexto, incluir trocas recentes ou selecionar mensag
 
 ## Saiba mais: verificações, recuperação e ajustes avançados
 
-<details>
-<summary>Abrir comportamento completo, limites de plataforma e histórico de verificação</summary>
-
 ### Execução e verificação comum
 
 Em um repositório Git, mesmo sem commits, um index privado registra alterações sem commit e arquivos não rastreados, exceto os excluídos. Em uma pasta fora do Git, as versões começam em um espaço de trabalho privado e vazio, e a escolhida pode ser salva em uma nova subpasta. O HEAD e o index originais são preservados. Cada versão tem seu worktree e sua sessão; a diferença é guardada como patch binário com hash.
@@ -225,8 +222,6 @@ Os testes nativos cobrem Windows, Linux e macOS. A [matriz detalhada](https://gi
 Cada versão consome geração; paralelismo não garante economia de tempo ou dinheiro. É possível parar uma versão ou a comparação inteira. Quando o limite termina, o plugin verifica o que já foi escrito. Uso não informado aparece como desconhecido, nunca como custo zero.
 
 A [CI](https://github.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/actions/workflows/ci.yml) cobre Windows/Linux, Node e navegador. Parte das integrações atuais usa um adaptador local de respostas fixas, com sessões, ferramentas e aplicações reais. Isso demonstra execução, sem medir a qualidade de um modelo externo. Os casos históricos com modelos reais são do DSH 0.2.1-rc.3 e não devem virar ranking ou promessa de desempenho.
-
-</details>
 
 <a id="whats-new"></a>
 

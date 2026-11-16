@@ -217,9 +217,6 @@ In 1.3.0, A|B works in any folder. A folder outside Git, including the DSH defau
 
 ## Further reading: checks, recovery and advanced settings
 
-<details>
-<summary>Open the complete behavior, platform limits and historical verification records</summary>
-
 ### What it does for you
 
 - Every version starts from **the same baseline**, including uncommitted work, without touching your index or files.
@@ -396,8 +393,6 @@ node scripts/preview-ui.mjs
 ```
 
 See [CONTRIBUTING.md](https://github.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/blob/main/CONTRIBUTING.md) and [CHANGELOG.md](https://github.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/blob/main/CHANGELOG.md).
-
-</details>
 
 <a id="whats-new"></a>
 

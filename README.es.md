@@ -187,9 +187,6 @@ Puedes no compartir contexto, incluir intercambios recientes o seleccionar mensa
 
 ## Más detalles: validación, recuperación y ajustes avanzados
 
-<details>
-<summary>Abrir comportamiento completo, límites de plataforma e historial de verificación</summary>
-
 ### Ejecución y criterios comunes
 
 En un repositorio Git, incluso sin commits, una instantánea mediante un index privado incluye los cambios sin commit y los archivos no rastreados, salvo los excluidos. En una carpeta fuera de Git, todas las versiones empiezan en un espacio de trabajo privado y vacío, y la elegida puede guardarse en una subcarpeta nueva. El HEAD y el index originales se conservan. Cada propuesta tiene su propio worktree y sesión; los cambios se guardan como un parche binario con hash.
@@ -225,8 +222,6 @@ Las pruebas nativas cubren Windows, Linux y macOS. Consulta la [matriz detallada
 Cada propuesta consume generación. El paralelismo no garantiza menos tiempo o coste. Puedes detener una versión o toda la comparación; al agotarse el tiempo se comprueban los cambios ya escritos. Si el proveedor no devuelve uso, se muestra como desconocido, nunca como coste cero.
 
 La [CI](https://github.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/actions/workflows/ci.yml) cubre Windows/Linux, Node y navegador. Parte de las integraciones actuales ejecuta sesiones, herramientas y aplicaciones reales con un adaptador local de respuestas fijas: demuestra la ejecución del sistema, no la calidad de un modelo externo. Los casos históricos con modelos reales corresponden a DSH 0.2.1-rc.3. No son una clasificación general ni una promesa de rendimiento.
-
-</details>
 
 <a id="whats-new"></a>
 
