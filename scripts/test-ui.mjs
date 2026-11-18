@@ -615,7 +615,9 @@ try {
   check((await workingCard.locator('.ac-live-steps').innerText()).includes('npm run typecheck') && await workingCard.locator('.ac-live-step').count() >= 2, 'the newest steps must show live under the whale without opening anything')
   await workingCard.locator('.ac-whale-bubble.think').waitFor({ timeout: 9000 })
   check(await workingCard.locator('.ac-whale-bubble.think').getAttribute('aria-hidden') === 'true', 'a thought rises over a working whale on its own, away from screen readers')
-  for (let poke = 0; poke < 3; poke++) { const box = await workingCard.locator('.ac-whale').boundingBox(); await page.mouse.click(box.x + box.width / 2, box.y + box.height / 2); await page.waitForTimeout(120) }
+  const workingWhale = workingCard.locator('.ac-whale')
+  for (let poke = 0; poke < 3; poke++) await workingWhale.click()
+  await workingCard.locator('.ac-whale-stage.spin').waitFor()
   check(await workingCard.locator('.ac-whale-stage.spin').count() === 1 && (await workingCard.locator('.ac-whale-bubble.say').innerText()).length > 0, 'three pokes in a row make the whale spin and answer')
   check(await page.evaluate(() => window.__requests.filter(request => request.method === 'trace').every(request => request.body.summary === true)), 'closed steps must read only a summary')
   await stepsToggle.click()
