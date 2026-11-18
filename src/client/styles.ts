@@ -757,4 +757,28 @@ ${DETAILS}
 .ac-root[lang=en] .ac-bar .ac-btn{flex:1 1 88px;min-width:88px}
 .ac-root[lang=en] .ac-bar .ac-btn.primary{flex-grow:1.35;flex-basis:112px;min-width:112px}
 }
+
+.ac-composer-settings .ac-more-settings,.ac-compare-tools .ac-align-pages{display:none}
+.ac-advanced-settings{display:contents}
+@media(max-width:600px){
+  .ac-composer-settings .ac-more-settings{display:inline-flex;align-self:flex-start;align-items:center;gap:6px;min-height:32px}
+  .ac-advanced-settings[data-open=false]{display:none}
+  .ac-advanced-settings[data-open=false][data-project-blocked=true]{display:contents}
+  .ac-advanced-settings[data-open=false][data-project-blocked=true]>:not(.ac-example-row,.ac-settings-foot){display:none}
+}
+@supports (grid-template-rows:subgrid){
+  @media(min-width:901px){
+    .ac-compare-tools .ac-align-pages{display:inline-flex}
+    /* Shared tracks align the actual frames, including when only one page has a progress note. */
+    .ac-grid[data-align-pages=true]>.ac-card:not(.ac-card-excluded){display:grid;grid-template-columns:minmax(0,1fr);grid-template-rows:subgrid;grid-row:span 7;row-gap:0;align-self:stretch;align-items:start}
+    .ac-grid[data-align-pages=true]>.ac-card>.ac-card-head{grid-row:1}
+    .ac-grid[data-align-pages=true]>.ac-card>.ac-steps-bar{grid-row:2}
+    .ac-grid[data-align-pages=true]>.ac-card>.ac-steps{grid-row:3}
+    .ac-grid[data-align-pages=true]>.ac-card>.ac-reply{grid-row:4}
+    .ac-grid[data-align-pages=true]>.ac-card>.ac-browser{grid-row:5/span 2;display:grid;grid-template-columns:minmax(0,1fr);grid-template-rows:subgrid;align-self:stretch;row-gap:0}
+    .ac-grid[data-align-pages=true] .ac-page-note{grid-row:1}
+    .ac-grid[data-align-pages=true] .ac-preview-stage{grid-row:2}
+    .ac-grid[data-align-pages=true]>.ac-card>.ac-card-evidence{grid-row:7}
+  }
+}
 `

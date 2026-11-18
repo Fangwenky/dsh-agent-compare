@@ -20,7 +20,7 @@ describe('client bundle', () => {
     vm.runInNewContext(src, { window, console })
     const requested: string[] = []
     const elements: any[] = []
-    const react = { createElement: (type: unknown, props: unknown, ...children: unknown[]) => { const element = { type, props, children }; elements.push(element); return element }, useState: (v: unknown) => [v, () => {}], useEffect: () => {}, useCallback: (f: unknown) => f, useRef: () => ({ current: null }), useSyncExternalStore: (_subscribe: unknown, snapshot: () => unknown) => snapshot(), Fragment: 'f' }
+    const react = { createElement: (type: unknown, props: unknown, ...children: unknown[]) => { const element = { type, props, children }; elements.push(element); return element }, useId: () => ':test-id:', useState: (v: unknown) => [v, () => {}], useEffect: () => {}, useCallback: (f: unknown) => f, useRef: () => ({ current: null }), useSyncExternalStore: (_subscribe: unknown, snapshot: () => unknown) => snapshot(), Fragment: 'f' }
     const exports = factory!((id) => { requested.push(id); if (id === 'react') return react; throw new Error(`unexpected require ${id}`) })
     return { exports, requested, slots, elements }
   }

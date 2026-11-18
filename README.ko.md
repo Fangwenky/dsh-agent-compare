@@ -27,9 +27,7 @@
 
 **鲸挑细选 · AgentCompare**는 [DeepSeek Harness](https://github.com/deepseek-ai/deepseek-harness)(DSH)의 비교 플러그인이며 설치 이름은 `dsh-agent-compare`입니다. 주 대화에서 한 번 요청하고 2~4개 답변, 파일 또는 실행 가능한 페이지를 비교해 생각에 가장 잘 맞는 버전을 선택하세요. **DSH Desktop + Web**을 지원하며 제품 UI는 중국어와 영어로 전환할 수 있습니다.
 
-<p align="center"><a href="#demo">데모</a> · <a href="#ui">UI 보기</a> · <a href="#tasks">적합한 작업</a> · <a href="#install">설치</a> · <a href="#support">지원과 제한</a> · <a href="#whats-new">버전 기록</a></p>
-
-> 이 가이드는 3.1.1 소스를 설명합니다. 공개된 버전은 npm 배지에서 확인하세요.
+<p align="center"><a href="#demo">45초 데모 보기</a> · <a href="#install">Desktop 또는 Web에 설치</a> · <a href="#support">호환성 확인</a></p>
 
 <a id="demo"></a>
 <a id="大肥鱼赛马-한-판-전체-보기"></a>
@@ -38,26 +36,110 @@
 
 ## 비교 흐름을 데모로 보기
 
-[![실제 호스트의 고정 후보: 고래와 단계, 네 페이지, 선택 이유, 저장 후 대화 계속.](https://raw.githubusercontent.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/main/docs/media/comparison-preview.gif)](https://github.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/blob/main/docs/media/comparison-workflow.mp4)
+[![실제 호스트의 고정 후보: 고래와 단계, 네 페이지, 선택 이유, 저장 후 대화 계속.](https://raw.githubusercontent.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/1edf6ec2d1be76a45ef3827795be7ceaafc982c9/assets/readme/comparison-quicklook.gif)](https://github.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/blob/main/docs/media/comparison-workflow.mp4)
 
 실제 DSH 호스트에서 고정 후보를 사용한 녹화입니다. 고래와 실시간 단계, 페이지 조작, 이유를 포함한 C 선택, 저장 후 주 대화로 돌아오는 과정을 보여 줍니다. 대기 구간은 편집했고 나머지는 원래 속도입니다.
 
-[전체 영상 · 45초](https://github.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/blob/main/docs/media/comparison-workflow.mp4) · [녹화 조건과 결과](https://github.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/blob/main/docs/demo.md)
-
-[![2~4개 버전과 스타일 설정, 실행, 체험과 선택, 검토 후 계속. 기능 예시.](https://raw.githubusercontent.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/main/assets/readme/comparison-workflow.webp)](https://raw.githubusercontent.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/main/assets/readme/comparison-workflow.webp)
-
-버전과 스타일 설정 → 병렬 실행 → 체험과 선택 → 검토 후 계속. 아래 그림은 기능 예시입니다.
-
-<a id="ui"></a>
-<a id="gallery"></a>
-
-## 화면과 경험
+[전체 영상 · 45초](https://github.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/blob/main/docs/media/comparison-workflow.mp4) · [녹화 조건과 결과](https://github.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/blob/main/docs/demo.md) · [전체 GIF](https://github.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/blob/main/docs/media/comparison-preview.gif)
 
 다음 이미지와 애니메이션은 실제 DSH 호스트에서 고정 후보를 실행한 화면입니다. 실제 UI와 작업 흐름을 보여 주며, 외부 모델의 품질·속도 측정과 구분합니다.
 
 [![실제 UI: 직접 조작하는 네 페이지와 각 답변·단계.](https://raw.githubusercontent.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/main/assets/readme/gallery-2.0/02-live-comparison.png)](https://raw.githubusercontent.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/main/assets/readme/gallery-2.0/02-live-comparison.png)
 
 네 페이지를 직접 조작하고 각 답변을 페이지와 함께 볼 수 있습니다. Steps를 열면 호스트가 제공한 생각과 도구 호출을 확인할 수 있습니다.
+
+<details>
+<summary>비교 과정 네 단계</summary>
+
+[![2~4개 버전과 스타일 설정, 실행, 체험과 선택, 검토 후 계속. 기능 예시.](https://raw.githubusercontent.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/main/assets/readme/comparison-workflow.webp)](https://raw.githubusercontent.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/main/assets/readme/comparison-workflow.webp)
+
+버전과 스타일 설정 → 병렬 실행 → 체험과 선택 → 검토 후 계속. 아래 그림은 기능 예시입니다.
+
+</details>
+
+<a id="install"></a>
+
+## 설치
+
+### DSH Desktop
+
+1. 앱의 **Plugins → Add plugin**에서 `dsh-agent-compare`를 설치합니다.
+2. DSH를 완전히 종료한 뒤 다시 열어 UI와 백엔드를 함께 업데이트합니다.
+3. 주 대화 입력창 왼쪽 아래의 **A|B**에서 버전 수와 스타일을 고르고 요청을 보냅니다.
+
+### 직접 실행하는 DSH Web
+
+인터페이스 언어는 중국어 간체와 영어입니다. DSH Desktop과 Web에서 전환할 수 있습니다.
+
+아래 명령은 직접 실행하는 DSH Web 프로필용입니다. 데스크톱의 `desktop` 프로필은 앱이 관리하므로 앱의 플러그인 페이지를 사용하세요.
+
+개발 기준은 Node 26.13.0, npm 12.2.2입니다. DSH 패키지 0.2.1-rc.5 / 0.2.2-rc.1로 검증합니다. 이미 사용하는 DSH 프로필을 확인하세요.
+
+npm 패키지를 기본 Web 프로필에 추가합니다. 공개 상태는 위의 npm 배지에서 확인하세요.
+
+```bash
+dsh plugin --profile web add dsh-agent-compare
+```
+
+다른 자체 관리 프로필을 쓰면 `web`을 실제 이름으로 바꾸세요.
+
+**업데이트 후 완전히 다시 시작하세요.** DSH Desktop을 완전히 종료한 뒤 다시 엽니다. Web에서는 해당 DSH 서비스를 재시작하고 페이지를 새로고침합니다. 화면만 새로고침하면 이전 백엔드가 남을 수 있으며, 버전이 다르면 재시작 안내가 표시됩니다.
+
+<details>
+<summary>소스에서 빌드하고 설치</summary>
+
+소스에서 빌드하여 설치할 수도 있습니다.
+
+```bash
+git clone https://github.com/lijiaqi-AI-Product-Manager/dsh-agent-compare.git
+cd dsh-agent-compare
+npm ci
+npm pack
+```
+
+`<your-profile>`을 실제 프로필 이름으로 바꿉니다.
+
+```bash
+dsh plugin --profile <your-profile> add ./dsh-agent-compare-3.2.0.tgz
+```
+
+</details>
+
+DSH를 다시 시작합니다. 업데이트 전에는 같은 기록을 사용하는 이전 인스턴스의 작업을 끝내고 닫으세요. 서로 다른 플러그인 버전의 동시 변경은 지원하지 않습니다.
+
+<a id="use"></a>
+<a id="첫-비교"></a>
+
+## 첫 비교
+
+1. 입력창 왼쪽 아래 **A|B**를 누르면 기존 입력창 위에 비교 설정이 열립니다.
+2. 2~4개 버전을 고릅니다. 기본값은 같은 모델·다른 스타일이며 현재 모델을 재사용합니다. 버전마다 스타일이나 한 줄 설명을 설정할 수 있고, 다른 모델 모드에서는 DSH에 설정된 모델 중에서 고릅니다.
+3. 블라인드·공개 비교, 버전별 생성 한도(5~120분), 공유할 대화 문맥을 정한 뒤 평소 입력창에 요청을 적어 전송합니다.
+4. 카드에서 진행 상태와 답변·파일·페이지 결과를 확인합니다. 실행 중인 페이지는 직접 조작할 수 있고 데스크톱·휴대전화 크기, 1~4 키 집중 보기, 0 키 전체 보기를 지원합니다. 3~4개일 때는 제외할 버전을 빼둘 수 있습니다.
+5. 「Choose A」등으로 하나를 고르거나 「None of these」로 모두 선택하지 않을 수 있습니다. 블라인드는 선택 후 모델과 스타일을 공개하고, 공개 비교에서는 처음부터 보입니다.
+6. 프로젝트 변경은 「Review and adopt」에서 차이와 검증 결과를 확인한 뒤 별도로 승인해야 적용됩니다. Git 밖의 폴더는 새 폴더로 저장할 수 있습니다. 답변만 있는 결과는 파일 적용이 필요 없습니다. 「Continue conversation」으로 선택 기록을 유지하며 기본 대화로 돌아갑니다.
+
+`试跑内置示例`는 별도 예제 상점 저장소에서 실행합니다. 기존 프로젝트를 건드리지 않으며 적용 대상도 예제입니다. 오른쪽 위의 `比较记录`와 `使用教程`는 새 대화와 기존 대화 모두에서 사용할 수 있습니다.
+
+대화 맥락은 공유 안 함·최근 대화·직접 선택 중에서 고릅니다. 기본값은 최근 3번의 대화이며 보낼 발췌를 먼저 확인할 수 있습니다. 긴 내용은 한도에 맞춰 잘리고 화면에 표시됩니다. 모든 버전은 같은 발췌를 받으며 선택 이유와 결과는 원래 대화로 이어집니다.
+
+<a id="ui"></a>
+<a id="gallery"></a>
+
+## 화면과 경험
+
+휴대폰에서 비교 방식, 버전 수, 블라인드 여부를 고르고 프로젝트와 공유할 대화를 확인한 뒤 바로 요청을 입력하세요. 스타일, 제한 시간, 기본 예제는 ‘More settings’에서 바꿀 수 있습니다. 이전 비교에서 설정을 열면 결과가 접힙니다. 다시 열어도 페이지의 입력값과 요청 초안은 그대로입니다.
+
+넓은 화면에서 실시간 페이지를 나란히 열고 ‘Align pages’를 누르면 두 페이지의 시작 높이가 맞춰집니다. 다시 누르면 원래 배치로 돌아가며 페이지에 입력한 값도 유지됩니다.
+
+<details>
+<summary>샘플 대화로 확인한 Edge 실제 화면</summary>
+
+[![390픽셀 화면에 함께 보이는 설정, 공유할 대화와 입력창](https://raw.githubusercontent.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/1edf6ec2d1be76a45ef3827795be7ceaafc982c9/assets/readme/mobile-settings-3.2.webp)](https://github.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/blob/1edf6ec2d1be76a45ef3827795be7ceaafc982c9/assets/readme/mobile-settings-3.2.webp)
+
+[![길이가 다른 답변 밑에서 같은 높이로 정렬된 두 페이지](https://raw.githubusercontent.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/1edf6ec2d1be76a45ef3827795be7ceaafc982c9/assets/readme/aligned-pages-3.2.webp)](https://github.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/blob/1edf6ec2d1be76a45ef3827795be7ceaafc982c9/assets/readme/aligned-pages-3.2.webp)
+
+</details>
 
 - **파란 리퀴드 글래스.** 반투명 유리 패널과 미끄러지는 선택 컨트롤 뒤로 천천히 흐르며 섞이는 파란 빛. 라이트·다크 테마를 지원하고, 동작 줄이기를 켜면 화면이 멈춰 있습니다. 검증한 화면 상태의 제품 UI 텍스트를 두 테마에서 글자별로 측정했으며 대비는 4.5:1 이상이었습니다.
 - **뚱뚱한 물고기가 함께 기다립니다.** 버전마다 DeepSeek 파란 고래 한 마리. 진행될수록 파란 물이 차오르고 빛 두 줄기가 윤곽을 따라 달립니다. 머리 위로 생각이 떠오르고, 찌르면 대답하고, 연달아 찌르면 빙글 돌고 비틀거리고 물을 튀깁니다.
@@ -112,79 +194,17 @@
 
 </details>
 
-<a id="install"></a>
-
-## 설치
-
-### DSH Desktop
-
-1. 앱의 **Plugins → Add plugin**에서 `dsh-agent-compare`를 설치합니다.
-2. DSH를 완전히 종료한 뒤 다시 열어 UI와 백엔드를 함께 업데이트합니다.
-3. 주 대화 입력창 왼쪽 아래의 **A|B**에서 버전 수와 스타일을 고르고 요청을 보냅니다.
-
-### 직접 실행하는 DSH Web
-
-인터페이스 언어는 중국어 간체와 영어입니다. DSH Desktop과 Web에서 전환할 수 있습니다.
-
-아래 명령은 직접 실행하는 DSH Web 프로필용입니다. 데스크톱의 `desktop` 프로필은 앱이 관리하므로 앱의 플러그인 페이지를 사용하세요.
-
-개발 기준은 Node 26.13.0, npm 12.2.2입니다. DSH 패키지 0.2.1-rc.5 / 0.2.2-rc.1로 검증합니다. 이미 사용하는 DSH 프로필을 확인하세요.
-
-npm 패키지를 기본 Web 프로필에 추가합니다. 공개 상태는 위의 npm 배지에서 확인하세요.
-
-```bash
-dsh plugin --profile web add dsh-agent-compare
-```
-
-다른 자체 관리 프로필을 쓰면 `web`을 실제 이름으로 바꾸세요.
-
-**업데이트 후 완전히 다시 시작하세요.** DSH Desktop을 완전히 종료한 뒤 다시 엽니다. Web에서는 해당 DSH 서비스를 재시작하고 페이지를 새로고침합니다. 화면만 새로고침하면 이전 백엔드가 남을 수 있으며, 버전이 다르면 재시작 안내가 표시됩니다.
-
-<details>
-<summary>소스에서 빌드하고 설치</summary>
-
-소스에서 빌드하여 설치할 수도 있습니다.
-
-```bash
-git clone https://github.com/lijiaqi-AI-Product-Manager/dsh-agent-compare.git
-cd dsh-agent-compare
-npm ci
-npm pack
-```
-
-`<your-profile>`을 실제 프로필 이름으로 바꿉니다.
-
-```bash
-dsh plugin --profile <your-profile> add ./dsh-agent-compare-3.1.1.tgz
-```
-
-</details>
-
-DSH를 다시 시작합니다. 업데이트 전에는 같은 기록을 사용하는 이전 인스턴스의 작업을 끝내고 닫으세요. 서로 다른 플러그인 버전의 동시 변경은 지원하지 않습니다.
-
-<a id="use"></a>
-<a id="첫-비교"></a>
-
-## 첫 비교
-
-1. 입력창 왼쪽 아래 **A|B**를 누르면 기존 입력창 위에 비교 설정이 열립니다.
-2. 2~4개 버전을 고릅니다. 기본값은 같은 모델·다른 스타일이며 현재 모델을 재사용합니다. 버전마다 스타일이나 한 줄 설명을 설정할 수 있고, 다른 모델 모드에서는 DSH에 설정된 모델 중에서 고릅니다.
-3. 블라인드·공개 비교, 버전별 생성 한도(5~120분), 공유할 대화 문맥을 정한 뒤 평소 입력창에 요청을 적어 전송합니다.
-4. 카드에서 진행 상태와 답변·파일·페이지 결과를 확인합니다. 실행 중인 페이지는 직접 조작할 수 있고 데스크톱·휴대전화 크기, 1~4 키 집중 보기, 0 키 전체 보기를 지원합니다. 3~4개일 때는 제외할 버전을 빼둘 수 있습니다.
-5. 「Choose A」등으로 하나를 고르거나 「None of these」로 모두 선택하지 않을 수 있습니다. 블라인드는 선택 후 모델과 스타일을 공개하고, 공개 비교에서는 처음부터 보입니다.
-6. 프로젝트 변경은 「Review and adopt」에서 차이와 검증 결과를 확인한 뒤 별도로 승인해야 적용됩니다. Git 밖의 폴더는 새 폴더로 저장할 수 있습니다. 답변만 있는 결과는 파일 적용이 필요 없습니다. 「Continue conversation」으로 선택 기록을 유지하며 기본 대화로 돌아갑니다.
-
-`试跑内置示例`는 별도 예제 상점 저장소에서 실행합니다. 기존 프로젝트를 건드리지 않으며 적용 대상도 예제입니다. 오른쪽 위의 `比较记录`와 `使用教程`는 새 대화와 기존 대화 모두에서 사용할 수 있습니다.
-
-대화 맥락은 공유 안 함·최근 대화·직접 선택 중에서 고릅니다. 기본값은 최근 3번의 대화이며 보낼 발췌를 먼저 확인할 수 있습니다. 긴 내용은 한도에 맞춰 잘리고 화면에 표시됩니다. 모든 버전은 같은 발췌를 받으며 선택 이유와 결과는 원래 대화로 이어집니다.
-
 <a id="support"></a>
 
 ## 지원 범위와 사용 시 제한
 
 [![Source version](https://img.shields.io/github/package-json/v/lijiaqi-AI-Product-Manager/dsh-agent-compare?label=source&color=3657f5&style=flat&labelColor=0b1b4f)](https://github.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/blob/main/package.json)
 [![Node.js ^22.22.2 || ^24.15.0 || >=26.0.0](https://img.shields.io/badge/Node.js-22%20%2F%2024%20%2F%2026%2B-238636?style=flat&labelColor=0b1b4f&logo=nodedotjs&logoColor=white)](https://github.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/blob/main/package.json)
-[![Tested on DSH 0.2.1-rc.5 and 0.2.2-rc.1](https://img.shields.io/badge/DSH%20tested-0.2.1--rc.5%20%2F%200.2.2--rc.1-4d6bfe?style=flat&labelColor=0b1b4f)](https://github.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/blob/main/docs/demo.md)
+
+| 호스트와 범위 | 검증 내용 |
+| --- | --- |
+| Windows · DSH 0.2.2-rc.2 / rc.3 · Node 26.13.0 · 2026-11-18 | 3.2.0 Windows 호스트 테스트에서 의존성 설치, 명령 검사, Vite 미리보기를 확인했습니다. |
+| Edge 157 · 390 / 1440 px | [샘플 대화로 확인한 Edge 실제 화면](#ui) |
 
 - 실시간 페이지에는 실행 가능한 웹 프로젝트가 필요합니다. 답변과 파일도 비교할 수 있으며 일반 폴더·저장소·하위 폴더의 차이는 프로젝트 가이드를 참고하세요.
 - 각 버전은 별도의 모델 사용량을 발생시킵니다. 시간과 비용은 작업과 모델에 따라 달라지며 병렬 실행이 항상 더 빠르거나 저렴하지는 않습니다.
@@ -238,6 +258,8 @@ Windows, Linux, macOS에서 네이티브 검증을 실행합니다. npm, pnpm, Y
 <a id="whats-new"></a>
 
 ## 업데이트 내역
+
+**3.2.0** · 모바일 설정을 두 단계로 나누고 넓은 화면에 실시간 페이지 정렬을 추가했습니다. 여덟 언어 모두 데모에서 설치와 첫 비교로 바로 이동할 수 있습니다.
 
 <details>
 <summary>3.1.1과 이전 버전의 변경 사항</summary>
