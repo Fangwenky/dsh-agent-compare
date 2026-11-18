@@ -46,7 +46,7 @@ export function Segmented<T extends string | number>({ label, value, options, on
 
 export function VersionsControl({ value, onChange, disabled }: { value: number; onChange(value: number): void; disabled?: boolean }): React.ReactElement {
   return <Segmented label={t("版本数")} value={value} disabled={disabled} onChange={onChange}
-    options={[2, 3, 4].map(n => ({ value: n, text: t("{0} 版", { 0: n }), title: n === 2 ? t("两版并排，最快") : t("{0} 版同时生成，用量约为单版的 {0} 倍", { 0: n }) }))} />
+    options={[2, 3, 4].map(n => ({ value: n, text: t("{0} 版", { 0: n }), title: t("生成 {0} 个候选。实际用量取决于任务和模型。", { 0: n }) }))} />
 }
 
 export function BlindControl({ blind, onChange, disabled }: { blind: boolean; onChange(blind: boolean): void; disabled?: boolean }): React.ReactElement {

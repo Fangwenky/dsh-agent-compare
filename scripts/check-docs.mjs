@@ -13,7 +13,10 @@ const referenceDocs = ['docs/package-managers.md', 'docs/demo.md', 'docs/runs-an
 const repositoryOnlyDocs = new Set(['docs/demo.md', 'docs/first-use.md', 'docs/distribution.md', 'docs/distribution.en.md'])
 const captureManifest = JSON.parse(await readFile(path.join(root, 'docs/media/screenshots/manifest.json'), 'utf8'))
 const mediaFiles = ['docs/media/comparison-preview.gif', 'docs/media/comparison-workflow.mp4', 'docs/media/social-preview.png', 'docs/media/manifest.json', 'assets/icon.png', 'assets/icon.svg', 'screenshots.json', 'docs/media/screenshots/manifest.json', ...captureManifest.files.map(file => file.path)]
-const repositoryOnlyMedia = new Set(['docs/media/comparison-preview.gif', 'docs/media/comparison-workflow.mp4', 'docs/media/social-preview.png', 'docs/media/manifest.json'])
+const repositoryOnlyMedia = new Set([
+  'docs/media/comparison-preview.gif', 'docs/media/comparison-workflow.mp4', 'docs/media/social-preview.png',
+  'docs/media/manifest.json', 'docs/media/screenshots/manifest.json', ...captureManifest.files.map(file => file.path)
+])
 const packagedMedia = mediaFiles.filter(file => !repositoryOnlyMedia.has(file))
 const manifest = JSON.parse(await readFile(path.join(root, 'package.json'), 'utf8'))
 const repository = manifest.repository.url.replace(/^git\+/, '').replace(/\.git$/, '')
@@ -109,6 +112,9 @@ const files = new Set(packages[0].files.map(file => file.path))
 for (const file of [...guides, ...referenceDocs.filter(file => !repositoryOnlyDocs.has(file)), ...packagedMedia, 'CONTRIBUTING.md', 'LICENSE']) assert.ok(files.has(file), `Package omits ${file}`)
 for (const file of repositoryOnlyDocs) assert.ok(!files.has(file), `Package repeats repository-only evidence or distribution notes: ${file}`)
 for (const file of files) assert.ok(!repositoryOnlyMedia.has(file) && !file.startsWith('assets/readme/') && !file.startsWith('docs/measurements/'), 'Presentation-only media and research evidence must stay out of the runtime package')
+const vendored = JSON.parse(await readFile(path.join(root, 'vendor/picomatch/picomatch-4.0.7.json'), 'utf8'))
+const matcherArchive = `examples/vite-react-demo/vendor/${vendored.archive}`
+assert.ok(files.has(matcherArchive), 'The bundled demo must contain its pinned matcher archive')
 assert.ok(packages[0].size <= 675_000, 'Compressed runtime package exceeds the 675 kB distribution budget')
 execFileSync(process.execPath, [path.join(root, 'scripts/check-publish-readme.mjs')], { cwd: root, stdio: 'inherit' })
 console.log(JSON.stringify({ languages: canonical.length, guides: guides.length, referenceDocs: referenceDocs.length, localLinks, version: manifest.version, sourceInstallArchivesCurrent: true, packagedGuides: guides.length, recordedAssetsVerified: recorded.files.length, packageBytes: packages[0].size }))

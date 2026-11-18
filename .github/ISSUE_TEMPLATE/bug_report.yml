@@ -19,13 +19,13 @@ body:
     id: record
     attributes:
       label: 运行记录 / Run record
-      description: 可选。`~/.dsh/agent-compare/runs/<runId>.json` 中相关的部分；请先去掉你不想公开的路径和任务内容。
+      description: 可选。`~/.dsh/agent-compare/runs/<runId>.json` 中相关的部分；请隐去本机路径、私密对话和凭据。Share only the relevant excerpt and redact personal paths, private prompts, and credentials.
       render: json
   - type: input
     id: versions
     attributes:
       label: 版本 / Versions
-      placeholder: dsh-agent-compare 0.2.0-alpha.1 · DSH 0.2.1-rc.3 desktop · Windows 11 · Node 24
+      placeholder: 实际插件版本 · DSH 版本及 Desktop/Web · 操作系统 · Node 版本 / Plugin version · DSH version and Desktop/Web · OS · Node version
     validations:
       required: true
   - type: dropdown
