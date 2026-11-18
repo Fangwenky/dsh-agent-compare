@@ -61,17 +61,25 @@ try{
   const pkg=JSON.parse(await readFile(path.join(repo,'package.json'),'utf8'))
   pkg.packageManager=item.manager+'@'+item.version
   pkg.allowScripts={esbuild:true}
+  const matcher=pkg.devDependencies.picomatch
+  if(item.manager==='yarn')pkg.resolutions={picomatch:matcher}
   await writeFile(path.join(repo,'package.json'),JSON.stringify(pkg,null,2)+'\n')
   await writeFile(path.join(repo,'.gitignore'),'node_modules/\ndist/\n.vite/\n')
   await writeFile(path.join(repo,'.npmrc'),'registry=https://registry.npmjs.org/\n')
   if(item.manager!=='npm')await rm(path.join(repo,'package-lock.json'))
   if(item.manager!=='npm')await writeFile(path.join(repo,item.manager==='pnpm'?'pnpm-lock.yaml':'yarn.lock'),await readFile(new URL('../test/managers/'+(item.manager==='pnpm'?'pnpm-lock.yaml':item.linker?'yarn-modern.lock':'yarn-classic.lock'),import.meta.url)))
-  if(item.manager==='pnpm')await writeFile(path.join(repo,'pnpm-workspace.yaml'),'allowBuilds:\n  esbuild: true\n')
+  if(item.manager==='pnpm')await writeFile(path.join(repo,'pnpm-workspace.yaml'),'allowBuilds:\n  esbuild: true\noverrides:\n  picomatch: '+JSON.stringify(matcher)+'\n')
   if(item.linker)await writeFile(path.join(repo,'.yarnrc.yml'),'nodeLinker: '+item.linker+'\nnpmRegistryServer: "https://registry.npmjs.org"\n')
   const setup=await runProjectProcess(installArgv(await inspectProject(repo)).argv,{cwd:repo,timeoutMs:600000,env:{CI:'1'}},prepare)
   const lockBlocked=process.platform==='win32'&&item.id==='pnpm'
   if(lockBlocked)assert.match(setup.stderr+'\n'+setup.stdout,/ERR_PNPM_STORE_DIR_OPEN_OPERATION_LOCK/,'Native pnpm changed: revisit the Windows guard instead of silently accepting it')
   else if(setup.code!==0)throw new Error(item.id+' fixture installation failed (timeout='+setup.timedOut+'): '+setup.stderr+'\n'+setup.stdout)
+  if(!lockBlocked){
+   const probe="const assert=require('node:assert/strict');const fromVite=require('node:module').createRequire(require.resolve('vite/package.json'));const match=fromVite('picomatch');assert.ok(match('src/**/*.ts')('src/core/example.ts'));assert.throws(()=>match.makeRe('photos/+(collection-*.jpg)'),SyntaxError)"
+   const command=item.linker==='pnp'?['yarn','node','-e',probe]:['node','-e',probe]
+   const verified=await runProjectProcess(command,{cwd:repo,timeoutMs:30000},prepare)
+   assert.equal(verified.code,0,item.id+' did not load the patched matcher from Vite: '+verified.stderr)
+  }
   const info=await inspectProject(repo)
   assert.equal(info.kind,'vite',info.reason)
   assert.equal(info.packageManager,item.manager)

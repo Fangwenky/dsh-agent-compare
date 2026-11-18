@@ -162,6 +162,9 @@ settings:
   autoInstallPeers: true
   excludeLinksFromLockfile: false
 
+overrides:
+  picomatch: file:vendor/picomatch-4.0.7-backport.tgz
+
 importers:
 
   .:
@@ -182,6 +185,9 @@ importers:
       '@vitejs/plugin-react':
         specifier: 6.2.1
         version: 6.2.1(vite@8.3.6)
+      picomatch:
+        specifier: file:vendor/picomatch-4.0.7-backport.tgz
+        version: file:vendor/picomatch-4.0.7-backport.tgz
       typescript:
         specifier: 7.0.2
         version: 7.0.2
@@ -446,6 +452,7 @@ packages:
 
   fdir@6.5.0:
     resolution: {integrity: sha512-tIbYtZbucOs0BRGqPJkshJUYdL+SDH7dVM8gjy+ERp3WAUjLEFJE+02kanyHtwjWOnwrKYBiwAmM0p4kLJAnXg==}
+    version: 6.5.0
     engines: {node: '>=12.0.0'}
     peerDependencies:
       picomatch: ^3 || ^4
@@ -540,8 +547,9 @@ packages:
   picocolors@1.1.1:
     resolution: {integrity: sha512-xceH2snhtb5M9liqDsmEw56le376mTZkEX/jEb/RxNFyegNul7eNslCXP9FDj/Lcu0X8KEyMceP2ntpaHrDEVA==}
 
-  picomatch@4.0.7:
-    resolution: {integrity: sha512-qcJu88Q2IWqJsDD529JKMdwGm/dvInW4HvQnRwiH9JtihJvzGOscDtHE3x1pBKeUOTysQ8kVmLnJ2kJu7yhcGA==}
+  picomatch@file:vendor/picomatch-4.0.7-backport.tgz:
+    resolution: {integrity: sha512-80jHpVlnjQlBAZdXcWAmYMtB3BRGpLYwU+97NaQ5bBBORcn9dGBZqPwYN8q3djer1vzNG2VSUh6ETHJWsxiMzg==, tarball: file:vendor/picomatch-4.0.7-backport.tgz}
+    version: 4.0.7
     engines: {node: '>=12'}
 
   postcss@8.5.32:
@@ -749,9 +757,9 @@ snapshots:
 
   detect-libc@2.1.2: {}
 
-  fdir@6.5.0(picomatch@4.0.7):
+  fdir@6.5.0(picomatch@file:vendor/picomatch-4.0.7-backport.tgz):
     optionalDependencies:
-      picomatch: 4.0.7
+      picomatch: file:vendor/picomatch-4.0.7-backport.tgz
 
   fsevents@2.3.3:
     optional: true
@@ -809,7 +817,7 @@ snapshots:
 
   picocolors@1.1.1: {}
 
-  picomatch@4.0.7: {}
+  picomatch@file:vendor/picomatch-4.0.7-backport.tgz: {}
 
   postcss@8.5.32:
     dependencies:
@@ -851,8 +859,8 @@ snapshots:
 
   tinyglobby@0.2.17:
     dependencies:
-      fdir: 6.5.0(picomatch@4.0.7)
-      picomatch: 4.0.7
+      fdir: 6.5.0(picomatch@file:vendor/picomatch-4.0.7-backport.tgz)
+      picomatch: file:vendor/picomatch-4.0.7-backport.tgz
 
   typescript@7.0.2:
     optionalDependencies:
@@ -880,7 +888,7 @@ snapshots:
   vite@8.3.6:
     dependencies:
       lightningcss: 1.33.0
-      picomatch: 4.0.7
+      picomatch: file:vendor/picomatch-4.0.7-backport.tgz
       postcss: 8.5.32
       rolldown: 1.2.16
       tinyglobby: 0.2.17
