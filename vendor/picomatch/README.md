@@ -1,6 +1,6 @@
 # Local picomatch security backport
 
-The developer toolchain and the bundled Vite example use this archive to address [GHSA-fc5q-39xc-vjpf](https://github.com/advisories/GHSA-fc5q-39xc-vjpf) while a patched upstream release is pending. The package retains the upstream name, version and MIT license. Both lockfiles pin this repository's archive to a commit and record its SHA-512. A cold dependency install downloads it from GitHub.
+The developer toolchain and the bundled Vite example use this backport to address [GHSA-fc5q-39xc-vjpf](https://github.com/advisories/GHSA-fc5q-39xc-vjpf) while a patched upstream release is pending. The package retains the upstream name, version and MIT license. Both lockfiles pin the SHA-512 of the archive in `examples/vite-react-demo/vendor/`. The example carries this archive into each isolated frozen install.
 
 The parser keeps the upstream literal and flat character-class rewrites. Before emitting any other repeated extglob, it requires nonempty, prefix-free literal alternatives. It raises a syntax error for unsupported repeated expressions. Ordinary globstars, wildcards outside repetition, and non-repeating extglobs follow the upstream implementation.
 
