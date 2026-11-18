@@ -473,7 +473,7 @@ function ComposerSettings({ sessionId, session }: { sessionId: string; session?:
     <div className="ac-meta ac-settings-facts">
       {p.mode === 'same-model' && <span>{t("当前模型：")}{routeText(setup?.current) || (setup ? t("请先在输入框右下角选择模型") : t("正在读取…"))}</span>}
       {setup?.project?.path ? <span className="ac-settings-project" title={setup.project.path}>{t("项目：")}{setup.project.path}</span> : null}
-      {versions > 2 && <span className="ac-usage-hint">{t("{0} 版同时生成，用量约为单版的 {0} 倍", { 0: versions })}</span>}
+      {versions > 2 && <span className="ac-usage-hint">{t("生成 {0} 个候选。实际用量取决于任务和模型。", { 0: versions })}</span>}
       <StyleHabit load={() => call<{ comparisons: number; styles: StyleStat[] }>('styleStats', { sessionId })} />
     </div>
     <div className="ac-settings-row ac-example-row">

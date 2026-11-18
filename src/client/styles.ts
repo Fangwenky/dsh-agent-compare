@@ -607,6 +607,7 @@ display:flex;flex-direction:column;overflow:hidden;animation:ac-rise .18s ease-o
 .ac-steps-list{margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:2px;font-size:12px}
 .ac-steps-list li.ok{color:var(--ac-fg2)}.ac-steps-list li.bad{color:var(--ac-err)}
 .ac-details summary{cursor:pointer;color:var(--ac-fg3);font-size:12px}
+@media(max-width:600px){.ac-root .ac-details>summary{min-block-size:24px;box-sizing:border-box}}
 .ac-strategy{margin-left:auto;font-weight:600;font-size:12px}
 .ac-summary{color:var(--ac-fg2);font-size:12px;white-space:pre-wrap;max-height:84px;overflow:auto}
 .ac-browser{flex:none;display:flex;flex-direction:column;min-height:0;background:var(--ac-l1)}
