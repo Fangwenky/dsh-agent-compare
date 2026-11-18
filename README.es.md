@@ -17,35 +17,117 @@
 
 **鲸挑细选 · AgentCompare** es un complemento de comparación para [DeepSeek Harness](https://github.com/deepseek-ai/deepseek-harness) (DSH), instalado como `dsh-agent-compare`. Envía una tarea en la conversación principal, compara entre 2 y 4 respuestas, archivos o páginas ejecutables y elige la versión que encaja con tu idea. Funciona en **DSH Desktop + Web**, con interfaces en chino e inglés.
 
-<p align="center"><a href="#demo">Ver demo</a> · <a href="#ui">Ver interfaz</a> · <a href="#tasks">Tareas</a> · <a href="#install">Instalar</a> · <a href="#support">Soporte y límites</a> · <a href="#whats-new">Versiones</a></p>
-
-> Esta guía describe el código fuente 3.1.1; la insignia npm muestra la versión publicada.
+<p align="center"><a href="#demo">Ver la demo de 45 segundos</a> · <a href="#install">Instalar en Desktop o Web</a> · <a href="#support">Consultar la compatibilidad</a></p>
 
 <a id="demo"></a>
 <a id="ver-una-carrera-del-pez-gordo-completa"></a>
 
 ## Mira una comparación en acción
 
-[![Candidatos controlados en un host real: ballenas, pasos, cuatro páginas, motivos, guardado y continuación.](https://raw.githubusercontent.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/main/docs/media/comparison-preview.gif)](https://github.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/blob/main/docs/media/comparison-workflow.mp4)
+[![Candidatos controlados en un host real: ballenas, pasos, cuatro páginas, motivos, guardado y continuación.](https://raw.githubusercontent.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/1edf6ec2d1be76a45ef3827795be7ceaafc982c9/assets/readme/comparison-quicklook.gif)](https://github.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/blob/main/docs/media/comparison-workflow.mp4)
 
 Grabación con candidatos controlados en un host DSH real: ballenas y pasos en directo, páginas interactivas, elección de C con motivos, guardado y vuelta a la conversación. Se recortan las esperas; el resto conserva su velocidad original.
 
-[Vídeo completo · 45 segundos](https://github.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/blob/main/docs/media/comparison-workflow.mp4) · [Condiciones y resultados](https://github.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/blob/main/docs/demo.md)
-
-[![Configurar 2–4 versiones y estilos, ejecutar, probar y elegir, revisar y continuar. Ilustración.](https://raw.githubusercontent.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/main/assets/readme/comparison-workflow.webp)](https://raw.githubusercontent.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/main/assets/readme/comparison-workflow.webp)
-
-Configura versiones y estilos → ejecuta en paralelo → prueba y elige → revisa y continúa. El diagrama es una ilustración del producto.
-
-<a id="ui"></a>
-<a id="gallery"></a>
-
-## Interfaz y experiencia
+[Vídeo completo · 45 segundos](https://github.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/blob/main/docs/media/comparison-workflow.mp4) · [Condiciones y resultados](https://github.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/blob/main/docs/demo.md) · [GIF completo](https://github.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/blob/main/docs/media/comparison-preview.gif)
 
 Estas capturas y animaciones muestran candidatos controlados en un host DSH real. Enseñan la interfaz y el flujo reales; la calidad y los tiempos del modelo se describen por separado.
 
 [![Interfaz real: cuatro páginas interactivas con sus respuestas y pasos.](https://raw.githubusercontent.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/main/assets/readme/gallery-2.0/02-live-comparison.png)](https://raw.githubusercontent.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/main/assets/readme/gallery-2.0/02-live-comparison.png)
 
 Usa las cuatro páginas directamente y lee cada respuesta junto a su resultado. Abre Steps para consultar el razonamiento y las llamadas a herramientas que proporciona el host.
+
+<details>
+<summary>La comparación en cuatro pasos</summary>
+
+[![Configurar 2–4 versiones y estilos, ejecutar, probar y elegir, revisar y continuar. Ilustración.](https://raw.githubusercontent.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/main/assets/readme/comparison-workflow.webp)](https://raw.githubusercontent.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/main/assets/readme/comparison-workflow.webp)
+
+Configura versiones y estilos → ejecuta en paralelo → prueba y elige → revisa y continúa. El diagrama es una ilustración del producto.
+
+</details>
+
+<a id="install"></a>
+
+## Instalación
+
+### DSH Desktop
+
+1. Instala `dsh-agent-compare` desde **Plugins → Add plugin** en la aplicación.
+2. Cierra DSH por completo y vuelve a abrirlo para actualizar interfaz y backend.
+3. Pulsa **A|B** abajo a la izquierda del editor principal, elige versiones y estilos y envía la tarea.
+
+### DSH Web autohospedado
+
+La interfaz está disponible en chino simplificado e inglés, seleccionables en DSH Desktop y Web.
+
+Los comandos siguientes corresponden a un perfil DSH Web gestionado por el usuario. El perfil `desktop` lo gestiona la aplicación de escritorio; utiliza su página de complementos.
+
+La referencia de desarrollo es Node 26.13.0 y npm 12.2.2. Las comprobaciones actuales usan el paquete oficial DSH 0.2.1-rc.5 / 0.2.2-rc.1. Identifica el perfil de DSH que utilizas.
+
+Instala el paquete npm en el perfil Web predeterminado. La insignia de npm indica el estado de publicación:
+
+```bash
+dsh plugin --profile web add dsh-agent-compare
+```
+
+Para otro perfil autogestionado, sustituye `web` por su nombre real.
+
+**Reinicia por completo tras actualizar.** Cierra DSH Desktop completamente y vuelve a abrirlo. En Web, reinicia el servicio DSH correspondiente y recarga la página. Recargar solo la interfaz puede dejar activo el backend anterior; si las versiones difieren, aparece un aviso.
+
+<details>
+<summary>Compilar e instalar desde el código</summary>
+
+También puedes compilar e instalar desde el código fuente:
+
+```bash
+git clone https://github.com/lijiaqi-AI-Product-Manager/dsh-agent-compare.git
+cd dsh-agent-compare
+npm ci
+npm pack
+```
+
+Sustituye `<your-profile>` por el nombre real de tu perfil:
+
+```bash
+dsh plugin --profile <your-profile> add ./dsh-agent-compare-3.2.0.tgz
+```
+
+</details>
+
+Reinicia DSH. Antes de actualizar, termina las comparaciones activas y cierra las instancias antiguas que comparten sus registros. No se admite que distintas versiones modifiquen los mismos registros simultáneamente.
+
+<a id="use"></a>
+<a id="primera-comparación"></a>
+
+## Primera comparación
+
+1. Pulsa **A|B**, abajo a la izquierda del cuadro de conversación. Los ajustes se abren sobre el cuadro existente.
+2. Elige 2–4 versiones. El modo predeterminado reutiliza el modelo actual con estilos distintos; puedes seleccionar cada estilo o describirlo en una línea. Si usas modelos distintos, elige entre los ya configurados en DSH.
+3. Elige comparación a ciegas o abierta, el límite por versión (5–120 minutos) y el contexto de conversación compartido. Escribe la petición en el cuadro habitual y envíala.
+4. Cada tarjeta muestra el progreso y su respuesta, archivos o página. Las páginas en ejecución son interactivas. Puedes cambiar el tamaño de escritorio/móvil, enfocar con 1–4 y volver a todas con 0; con 3–4 versiones puedes apartar las descartadas.
+5. Usa «Choose A», por ejemplo, o «None of these» para no elegir ninguna. A ciegas, los modelos y estilos se revelan al elegir; en comparación abierta están visibles desde el principio.
+6. Para cambios del proyecto, «Review and adopt» muestra diferencias y comprobaciones antes de una confirmación separada. Fuera de Git puedes guardar en una carpeta nueva. Una respuesta no requiere aplicar archivos. «Continue conversation» vuelve al diálogo conservando la elección.
+
+`试跑内置示例` crea una tienda de ejemplo en otro repositorio; no modifica tu proyecto. La incorporación del resultado también apunta a ese ejemplo. `比较记录` abre el historial y `使用教程` la guía; ambos controles aparecen en conversaciones nuevas y existentes.
+
+Puedes no compartir contexto, incluir intercambios recientes o seleccionar mensajes. El valor predeterminado son los últimos 3 intercambios; puedes revisar el extracto antes de enviarlo. El contenido largo se recorta con una indicación visible. Todas las versiones reciben el mismo extracto, y el resultado y los motivos de elección vuelven a la conversación original.
+
+<a id="ui"></a>
+<a id="gallery"></a>
+
+## Interfaz y experiencia
+
+En el móvil, elige el modo, el número de versiones y si la comparación será a ciegas. Revisa el proyecto y el contexto que se compartirá antes de escribir en la conversación. «More settings» reúne los estilos, el límite de tiempo y el ejemplo.
+
+En una pantalla ancha, pulsa «Align pages» para que las páginas interactivas empiecen a la misma altura. Vuelve a pulsarlo para recuperar la disposición original conservando lo escrito en cada página.
+
+<details>
+<summary>Ver la interfaz en Edge con una conversación de ejemplo</summary>
+
+[![Ajustes, contexto compartido y campo de texto en una pantalla de 390 píxeles](https://raw.githubusercontent.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/1edf6ec2d1be76a45ef3827795be7ceaafc982c9/assets/readme/mobile-settings-3.2.webp)](https://github.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/blob/1edf6ec2d1be76a45ef3827795be7ceaafc982c9/assets/readme/mobile-settings-3.2.webp)
+
+[![Dos páginas interactivas alineadas bajo respuestas de distinta longitud](https://raw.githubusercontent.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/1edf6ec2d1be76a45ef3827795be7ceaafc982c9/assets/readme/aligned-pages-3.2.webp)](https://github.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/blob/1edf6ec2d1be76a45ef3827795be7ceaafc982c9/assets/readme/aligned-pages-3.2.webp)
+
+</details>
 
 - **Vidrio líquido azul.** Paneles de vidrio translúcido y selectores que se deslizan sobre una luz azul que fluye despacio, en tema claro y oscuro; con el movimiento reducido activado, todo se queda quieto. El texto del producto en los estados de interfaz comprobados se midió glifo a glifo en ambos temas, con un contraste de 4.5:1 o más.
 - **Un pez gordo te acompaña.** Una ballena azul de DeepSeek por versión se llena de agua azul a medida que avanza mientras dos luces recorren su borde. Le suben pensamientos sobre la cabeza; tócala y te contesta, sigue tocándola y gira, se tambalea y salpica.
@@ -100,79 +182,17 @@ Con un mismo modelo, asignas estilos distintos a 2–4 versiones: ocho preajuste
 
 </details>
 
-<a id="install"></a>
-
-## Instalación
-
-### DSH Desktop
-
-1. Instala `dsh-agent-compare` desde **Plugins → Add plugin** en la aplicación.
-2. Cierra DSH por completo y vuelve a abrirlo para actualizar interfaz y backend.
-3. Pulsa **A|B** abajo a la izquierda del editor principal, elige versiones y estilos y envía la tarea.
-
-### DSH Web autohospedado
-
-La interfaz está disponible en chino simplificado e inglés, seleccionables en DSH Desktop y Web.
-
-Los comandos siguientes corresponden a un perfil DSH Web gestionado por el usuario. El perfil `desktop` lo gestiona la aplicación de escritorio; utiliza su página de complementos.
-
-La referencia de desarrollo es Node 26.13.0 y npm 12.2.2. Las comprobaciones actuales usan el paquete oficial DSH 0.2.1-rc.5 / 0.2.2-rc.1. Identifica el perfil de DSH que utilizas.
-
-Instala el paquete npm en el perfil Web predeterminado. La insignia de npm indica el estado de publicación:
-
-```bash
-dsh plugin --profile web add dsh-agent-compare
-```
-
-Para otro perfil autogestionado, sustituye `web` por su nombre real.
-
-**Reinicia por completo tras actualizar.** Cierra DSH Desktop completamente y vuelve a abrirlo. En Web, reinicia el servicio DSH correspondiente y recarga la página. Recargar solo la interfaz puede dejar activo el backend anterior; si las versiones difieren, aparece un aviso.
-
-<details>
-<summary>Compilar e instalar desde el código</summary>
-
-También puedes compilar e instalar desde el código fuente:
-
-```bash
-git clone https://github.com/lijiaqi-AI-Product-Manager/dsh-agent-compare.git
-cd dsh-agent-compare
-npm ci
-npm pack
-```
-
-Sustituye `<your-profile>` por el nombre real de tu perfil:
-
-```bash
-dsh plugin --profile <your-profile> add ./dsh-agent-compare-3.1.1.tgz
-```
-
-</details>
-
-Reinicia DSH. Antes de actualizar, termina las comparaciones activas y cierra las instancias antiguas que comparten sus registros. No se admite que distintas versiones modifiquen los mismos registros simultáneamente.
-
-<a id="use"></a>
-<a id="primera-comparación"></a>
-
-## Primera comparación
-
-1. Pulsa **A|B**, abajo a la izquierda del cuadro de conversación. Los ajustes se abren sobre el cuadro existente.
-2. Elige 2–4 versiones. El modo predeterminado reutiliza el modelo actual con estilos distintos; puedes seleccionar cada estilo o describirlo en una línea. Si usas modelos distintos, elige entre los ya configurados en DSH.
-3. Elige comparación a ciegas o abierta, el límite por versión (5–120 minutos) y el contexto de conversación compartido. Escribe la petición en el cuadro habitual y envíala.
-4. Cada tarjeta muestra el progreso y su respuesta, archivos o página. Las páginas en ejecución son interactivas. Puedes cambiar el tamaño de escritorio/móvil, enfocar con 1–4 y volver a todas con 0; con 3–4 versiones puedes apartar las descartadas.
-5. Usa «Choose A», por ejemplo, o «None of these» para no elegir ninguna. A ciegas, los modelos y estilos se revelan al elegir; en comparación abierta están visibles desde el principio.
-6. Para cambios del proyecto, «Review and adopt» muestra diferencias y comprobaciones antes de una confirmación separada. Fuera de Git puedes guardar en una carpeta nueva. Una respuesta no requiere aplicar archivos. «Continue conversation» vuelve al diálogo conservando la elección.
-
-`试跑内置示例` crea una tienda de ejemplo en otro repositorio; no modifica tu proyecto. La incorporación del resultado también apunta a ese ejemplo. `比较记录` abre el historial y `使用教程` la guía; ambos controles aparecen en conversaciones nuevas y existentes.
-
-Puedes no compartir contexto, incluir intercambios recientes o seleccionar mensajes. El valor predeterminado son los últimos 3 intercambios; puedes revisar el extracto antes de enviarlo. El contenido largo se recorta con una indicación visible. Todas las versiones reciben el mismo extracto, y el resultado y los motivos de elección vuelven a la conversación original.
-
 <a id="support"></a>
 
 ## Compatibilidad y límites de uso
 
 [![Source version](https://img.shields.io/github/package-json/v/lijiaqi-AI-Product-Manager/dsh-agent-compare?label=source&color=3657f5&style=flat&labelColor=0b1b4f)](https://github.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/blob/main/package.json)
 [![Node.js ^22.22.2 || ^24.15.0 || >=26.0.0](https://img.shields.io/badge/Node.js-22%20%2F%2024%20%2F%2026%2B-238636?style=flat&labelColor=0b1b4f&logo=nodedotjs&logoColor=white)](https://github.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/blob/main/package.json)
-[![Tested on DSH 0.2.1-rc.5 and 0.2.2-rc.1](https://img.shields.io/badge/DSH%20tested-0.2.1--rc.5%20%2F%200.2.2--rc.1-4d6bfe?style=flat&labelColor=0b1b4f)](https://github.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/blob/main/docs/demo.md)
+
+| Entorno y alcance | Verificación |
+| --- | --- |
+| Windows · DSH 0.2.2-rc.2 / rc.3 · Node 26.13.0 · 2026-11-18 | La prueba de la versión 3.2.0 en Windows cubrió la instalación de dependencias, la ejecución de comprobaciones y una vista previa de Vite. |
+| Edge 157 · 390 / 1440 px | [Ver la interfaz en Edge con una conversación de ejemplo](#ui) |
 
 - Las páginas en directo requieren un proyecto web ejecutable; también puedes comparar respuestas y archivos. La guía distingue carpetas normales, repositorios y subcarpetas.
 - Cada versión consume uso del modelo. El tiempo y el coste dependen de la tarea y del modelo; ejecutar en paralelo no garantiza menor coste ni espera.
@@ -226,6 +246,8 @@ La [CI](https://github.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/actions/
 <a id="whats-new"></a>
 
 ## Novedades por versión
+
+**3.2.0** · Los ajustes del móvil se dividen en dos niveles y las páginas en directo pueden alinearse en pantallas anchas. Las ocho guías llevan de la demo a la instalación y a la primera comparación.
 
 <details>
 <summary>Cambios de 3.1.1 y versiones anteriores</summary>

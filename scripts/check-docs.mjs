@@ -17,8 +17,14 @@ const repositoryOnlyMedia = new Set(['docs/media/comparison-preview.gif', 'docs/
 const packagedMedia = mediaFiles.filter(file => !repositoryOnlyMedia.has(file))
 const manifest = JSON.parse(await readFile(path.join(root, 'package.json'), 'utf8'))
 const repository = manifest.repository.url.replace(/^git\+/, '').replace(/\.git$/, '')
-const repositoryFiles = `${repository}/blob/main/`
-const repositoryMedia = repository.replace('https://github.com/', 'https://raw.githubusercontent.com/') + '/main/'
+const blobRoot = `${repository}/blob/`
+const rawRoot = repository.replace('https://github.com/', 'https://raw.githubusercontent.com/') + '/'
+const repositoryFiles = blobRoot + 'main/'
+const repositoryMedia = rawRoot + 'main/'
+function repositoryTarget(href) {
+  const prefix = [blobRoot, rawRoot].find(base => href.startsWith(base))
+  if (prefix) return /^(?:main|[a-f0-9]{40})\/(.+)$/.exec(href.slice(prefix.length))?.[1]
+}
 const expectedTarball = `${manifest.name}-${manifest.version}.tgz`
 const contents = new Map(await Promise.all([...guides, ...referenceDocs].map(async file => [file, await readFile(path.join(root, file), 'utf8')])))
 assert.equal(contents.get('README.zh.md'), chineseGuideAlias(contents.get('README.md')), 'Run node scripts/sync-chinese-guide.mjs to update the complete Chinese compatibility guide')
@@ -46,7 +52,7 @@ for (const [file, source] of contents) {
   }
   for (const match of withoutCode(source).matchAll(/!?\[[^\]]*\]\(([^)\s]+)(?:\s+"[^"]*")?\)/g)) {
     const href = match[1]
-    const repositoryPath = href.startsWith(repositoryFiles) ? href.slice(repositoryFiles.length) : href.startsWith(repositoryMedia) ? href.slice(repositoryMedia.length) : undefined
+    const repositoryPath = repositoryTarget(href)
     if (/^https?:\/\//.test(href) && repositoryPath === undefined) continue
     assert.ok(!/^[a-z][a-z0-9+.-]*:/i.test(repositoryPath ?? href), `${file}: unsupported link scheme`)
     const [relative, fragment] = (repositoryPath ?? href).split('#'), destination = path.resolve(root, repositoryPath === undefined ? path.dirname(file) : '.', decodeURIComponent(relative || path.basename(file)))

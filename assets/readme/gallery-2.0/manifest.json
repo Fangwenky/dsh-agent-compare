@@ -1,7 +1,7 @@
 {
   "schema": "agentcompare.gallery/v1",
-  "packageVersion": "3.1.1",
-  "updatedAt": "2026-11-16T05:24:55.396Z",
+  "packageVersion": "3.2.0",
+  "updatedAt": "2026-11-18T11:03:27.163Z",
   "runtimeSource": "782b8911b823936ca2d3cc15c0ce54a18e9a1f22",
   "hostVersion": "0.2.2-rc.1",
   "browser": "Microsoft Edge 157",
