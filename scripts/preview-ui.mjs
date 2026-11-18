@@ -207,7 +207,11 @@ window.fetch = async (url, init) => {
     return realFetch('/harness/preferences',init);
   }
   if (m[1] === 'contextPreview' && window.__holdContextPreview) await new Promise(resolve=>{window.__resumeContextPreview=()=>{window.__holdContextPreview=false;delete window.__resumeContextPreview;resolve()}});
-  if (m[1] === 'list' && window.__historyDelayMs) await new Promise(resolve=>setTimeout(resolve,window.__historyDelayMs));
+  if (m[1] === 'list' && window.__holdHistorySearch && body.search === window.__holdHistorySearch) {
+    await new Promise(resolve => { window.__resumeHistorySearch = resolve });
+    window.__holdHistorySearch = null;
+    window.__resumeHistorySearch = null;
+  }
   let value = m[1] === 'latest' ? listHistory(body).runs[0] ?? null
     : m[1] === 'list' ? listHistory(body)
     : m[1] === 'candidateFile' ? {path:body.path,size:42,binary:false,text:'# '+body.path+'\\nprint(len(open("notes.txt").read().split()))\\n',truncated:false}
