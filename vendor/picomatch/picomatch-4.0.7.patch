@@ -1,0 +1,22 @@
+--- a/lib/parse.js
++++ b/lib/parse.js
+@@ -284,0 +285,12 @@
++};
++
++// Require a uniquely decodable body before adding a repetition. Each branch
++// is a nonempty literal and no branch can consume a prefix of another.
++// Fold case even if the caller applies case-insensitive flags downstream.
++const hasUnambiguousLiteralBranches = body => {
++  const branches = body.split('|');
++  if (branches.some(branch => !branch.length || /[^A-Za-z0-9_.-]/.test(branch))) {
++    return false;
++  }
++  const sorted = branches.map(branch => branch.toLowerCase()).sort();
++  return sorted.every((branch, index) => index === 0 || !branch.startsWith(sorted[index - 1]));
+@@ -567,0 +580,6 @@
++    // The existing literal and flat-class rewrites above are already safe.
++    // Reject other repeated bodies before emitting a nested quantifier.
++    if ((token.type === 'plus' || token.type === 'star') && !hasUnambiguousLiteralBranches(body)) {
++      throw new SyntaxError('Repeated extglob requires unambiguous literal alternatives');
++    }
++
