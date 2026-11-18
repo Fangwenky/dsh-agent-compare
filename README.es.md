@@ -116,7 +116,7 @@ Puedes no compartir contexto, incluir intercambios recientes o seleccionar mensa
 
 ## Interfaz y experiencia
 
-En el móvil, elige el modo, el número de versiones y si la comparación será a ciegas. Revisa el proyecto y el contexto que se compartirá antes de escribir en la conversación. «More settings» reúne los estilos, el límite de tiempo y el ejemplo.
+En el móvil, elige el modo, el número de versiones y si la comparación será a ciegas. Revisa el proyecto y el contexto que se compartirá antes de escribir en la conversación. «More settings» reúne los estilos, el límite de tiempo y el ejemplo. Al volver a una comparación, abrir los ajustes pliega el resultado anterior. Al abrirlo de nuevo se conservan las páginas y el borrador.
 
 En una pantalla ancha, pulsa «Align pages» para que las páginas interactivas empiecen a la misma altura. Vuelve a pulsarlo para recuperar la disposición original conservando lo escrito en cada página.
 

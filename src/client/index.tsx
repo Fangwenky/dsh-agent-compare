@@ -394,7 +394,7 @@ function ExampleTimingEvidence(): React.ReactElement {
   return <details className="ac-details"><summary>{t("基础示例实测：首个预览中位 41 秒（指定配置 3 轮）")}</summary><p className="ac-meta">{t("2026-11-05，Windows · DSH 0.2.1-rc.5 · Node 26.13.0 · DeepSeek Flash，基础搜索与清空任务。首个预览 39–60 秒，两版验收中位 112.5 秒；6/6 候选通过，3 次测试采用与撤销成功。每版报告约 12.3–123.5 万 token，含缓存，不能直接换算费用。宿主已启动，缓存未重置；这不是其他配置的耗时承诺。")}<a href="https://github.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/blob/main/docs/first-use.md" target="_blank" rel="noreferrer">{t("查看源码、样本和测量条件")}</a></p></details>
 }
 /** Session-scoped controls above the resident conversation composer. */
-function ComposerSettings({ sessionId, session }: { sessionId: string; session?: unknown }): React.ReactElement | null {
+function ComposerSettings({ sessionId, session, onExpand }: { sessionId: string; session?: unknown; onExpand: () => void }): React.ReactElement | null {
   const mode = useAbMode(sessionId), p = mode.preferences
   const [advanced, setAdvanced] = useState(false)
   const advancedId = React.useId()
@@ -444,6 +444,11 @@ function ComposerSettings({ sessionId, session }: { sessionId: string; session?:
     catch (e) { setError((e as Error).message) }
     finally { setBusy(false) }
   }
+  const toggleSettings = (): void => {
+    mode.collapsed = !mode.collapsed
+    if (!mode.collapsed) onExpand()
+    publishMode(mode)
+  }
   const versions = versionsOf(p)
   const slots = Array.from({ length: versions }, (_, i) => p.models[i] ?? {})
   const validPair = slots.every(m => m.provider && m.model) && new Set(slots.map(m => `${m.provider}/${m.model}`)).size === slots.length
@@ -451,7 +456,7 @@ function ComposerSettings({ sessionId, session }: { sessionId: string; session?:
   const blind = p.blind !== false
   if (!enabled && !mode.error) return null
   return <section lang={currentLocale()} className="ac-root ac-composer-settings" aria-label={t("A|B 比较设置")}><Styles />
-    <div className="ac-settings-head"><span className="ac-logo">A|B</span><div><b>{t("对比模式")}</b><span>{mode.collapsed ? t("{0} · {1} 版 · {2} · 每版 {3} 分钟", { 0: p.mode === 'same-model' ? t("同一模型 · 不同风格") : t("不同模型 · 同一风格"), 1: versions, 2: blind ? t("盲选") : t("公开对比"), 3: p.generationMinutes }) : t("在下方写需求，发送后在这条对话里同时运行各版。")}</span></div><button className="ac-text-btn" onClick={() => { mode.collapsed = !mode.collapsed; publishMode(mode) }}>{mode.collapsed ? t("展开设置") : t("收起")}</button><button className="ac-icon-btn" onClick={close} disabled={busy} aria-label={t("退出 A|B 模式")}><IconClose /></button></div>
+    <div className="ac-settings-head"><span className="ac-logo">A|B</span><div><b>{t("对比模式")}</b><span>{mode.collapsed ? t("{0} · {1} 版 · {2} · 每版 {3} 分钟", { 0: p.mode === 'same-model' ? t("同一模型 · 不同风格") : t("不同模型 · 同一风格"), 1: versions, 2: blind ? t("盲选") : t("公开对比"), 3: p.generationMinutes }) : t("在下方写需求，发送后在这条对话里同时运行各版。")}</span></div><button className="ac-text-btn" onClick={toggleSettings} aria-expanded={!mode.collapsed}>{mode.collapsed ? t("展开设置") : t("收起")}</button><button className="ac-icon-btn" onClick={close} disabled={busy} aria-label={t("退出 A|B 模式")}><IconClose /></button></div>
     {setup?.capabilities?.ok === false && <div className="ac-feedback" role="alert">{t("当前 DSH ")}{setup.dshVersion ?? t("（版本未知）")}{t(" 缺少比较所需接口：")}{setup.capabilities.missing.join('、')}{t("。请升级或回退至已验证版本；比较记录和草稿保留。")}</div>}
     {setup?.capabilities?.warnings.includes('sessionController.resolveAgent') && <div className="ac-feedback" role="status">{t("当前 DSH 缺少会话恢复接口：sessionController.resolveAgent。已打开的对话仍可使用；历史对话请先在 DSH 中重新打开。")}</div>}
     {/* One text run: inline pieces must not become separate flex columns. */}
@@ -499,6 +504,10 @@ function ComposerSettings({ sessionId, session }: { sessionId: string; session?:
   </section>
 }
 
+function phoneComposer(): boolean {
+  return globalThis.matchMedia?.('(max-width: 600px)').matches === true
+}
+
 /** Keep blank-session and background-tool results outside the host's folded tool turns. */
 function ComposerDock({ sessionId, session }: { sessionId: string; session?: { blank?: boolean } }): React.ReactElement {
   // The host may reuse a slot component across sessions; its local state must not follow it.
@@ -533,16 +542,27 @@ function ComposerDockState({ sessionId, session }: { sessionId: string; session?
   }, [latest?.runId, latest?.state, mode])
   const resident = latest?.origin?.kind === 'tool' && latest.state !== 'abandoned' && mode.dismissedRunId !== latest.runId
   const runId = blank ? mode.runId ?? latest?.runId : resident ? latest?.runId : undefined
-  useEffect(() => { setCollapsed(!blank && latest?.state === 'adopted' && latest.adoption?.state === 'adopted') }, [runId])
+  useEffect(() => {
+    // A restored, settled result should leave the resident editor available on phones.
+    const editing = mode.preferences.enabled && !mode.collapsed && phoneComposer()
+    setCollapsed(!!runId && (editing || (!blank && latest?.state === 'adopted' && latest.adoption?.state === 'adopted')))
+  }, [runId])
+  const expandResult = (): void => {
+    if (phoneComposer() && mode.preferences.enabled && !mode.collapsed) {
+      mode.collapsed = true
+      publishMode(mode)
+    }
+    setCollapsed(false)
+  }
   return <>
     {(runId || mode.preferences.enabled) && <div lang={currentLocale()} className="ac-root ac-notice-root"><Styles /><StaleBackendNotice call={call} /></div>}
     {capabilityError && <div lang={currentLocale()} className="ac-root"><Styles /><div className="ac-feedback ac-prerequisite" role="alert"><span><Diagnostic text={capabilityError} /></span><div className="ac-prerequisite-actions"><button className="ac-text-btn" onClick={() => { void loadMode(sessionId) }}>{t("重新检查接口")}</button><button className="ac-text-btn" onClick={() => setOpen(sessionId)}>{t("比较记录")}</button></div></div></div>}
     {runId && <section lang={currentLocale()} className="ac-root ac-conversation-run" aria-label={t("本对话的 A|B 结果")}><Styles /><RunRing />
-      {collapsed && <div className="ac-conversation-run-head"><b>{t("本次比较")}</b><span className="ac-meta">{runId}</span><span className="ac-spacer" /><button className="ac-text-btn" onClick={() => setOpen(sessionId)}>{t("记录与教程")}</button><button className="ac-text-btn" onClick={() => setCollapsed(false)}>{t("展开结果")}</button></div>}
+      {collapsed && <div className="ac-conversation-run-head"><b>{t("本次比较")}</b><span className="ac-meta">{runId}</span><span className="ac-spacer" /><button className="ac-text-btn" onClick={() => setOpen(sessionId)}>{t("记录与教程")}</button><button className="ac-text-btn" onClick={expandResult}>{t("展开结果")}</button></div>}
       <div className="ac-conversation-run-scroll" hidden={collapsed}><RunView key={runId} runId={runId} sessionId={sessionId} compact {...(latest?.runId === runId ? { initial: latest } : {})} onExpand={() => setOpen(sessionId, runId)} onCollapse={() => setCollapsed(true)} /></div>
     </section>}
     {error && (blank || mode.preferences.enabled || mode.refreshVersion) ? <div lang={currentLocale()} className="ac-root"><div className="ac-feedback" role="alert"><span>{t("读取比较记录失败：")}<Diagnostic text={error} /></span></div></div> : null}
-    <ComposerSettings sessionId={sessionId} session={session} />
+    <ComposerSettings sessionId={sessionId} session={session} onExpand={() => { if (phoneComposer()) setCollapsed(true) }} />
   </>
 }
 function StarNudge(): React.ReactElement | null {

@@ -116,7 +116,7 @@ Vous pouvez ne partager aucun contexte, inclure les échanges récents ou sélec
 
 ## Interface et expérience
 
-Sur téléphone, choisissez le mode, le nombre de versions et la comparaison à l’aveugle ou à découvert. Vérifiez le projet et le contexte partagé, puis saisissez votre demande dans la conversation. « More settings » donne accès aux styles, à la durée limite et à l’exemple.
+Sur téléphone, choisissez le mode, le nombre de versions et la comparaison à l’aveugle ou à découvert. Vérifiez le projet et le contexte partagé, puis saisissez votre demande dans la conversation. « More settings » donne accès aux styles, à la durée limite et à l’exemple. À la reprise d’une comparaison, ouvrir les réglages replie le résultat précédent. Rouvrez-le pour retrouver les pages et votre brouillon.
 
 Sur grand écran, « Align pages » place les pages interactives à la même hauteur. Un second clic rétablit la disposition initiale et conserve la saisie dans chaque page.
 

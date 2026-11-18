@@ -332,6 +332,20 @@ try {
   await page.locator('.ac-conversation-run iframe').nth(1).waitFor()
   check(await page.locator('.ac-conversation-run iframe').count() === 2, 'blank-session results must reopen from persisted run records')
   await page.screenshot({ path: path.join(output, 'blank-conversation.png') })
+  await page.setViewportSize({ width: 390, height: 844 })
+  const residentFrames = page.locator('.ac-conversation-run iframe')
+  await residentFrames.evaluateAll(frames => { window.__residentFrameNodes = frames.map(frame => frame.contentWindow) })
+  const phoneSettings = page.locator('.ac-composer-settings')
+  const reopenSettings = phoneSettings.getByRole('button', { name: '展开设置', exact: true })
+  if (!await reopenSettings.isVisible()) await phoneSettings.getByRole('button', { name: '收起', exact: true }).click()
+  await reopenSettings.click()
+  check(!await page.locator('.ac-conversation-run-scroll').isVisible() && await phoneSettings.locator('.ac-more-settings').isVisible(), 'opening phone settings folds an older result to make room for the resident prompt')
+  await page.locator('#draft').fill('比较这两种搜索布局')
+  await page.getByRole('button', { name: '展开结果', exact: true }).click()
+  check(await reopenSettings.isVisible() && await residentFrames.nth(1).isVisible(), 'opening the result restores its live pages and folds phone settings')
+  check(await page.locator('#draft').inputValue() === '比较这两种搜索布局' && await residentFrames.evaluateAll(frames => frames.every((frame, i) => frame.contentWindow === window.__residentFrameNodes[i])), 'switching between settings and results preserves the draft and both page instances')
+  await page.setViewportSize({ width: 1440, height: 900 })
+
 
   await page.evaluate(() => {
     window.__sessionPlans.push({method:'latest',sessionId:'s2',delayMs:600,error:'新对话记录暂不可用'});

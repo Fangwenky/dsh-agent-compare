@@ -122,7 +122,7 @@ In 1.3.0, A|B works in any folder. A folder outside Git, including the DSH defau
 
 ## Interface and experience
 
-On a phone, choose the mode, number of versions and blind or open comparison. Check the project and shared context, then type in the conversation. Open More settings for styles, time limits and the built-in example.
+On a phone, choose the mode, number of versions and blind or open comparison. Check the project and shared context, then type in the conversation. Open More settings for styles, time limits and the built-in example. When you return to a comparison, opening settings folds the earlier result. Reopen it to continue with the same pages and draft.
 
 On a wide screen, select Align pages to bring live previews to the same starting height. Select it again to restore the original layout. Anything typed in a preview stays there.
 

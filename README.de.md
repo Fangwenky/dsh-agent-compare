@@ -116,7 +116,7 @@ Teilen Sie keinen Kontext, die letzten Gesprächsrunden oder ausgewählte Nachri
 
 ## Oberfläche und Erlebnis
 
-Am Smartphone wählen Sie Vergleichsmodus, Anzahl der Versionen und ob die Auswahl verdeckt sein soll. Prüfen Sie Projekt und Gesprächskontext und tippen Sie Ihre Aufgabe direkt ins Eingabefeld. Unter „More settings“ finden Sie Stile, Zeitlimit und Beispiel.
+Am Smartphone wählen Sie Vergleichsmodus, Anzahl der Versionen und ob die Auswahl verdeckt sein soll. Prüfen Sie Projekt und Gesprächskontext und tippen Sie Ihre Aufgabe direkt ins Eingabefeld. Unter „More settings“ finden Sie Stile, Zeitlimit und Beispiel. Wenn Sie einen Vergleich erneut öffnen, klappt sein Ergebnis beim Öffnen der Einstellungen ein. Beim Ausklappen bleiben die Seiten und Ihr Entwurf erhalten.
 
 Auf breiten Bildschirmen richtet „Align pages“ die Oberkanten der interaktiven Seiten aneinander aus. Ein zweiter Klick stellt die ursprüngliche Anordnung wieder her. Bereits eingegebene Werte bleiben erhalten.
 

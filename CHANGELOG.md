@@ -2,7 +2,7 @@
 
 ## 3.2.0
 
-- Keep model selection, workspace warnings and the conversation context visible on phones. More settings opens the original style, time limit, sample and Windows controls without replacing the prompt.
+- Keep model selection, workspace warnings and the conversation context visible on phones. More settings opens the original style, time limit, sample and Windows controls without replacing the prompt. On phones, switching between a previous result and settings preserves the live pages and the draft.
 - Align live pages side by side on wide screens, even with different reply lengths. Turn alignment off to return to the original layout with the same interactive pages.
 - Lead all eight guides from the demonstration to installation and compatibility. Keep the Chinese package guide synchronized and use candidate-count guidance for two to four versions.
 

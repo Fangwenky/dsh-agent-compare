@@ -116,7 +116,7 @@ Escolha não compartilhar contexto, incluir trocas recentes ou selecionar mensag
 
 ## Interface e experiência
 
-No celular, escolha o modo, o número de versões e se a comparação será às cegas. Confira o projeto e o contexto compartilhado e digite o pedido na conversa. Abra “More settings” para ajustar estilos, limite de tempo e o exemplo.
+No celular, escolha o modo, o número de versões e se a comparação será às cegas. Confira o projeto e o contexto compartilhado e digite o pedido na conversa. Abra “More settings” para ajustar estilos, limite de tempo e o exemplo. Ao voltar a uma comparação, abrir as configurações recolhe o resultado anterior. Ao reabri-lo, as páginas e o rascunho são preservados.
 
 Em uma tela larga, use “Align pages” para alinhar o início das páginas interativas. Clique novamente para voltar à disposição original. O que você digitou em cada página é preservado.
 
