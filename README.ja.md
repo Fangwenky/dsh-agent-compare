@@ -1,5 +1,7 @@
 [![鲸挑细选：同じアイデアから生まれた4種類のタイマー。赤いトマトの C を選択。機能イメージ。](https://raw.githubusercontent.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/main/assets/readme/hero-bilingual.webp)](#demo)
 
+<div align="center">
+
 <a id="agentcompare"></a>
 <a id="agent-compare-dsh-agent-compare--鲸挑细选"></a>
 
@@ -7,11 +9,13 @@
 
 [![GitHub stars](https://img.shields.io/github/stars/lijiaqi-AI-Product-Manager/dsh-agent-compare?label=GitHub%20Stars&color=3657f5&style=flat&labelColor=0b1b4f&cacheSeconds=300)](https://github.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/stargazers)
 [![npm download/下载量](https://raw.githubusercontent.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/main/assets/statistics/npm-total-badge.svg)](https://www.npmjs.com/package/dsh-agent-compare)
+[![DSH Market · ワークフロー DL 1位](https://img.shields.io/badge/DSH%20Market-%E3%83%AF%E3%83%BC%E3%82%AF%E3%83%95%E3%83%AD%E3%83%BC%20DL%201%E4%BD%8D-3657f5?style=flat&labelColor=0b1b4f)](https://dshmarket.com/categories/workflow/)
 [![npm version](https://img.shields.io/npm/v/dsh-agent-compare?label=npm&color=3657f5&style=flat&labelColor=0b1b4f&logo=npm&logoColor=white)](https://www.npmjs.com/package/dsh-agent-compare)
+
 [![CI](https://img.shields.io/github/actions/workflow/status/lijiaqi-AI-Product-Manager/dsh-agent-compare/ci.yml?branch=main&label=CI&logo=github&logoColor=white&style=flat&labelColor=0b1b4f)](https://github.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/actions/workflows/ci.yml)
 [![License: MIT](https://img.shields.io/badge/license-MIT-4d6bfe?style=flat&labelColor=0b1b4f)](https://github.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/blob/main/LICENSE)
+[![Tested on DSH 0.2.1-rc.5 and 0.2.2-rc.1](https://img.shields.io/badge/DSH%20tested-0.2.1--rc.5%20%2F%200.2.2--rc.1-4d6bfe?style=flat&labelColor=0b1b4f)](https://github.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/blob/main/docs/demo.md)
 
-[![DSH Market · ワークフロー DL 1位](https://img.shields.io/badge/DSH%20Market-%E3%83%AF%E3%83%BC%E3%82%AF%E3%83%95%E3%83%AD%E3%83%BC%20DL%201%E4%BD%8D-3657f5?style=flat&labelColor=0b1b4f)](https://dshmarket.com/categories/workflow/)
 [![dsh.so · 週間 DL 7位](https://img.shields.io/badge/dsh.so-%E9%80%B1%E9%96%93%20DL%207%E4%BD%8D-3657f5?style=flat&labelColor=0b1b4f)](https://www.dsh.so/artifact/dsh-agent-compare/)
 [![dsh.so · 週間 Star 増加 19位](https://img.shields.io/badge/dsh.so-%E9%80%B1%E9%96%93%20Star%20%E5%A2%97%E5%8A%A0%2019%E4%BD%8D-3657f5?style=flat&labelColor=0b1b4f)](https://www.dsh.so/artifact/dsh-agent-compare/)
 
@@ -27,6 +31,8 @@
 
 <a id="demo"></a>
 <a id="大肥鱼赛马を最初から最後まで見る"></a>
+
+</div>
 
 ## 比較の流れをデモで見る
 

@@ -1,20 +1,24 @@
 [![鲸挑细选：同一想法的四种番茄钟设计，红色番茄版本 C 已选中。功能示意。](https://raw.githubusercontent.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/main/assets/readme/hero-bilingual.webp)](#demo)
 
+<div align="center">
+
 <a id="agentcompare"></a>
 <a id="agentcompare-中文指南"></a>
 <a id="鲸挑细选--agent-compare-dsh-agent-compare"></a>
 
-# 鲸挑细选 · AgentCompare
+# 鲸挑细选 · Agent Compare
 
 [![GitHub stars](https://img.shields.io/github/stars/lijiaqi-AI-Product-Manager/dsh-agent-compare?label=GitHub%20Stars&color=3657f5&style=flat&labelColor=0b1b4f&cacheSeconds=300)](https://github.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/stargazers)
 [![npm download/下载量](https://raw.githubusercontent.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/main/assets/statistics/npm-total-badge.svg)](https://www.npmjs.com/package/dsh-agent-compare)
+[![DSH Market · 工作流下载榜 #1](https://img.shields.io/badge/DSH%20Market-%E5%B7%A5%E4%BD%9C%E6%B5%81%E4%B8%8B%E8%BD%BD%E6%A6%9C%20%231-3657f5?style=flat&labelColor=0b1b4f)](https://dshmarket.com/zh/categories/workflow/)
 [![npm version](https://img.shields.io/npm/v/dsh-agent-compare?label=npm&color=3657f5&style=flat&labelColor=0b1b4f&logo=npm&logoColor=white)](https://www.npmjs.com/package/dsh-agent-compare)
+
 [![CI](https://img.shields.io/github/actions/workflow/status/lijiaqi-AI-Product-Manager/dsh-agent-compare/ci.yml?branch=main&label=CI&logo=github&logoColor=white&style=flat&labelColor=0b1b4f)](https://github.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/actions/workflows/ci.yml)
 [![License: MIT](https://img.shields.io/badge/license-MIT-4d6bfe?style=flat&labelColor=0b1b4f)](https://github.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/blob/main/LICENSE)
 [![Source version](https://img.shields.io/github/package-json/v/lijiaqi-AI-Product-Manager/dsh-agent-compare?label=source&color=3657f5&style=flat&labelColor=0b1b4f)](https://github.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/blob/main/package.json)
 [![Node.js ^22.22.2 || ^24.15.0 || >=26.0.0](https://img.shields.io/badge/Node.js-22%20%2F%2024%20%2F%2026%2B-238636?style=flat&labelColor=0b1b4f&logo=nodedotjs&logoColor=white)](https://github.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/blob/main/package.json)
+[![Tested on DSH 0.2.1-rc.5 and 0.2.2-rc.1](https://img.shields.io/badge/DSH%20tested-0.2.1--rc.5%20%2F%200.2.2--rc.1-4d6bfe?style=flat&labelColor=0b1b4f)](https://github.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/blob/main/docs/demo.md)
 
-[![DSH Market · 工作流下载榜 #1](https://img.shields.io/badge/DSH%20Market-%E5%B7%A5%E4%BD%9C%E6%B5%81%E4%B8%8B%E8%BD%BD%E6%A6%9C%20%231-3657f5?style=flat&labelColor=0b1b4f)](https://dshmarket.com/zh/categories/workflow/)
 [![dsh.so · 周下载榜 #7](https://img.shields.io/badge/dsh.so-%E5%91%A8%E4%B8%8B%E8%BD%BD%E6%A6%9C%20%237-3657f5?style=flat&labelColor=0b1b4f)](https://www.dsh.so/artifact/dsh-agent-compare/)
 [![dsh.so · 周 Star 增长榜 #19](https://img.shields.io/badge/dsh.so-%E5%91%A8%20Star%20%E5%A2%9E%E9%95%BF%E6%A6%9C%20%2319-3657f5?style=flat&labelColor=0b1b4f)](https://www.dsh.so/artifact/dsh-agent-compare/)
 
@@ -22,14 +26,16 @@
 
 **中文** · [English](https://github.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/blob/main/README.en.md) · [日本語](https://github.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/blob/main/README.ja.md) · [한국어](https://github.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/blob/main/README.ko.md) · [Español](https://github.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/blob/main/README.es.md) · [Português (Brasil)](https://github.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/blob/main/README.pt-BR.md) · [Français](https://github.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/blob/main/README.fr.md) · [Deutsch](https://github.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/blob/main/README.de.md)
 
-**让同一想法，长出更多实现方案！**
+**大肥鱼赛马：让同一想法，长出更多实现方案！**
 
-**鲸挑细选 · AgentCompare** 是 [DeepSeek Harness](https://github.com/deepseek-ai/deepseek-harness)（DSH）的比较插件，安装名为 `dsh-agent-compare`。在主对话里，把同一需求交给 2–4 个版本，比较回答、文件或可运行网页，再选出更符合你想法的一版。支持 **DSH Desktop + Web**，产品界面可切换中文和 English。
+**鲸挑细选 · Agent Compare** 是 [DeepSeek Harness](https://github.com/deepseek-ai/deepseek-harness)（DSH）的比较插件，安装名为 `dsh-agent-compare`。在主对话里，把同一需求交给 2–4 个版本，比较回答、文件或可运行网页，再选出更符合你想法的一版。支持 **DSH Desktop + Web**，产品界面可切换中文和 English。
 
 <p align="center"><a href="#demo">看 45 秒演示</a> · <a href="#install">安装到 Desktop / Web</a> · <a href="#support">查兼容范围</a></p>
 
 <a id="demo"></a>
 <a id="看一场完整的大肥鱼赛马"></a>
+
+</div>
 
 ## 先看一次完整比较
 
