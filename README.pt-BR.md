@@ -11,6 +11,12 @@
 [![CI](https://img.shields.io/github/actions/workflow/status/lijiaqi-AI-Product-Manager/dsh-agent-compare/ci.yml?branch=main&label=CI&logo=github&logoColor=white&style=flat&labelColor=0b1b4f)](https://github.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/actions/workflows/ci.yml)
 [![License: MIT](https://img.shields.io/badge/license-MIT-4d6bfe?style=flat&labelColor=0b1b4f)](https://github.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/blob/main/LICENSE)
 
+[![DSH Market · Downloads de fluxos #1](https://img.shields.io/badge/DSH%20Market-Downloads%20de%20fluxos%20%231-3657f5?style=flat&labelColor=0b1b4f)](https://dshmarket.com/categories/workflow/)
+[![dsh.so · Downloads semanais #7](https://img.shields.io/badge/dsh.so-Downloads%20semanais%20%237-3657f5?style=flat&labelColor=0b1b4f)](https://www.dsh.so/artifact/dsh-agent-compare/)
+[![dsh.so · Novas estrelas semanais #19](https://img.shields.io/badge/dsh.so-Novas%20estrelas%20semanais%20%2319-3657f5?style=flat&labelColor=0b1b4f)](https://www.dsh.so/artifact/dsh-agent-compare/)
+
+<sub>2026-11-17 · O DSH Market classifica Fluxo de trabalho e automação por solicitações de download do npm nos últimos 30 dias, incluindo automação. O dsh.so soma npm e espelho para os downloads semanais e classifica as estrelas ganhas na semana.</sub>
+
 [中文](https://github.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/blob/main/README.md) · [English](https://github.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/blob/main/README.en.md) · [日本語](https://github.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/blob/main/README.ja.md) · [한국어](https://github.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/blob/main/README.ko.md) · [Español](https://github.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/blob/main/README.es.md) · **Português (Brasil)** · [Français](https://github.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/blob/main/README.fr.md) · [Deutsch](https://github.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/blob/main/README.de.md)
 
 **Uma mesma ideia, mais formas de torná-la realidade!**

@@ -11,6 +11,12 @@
 [![CI](https://img.shields.io/github/actions/workflow/status/lijiaqi-AI-Product-Manager/dsh-agent-compare/ci.yml?branch=main&label=CI&logo=github&logoColor=white&style=flat&labelColor=0b1b4f)](https://github.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/actions/workflows/ci.yml)
 [![License: MIT](https://img.shields.io/badge/license-MIT-4d6bfe?style=flat&labelColor=0b1b4f)](https://github.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/blob/main/LICENSE)
 
+[![DSH Market · Workflow-Downloads Nr. 1](https://img.shields.io/badge/DSH%20Market-Workflow--Downloads%20Nr.%201-3657f5?style=flat&labelColor=0b1b4f)](https://dshmarket.com/categories/workflow/)
+[![dsh.so · Wochen-Downloads Nr. 7](https://img.shields.io/badge/dsh.so-Wochen--Downloads%20Nr.%207-3657f5?style=flat&labelColor=0b1b4f)](https://www.dsh.so/artifact/dsh-agent-compare/)
+[![dsh.so · Neue Sterne pro Woche Nr. 19](https://img.shields.io/badge/dsh.so-Neue%20Sterne%20pro%20Woche%20Nr.%2019-3657f5?style=flat&labelColor=0b1b4f)](https://www.dsh.so/artifact/dsh-agent-compare/)
+
+<sub>2026-11-17 · DSH Market sortiert Workflow und Automatisierung nach npm-Downloadanfragen der letzten 30 Tage, einschließlich automatisierter Anfragen. dsh.so summiert npm und Mirror für wöchentliche Downloads und wertet die in der Woche hinzugekommenen Sterne aus.</sub>
+
 [中文](https://github.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/blob/main/README.md) · [English](https://github.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/blob/main/README.en.md) · [日本語](https://github.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/blob/main/README.ja.md) · [한국어](https://github.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/blob/main/README.ko.md) · [Español](https://github.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/blob/main/README.es.md) · [Português (Brasil)](https://github.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/blob/main/README.pt-BR.md) · [Français](https://github.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/blob/main/README.fr.md) · **Deutsch**
 
 **Eine Idee, mehr Wege, sie Wirklichkeit werden zu lassen!**

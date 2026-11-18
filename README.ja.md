@@ -11,6 +11,12 @@
 [![CI](https://img.shields.io/github/actions/workflow/status/lijiaqi-AI-Product-Manager/dsh-agent-compare/ci.yml?branch=main&label=CI&logo=github&logoColor=white&style=flat&labelColor=0b1b4f)](https://github.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/actions/workflows/ci.yml)
 [![License: MIT](https://img.shields.io/badge/license-MIT-4d6bfe?style=flat&labelColor=0b1b4f)](https://github.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/blob/main/LICENSE)
 
+[![DSH Market · ワークフロー DL 1位](https://img.shields.io/badge/DSH%20Market-%E3%83%AF%E3%83%BC%E3%82%AF%E3%83%95%E3%83%AD%E3%83%BC%20DL%201%E4%BD%8D-3657f5?style=flat&labelColor=0b1b4f)](https://dshmarket.com/categories/workflow/)
+[![dsh.so · 週間 DL 7位](https://img.shields.io/badge/dsh.so-%E9%80%B1%E9%96%93%20DL%207%E4%BD%8D-3657f5?style=flat&labelColor=0b1b4f)](https://www.dsh.so/artifact/dsh-agent-compare/)
+[![dsh.so · 週間 Star 増加 19位](https://img.shields.io/badge/dsh.so-%E9%80%B1%E9%96%93%20Star%20%E5%A2%97%E5%8A%A0%2019%E4%BD%8D-3657f5?style=flat&labelColor=0b1b4f)](https://www.dsh.so/artifact/dsh-agent-compare/)
+
+<sub>2026-11-17 · DSH Market のワークフロー・自動化部門は、自動アクセスを含む npm の直近 30 日間のダウンロードリクエスト順です。dsh.so の週間ダウンロードは npm とミラーの合計で、Star は週間の増加数です。</sub>
+
 [中文](https://github.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/blob/main/README.md) · [English](https://github.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/blob/main/README.en.md) · **日本語** · [한국어](https://github.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/blob/main/README.ko.md) · [Español](https://github.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/blob/main/README.es.md) · [Português (Brasil)](https://github.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/blob/main/README.pt-BR.md) · [Français](https://github.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/blob/main/README.fr.md) · [Deutsch](https://github.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/blob/main/README.de.md)
 
 **ひとつのアイデアから、もっと多彩な実現方法へ！**

@@ -11,6 +11,12 @@
 [![CI](https://img.shields.io/github/actions/workflow/status/lijiaqi-AI-Product-Manager/dsh-agent-compare/ci.yml?branch=main&label=CI&logo=github&logoColor=white&style=flat&labelColor=0b1b4f)](https://github.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/actions/workflows/ci.yml)
 [![License: MIT](https://img.shields.io/badge/license-MIT-4d6bfe?style=flat&labelColor=0b1b4f)](https://github.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/blob/main/LICENSE)
 
+[![DSH Market · 워크플로 다운로드 1위](https://img.shields.io/badge/DSH%20Market-%EC%9B%8C%ED%81%AC%ED%94%8C%EB%A1%9C%20%EB%8B%A4%EC%9A%B4%EB%A1%9C%EB%93%9C%201%EC%9C%84-3657f5?style=flat&labelColor=0b1b4f)](https://dshmarket.com/categories/workflow/)
+[![dsh.so · 주간 다운로드 7위](https://img.shields.io/badge/dsh.so-%EC%A3%BC%EA%B0%84%20%EB%8B%A4%EC%9A%B4%EB%A1%9C%EB%93%9C%207%EC%9C%84-3657f5?style=flat&labelColor=0b1b4f)](https://www.dsh.so/artifact/dsh-agent-compare/)
+[![dsh.so · 주간 Star 증가 19위](https://img.shields.io/badge/dsh.so-%EC%A3%BC%EA%B0%84%20Star%20%EC%A6%9D%EA%B0%80%2019%EC%9C%84-3657f5?style=flat&labelColor=0b1b4f)](https://www.dsh.so/artifact/dsh-agent-compare/)
+
+<sub>2026-11-17 · DSH Market의 워크플로·자동화 부문은 자동 요청을 포함한 최근 30일 npm 다운로드 요청으로 집계합니다. dsh.so는 주간 npm과 미러 다운로드 요청을 합산하며, Star 순위는 주간 증가량 기준입니다.</sub>
+
 [中文](https://github.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/blob/main/README.md) · [English](https://github.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/blob/main/README.en.md) · [日本語](https://github.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/blob/main/README.ja.md) · **한국어** · [Español](https://github.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/blob/main/README.es.md) · [Português (Brasil)](https://github.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/blob/main/README.pt-BR.md) · [Français](https://github.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/blob/main/README.fr.md) · [Deutsch](https://github.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/blob/main/README.de.md)
 
 **하나의 아이디어에서, 더 다양한 구현 방안으로!**

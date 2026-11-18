@@ -11,6 +11,12 @@
 [![CI](https://img.shields.io/github/actions/workflow/status/lijiaqi-AI-Product-Manager/dsh-agent-compare/ci.yml?branch=main&label=CI&logo=github&logoColor=white&style=flat&labelColor=0b1b4f)](https://github.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/actions/workflows/ci.yml)
 [![License: MIT](https://img.shields.io/badge/license-MIT-4d6bfe?style=flat&labelColor=0b1b4f)](https://github.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/blob/main/LICENSE)
 
+[![DSH Market · Téléchargements workflow nº 1](https://img.shields.io/badge/DSH%20Market-T%C3%A9l%C3%A9chargements%20workflow%20n%C2%BA%201-3657f5?style=flat&labelColor=0b1b4f)](https://dshmarket.com/categories/workflow/)
+[![dsh.so · Téléchargements hebdo nº 7](https://img.shields.io/badge/dsh.so-T%C3%A9l%C3%A9chargements%20hebdo%20n%C2%BA%207-3657f5?style=flat&labelColor=0b1b4f)](https://www.dsh.so/artifact/dsh-agent-compare/)
+[![dsh.so · Nouvelles étoiles hebdo nº 19](https://img.shields.io/badge/dsh.so-Nouvelles%20%C3%A9toiles%20hebdo%20n%C2%BA%2019-3657f5?style=flat&labelColor=0b1b4f)](https://www.dsh.so/artifact/dsh-agent-compare/)
+
+<sub>2026-11-17 · DSH Market classe les workflows et automatisations par requêtes de téléchargement npm sur 30 jours, dont les requêtes automatisées. dsh.so additionne npm et son miroir pour les téléchargements hebdomadaires et classe les étoiles gagnées dans la semaine.</sub>
+
 [中文](https://github.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/blob/main/README.md) · [English](https://github.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/blob/main/README.en.md) · [日本語](https://github.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/blob/main/README.ja.md) · [한국어](https://github.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/blob/main/README.ko.md) · [Español](https://github.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/blob/main/README.es.md) · [Português (Brasil)](https://github.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/blob/main/README.pt-BR.md) · **Français** · [Deutsch](https://github.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/blob/main/README.de.md)
 
 **Une même idée, plus de façons de lui donner vie !**
