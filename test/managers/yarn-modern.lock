@@ -326,6 +326,7 @@ __metadata:
     "@types/react": "npm:19.3.0"
     "@types/react-dom": "npm:19.3.0"
     "@vitejs/plugin-react": "npm:6.2.1"
+    picomatch: "file:vendor/picomatch-4.0.7-backport.tgz"
     react: "npm:19.3.1"
     react-dom: "npm:19.3.1"
     typescript: "npm:7.0.2"
@@ -596,10 +597,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"picomatch@npm:^4.0.4, picomatch@npm:^4.0.7":
+"picomatch@file:vendor/picomatch-4.0.7-backport.tgz::locator=agent-compare-demo-shop%40workspace%3A.":
   version: 4.0.7
-  resolution: "picomatch@npm:4.0.7"
-  checksum: 10c0/beb6ae02c43ae44e84883b90830196d9046b1726ead292adcf7f57945e0bb0d992d68563d87e03b484b6f3c9a5c6defda7523477f047d7f0e663f126cc01787f
+  resolution: "picomatch@file:vendor/picomatch-4.0.7-backport.tgz#vendor/picomatch-4.0.7-backport.tgz::hash=f348c7&locator=agent-compare-demo-shop%40workspace%3A."
+  checksum: 10c0/f51c9df310361ca486726dbdc540267fb820d72be8545a2f64243240c46cab1d0212a2721059665a743ba585db0ff529f52e550db8761285ac0022f742fd5014
   languageName: node
   linkType: hard
 
