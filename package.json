@@ -46,7 +46,8 @@
     "!docs/first-use.md",
     "!docs/distribution*.md",
     "!docs/media/history",
-    "!docs/media/screenshots/0*.png"
+    "!docs/media/screenshots",
+    "examples/vite-react-demo/vendor/picomatch-4.0.7-backport.tgz"
   ],
   "engines": {
     "node": "^22.22.2 || ^24.15.0 || >=26.0.0",
@@ -56,6 +57,7 @@
     "build": "node -e \"require('node:fs').rmSync('lib',{recursive:true,force:true})\" && tsc -p tsconfig.json && tsc -p tsconfig.client.json && node scripts/wrap-client.mjs",
     "typecheck": "tsc -p tsconfig.json --noEmit && tsc -p tsconfig.client.json --noEmit",
     "check:docs": "node scripts/check-docs.mjs",
+    "check:dependency-audit": "node scripts/check-dependency-audit.mjs",
     "check:publish-readme": "node scripts/check-publish-readme.mjs",
     "test": "npm run build && vitest run",
     "test:coverage": "npm run build && vitest run --coverage",
@@ -147,6 +149,7 @@
     "@vitest/coverage-v8": "^5.1.0",
     "axe-core": "^4.14.0",
     "esbuild": "^0.28.2",
+    "picomatch": "file:examples/vite-react-demo/vendor/picomatch-4.0.7-backport.tgz",
     "react": "^19.3.1",
     "react-dom": "^19.3.1",
     "typescript": "^7.0.2",
@@ -171,5 +174,8 @@
     "url": "git+https://github.com/lijiaqi-AI-Product-Manager/dsh-agent-compare.git"
   },
   "homepage": "https://github.com/lijiaqi-AI-Product-Manager/dsh-agent-compare#readme",
-  "bugs": "https://github.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/issues"
+  "bugs": "https://github.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/issues",
+  "overrides": {
+    "picomatch": "$picomatch"
+  }
 }
