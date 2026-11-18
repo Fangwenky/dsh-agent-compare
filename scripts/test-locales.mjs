@@ -107,6 +107,13 @@ try {
         // The conversation preview resolves separately and can move the next
         // disclosure while a pointer click is being dispatched on narrow screens.
         await page.locator('.ac-context-summary > details > summary').filter({ hasText: 'See what is included' }).waitFor()
+        if (width <= 600) {
+          const more = page.getByRole('button', { name: 'More settings', exact: true })
+          check(await more.getAttribute('aria-expanded') === 'false', 'mobile settings start collapsed in English')
+          await page.screenshot({ path: path.join(output, 'english-essentials-' + width + '.png') })
+          await more.click()
+          check(await page.getByRole('button', { name: 'Hide more settings', exact: true }).getAttribute('aria-expanded') === 'true', 'the open disclosure is labelled in English')
+        }
         const summary = page.locator('.ac-composer-settings details > summary').filter({ hasText: 'Advanced Windows settings' })
         // A native disclosure may already be open after browser state restoration.
         // Open it when needed instead of blindly toggling it closed.
