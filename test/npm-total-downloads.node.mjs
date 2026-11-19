@@ -1,3 +1,4 @@
+import { collectGitHubStars, renderStarsBadge, renderDownloadBadge, renderMarketBadge, renderDshSoBadge } from '../scripts/metric-badges.mjs'
 import test from 'node:test'
 import assert from 'node:assert/strict'
 import {collectTotal, lifetimeTotal, renderTotal, renderBadge} from '../scripts/npm-total-downloads.mjs'
@@ -69,3 +70,36 @@ test('card and badge expose the same complete lifetime number and coverage', () 
   assert.throws(()=>renderTotal({...snapshot,total:156}),/differs/)
 })
 
+test('star refresh requires the named GitHub repository and a nonnegative integer count', async () => {
+  const at = '2026-11-19T01:30:00.000Z'
+  const repository = 'lijiaqi-AI-Product-Manager/dsh-agent-compare'
+  const get = async (url, options) => {
+    assert.equal(url, 'https://api.github.com/repos/' + repository)
+    assert.equal(options.redirect, 'error')
+    return { ok: true, json: async () => ({ full_name: repository, stargazers_count: 433 }) }
+  }
+  const snapshot = await collectGitHubStars(get, at)
+  assert.equal(snapshot.checkedAt, at)
+  assert.match(renderStarsBadge(snapshot), /433/)
+  await assert.rejects(() => collectGitHubStars(async () => ({ ok: false, status: 403 })), /403/)
+  await assert.rejects(() => collectGitHubStars(async () => ({ ok: true, json: async () => ({ full_name: 'unrelated/repo', stargazers_count: 433 }) })))
+  assert.throws(() => renderStarsBadge({ ...snapshot, stars: -1 }), /Invalid metric/)
+})
+
+test('new artwork shows the lifetime value and qualifies each rank with its own date', () => {
+  const total = renderDownloadBadge({ total: 176840, firstDay: '2026-11-03', asOf: '2026-11-17' })
+  assert.match(total, /176,840/)
+  assert.match(total, /npm download\/下载量/)
+  const market = { source: 'https://dshmarket.com/categories/workflow/', asOf: '2026-11-17', position: 1 }
+  assert.match(renderMarketBadge(market), /#1/)
+  assert.match(renderMarketBadge(market), /30 days · 2026-11-17/)
+  assert.throws(() => renderMarketBadge({ ...market, asOf: '2026-11-31' }), /Invalid metric date/)
+  const dshSo = renderDshSoBadge({
+    source: 'https://www.dsh.so/artifact/dsh-agent-compare/',
+    asOf: '2026-11-18',
+    weeklyDownloadsPosition: 7,
+    weeklyStarGrowthPosition: 19,
+  })
+  assert.match(dshSo, /Downloads #7, Star growth #19/)
+  assert.match(dshSo, /2026-11-18/)
+})

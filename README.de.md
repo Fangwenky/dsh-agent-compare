@@ -7,17 +7,16 @@
 
 # AgentCompare · 鲸挑细选
 
-[![GitHub stars](https://img.shields.io/github/stars/lijiaqi-AI-Product-Manager/dsh-agent-compare?label=GitHub%20Stars&color=3657f5&style=flat&labelColor=0b1b4f&cacheSeconds=300)](https://github.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/stargazers)
-[![npm download/下载量](https://raw.githubusercontent.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/main/assets/statistics/npm-total-badge.svg)](https://www.npmjs.com/package/dsh-agent-compare)
-[![DSH Market · Workflow-Downloads Nr. 1](https://img.shields.io/badge/DSH%20Market-Workflow--Downloads%20Nr.%201-3657f5?style=flat&labelColor=0b1b4f)](https://dshmarket.com/categories/workflow/)
-[![npm version](https://img.shields.io/npm/v/dsh-agent-compare?label=npm&color=3657f5&style=flat&labelColor=0b1b4f&logo=npm&logoColor=white)](https://www.npmjs.com/package/dsh-agent-compare)
+[![GitHub stars](https://raw.githubusercontent.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/main/assets/statistics/github-stars.svg)](https://github.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/stargazers)
+[![npm download/下载量](https://raw.githubusercontent.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/main/assets/statistics/npm-total-highlight.svg)](https://www.npmjs.com/package/dsh-agent-compare)
+[![DSH Market · Workflow-Downloads Nr. 1](https://raw.githubusercontent.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/main/assets/statistics/dsh-market-rank.svg)](https://dshmarket.com/categories/workflow/)
 
+[![dsh.so · Wochen-Downloads Nr. 7 · Neue Sterne pro Woche Nr. 19](https://raw.githubusercontent.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/main/assets/statistics/dshso-weekly-ranks.svg)](https://www.dsh.so/artifact/dsh-agent-compare/)
+
+[![npm version](https://img.shields.io/npm/v/dsh-agent-compare?label=npm&color=3657f5&style=flat&labelColor=0b1b4f&logo=npm&logoColor=white)](https://www.npmjs.com/package/dsh-agent-compare)
 [![CI](https://img.shields.io/github/actions/workflow/status/lijiaqi-AI-Product-Manager/dsh-agent-compare/ci.yml?branch=main&label=CI&logo=github&logoColor=white&style=flat&labelColor=0b1b4f)](https://github.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/actions/workflows/ci.yml)
 [![License: MIT](https://img.shields.io/badge/license-MIT-4d6bfe?style=flat&labelColor=0b1b4f)](https://github.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/blob/main/LICENSE)
 [![Tested on DSH 0.2.1-rc.5 and 0.2.2-rc.1](https://img.shields.io/badge/DSH%20tested-0.2.1--rc.5%20%2F%200.2.2--rc.1-4d6bfe?style=flat&labelColor=0b1b4f)](https://github.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/blob/main/docs/demo.md)
-
-[![dsh.so · Wochen-Downloads Nr. 7](https://img.shields.io/badge/dsh.so-Wochen--Downloads%20Nr.%207-3657f5?style=flat&labelColor=0b1b4f)](https://www.dsh.so/artifact/dsh-agent-compare/)
-[![dsh.so · Neue Sterne pro Woche Nr. 19](https://img.shields.io/badge/dsh.so-Neue%20Sterne%20pro%20Woche%20Nr.%2019-3657f5?style=flat&labelColor=0b1b4f)](https://www.dsh.so/artifact/dsh-agent-compare/)
 
 <sub>2026-11-17 · DSH Market sortiert Workflow und Automatisierung nach npm-Downloadanfragen der letzten 30 Tage, einschließlich automatisierter Anfragen. dsh.so summiert npm und Mirror für wöchentliche Downloads und wertet die in der Woche hinzugekommenen Sterne aus.</sub>
 
