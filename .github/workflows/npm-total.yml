@@ -26,7 +26,11 @@ jobs:
       - run: node --test test/npm-total-downloads.node.mjs
       - run: node scripts/npm-total-downloads.mjs
       - run: node scripts/npm-total-downloads.mjs --check
-      - name: Save changed public totals
+      - run: node scripts/metric-badges.mjs
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+      - run: node scripts/metric-badges.mjs --check
+      - name: Save changed public metrics
         env:
           GIT_AUTHOR_NAME: lijiaqimun-coder
           GIT_AUTHOR_EMAIL: lijiaqi.mun@gmail.com
@@ -35,9 +39,11 @@ jobs:
         shell: bash
         run: |
           git add -- assets/statistics/npm-total-*.svg docs/measurements/npm-total.json
+          git add -- assets/statistics/github-stars.svg docs/measurements/github-stars.json
+          git add -- assets/statistics/dsh-market-rank.svg assets/statistics/dshso-weekly-downloads.svg assets/statistics/dshso-weekly-stars.svg
           if git diff --cached --quiet; then
             exit 0
           fi
-          git commit -m "chore: refresh cumulative npm download requests"
+          git commit -m "chore: refresh public README metrics"
           git push origin HEAD:main
 

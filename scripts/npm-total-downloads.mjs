@@ -2,6 +2,7 @@ import assert from 'node:assert/strict'
 import {mkdir, readFile, writeFile} from 'node:fs/promises'
 import path from 'node:path'
 import {fileURLToPath, pathToFileURL} from 'node:url'
+import { renderDownloadBadge } from './metric-badges.mjs'
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..')
 const packageName = 'dsh-agent-compare'
@@ -122,6 +123,7 @@ export function totalAssets(snapshot) {
     files.set(assetRoot + '/npm-total-' + (mobile ? 'mobile-' : '') + theme + '.svg', renderTotal(snapshot, theme, mobile))
   }
   files.set(assetRoot + '/npm-total-badge.svg', renderBadge(snapshot))
+  files.set(assetRoot + '/npm-total-highlight.svg', renderDownloadBadge(snapshot))
   return files
 }
 

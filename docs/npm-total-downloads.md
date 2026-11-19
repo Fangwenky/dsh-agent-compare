@@ -8,9 +8,15 @@ The displayed lifetime total starts on the registry's first-publication date and
 
 The badge reads **npm download/下载量** and retains the lifetime coverage defined above.
 
-README 的 Star 徽章直接读取 GitHub 仓库的当前 Star 数，设置约 5 分钟缓存；它与每天刷新的 npm 累计快照是两个数据源。Star 历史折线图保持撤下。
+Star 徽章取自 GitHub 仓库接口的 Star 快照。它与 npm 累计下载量共用每日刷新任务，具体取数时间分别保存在公开快照中。
 
-The README Star badge reads the current GitHub repository count with about five minutes of caching. It is separate from the daily cumulative npm snapshot. The Star history chart remains withdrawn.
+The Star badge uses the GitHub repository API snapshot. The same daily job refreshes both sources, with a separate observation date for each.
+
+[Star 快照](https://github.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/blob/main/docs/measurements/github-stars.json) · [榜单快照](https://github.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/blob/main/docs/measurements/market-ranks.json)
+
+[DSH Market](https://dshmarket.com/zh/categories/workflow/) 工作流与自动化分榜按近 30 天 npm 下载请求排序。[dsh.so](https://www.dsh.so/artifact/dsh-agent-compare/) 周下载榜合计 npm 与镜像请求，Star 周榜按增量排序。榜单的观察日期保存在公开快照中。维护者核对最新榜单后更新快照和各语言的排名说明。
+
+[DSH Market](https://dshmarket.com/categories/workflow/) ranks 30-day npm requests in Workflow & Automation. [dsh.so](https://www.dsh.so/artifact/dsh-agent-compare/) combines npm and mirror requests for weekly downloads and ranks weekly Star gains separately. The public snapshot records each board’s observation date. Verify both sources before updating the data and translated labels.
 
 来源：[发布元数据](https://registry.npmjs.org/dsh-agent-compare) · [最后可用日](https://api.npmjs.org/downloads/point/last-day/dsh-agent-compare) · [npm API 定义](https://github.com/npm/registry/blob/main/docs/download-counts.md)。完整逐日来源及范围保留在[公开快照](https://github.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/blob/main/docs/measurements/npm-total.json)，README 只展示累计总数。
 
@@ -28,6 +34,8 @@ The configured time is a target; the Actions run history establishes whether a c
 node --test test/npm-total-downloads.node.mjs
 node scripts/npm-total-downloads.mjs
 node scripts/npm-total-downloads.mjs --check
+node scripts/metric-badges.mjs
+node scripts/metric-badges.mjs --check
 ```
 
 `--render-only` 使用已保存快照离线生成图片；`--check` 离线检查图片与快照的一致性。上述过程不登录 npm，也不发布新包。
