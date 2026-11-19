@@ -8,7 +8,7 @@ const repository = 'lijiaqi-AI-Product-Manager/dsh-agent-compare'
 const starsSource = 'https://api.github.com/repos/' + repository
 const starsFile = 'docs/measurements/github-stars.json'
 const ranksFile = 'docs/measurements/market-ranks.json'
-const marketSource = 'https://dshmarket.com/categories/workflow/'
+const marketSource = 'https://dshmarket.com/#popular'
 const dshSoSource = 'https://www.dsh.so/artifact/dsh-agent-compare/'
 const font = 'system-ui,-apple-system,BlinkMacSystemFont,Segoe UI,Microsoft YaHei,Noto Sans CJK SC,sans-serif'
 const formatNumber = new Intl.NumberFormat('en-US')
@@ -101,7 +101,7 @@ export function renderMarketBadge(snapshot) {
   assert.equal(snapshot.source, marketSource)
   const date = day(snapshot.asOf)
   const rank = '#' + count(snapshot.position, 1)
-  return svg(226, 66, `DSH Market · Workflow download rank ${rank}`, `Workflow & Automation category, 30-day npm download requests. Snapshot ${date}.`, `
+  return svg(226, 66, `DSH 插件市场下载榜 · DSH Market download rank ${rank}`, `All plugins, ranked by 30-day npm download requests. Snapshot ${date}.`, `
   <defs>
     <linearGradient id="blue" x1="0" y1="1" x2="1" y2="0"><stop stop-color="#25236b"/><stop offset=".55" stop-color="#3e50cf"/><stop offset="1" stop-color="#6748ba"/></linearGradient>
     <linearGradient id="medal" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#c9f3ff"/><stop offset="1" stop-color="#bdb1ff"/></linearGradient>
@@ -116,9 +116,8 @@ export function renderMarketBadge(snapshot) {
   <path d="M14 33 9 29m8 10-6-3m47-3 5-4m-8 10 6-3" fill="none" stroke="#d9dfff" stroke-linecap="round" stroke-width="1.35"/>
   <g font-family="${font}">
     <text x="36" y="38" text-anchor="middle" fill="#29266b" font-size="${numberSize(rank, 20, 31)}" font-weight="800">${rank}</text>
-    <text x="71" y="22" fill="#fff" font-size="11.5" font-weight="780" letter-spacing="1">DSH MARKET</text>
-    <text x="71" y="39" fill="#f5f4ff" font-size="11.3" font-weight="680">工作流下载榜</text>
-    <text x="71" y="53" fill="#f0eeff" font-size="9.6">Workflow downloads</text>
+    <text x="71" y="29" fill="#fff" font-size="12.5" font-weight="740">DSH 插件市场下载榜</text>
+    <text x="71" y="46" fill="#f0eeff" font-size="10.6">DSH Market download rank</text>
   </g>`)
 }
 
@@ -164,8 +163,8 @@ async function main() {
 
   const assets = new Map([
     ['assets/statistics/github-stars.svg', renderStarsBadge(stars)],
-    ['assets/statistics/dsh-market-rank.svg', renderMarketBadge(ranks.dshMarket)],
-    ['assets/statistics/dshso-weekly-downloads.svg', renderDshSoBadge(ranks.dshSo, 'downloads')],
+    ['assets/statistics/dsh-market-download-rank.svg', renderMarketBadge(ranks.dshMarket)],
+    ['assets/statistics/dshso-weekly-download-rank.svg', renderDshSoBadge(ranks.dshSo, 'downloads')],
     ['assets/statistics/dshso-weekly-stars.svg', renderDshSoBadge(ranks.dshSo, 'stars')],
     [starsFile, JSON.stringify(stars, null, 2) + '\n'],
   ])

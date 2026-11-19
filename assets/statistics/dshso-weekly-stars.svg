@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="154" height="52" viewBox="0 0 154 52" role="img" aria-labelledby="title description">
   <title id="title">dsh.so · 周增星榜 · Weekly star gain #19</title>
-  <desc id="description">Snapshot 2026-11-17 UTC. Ranks weekly gains in GitHub stars.</desc>
+  <desc id="description">Snapshot 2026-11-18 UTC. Ranks weekly gains in GitHub stars.</desc>
   <defs><linearGradient id="rose" x2="1" y2="1"><stop stop-color="#fff2e3"/><stop offset="1" stop-color="#fbe0d9"/></linearGradient></defs>
   <rect x="1" y="1" width="152" height="50" rx="16" fill="url(#rose)" stroke="#e0ad99"/>
   <path d="M15 6h123" stroke="#fff" stroke-linecap="round" opacity=".9"/>

@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="226" height="66" viewBox="0 0 226 66" role="img" aria-labelledby="title description">
-  <title id="title">DSH Market · Workflow download rank #1</title>
-  <desc id="description">Workflow &amp; Automation category, 30-day npm download requests. Snapshot 2026-11-17.</desc>
+  <title id="title">DSH 插件市场下载榜 · DSH Market download rank #15</title>
+  <desc id="description">All plugins, ranked by 30-day npm download requests. Snapshot 2026-11-18.</desc>
   <defs>
     <linearGradient id="blue" x1="0" y1="1" x2="1" y2="0"><stop stop-color="#25236b"/><stop offset=".55" stop-color="#3e50cf"/><stop offset="1" stop-color="#6748ba"/></linearGradient>
     <linearGradient id="medal" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#c9f3ff"/><stop offset="1" stop-color="#bdb1ff"/></linearGradient>
@@ -14,9 +14,8 @@
   <path d="M12 25c-2 7 0 15 8 21m39-21c2 7 0 15-8 21" fill="none" stroke="#d9dfff" stroke-width="1.2"/>
   <path d="M14 33 9 29m8 10-6-3m47-3 5-4m-8 10 6-3" fill="none" stroke="#d9dfff" stroke-linecap="round" stroke-width="1.35"/>
   <g font-family="system-ui,-apple-system,BlinkMacSystemFont,Segoe UI,Microsoft YaHei,Noto Sans CJK SC,sans-serif">
-    <text x="36" y="38" text-anchor="middle" fill="#29266b" font-size="20" font-weight="800">#1</text>
-    <text x="71" y="22" fill="#fff" font-size="11.5" font-weight="780" letter-spacing="1">DSH MARKET</text>
-    <text x="71" y="39" fill="#f5f4ff" font-size="11.3" font-weight="680">工作流下载榜</text>
-    <text x="71" y="53" fill="#f0eeff" font-size="9.6">Workflow downloads</text>
+    <text x="36" y="38" text-anchor="middle" fill="#29266b" font-size="15" font-weight="800">#15</text>
+    <text x="71" y="29" fill="#fff" font-size="12.5" font-weight="740">DSH 插件市场下载榜</text>
+    <text x="71" y="46" fill="#f0eeff" font-size="10.6">DSH Market download rank</text>
   </g>
 </svg>
