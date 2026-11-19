@@ -21,8 +21,6 @@ export interface PendingNote { readonly runId: string; readonly milestone: strin
 
 interface Scan { seq: number; readonly keys: Set<string> }
 
-/** Notes for the newest comparisons first; older ones stay in history and the current-state context. */
-const RECENT_RUNS = 20
 const NOTES_PER_STEP = 5
 
 export class StepMemory {
@@ -34,18 +32,23 @@ export class StepMemory {
     createMessage(): Promise<((message: unknown) => unknown) | undefined>
   }) {}
 
-  /** Comparison facts this conversation's log does not contain yet, oldest first. */
-  async pending(session: MemorySession): Promise<PendingNote[]> {
+  /** Deliver older facts first. A candidate context instead requests the most recent pending facts. */
+  async pending(session: MemorySession, order: 'oldest' | 'recent' = 'oldest'): Promise<PendingNote[]> {
     const records = (await this.deps.records(session.id)).filter(record => record.sessionId === session.id)
     if (records.length === 0) return []
     const keys = this.scan(session)
     const notes: PendingNote[] = []
-    for (const record of [...records].sort((a, b) => a.updatedAt - b.updatedAt).slice(-RECENT_RUNS)) {
-      const milestone = milestoneOf(record), text = memoryNote(record)
-      if (!milestone || !text || keys.has(`${record.runId}:${milestone}`)) continue
+    records.sort((a, b) => a.updatedAt - b.updatedAt || a.runId.localeCompare(b.runId))
+    if (order === 'recent') records.reverse()
+    for (const record of records) {
+      const milestone = milestoneOf(record)
+      if (!milestone || keys.has(`${record.runId}:${milestone}`)) continue
+      const text = memoryNote(record)
+      if (!text) continue
       notes.push({ runId: record.runId, milestone, text })
+      if (notes.length === NOTES_PER_STEP) break
     }
-    return notes.slice(-NOTES_PER_STEP)
+    return order === 'recent' ? notes.reverse() : notes
   }
 
   /** Model-facing messages for the pending notes, or none when the host cannot build messages. */

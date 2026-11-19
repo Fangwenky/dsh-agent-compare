@@ -30,8 +30,8 @@ export declare class StepMemory {
         records(sessionId: string): Promise<readonly RunRecord[]>;
         createMessage(): Promise<((message: unknown) => unknown) | undefined>;
     });
-    /** Comparison facts this conversation's log does not contain yet, oldest first. */
-    pending(session: MemorySession): Promise<PendingNote[]>;
+    /** Deliver older facts first. A candidate context instead requests the most recent pending facts. */
+    pending(session: MemorySession, order?: 'oldest' | 'recent'): Promise<PendingNote[]>;
     /** Model-facing messages for the pending notes, or none when the host cannot build messages. */
     messages(session: MemorySession): Promise<unknown[]>;
     /** Whether the conversation's log already holds the record's current fact. */

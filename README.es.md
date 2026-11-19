@@ -97,10 +97,10 @@ npm ci
 npm pack
 ```
 
-Sustituye `<your-profile>` por el nombre real de tu perfil:
+Este comando instala el archivo en el perfil web `web`.
 
 ```bash
-dsh plugin --profile <your-profile> add ./dsh-agent-compare-3.2.0.tgz
+dsh plugin --profile web add ./dsh-agent-compare-3.2.1.tgz
 ```
 
 </details>
@@ -129,6 +129,10 @@ Puedes no compartir contexto, incluir intercambios recientes o seleccionar mensa
 ## Interfaz y experiencia
 
 En el móvil, elige el modo, el número de versiones y si la comparación será a ciegas. Revisa el proyecto y el contexto que se compartirá antes de escribir en la conversación. «More settings» reúne los estilos, el límite de tiempo y el ejemplo. Al volver a una comparación, abrir los ajustes pliega el resultado anterior. Al abrirlo de nuevo se conservan las páginas y el borrador.
+
+En ventanas bajas puedes desplazarte por los ajustes sin perder de vista el borrador ni el botón de envío. En horizontal, pulsa «Expand settings» para abrir las opciones.
+
+Si tu petición menciona opciones de `/ab`, escribe `--` antes del texto. Por ejemplo, `/ab --versions 2 -- Explica la opción --example` pide dos explicaciones.
 
 En una pantalla ancha, pulsa «Align pages» para que las páginas interactivas empiecen a la misma altura. Vuelve a pulsarlo para recuperar la disposición original conservando lo escrito en cada página.
 
@@ -258,6 +262,8 @@ La [CI](https://github.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/actions/
 <a id="whats-new"></a>
 
 ## Novedades por versión
+
+**3.2.1** · La comprobación de texto espera hasta cinco segundos a que aparezca la respuesta de la página. Los resultados pendientes llegan a la conversación original por orden de actualización, hasta cinco por paso.
 
 **3.2.0** · Los ajustes del móvil se dividen en dos niveles y las páginas en directo pueden alinearse en pantallas anchas. Las ocho guías llevan de la demo a la instalación y a la primera comparación.
 

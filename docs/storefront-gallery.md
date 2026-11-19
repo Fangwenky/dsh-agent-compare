@@ -1,4 +1,4 @@
-# 鲸挑细选 · AgentCompare 3.1 · 图片与界面 / Gallery
+# 鲸挑细选 · AgentCompare · 图片与界面 / Gallery
 
 在 DSH Desktop 与 Web 的主对话里比较 2–4 版回答、文件或网页。每版的思考和工具调用可展开查看，回复与成品同等显示。选择风格、盲选或公开对比，选完说明理由，再继续主对话；文件写回前先审查，保留撤销与恢复入口。
 
@@ -51,7 +51,7 @@ The first and last images are product illustrations. The six interface captures 
 ## 同步与数据 / Sync and statistics
 
 - [screenshots.json](../screenshots.json) gives catalogs the eight ordered HTTPS image URLs. The versioned paths replace the earlier two-image gallery.
-- [Capture manifest](../assets/readme/gallery-2.0/manifest.json) records image hashes, dimensions, kinds and runtime identity. Images stay outside the npm runtime package.
+- The [capture manifest](https://github.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/blob/main/assets/readme/gallery-2.0/manifest.json) records image hashes, dimensions, kinds and runtime identity. The repository hosts the gallery images.
 - [GitHub Stars](https://github.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/stargazers) and [npm downloads](https://www.npmjs.com/package/dsh-agent-compare) are independent live statistics. README badges query their respective sources; catalog cards may have their own refresh schedules. A missing value means unknown, not zero. Downloads count package requests, not unique users.
 - Publishing a repository update does not prove a downstream catalog has refreshed. The public image URLs and each displayed listing must be checked separately.
 

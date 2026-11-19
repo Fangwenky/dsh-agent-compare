@@ -12,4 +12,4 @@
 
 如果怀疑某个工具链与适配层冲突，可保留当前结果，在下一次比较前切换模式。记录中的配置随比较封存，不能在重新验收或采用期间悄悄改变条件。
 
-这项开关不能解决 Windows pnpm 12 的系统操作锁写入要求，也不代表 TypeScript 7 已支持 Yarn PnP。相应限制仍见[分发与兼容说明](distribution.md)。
+Windows pnpm 12 的系统操作锁和 TypeScript 7 的 Yarn PnP 兼容情况见[分发与兼容说明](https://github.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/blob/main/docs/distribution.md)。

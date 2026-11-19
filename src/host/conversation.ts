@@ -18,42 +18,65 @@ export interface AbInput {
 
 /**
  * `/ab [--example] [--minutes N] [--versions N] [--models provider/model,provider/model[,…]] <task>`.
- * Flags may appear anywhere; everything else is the task, kept verbatim.
+* Use a standalone -- after any leading options to make the rest of the prompt literal.
+ * Existing trailing option groups are also accepted. Embedded examples stay in the prompt.
  */
 export function parseAbInput(raw: string): AbInput {
-  const tokens = raw.trim().split(/(\s+)/)
-  let example = false
-  let minutes: number | undefined
-  let versions: number | undefined
-  let models: AgentRoute[] | undefined
-  const rest: string[] = []
-  for (let i = 0; i < tokens.length; i++) {
-    const t = tokens[i]!
-    if (t === '--example') { example = true; i++; continue }
-    if (t === '--minutes' || t === '--models' || t === '--versions') {
-      // tokens alternate word / whitespace; the value is two positions ahead.
-      const value = tokens[i + 2]
-      if (value === undefined) throw new Error(`${t} 需要一个值`)
-      if (t === '--minutes') {
-        const n = Number(value)
-        if (!Number.isFinite(n) || n < 5 || n > 120) throw new Error('--minutes 需要 5 到 120 之间的分钟数')
-        minutes = n
-      } else if (t === '--versions') {
-        const n = Number(value)
-        if (!Number.isSafeInteger(n) || n < 2 || n > 4) throw new Error('--versions 需要 2 到 4 之间的整数')
-        versions = n
-      } else {
-        const list = value.split(',').map((s) => s.trim()).filter(Boolean).map(routeOf)
-        if (list.length < 2 || list.length > 4) throw new Error('--models 需要 2 到 4 个模型，用逗号分隔，例如 deepseek/deepseek-chat,deepseek/deepseek-reasoner')
-        models = list
-      }
-      i += 3
-      continue
+  const words = [...raw.matchAll(/\S+/g)]
+  const options: { example: boolean; minutes?: number; versions?: number; models?: AgentRoute[] } = { example: false }
+  const takesValue = (flag: string): boolean => flag === '--minutes' || flag === '--versions' || flag === '--models'
+
+  function apply(flag: string, value?: string): void {
+    if (flag === '--example') { options.example = true; return }
+    if (value === undefined || value.startsWith('--')) throw new Error(flag + ' 需要一个值')
+    if (flag === '--models') {
+      const models = value.split(',').map(s => s.trim()).filter(Boolean).map(routeOf)
+      if (models.length < 2 || models.length > 4) throw new Error('--models 需要 2 到 4 个模型，用逗号分隔，例如 deepseek/deepseek-chat,deepseek/deepseek-reasoner')
+      options.models = models
+    } else if (flag === '--versions') {
+      const n = Number(value)
+      if (!Number.isSafeInteger(n) || n < 2 || n > 4) throw new Error('--versions 需要 2 到 4 之间的整数')
+      options.versions = n
+    } else {
+      const n = Number(value)
+      if (!Number.isFinite(n) || n < 5 || n > 120) throw new Error('--minutes 需要 5 到 120 之间的分钟数')
+      options.minutes = n
     }
-    rest.push(t)
   }
-  if (models && versions !== undefined && versions !== models.length) throw new Error('--versions 与 --models 给出的模型数量不一致')
-  return { task: rest.join('').trim(), example, ...(minutes === undefined ? {} : { minutes }), ...(models === undefined ? {} : { models }), ...(versions === undefined ? {} : { versions }) }
+
+  let first = 0, end = words.length
+  while (first < end) {
+    const flag = words[first]![0]
+    if (flag !== '--example' && !takesValue(flag)) break
+    first++
+    apply(flag, takesValue(flag) ? words[first++]?.[0] : undefined)
+  }
+  if (words[first]?.[0] === '--') {
+    first++
+  } else {
+    // A number or a model list at the end can be a legacy option. Prose in the middle is always literal.
+    const trailing: Array<[string, string?]> = []
+    while (end > first) {
+      const value = words[end - 1]![0]
+      if (value === '--example' || takesValue(value)) {
+        trailing.push([value])
+        end--
+        continue
+      }
+      const flag = end - first >= 2 ? words[end - 2]![0] : ''
+      const looksLikeValue = flag === '--models'
+        ? /[,/]/.test(value) || /^[\w.-]+-[\w.-]+$/.test(value)
+        : /^[+-]?(?:\d|\.\d)/.test(value)
+      if (!takesValue(flag) || !looksLikeValue) break
+      trailing.push([flag, value])
+      end -= 2
+    }
+    for (const [flag, value] of trailing.reverse()) apply(flag, value)
+  }
+  if (options.models && options.versions !== undefined && options.versions !== options.models.length) throw new Error('--versions 与 --models 给出的模型数量不一致')
+  const last = words[end - 1]
+  const task = first < end && last ? raw.slice(words[first]!.index, last.index + last[0].length) : ''
+  return { task, ...options }
 }
 
 function routeOf(spec: string): AgentRoute {

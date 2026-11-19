@@ -4,7 +4,7 @@ import { RUN_SCHEMA, type RunRecord } from '../src/core/types.ts'
 import { StepMemory } from '../src/host/step-memory.ts'
 
 describe('/ab input', () => {
-  it('keeps the task verbatim and reads flags anywhere', () => {
+  it('keeps the task verbatim and reads leading or trailing options', () => {
     expect(parseAbInput('给商品列表加上搜索框，手机上也要好用')).toEqual({ task: '给商品列表加上搜索框，手机上也要好用', example: false })
     expect(parseAbInput('--minutes 60 重做首页  顶部')).toEqual({ task: '重做首页  顶部', example: false, minutes: 60 })
     expect(parseAbInput('重做首页 --models deepseek/deepseek-chat,other/m2')).toEqual({ task: '重做首页', example: false, models: [{ provider: 'deepseek', model: 'deepseek-chat' }, { provider: 'other', model: 'm2' }] })
@@ -19,6 +19,16 @@ describe('/ab input', () => {
     expect(parseAbInput('做首页 --versions 4')).toEqual({ task: '做首页', example: false, versions: 4 })
     expect(parseAbInput('做首页 --models a/1,b/2,c/3').models).toHaveLength(3)
     expect(() => parseAbInput('x --minutes')).toThrow(/需要一个值/)
+  })
+
+  it('preserves option names and values in a prompt, including repeated whitespace', () => {
+    for (const task of ['请解释 --versions 参数', '请保留 --example 这个选项的原文', '请把 --minutes 30 写进文档', 'Document --models a/1,b/2 as an example', 'Explain --versions to readers']) {
+      expect(parseAbInput(task)).toEqual({ task, example: false })
+    }
+    const literal = '请保留  --example\n以及 --versions 4'
+    expect(parseAbInput('--minutes 15 --versions 2 -- ' + literal)).toEqual({ task: literal, example: false, minutes: 15, versions: 2 })
+    expect(parseAbInput('-- --example')).toEqual({ task: '--example', example: false })
+    expect(parseAbInput('请解释 --example 这个参数 --minutes 15')).toEqual({ task: '请解释 --example 这个参数', example: false, minutes: 15 })
   })
   it('round-trips the run id through the command result text', () => {
     expect(runIdInText(commandResultText('0a1b2c3d'))).toBe('0a1b2c3d')
@@ -115,6 +125,27 @@ describe('conversation memory in the conversation\'s own steps', () => {
     expect(retried).toHaveLength(1)
     session.commit(retried)
     expect(await new StepMemory({ records: async () => records, createMessage: create }).messages(session)).toHaveLength(0)
+  })
+
+  it('drains older results in bounded batches across a restart and concurrent arrivals', async () => {
+    const session = logSession()
+    const records = Array.from({ length: 22 }, (_, i) => run({ runId: String(i).padStart(8, '0'), updatedAt: i }))
+    const ownIds = records.map(record => record.runId)
+    records.reverse()
+    records.push(run({ runId: 'other', sessionId: 's2', updatedAt: 0 }))
+    const deps = { records: async () => records, createMessage: create }
+    let memory = new StepMemory(deps)
+    const received: string[] = []
+    expect((await memory.pending(session, 'recent')).map(note => note.runId)).toEqual(ownIds.slice(-5))
+    for (const size of [5, 5, 5, 5, 3, 0]) {
+      const batch = await memory.messages(session)
+      expect(batch).toHaveLength(size)
+      received.push(...batch.map(message => (message as { source: { runId: string } }).source.runId))
+      session.commit(batch)
+      if (received.length === 5) records.push(run({ runId: 'new-run', updatedAt: 50 }))
+      memory = new StepMemory(deps)
+    }
+    expect(received).toEqual([...ownIds, 'new-run'])
   })
 
   it('only speaks for the owning conversation and stays silent without a message factory', async () => {

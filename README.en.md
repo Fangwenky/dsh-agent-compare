@@ -99,7 +99,7 @@ npm pack
 ```
 
 ```bash
-dsh plugin --profile <your-profile> add ./dsh-agent-compare-3.2.0.tgz
+dsh plugin --profile web add ./dsh-agent-compare-3.2.1.tgz
 ```
 
 </details>
@@ -135,6 +135,10 @@ In 1.3.0, A|B works in any folder. A folder outside Git, including the DSH defau
 ## Interface and experience
 
 On a phone, choose the mode, number of versions and blind or open comparison. Check the project and shared context, then type in the conversation. Open More settings for styles, time limits and the built-in example. When you return to a comparison, opening settings folds the earlier result. Reopen it to continue with the same pages and draft.
+
+In short windows, scroll the settings panel while the draft and Send stay in view. In a low landscape window, use Expand settings to change options.
+
+When typing `/ab`, put `--` before a prompt that mentions option names. For example, `/ab --versions 2 -- Explain the --example option` requests two explanations.
 
 On a wide screen, select Align pages to bring live previews to the same starting height. Select it again to restore the original layout. Anything typed in a preview stays there.
 
@@ -429,6 +433,8 @@ See [CONTRIBUTING.md](https://github.com/lijiaqi-AI-Product-Manager/dsh-agent-co
 <a id="whats-new"></a>
 
 ## What's new
+
+**3.2.1** · Page text checks wait up to five seconds for rendered feedback. Queued results reach their original conversation in update order, up to five per conversation step.
 
 **3.2.0** · Mobile settings now open in two levels, and live pages can be aligned on wide screens. All eight guides lead from the demo straight to installation and the first comparison.
 

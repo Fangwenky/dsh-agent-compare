@@ -12,4 +12,4 @@ After reveal, **Check evidence and usage** shows configured mode separately from
 
 If a conflict is suspected, retain the current result and change the setting before a new comparison. Reverification and adoption keep the admitted conditions.
 
-This control does not resolve pnpm 12's Windows system operation-lock requirement or establish TypeScript 7 support for Yarn PnP. See the [distribution and compatibility notes](distribution.en.md).
+The [distribution and compatibility notes](https://github.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/blob/main/docs/distribution.en.md) describe the Windows operation-lock requirement in pnpm 12 and the status of TypeScript 7 with Yarn PnP.

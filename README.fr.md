@@ -97,10 +97,10 @@ npm ci
 npm pack
 ```
 
-Remplacez `<your-profile>` par le nom réel de votre profil :
+Cette commande installe l’archive dans le profil Web `web`.
 
 ```bash
-dsh plugin --profile <your-profile> add ./dsh-agent-compare-3.2.0.tgz
+dsh plugin --profile web add ./dsh-agent-compare-3.2.1.tgz
 ```
 
 </details>
@@ -129,6 +129,10 @@ Vous pouvez ne partager aucun contexte, inclure les échanges récents ou sélec
 ## Interface et expérience
 
 Sur téléphone, choisissez le mode, le nombre de versions et la comparaison à l’aveugle ou à découvert. Vérifiez le projet et le contexte partagé, puis saisissez votre demande dans la conversation. « More settings » donne accès aux styles, à la durée limite et à l’exemple. À la reprise d’une comparaison, ouvrir les réglages replie le résultat précédent. Rouvrez-le pour retrouver les pages et votre brouillon.
+
+Dans une fenêtre basse, les réglages défilent séparément et le champ de saisie et le bouton d’envoi restent visibles. En mode paysage sur petit écran, « Expand settings » permet de rouvrir les réglages.
+
+Si votre demande contient des noms d’options de `/ab`, placez `--` avant son texte. Par exemple, `/ab --versions 2 -- Explique l’option --example` demande deux explications.
 
 Sur grand écran, « Align pages » place les pages interactives à la même hauteur. Un second clic rétablit la disposition initiale et conserve la saisie dans chaque page.
 
@@ -258,6 +262,8 @@ La [CI](https://github.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/actions/
 <a id="whats-new"></a>
 
 ## Nouveautés par version
+
+**3.2.1** · La vérification du texte attend jusqu’à cinq secondes que la page affiche le résultat d’une action. Les résultats en attente rejoignent leur conversation d’origine dans l’ordre de leur mise à jour, à raison de cinq au plus par étape.
 
 **3.2.0** · Les réglages mobiles sont répartis sur deux niveaux et les pages interactives peuvent être alignées sur grand écran. Les huit guides mènent de la démo à l’installation et à la première comparaison.
 

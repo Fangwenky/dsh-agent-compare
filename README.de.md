@@ -97,10 +97,10 @@ npm ci
 npm pack
 ```
 
-Ersetze `<your-profile>` durch den tatsächlichen Profilnamen:
+Der Befehl installiert das Archiv im Web-Profil `web`.
 
 ```bash
-dsh plugin --profile <your-profile> add ./dsh-agent-compare-3.2.0.tgz
+dsh plugin --profile web add ./dsh-agent-compare-3.2.1.tgz
 ```
 
 </details>
@@ -129,6 +129,10 @@ Teilen Sie keinen Kontext, die letzten Gesprächsrunden oder ausgewählte Nachri
 ## Oberfläche und Erlebnis
 
 Am Smartphone wählen Sie Vergleichsmodus, Anzahl der Versionen und ob die Auswahl verdeckt sein soll. Prüfen Sie Projekt und Gesprächskontext und tippen Sie Ihre Aufgabe direkt ins Eingabefeld. Unter „More settings“ finden Sie Stile, Zeitlimit und Beispiel. Wenn Sie einen Vergleich erneut öffnen, klappt sein Ergebnis beim Öffnen der Einstellungen ein. Beim Ausklappen bleiben die Seiten und Ihr Entwurf erhalten.
+
+In niedrigen Fenstern lässt sich der Einstellungsbereich separat scrollen. Eingabefeld und Senden bleiben sichtbar. Im flachen Querformat öffnen Sie die Optionen mit „Expand settings“.
+
+Wenn Ihr Auftrag Optionsnamen enthält, setzen Sie bei `/ab` ein `--` vor den Text. Mit `/ab --versions 2 -- Erkläre die Option --example` erhalten Sie zwei Erklärungen.
 
 Auf breiten Bildschirmen richtet „Align pages“ die Oberkanten der interaktiven Seiten aneinander aus. Ein zweiter Klick stellt die ursprüngliche Anordnung wieder her. Bereits eingegebene Werte bleiben erhalten.
 
@@ -258,6 +262,8 @@ Die [CI](https://github.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/actions
 <a id="whats-new"></a>
 
 ## Neuerungen nach Version
+
+**3.2.1** · Textprüfungen warten bis zu fünf Sekunden auf die sichtbare Rückmeldung der Seite. Ausstehende Ergebnisse gelangen nach Änderungszeit geordnet in das ursprüngliche Gespräch, bis zu fünf pro Gesprächsschritt.
 
 **3.2.0** · Die mobilen Einstellungen haben jetzt zwei Ebenen. Auf breiten Bildschirmen lassen sich Live-Seiten ausrichten. Alle acht Anleitungen führen von der Demo direkt zur Installation und zum ersten Vergleich.
 

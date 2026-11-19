@@ -103,7 +103,7 @@ const modes = new Map<string, AbMode>()
 const registeredShells = new WeakSet<InputShell>()
 function modeFor(sessionId: string): AbMode {
   let mode = modes.get(sessionId)
-  if (!mode) { mode = { preferences: { enabled: false, mode: 'same-model', generationMinutes: 30, models: [{}, {}] }, version: 0, loaded: false, loading: false, collapsed: false, saving: 0, contextIds: [], pending: Promise.resolve(), listeners: new Set() }; modes.set(sessionId, mode) }
+  if (!mode) { mode = { preferences: { enabled: false, mode: 'same-model', generationMinutes: 30, models: [{}, {}] }, version: 0, loaded: false, loading: false, collapsed: startWithSettingsFolded(), saving: 0, contextIds: [], pending: Promise.resolve(), listeners: new Set() }; modes.set(sessionId, mode) }
   return mode
 }
 function publishMode(mode: AbMode): void { mode.version++; for (const update of mode.listeners) update() }
@@ -415,7 +415,7 @@ function ComposerSettings({ sessionId, session, onExpand }: { sessionId: string;
     finally { setLoading(false) }
   }, [sessionId])
   useEffect(() => {
-    if (!enabled || mode.collapsed) return
+    if (!enabled) return
     // A completed newer read supersedes older reads; slow polling must still make progress.
     let active = true, request = 0, applied = 0
     const refresh = (): void => {
@@ -424,7 +424,7 @@ function ComposerSettings({ sessionId, session, onExpand }: { sessionId: string;
       call<Setup>('setup', { sessionId }).then(value => { if (active && version >= applied) { applied = version; setSetup(value); setSetupError(undefined) } }, (error: Error) => { if (active && version >= applied) { applied = version; setSetup(undefined); setSetupError(error.message) } })
     }
     refresh()
-    const timer = setInterval(refresh, 10000)
+    const timer = mode.collapsed ? undefined : setInterval(refresh, 10000)
     return () => { active = false; clearInterval(timer) }
   }, [enabled, mode.collapsed, session, sessionId, setupRetry])
   useEffect(() => { if (enabled && p.mode === 'cross-model') void loadModels() }, [enabled, p.mode, loadModels])
@@ -504,8 +504,12 @@ function ComposerSettings({ sessionId, session, onExpand }: { sessionId: string;
   </section>
 }
 
+function startWithSettingsFolded(): boolean {
+  return globalThis.matchMedia?.('(max-height: 440px)').matches === true
+}
+
 function phoneComposer(): boolean {
-  return globalThis.matchMedia?.('(max-width: 600px)').matches === true
+  return globalThis.matchMedia?.('(max-width: 600px), (max-height: 740px)').matches === true
 }
 
 /** Keep blank-session and background-tool results outside the host's folded tool turns. */
@@ -707,7 +711,7 @@ function WhyLink({ pick }: { pick: Label }): React.ReactElement {
     why?.querySelector<HTMLElement>('button:not(:disabled)')?.focus({ preventScroll: true })
   }}>{t("为什么选 {0}？", { 0: pick })}</button>
 }
-/** After a pick: why it won, in a few taps. The main conversation hears it with its next message. */
+/** After a pick, queue the user's reasons alongside the result for their conversation. */
 function PickReasons({ run, busy, act }: { run: Run; busy: boolean; act: Act }): React.ReactElement | null {
   const pick = run.choice?.pick
   const order = PICK_REASONS.map(reason => reason.id)
@@ -742,7 +746,7 @@ function PickReasons({ run, busy, act }: { run: Run; busy: boolean; act: Act }):
       <input ref={field} className="ac-why-note" type="text" maxLength={MAX_PICK_NOTE} value={draft} aria-label={t("补充一句理由")} placeholder={t("补一句，例如：按钮更好找")}
         onChange={event => setDraft(event.target.value)} onBlur={commit} onKeyDown={event => { if (event.key === 'Enter') { event.preventDefault(); commit() } }} />
     </div>
-    <span className="ac-meta" role="status">{said ? t("已记下。主对话的下一条消息会带上这些理由，后续修改会保留这些优点。") : t("可选：选几个理由，主对话接着修改时会保留这些优点。")}</span>
+    <span className="ac-meta" role="status">{said ? t("已记下。选择理由会随结果写入主对话，供后续修改参考。") : t("可选：选几个理由，主对话接着修改时会保留这些优点。")}</span>
   </section>
 }
 function copySize(bytes: number): string { return bytes < 1024 * 1024 ? `${(bytes / 1024).toFixed(1)} KB` : `${(bytes / 1024 / 1024).toFixed(1)} MB` }
@@ -800,7 +804,7 @@ function ConversationLink({ run }: { run: Run }): React.ReactElement | null {
   return <div className="ac-link-strip">
     {context ? <details className="ac-link-item"><summary><span className="ac-link-dot in" aria-hidden="true" />{t("各版都带入了主对话的 {0} 条内容，约 {1} 字", { 0: context.messages, 1: context.chars.toLocaleString() })}{context.truncated ? t("（已截取）") : ''}</summary><pre className="ac-context-text" tabIndex={0}>{context.text}</pre></details>
       : <span className="ac-link-item"><span className="ac-link-dot" aria-hidden="true" />{t("各版只看到了需求本身")}</span>}
-    {memory && <span className={`ac-link-item${memory === 'synced' ? ' ok' : ''}`} role="status"><span className={`ac-link-dot ${memory === 'synced' ? 'ok' : 'wait'}`} aria-hidden="true" />{memory === 'synced' ? t("结果已写入主对话记忆") : t("结果会在你下一条消息时写入主对话记忆")}</span>}
+    {memory && <span className={`ac-link-item${memory === 'synced' ? ' ok' : ''}`} role="status"><span className={`ac-link-dot ${memory === 'synced' ? 'ok' : 'wait'}`} aria-hidden="true" />{memory === 'synced' ? t("结果已写入主对话记忆") : t("结果已排队，将随主对话分批写入记忆")}</span>}
   </div>
 }
 function Banners({ run, recordOnly = false }: { run: Run; recordOnly?: boolean }): React.ReactElement | null {
@@ -1103,7 +1107,7 @@ function AbModeButton({ sessionId }: { sessionId: string }): React.ReactElement 
     if (!mode.loaded) { void loadMode(sessionId); return }
     const applied = enabled ? leaveMode(sessionId) : enterMode(sessionId)
     if (!applied) { mode.error = clientSupportMessage(sessionId) ?? t("输入框正在提交或已有其他命令模式，请等它结束后再切换。"); publishMode(mode); return }
-    mode.collapsed = false
+    mode.collapsed = startWithSettingsFolded()
     saveMode(sessionId, { ...mode.preferences, enabled: !enabled }); inputShell(sessionId)?.focus?.()
   }
   return <><Styles /><button className={`ac-mode-btn${enabled ? ' on' : ''}`} onClick={toggle} disabled={!mode.loaded || mode.loading || !!capabilityError} aria-pressed={enabled} title={capabilityError ?? (enabled ? t("A|B 对比模式已开启，点此退出") : t("开启 A|B 对比模式，在主对话里同时运行 2–4 版"))} aria-label={t("A|B 对比模式")}>A|B</button></>

@@ -2,13 +2,13 @@
 
 ## 比较结果写回主对话
 
-每次比较的关键事实，会作为这条对话自己的消息写入下一次请求，并保存在会话记录里。这些事实包括：各候选的验收结果、你的选择（揭晓后改选时同时注明盲选）、采用或撤销后写入的文件、另存的分支。写入发生在 DSH 处理这次请求的那一步（`agent/pre-step`），排在你本次消息之前。这样模型回答“刚才比较的结果怎么样”或“在采用的版本上继续改”时，读到的都是记录里的事实。
+每次比较的关键事实，会分批写入这条对话自己的请求，并保存在会话记录里。每个对话步骤最多写入 5 条，更新时间较早的结果先写入。这些事实包括：各候选的验收结果、你的选择（揭晓后改选时同时注明盲选）、采用或撤销后写入的文件、另存的分支。写入发生在 DSH 处理这次请求的那一步（`agent/pre-step`），排在你本次消息之前。这样模型回答“刚才比较的结果怎么样”或“在采用的版本上继续改”时，读到的都是记录里的事实。
 
 - 已写入的事实按会话记录去重，不会重复出现；请求如果在提交前被取消，下一次请求会补上。
-- 对话不在打开状态时什么也不做，你回到这条对话、发出下一条消息时再写入。
+- 对话不在打开状态时什么也不做，你回到这条对话、继续发送消息后，剩余结果会依次写入。
 - 每次请求的系统提示里还附带最新一次比较的当前状态：需求、选择、采用状态、写入的文件和目标仓库。这份状态以记录为准，覆盖之前的旧说法。
 - 写入的文件只在仍然留在工作区时列出；撤销、拒绝或回滚之后不再列出。
-- 对话打开时，卡片底部会显示「结果已写入主对话记忆」或「结果会在你下一条消息时写入主对话记忆」。
+- 对话打开时，卡片底部会显示「结果已写入主对话记忆」或「结果已排队，将随主对话分批写入记忆」。
 - 读取记录失败或宿主传来的数据不完整时，这一步照常发送，不会因为记忆而被阻塞。
 - 这些消息只给模型看，不会作为聊天气泡显示；会话的「轨迹」里可以查到。
 - 候选会话和子 Agent 不会收到这些事实，也不能借此发起新的比较。
@@ -35,10 +35,10 @@ A|B 设置条里的「主对话上下文」决定各版候选能看到主对话�
 ## English
 
 **Results back in the conversation.**
-- Each comparison's key facts become the conversation's own messages in its next request, ahead of your message, and stay in the session log. The facts are: the shared check outcome, your pick (and the blind pick, if you changed it after the reveal), the files written or undone, and any saved branch.
-- They are added at DSH's `agent/pre-step` and deduplicated against the log. A request cancelled before admission receives them on the next request.
+- Each comparison's key facts become the conversation's own messages ahead of your message and stay in the session log. Each admitted step writes up to five pending results, with the least recently updated first. The facts are: the shared check outcome, your pick (and the blind pick, if you changed it after the reveal), the files written or undone, and any saved branch.
+- They are added at DSH's `agent/pre-step` and deduplicated against the log. A step cancelled before admission leaves its results queued.
 - Every request's system prompt also carries the latest comparison's current state: task, pick, adoption state, target repository, and the written files while they are still in the working tree.
-- While the conversation is open, the card shows whether the result is already in the conversation's memory or will enter it with your next message.
+- While the conversation is open, the card shows whether the result is already in the conversation's memory or queued for a later batch.
 - A failed record read or an incomplete host payload never holds up the request.
 - Candidate and delegated sessions never receive these facts.
 
