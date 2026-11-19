@@ -1,5 +1,13 @@
 import assert from 'node:assert/strict'
 
+export const aptDownloadDeadline = 'Ubuntu browser dependency download deadline reached'
+export const aptInstallFromCache = 'Installing Ubuntu browser dependencies from the APT cache'
+
+const ubuntuArchiveHost = String.raw`(?:(?:azure\.archive|archive|security)\.ubuntu\.com|(?:[a-z0-9]+(?:-[a-z0-9]+)*\.)?ec2\.archive\.ubuntu\.com|mirrors\.edge\.kernel\.org)`
+const ubuntuArchiveUrl = new RegExp(String.raw`https?://${ubuntuArchiveHost}/ubuntu(?=/|\s|$)`, 'g')
+const failedArchiveFetch = new RegExp(String.raw`E:\s*Failed to fetch https?://${ubuntuArchiveHost}/ubuntu/`, 'i')
+
+
 const SUPPORTED_MIRRORS = Object.freeze([
   'https://mirrors.edge.kernel.org/ubuntu',
   'https://archive.ubuntu.com/ubuntu',
@@ -54,7 +62,7 @@ export async function configureUbuntuBrowserSources({ lstat, readFile, writeFile
     try { info = await lstat(file) } catch (error) { if (error.code === 'ENOENT') continue; throw error }
     assert.ok(info.isFile() && !info.isSymbolicLink() && info.size < 1024 * 1024)
     const before = await readFile(file, 'utf8')
-    const after = before.replace(/https?:\/\/(?:(?:azure\.archive|archive|security)\.ubuntu\.com|mirrors\.edge\.kernel\.org)\/ubuntu(?=\/|\s|$)/g, mirror)
+    const after = before.replace(ubuntuArchiveUrl, mirror)
     if (after !== before) { await writeFile(file, after); changedSourceFiles++ }
   }
   return { changedSourceFiles }
@@ -74,9 +82,11 @@ export async function installUbuntuBrowserDependencies({ codename, browser, io, 
     const result = await run(browser)
     const output = result.output ?? ''
     const integrityFailure = /NO_PUBKEY|BADSIG|EXPKEYSIG|invalid signature|not signed|Hash Sum mismatch|unauthenticated|does not have a Release file|Unable to locate package|Unmet dependencies/i.test(output)
-    const archiveFetchFailure = /E:\s*Failed to fetch https:\/\/(?:(?:azure\.archive|archive|security)\.ubuntu\.com|mirrors\.edge\.kernel\.org)\/ubuntu\//i.test(output)
+    const archiveFetchFailure = failedArchiveFetch.test(output)
     const connectionFailure = /Could not (?:connect|resolve)|Network is unreachable|Temporary failure resolving|Connection (?:timed out|refused|failed)|Failed to connect|connection timed out/i.test(output)
-    const transportFailure = !integrityFailure && archiveFetchFailure && connectionFailure
+    const installingFromCache = output.includes(aptInstallFromCache)
+    const deadlineReached = output.includes(aptDownloadDeadline)
+    const transportFailure = !integrityFailure && !installingFromCache && (deadlineReached || (archiveFetchFailure && connectionFailure))
     attempts.push({ mirror: selected.mirror, probes: selected.probes, changedSourceFiles: configured.changedSourceFiles, status: result.status, signal: result.signal ?? null, transportFailure })
     if (result.status === 0 && !result.signal && !integrityFailure) return { installed: true, browser, attemptLimit: 2, attempts }
     const eligibleFallback = Number.isInteger(result.status) && result.status !== 0 && !result.signal && transportFailure

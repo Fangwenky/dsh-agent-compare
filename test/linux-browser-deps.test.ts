@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { configureUbuntuBrowserSources, installUbuntuBrowserDependencies, selectUbuntuBrowserMirror } from '../scripts/ubuntu-browser-sources.mjs'
+import { aptDownloadDeadline, aptInstallFromCache, configureUbuntuBrowserSources, installUbuntuBrowserDependencies, selectUbuntuBrowserMirror } from '../scripts/ubuntu-browser-sources.mjs'
 
 function fixture(entries: Record<string, string>, unsafe?: string) {
   const files = new Map(Object.entries(entries)), writes: string[] = []
@@ -32,6 +32,21 @@ describe('Ubuntu browser dependency sources', () => {
     expect(f.files.get(mirrors)).toBe('https://archive.ubuntu.com/ubuntu\r\n')
     expect((await configureUbuntuBrowserSources(f.io)).changedSourceFiles).toBe(0)
   })
+
+  it('rewrites Ubuntu EC2 mirrors from the current hosted runner image', async () => {
+    const list = '/etc/apt/apt-mirrors.txt'
+    const source = '/etc/apt/sources.list.d/ubuntu.sources'
+    const region = 'http://us-east-2.ec2.archive.ubuntu.com/ubuntu'
+    const unrelated = 'https://us-east-2.ec2.archive.ubuntu.com.example/ubuntu'
+    const config = 'Types: deb\nURIs: mirror+file:/etc/apt/apt-mirrors.txt\nSuites: resolute resolute-updates\nSigned-By: /usr/share/keyrings/ubuntu-archive-keyring.gpg\n'
+    const f = fixture({ [source]: config, [list]: region + '/ priority:1\n' + unrelated + '\n' })
+    await configureUbuntuBrowserSources(f.io, 'https://mirrors.edge.kernel.org/ubuntu')
+    expect(f.files.get(list)).toBe('https://mirrors.edge.kernel.org/ubuntu/ priority:1\n' + unrelated + '\n')
+    await configureUbuntuBrowserSources(f.io)
+    expect(f.files.get(list)).toBe('https://archive.ubuntu.com/ubuntu/ priority:1\n' + unrelated + '\n')
+    expect(f.files.get(source)).toBe(config)
+  })
+
 
   it('preserves unrelated repositories and similarly named paths', async () => {
     const file = '/etc/apt/sources.list', text = 'deb https://packages.microsoft.com/ubuntu/24.04/prod noble main\nhttp://azure.archive.ubuntu.com/ubuntu-other\nhttp://azure.archive.ubuntu.com.example/ubuntu\n'
@@ -166,6 +181,26 @@ describe('Ubuntu browser dependency download recovery', () => {
     const f = fixture({ [source]: signed }); let calls = 0
     await expect(installUbuntuBrowserDependencies({ codename: 'noble', browser: 'webkit', io: f.io, probe: async () => true, run: async () => { calls++; return outcome } })).rejects.toThrow()
     expect(calls).toBe(1)
+  })
+
+
+  it('uses the alternate origin when the signed download stage reaches its deadline', async () => {
+    const f = fixture({ [source]: signed })
+    let runs = 0
+    const result = await installUbuntuBrowserDependencies({ codename: 'noble', browser: 'webkit', io: f.io,
+      probe: async () => true, run: async () => ++runs === 1 ? { status: 1, output: aptDownloadDeadline } : { status: 0, output: aptInstallFromCache },
+    })
+    expect(result.attempts.map((attempt: { transportFailure: boolean }) => attempt.transportFailure)).toEqual([true, false])
+    expect(runs).toBe(2)
+  })
+
+  it.each([aptInstallFromCache, 'BADSIG'])('does not switch mirrors when %s is present', async marker => {
+    const f = fixture({ [source]: signed })
+    let runs = 0
+    await expect(installUbuntuBrowserDependencies({ codename: 'noble', browser: 'webkit', io: f.io,
+      probe: async () => true, run: async () => { runs++; return { status: 1, output: aptDownloadDeadline + '\n' + marker } },
+    })).rejects.toThrow('no eligible archive transport fallback')
+    expect(runs).toBe(1)
   })
 
   it('validates the browser before changing sources or starting a command', async () => {
