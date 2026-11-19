@@ -1,14 +1,9 @@
 {
   "schema": "agentcompare.market-ranks/v1",
   "dshMarket": {
-    "source": "https://dshmarket.com/#popular",
+    "source": "https://dshmarket.com/categories/workflow/",
     "asOf": "2026-11-18",
-    "position": 15,
-    "workflow": {
-      "source": "https://dshmarket.com/categories/workflow/",
-      "asOf": "2026-11-18",
-      "position": 1
-    }
+    "position": 1
   },
   "dshSo": {
     "source": "https://www.dsh.so/artifact/dsh-agent-compare/",
