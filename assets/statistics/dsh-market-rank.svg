@@ -15,8 +15,8 @@
   <path d="M14 33 9 29m8 10-6-3m47-3 5-4m-8 10 6-3" fill="none" stroke="#d9dfff" stroke-linecap="round" stroke-width="1.35"/>
   <g font-family="system-ui,-apple-system,BlinkMacSystemFont,Segoe UI,Microsoft YaHei,Noto Sans CJK SC,sans-serif">
     <text x="36" y="38" text-anchor="middle" fill="#29266b" font-size="20" font-weight="800">#1</text>
-    <text x="71" y="22" fill="#fff" font-size="11.5" font-weight="780" letter-spacing="1.05">DSH MARKET</text>
-    <text x="71" y="38" fill="#f3f4ff" font-size="10.8" font-weight="660">Workflow downloads</text>
-    <text x="71" y="53" fill="#f0edff" font-size="9.4">30 days · 2026-11-17</text>
+    <text x="71" y="22" fill="#fff" font-size="11.5" font-weight="780" letter-spacing="1">DSH MARKET</text>
+    <text x="71" y="39" fill="#f5f4ff" font-size="11.3" font-weight="680">工作流下载榜</text>
+    <text x="71" y="53" fill="#f0eeff" font-size="9.6">Workflow downloads</text>
   </g>
 </svg>

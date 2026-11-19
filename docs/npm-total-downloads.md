@@ -14,9 +14,9 @@ The Star badge uses the GitHub repository API snapshot. The same daily job refre
 
 [Star 快照](https://github.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/blob/main/docs/measurements/github-stars.json) · [榜单快照](https://github.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/blob/main/docs/measurements/market-ranks.json)
 
-[DSH Market](https://dshmarket.com/zh/categories/workflow/) 工作流与自动化分榜按近 30 天 npm 下载请求排序。[dsh.so](https://www.dsh.so/artifact/dsh-agent-compare/) 周下载榜合计 npm 与镜像请求，Star 周榜按增量排序。排行榜用核对当日的公开快照，徽章标出观察日期。维护者核对最新榜单后更新快照和各语言的排名说明。
+[DSH Market](https://dshmarket.com/zh/categories/workflow/) 工作流与自动化分榜按近 30 天 npm 下载请求排序。[dsh.so](https://www.dsh.so/artifact/dsh-agent-compare/) 周下载榜合计 npm 与镜像请求，Star 周榜按增量排序。榜单的观察日期保存在公开快照中。维护者核对最新榜单后更新快照和各语言的排名说明。
 
-[DSH Market](https://dshmarket.com/categories/workflow/) ranks 30-day npm requests in Workflow & Automation. [dsh.so](https://www.dsh.so/artifact/dsh-agent-compare/) combines npm and mirror requests for weekly downloads and ranks weekly Star gains separately. Rank badges show dated observations; review each public source before updating the snapshot and the translated labels.
+[DSH Market](https://dshmarket.com/categories/workflow/) ranks 30-day npm requests in Workflow & Automation. [dsh.so](https://www.dsh.so/artifact/dsh-agent-compare/) combines npm and mirror requests for weekly downloads and ranks weekly Star gains separately. The public snapshot records each board’s observation date. Verify both sources before updating the data and translated labels.
 
 来源：[发布元数据](https://registry.npmjs.org/dsh-agent-compare) · [最后可用日](https://api.npmjs.org/downloads/point/last-day/dsh-agent-compare) · [npm API 定义](https://github.com/npm/registry/blob/main/docs/download-counts.md)。完整逐日来源及范围保留在[公开快照](https://github.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/blob/main/docs/measurements/npm-total.json)，README 只展示累计总数。
 

@@ -44,7 +44,7 @@ for (const [file, source] of contents) {
     // the public latest; source archives remain pinned and checked below.
     assert.ok(source.split('\n').some(line => line.trim() === `dsh plugin --profile web add ${manifest.name}`), `${file}: missing the public npm latest installation target`)
     assert.ok(source.includes(`${repository}/issues/4`), `${file}: missing listing and review status records`)
-    for (const badge of ['github-stars.svg', 'npm-total-highlight.svg', 'dsh-market-rank.svg', 'dshso-weekly-ranks.svg']) {
+    for (const badge of ['github-stars.svg', 'npm-total-highlight.svg', 'dsh-market-rank.svg', 'dshso-weekly-downloads.svg', 'dshso-weekly-stars.svg']) {
       assert.ok(source.includes(repositoryMedia + 'assets/statistics/' + badge), `${file}: missing ${badge}`)
     }
     assert.ok(!source.includes('/assets/growth/dsh-agent-compare/stars-'), `${file}: Star history chart is withdrawn`)

@@ -27,8 +27,8 @@ function day(value) {
   return value
 }
 
-function svg(width, height, title, description, content) {
-  return `<svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${height}" viewBox="0 0 ${width} ${height}" role="img" aria-labelledby="title description">
+function svg(width, height, title, description, content, displayWidth = width) {
+  return `<svg xmlns="http://www.w3.org/2000/svg" width="${displayWidth}" height="${Math.round(height * displayWidth / width)}" viewBox="0 0 ${width} ${height}" role="img" aria-labelledby="title description">
   <title id="title">${escape(title)}</title>
   <desc id="description">${escape(description)}</desc>
   ${content.trim()}
@@ -74,7 +74,7 @@ export function renderStarsBadge(snapshot) {
   <g font-family="${font}">
     <text x="53" y="23" fill="#edf2ff" font-size="10" font-weight="650" letter-spacing=".8">GITHUB STARS</text>
     <text x="51" y="51" fill="#ffe9a2" font-size="${numberSize(value, 28, 88)}" font-weight="750">${value}</text>
-  </g>`)
+  </g>`, 140)
 }
 
 export function renderDownloadBadge(snapshot) {
@@ -94,7 +94,7 @@ export function renderDownloadBadge(snapshot) {
   <g font-family="${font}">
     <text x="55" y="23" fill="#165449" font-size="9.8" font-weight="660" textLength="100" lengthAdjust="spacingAndGlyphs">${label}</text>
     <text x="55" y="50" fill="#083e33" font-size="${numberSize(value, 26, 100)}" font-weight="770" letter-spacing="-.4">${value}</text>
-  </g>`)
+  </g>`, 166)
 }
 
 export function renderMarketBadge(snapshot) {
@@ -116,28 +116,40 @@ export function renderMarketBadge(snapshot) {
   <path d="M14 33 9 29m8 10-6-3m47-3 5-4m-8 10 6-3" fill="none" stroke="#d9dfff" stroke-linecap="round" stroke-width="1.35"/>
   <g font-family="${font}">
     <text x="36" y="38" text-anchor="middle" fill="#29266b" font-size="${numberSize(rank, 20, 31)}" font-weight="800">${rank}</text>
-    <text x="71" y="22" fill="#fff" font-size="11.5" font-weight="780" letter-spacing="1.05">DSH MARKET</text>
-    <text x="71" y="38" fill="#f3f4ff" font-size="10.8" font-weight="660">Workflow downloads</text>
-    <text x="71" y="53" fill="#f0edff" font-size="9.4">30 days · ${date}</text>
+    <text x="71" y="22" fill="#fff" font-size="11.5" font-weight="780" letter-spacing="1">DSH MARKET</text>
+    <text x="71" y="39" fill="#f5f4ff" font-size="11.3" font-weight="680">工作流下载榜</text>
+    <text x="71" y="53" fill="#f0eeff" font-size="9.6">Workflow downloads</text>
   </g>`)
 }
 
-export function renderDshSoBadge(snapshot) {
+export function renderDshSoBadge(snapshot, metric) {
   assert.equal(snapshot.source, dshSoSource)
+  assert.ok(metric === 'downloads' || metric === 'stars', 'Unknown dsh.so metric')
   const date = day(snapshot.asOf)
-  const downloads = '#' + count(snapshot.weeklyDownloadsPosition, 1)
-  const starGrowth = '#' + count(snapshot.weeklyStarGrowthPosition, 1)
-  return svg(288, 32, `dsh.so weekly rankings · Downloads ${downloads}, Star growth ${starGrowth}`,
-    `Snapshot ${date} UTC. Downloads combine npm and its mirror. Stars are weekly gains.`, `
-  <defs><linearGradient id="enamel"><stop stop-color="#f4f1ff"/><stop offset="1" stop-color="#fff7e2"/></linearGradient></defs>
-  <rect x="1" y="1" width="286" height="30" rx="15" fill="url(#enamel)" stroke="#d9cde9"/>
-  <rect x="5" y="5" width="48" height="22" rx="11" fill="#6849a5"/>
-  <path d="M143 9v14" stroke="#dacdea"/>
-  <g font-family="${font}">
-    <text x="29" y="20" text-anchor="middle" fill="#fff" font-size="10.5" font-weight="725">dsh.so</text>
-    <text x="62" y="19.5" fill="#3d2863" font-size="10.2" font-weight="680">Downloads ${downloads}</text>
-    <text x="151" y="19.5" fill="#674018" font-size="10.2" font-weight="680">Star gain ${starGrowth}</text>
-    <text x="280" y="19.5" text-anchor="end" fill="#755223" font-size="8.4">${date}</text>
+  const downloads = metric === 'downloads'
+  const rank = '#' + count(downloads ? snapshot.weeklyDownloadsPosition : snapshot.weeklyStarGrowthPosition, 1)
+  const label = downloads ? 'Weekly downloads' : 'Weekly star gain'
+  const title = downloads ? '周下载榜' : '周增星榜'
+  const foreground = downloads ? '#184775' : '#803928'
+  const surface = downloads ? `
+  <defs><linearGradient id="ice" x2="1" y2="1"><stop stop-color="#edfaff"/><stop offset="1" stop-color="#d2e5ff"/></linearGradient></defs>
+  <path d="M8 1h131l14 12v31l-7 7H15L1 38V8Z" fill="url(#ice)" stroke="#a1bee9"/>
+  <path d="M5 11 12 5h125l10 9" fill="none" stroke="#fff" opacity=".9"/>
+  <path d="M55 11v30" stroke="#a2bce3"/>
+  <path d="m143 36 3 3-3 3-3-3Z" fill="#6c9ed2"/>` : `
+  <defs><linearGradient id="rose" x2="1" y2="1"><stop stop-color="#fff2e3"/><stop offset="1" stop-color="#fbe0d9"/></linearGradient></defs>
+  <rect x="1" y="1" width="152" height="50" rx="16" fill="url(#rose)" stroke="#e0ad99"/>
+  <path d="M15 6h123" stroke="#fff" stroke-linecap="round" opacity=".9"/>
+  <path d="M55 11v30" stroke="#e4b79f"/>
+  <path d="m143 14 1.5 3.5L148 19l-3.5 1.5L143 24l-1.5-3.5L138 19l3.5-1.5Z" fill="#dc8c6d"/>`
+  return svg(154, 52, `dsh.so · ${title} · ${label} ${rank}`,
+    `Snapshot ${date} UTC. ${downloads ? 'Downloads combine npm and its mirror.' : 'Ranks weekly gains in GitHub stars.'}`, `
+  ${surface}
+  <g font-family="${font}" fill="${foreground}">
+    <text x="11" y="17" font-size="9" font-weight="720">dsh.so</text>
+    <text x="10" y="39" font-size="${numberSize(rank, 22, 42)}" font-weight="790">${rank}</text>
+    <text x="63" y="22" font-size="11.3" font-weight="700">${title}</text>
+    <text x="63" y="36" font-size="9.1">${label}</text>
   </g>`)
 }
 
@@ -153,7 +165,8 @@ async function main() {
   const assets = new Map([
     ['assets/statistics/github-stars.svg', renderStarsBadge(stars)],
     ['assets/statistics/dsh-market-rank.svg', renderMarketBadge(ranks.dshMarket)],
-    ['assets/statistics/dshso-weekly-ranks.svg', renderDshSoBadge(ranks.dshSo)],
+    ['assets/statistics/dshso-weekly-downloads.svg', renderDshSoBadge(ranks.dshSo, 'downloads')],
+    ['assets/statistics/dshso-weekly-stars.svg', renderDshSoBadge(ranks.dshSo, 'stars')],
     [starsFile, JSON.stringify(stars, null, 2) + '\n'],
   ])
   for (const [file, content] of assets) {

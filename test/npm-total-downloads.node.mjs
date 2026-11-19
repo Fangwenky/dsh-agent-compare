@@ -92,14 +92,17 @@ test('new artwork shows the lifetime value and qualifies each rank with its own 
   assert.match(total, /npm download\/下载量/)
   const market = { source: 'https://dshmarket.com/categories/workflow/', asOf: '2026-11-17', position: 1 }
   assert.match(renderMarketBadge(market), /#1/)
-  assert.match(renderMarketBadge(market), /30 days · 2026-11-17/)
+  assert.match(renderMarketBadge(market), /工作流下载榜/)
+  assert.match(renderMarketBadge(market), /Workflow downloads/)
+  assert.match(renderMarketBadge(market), /Snapshot 2026-11-17/)
   assert.throws(() => renderMarketBadge({ ...market, asOf: '2026-11-31' }), /Invalid metric date/)
-  const dshSo = renderDshSoBadge({
+  const dshSo = {
     source: 'https://www.dsh.so/artifact/dsh-agent-compare/',
     asOf: '2026-11-18',
     weeklyDownloadsPosition: 7,
     weeklyStarGrowthPosition: 19,
-  })
-  assert.match(dshSo, /Downloads #7, Star growth #19/)
-  assert.match(dshSo, /2026-11-18/)
+  }
+  assert.match(renderDshSoBadge(dshSo, 'downloads'), /Weekly downloads #7/)
+  assert.match(renderDshSoBadge(dshSo, 'stars'), /Weekly star gain #19/)
+  assert.match(renderDshSoBadge(dshSo, 'stars'), /2026-11-18/)
 })
