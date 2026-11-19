@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { configureUbuntuBrowserSources, installUbuntuBrowserDependencies, selectUbuntuBrowserMirror } from '../scripts/ubuntu-browser-sources.mjs'
+import { aptDownloadDeadline, aptInstallFromCache, configureUbuntuBrowserSources, installUbuntuBrowserDependencies, selectUbuntuBrowserMirror } from '../scripts/ubuntu-browser-sources.mjs'
 
 function fixture(entries: Record<string, string>, unsafe?: string) {
   const files = new Map(Object.entries(entries)), writes: string[] = []
@@ -166,6 +166,26 @@ describe('Ubuntu browser dependency download recovery', () => {
     const f = fixture({ [source]: signed }); let calls = 0
     await expect(installUbuntuBrowserDependencies({ codename: 'noble', browser: 'webkit', io: f.io, probe: async () => true, run: async () => { calls++; return outcome } })).rejects.toThrow()
     expect(calls).toBe(1)
+  })
+
+
+  it('uses the alternate origin when the signed download stage reaches its deadline', async () => {
+    const f = fixture({ [source]: signed })
+    let runs = 0
+    const result = await installUbuntuBrowserDependencies({ codename: 'noble', browser: 'webkit', io: f.io,
+      probe: async () => true, run: async () => ++runs === 1 ? { status: 1, output: aptDownloadDeadline } : { status: 0, output: aptInstallFromCache },
+    })
+    expect(result.attempts.map((attempt: { transportFailure: boolean }) => attempt.transportFailure)).toEqual([true, false])
+    expect(runs).toBe(2)
+  })
+
+  it.each([aptInstallFromCache, 'BADSIG'])('does not switch mirrors when %s is present', async marker => {
+    const f = fixture({ [source]: signed })
+    let runs = 0
+    await expect(installUbuntuBrowserDependencies({ codename: 'noble', browser: 'webkit', io: f.io,
+      probe: async () => true, run: async () => { runs++; return { status: 1, output: aptDownloadDeadline + '\n' + marker } },
+    })).rejects.toThrow('no eligible archive transport fallback')
+    expect(runs).toBe(1)
   })
 
   it('validates the browser before changing sources or starting a command', async () => {
