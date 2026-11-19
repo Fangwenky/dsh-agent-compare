@@ -55,7 +55,7 @@ interface PwPage {
   on(event: 'pageerror', cb: (e: Error) => void): void
   goto(url: string, opts: { waitUntil: string; timeout: number }): Promise<unknown>
   waitForSelector(sel: string, opts: { timeout: number }): Promise<unknown>
-  textContent(sel: string): Promise<string | null>
+  waitForFunction(predicate: (text: string) => boolean, text: string, options: { timeout: number; polling: number }): Promise<unknown>
   screenshot(opts: { path: string; fullPage: boolean }): Promise<unknown>
   locator(sel: string): PwLocator
   setViewportSize(size: { width: number; height: number }): Promise<void>
@@ -63,6 +63,20 @@ interface PwPage {
 }
 
 const STEP_TIMEOUT = 5_000
+
+/** Read the rendered text again while the page updates after navigation or an action. */
+async function hasRenderedText(page: PwPage, text: string): Promise<boolean> {
+  try {
+    await page.waitForFunction(expected => {
+      const body = document.body
+      return !!body && body.getClientRects().length > 0 && body.innerText.includes(expected)
+    }, text, { timeout: STEP_TIMEOUT, polling: 100 })
+    return true
+  } catch (error) {
+    if ((error as Error).name === 'TimeoutError') return false
+    throw error
+  }
+}
 
 function stepLabel(s: BrowserStep): string {
   if (s.label !== undefined) return s.label
@@ -84,8 +98,7 @@ async function runStep(page: PwPage, s: BrowserStep): Promise<string | undefined
     else if ('expectVisible' in s) await page.locator(s.expectVisible).first().waitFor({ state: 'visible', timeout: STEP_TIMEOUT })
     else if ('viewport' in s) await page.setViewportSize(s.viewport)
     else if ('expectText' in s) {
-      const body = (await page.textContent('body')) ?? ''
-      if (!body.includes(s.expectText)) return '没有找到这段文字'
+      if (!await hasRenderedText(page, s.expectText)) return '等待 5 秒后，页面仍未显示这段文字'
     } else {
       // Counts settle after React re-renders; poll briefly instead of reading once.
       const until = Date.now() + STEP_TIMEOUT
@@ -158,8 +171,7 @@ export async function runBrowserCheck(url: string, check: BrowserCheck, screensh
       try { await page.waitForSelector(check.expectSelector, { timeout: 5_000 }) } catch { problems.push(`selector not found: ${check.expectSelector}`) }
     }
     if (check.expectText !== undefined) {
-      const body = (await page.textContent('body')) ?? ''
-      if (!body.includes(check.expectText)) problems.push(`text not found: ${check.expectText}`)
+      if (!await hasRenderedText(page, check.expectText)) problems.push(`text not visible after 5 s: ${check.expectText}`)
     }
     await mkdir(path.dirname(screenshotFile), { recursive: true })
     await page.screenshot({ path: screenshotFile, fullPage: false })

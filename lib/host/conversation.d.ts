@@ -16,7 +16,8 @@ export interface AbInput {
 }
 /**
  * `/ab [--example] [--minutes N] [--versions N] [--models provider/model,provider/model[,…]] <task>`.
- * Flags may appear anywhere; everything else is the task, kept verbatim.
+* Use a standalone -- after any leading options to make the rest of the prompt literal.
+ * Existing trailing option groups are also accepted. Embedded examples stay in the prompt.
  */
 export declare function parseAbInput(raw: string): AbInput;
 /** The run id a `/ab` command result carries. */

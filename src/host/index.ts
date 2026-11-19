@@ -59,7 +59,7 @@ export interface Config {
   home?: string
 }
 
-const VERSION = '3.2.0'
+const VERSION = '3.2.1'
 const ROUTE = '/agent-compare/api'
 
 // Minimal structural views of the host services this plugin touches.
@@ -440,7 +440,7 @@ export async function apply(ctx: HostCtx, config: Config = {}): Promise<void> {
   })
   // `example` lets the card offer a repeat that creates a fresh example repository instead of using the conversation's project.
   /**
-   * `synced`: the owning conversation's log holds the current fact; `next-message`: it enters the next request.
+   * `synced`: the log holds the current fact. The existing `next-message` wire value means queued.
    * A conversation that is not open has no log to read here, so its state is not claimed either way.
    */
   const memoryState = (record: RunRecord): 'synced' | 'next-message' | undefined => {
@@ -451,7 +451,7 @@ export async function apply(ctx: HostCtx, config: Config = {}): Promise<void> {
   }
   /** Results the conversation's log does not hold yet; the next comparison should still know them. */
   const pendingNotes = async (session: SessionLike): Promise<string[]> => {
-    try { return (await memory.pending(session)).map(note => note.text) }
+    try { return (await memory.pending(session, 'recent')).map(note => note.text) }
     catch (error) { ctx.logger.warn(`agent-compare: pending comparison notes unavailable: ${(error as Error).message}`); return [] }
   }
   const present = async (record: RunRecord): Promise<unknown> => {

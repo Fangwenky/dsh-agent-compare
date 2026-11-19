@@ -760,11 +760,16 @@ ${DETAILS}
 
 .ac-composer-settings .ac-more-settings,.ac-compare-tools .ac-align-pages{display:none}
 .ac-advanced-settings{display:contents}
-@media(max-width:600px){
+@media(max-width:600px),(max-height:740px){
   .ac-composer-settings .ac-more-settings{display:inline-flex;align-self:flex-start;align-items:center;gap:6px;min-height:32px}
   .ac-advanced-settings[data-open=false]{display:none}
   .ac-advanced-settings[data-open=false][data-project-blocked=true]{display:contents}
   .ac-advanced-settings[data-open=false][data-project-blocked=true]>:not(.ac-example-row,.ac-settings-foot){display:none}
+}
+/* Leave space for the host's draft and Send, including when extra settings are open. */
+@media(max-height:740px){
+  .ac-composer-settings{box-sizing:border-box;max-block-size:clamp(5rem,calc(100dvh - 19rem),26rem);overflow-y:auto;overscroll-behavior-y:contain;scroll-padding-block:8px}
+  .ac-composer-settings>*{flex-shrink:0}
 }
 @supports (grid-template-rows:subgrid){
   @media(min-width:901px){

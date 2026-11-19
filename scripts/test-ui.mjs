@@ -1313,6 +1313,25 @@ try {
   await page.keyboard.press('Escape')
   check(await page.getByRole('dialog').count() === 0, 'Escape must close the workspace')
   check(await page.evaluate(() => document.activeElement.classList.contains('ac-header-btn')), 'closing must restore entry-button focus')
+  for (const [width, height] of [[600, 700], [601, 700], [390, 480], [667, 375]]) {
+    await page.setViewportSize({ width, height })
+    await open('compose')
+    const panel = page.locator('.ac-composer-settings')
+    const visibleInput = () => page.evaluate(() => ['#draft', '#send'].every(selector => {
+      const element = document.querySelector(selector), box = element.getBoundingClientRect()
+      return box.height > 0 && box.top >= 0 && box.bottom <= innerHeight &&
+        element.contains(document.elementFromPoint(box.x + box.width / 2, box.y + box.height / 2))
+    }))
+    check(await visibleInput(), `the draft and Send are fully available on first open at ${width}×${height}`)
+    const expand = panel.getByRole('button', { name: '展开设置', exact: true })
+    if (await expand.isVisible()) await expand.click()
+    await page.locator('#draft').fill('保留这份草稿')
+    await panel.locator('.ac-more-settings').click()
+    const timeLimit = panel.getByRole('combobox', { name: '每版生成上限' })
+    await timeLimit.focus()
+    check(await timeLimit.evaluate(el => el === document.activeElement), 'keyboard focus reaches the additional settings')
+    check(await visibleInput() && await page.locator('#draft').inputValue() === '保留这份草稿', 'expanded settings keep the draft and Send accessible')
+  }
   check(errors.length === 0, `unexpected browser errors: ${errors.join('; ')}`)
   console.log(JSON.stringify({ assertions, screenshots: output, browser: browser.version(), engine, channel, embeddedCookies, directCookieIsolation: true, expectedBrowserDenials, react: await page.evaluate(() => React.version), node: process.version }))
 } catch (error) {

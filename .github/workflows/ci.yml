@@ -77,6 +77,8 @@ jobs:
       - run: npx playwright-core install --only-shell chromium
         if: runner.os != 'Linux'
       - run: npm run smoke
+      - name: Verify rendered and delayed browser text
+        run: node scripts/test-browser-text.mjs
       - name: Check record compatibility with the published release
         if: runner.os == 'Linux'
         run: node scripts/check-record-compatibility.mjs

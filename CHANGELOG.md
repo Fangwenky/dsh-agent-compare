@@ -1,5 +1,12 @@
 # Changelog
 
+## 3.2.1
+
+- Page and step text checks read rendered text and wait up to five seconds for feedback after an interaction.
+- Handwritten /ab prompts keep embedded option names. Put a standalone -- after leading options to pass the remaining prompt literally.
+- Conversation memory drains older pending results in batches of five. New comparisons still receive recent context while the backlog clears.
+- Short windows keep the draft and Send visible, with independently scrollable settings. Low landscape windows start with a compact summary. All eight guides include a literal command example and a copyable Web install command.
+
 ## 3.2.0
 
 - Keep model selection, workspace warnings and the conversation context visible on phones. More settings opens the original style, time limit, sample and Windows controls without replacing the prompt. On phones, switching between a previous result and settings preserves the live pages and the draft.
