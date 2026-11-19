@@ -90,11 +90,11 @@ test('new artwork shows the lifetime value and qualifies each rank with its own 
   const total = renderDownloadBadge({ total: 176840, firstDay: '2026-11-03', asOf: '2026-11-17' })
   assert.match(total, /176,840/)
   assert.match(total, /npm download\/下载量/)
-  const market = { source: 'https://dshmarket.com/#popular', asOf: '2026-11-17', position: 15 }
-  assert.match(renderMarketBadge(market), /#15/)
-  assert.match(renderMarketBadge(market), /DSH 插件市场下载榜/)
-  assert.match(renderMarketBadge(market), /DSH Market download rank/)
-  assert.throws(() => renderMarketBadge({ ...market, source: 'https://dshmarket.com/categories/workflow/' }))
+  const market = { source: 'https://dshmarket.com/categories/workflow/', asOf: '2026-11-17', position: 1 }
+  assert.match(renderMarketBadge(market), />#1<\/text>/)
+  assert.match(renderMarketBadge(market), />DSH插件市场下载榜<\/text>/)
+  assert.match(renderMarketBadge(market), />Workflow download<\/text>/)
+  assert.throws(() => renderMarketBadge({ ...market, source: 'https://dshmarket.com/#popular' }))
   assert.match(renderMarketBadge(market), /Snapshot 2026-11-17/)
   assert.throws(() => renderMarketBadge({ ...market, asOf: '2026-11-31' }), /Invalid metric date/)
   const dshSo = {

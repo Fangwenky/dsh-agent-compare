@@ -40,7 +40,7 @@ jobs:
         run: |
           git add -- assets/statistics/npm-total-*.svg docs/measurements/npm-total.json
           git add -- assets/statistics/github-stars.svg docs/measurements/github-stars.json
-          git add -- assets/statistics/dsh-market-download-rank.svg assets/statistics/dshso-weekly-download-rank.svg assets/statistics/dshso-weekly-stars.svg
+          git add -- assets/statistics/dsh-market-workflow-download.svg assets/statistics/dshso-weekly-download-rank.svg assets/statistics/dshso-weekly-stars.svg
           if git diff --cached --quiet; then
             exit 0
           fi
