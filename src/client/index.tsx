@@ -20,10 +20,11 @@ import { clientCapabilities } from './capabilities.js'
 import { WindowsProcessControl, WindowsProcessEvidence } from './windows-compat.js'
 import { ConversationContextControl, type ContextMode } from './conversation-context.js'
 import { CopyButton, ProjectNotes, ResultView } from './results.js'
-import { BlindControl, MAX_VERSIONS, MIN_VERSIONS, revealedStyleName, Segmented, StyleCombos, StyleHabit, StylePicker, StyleSlots, stylesFor, VersionsControl, type StyleChoice } from './style-picker.js'
+import { BlindControl, MAX_VERSIONS, MIN_VERSIONS, revealedStyleName, Segmented, StyleSwatch, StyleCombos, StyleHabit, StylePicker, StyleSlots, stylesFor, VersionsControl, type StyleChoice } from './style-picker.js'
 import { LABELS, MAX_PICK_NOTE, PICK_REASONS, type Label, type PickReason, type StyleStat } from './model.js'
 import { Ambient, attachFx, burst, RunRing } from './fx.js'
 import { runningTool, LiveSteps, ReplyBlock, StepsPanel, StepsToggle, useTrace, Whale, WhaleFace } from './agent-view.js'
+import { STYLE_CATALOG } from './style-catalog.js'
 import { Banner, ChangeSummary, DiffViewer, FailureMark, ReviewPaths } from './review.js'
 import { StaleBackendNotice } from './version.js'
 export const name = 'agent-compare-client'
@@ -789,9 +790,15 @@ function CopySpace({ run, sessionId, blocked, publish, requestKey = 0, onRelease
   useEffect(() => {
     if (requestKey <= 0) return
     void inspect()
-    section.current?.scrollIntoView({ block: 'center' })
     section.current?.focus({ preventScroll: true })
+    section.current?.scrollIntoView({ block: 'start' })
   }, [requestKey])
+  useLayoutEffect(() => {
+    const target = section.current
+    if (requestKey > 0 && plan && target === document.activeElement) {
+      target?.scrollIntoView({ block: 'start' })
+    }
+  }, [requestKey, plan])
   const release = async (): Promise<void> => {
     if (!plan?.allowed || (plan.otherSession && !otherConfirmed) || busy || blocked) return
     const id = ++request.current
@@ -1185,18 +1192,21 @@ function AbModeButton({ sessionId }: { sessionId: string }): React.ReactElement 
   }
   return <><Styles /><button className={`ac-mode-btn${enabled ? ' on' : ''}`} onClick={toggle} disabled={!mode.loaded || mode.loading || !!capabilityError} aria-pressed={enabled} title={capabilityError ?? (enabled ? t("A|B 对比模式已开启，点此退出") : t("开启 A|B 对比模式，在主对话里同时运行 2–4 版"))} aria-label={t("A|B 对比模式")}><span aria-hidden="true" className="ac-mode-letters"><b>A</b>|<b>B</b></span></button></>
 }
-function History({ data, open, busy, failed, scope, query, onScope, onSearch, onPage, onlyUnavailable, problemSupported, onUnavailable }: {
-  data?: ListResult; open: (r: Run) => void; busy: boolean; failed?: string
+function History({ sessionId, data, open, busy, failed, scope, query, onScope, onSearch, onPage, onlyUnavailable, problemSupported, onUnavailable }: {
+  sessionId:string; data?: ListResult; open: (r: Run) => void; busy: boolean; failed?: string
   scope: 'all' | 'session'; query: string; onScope: (scope: 'all' | 'session') => void; onSearch: (query: string) => void; onPage: (offset: number) => void
   onlyUnavailable: boolean; problemSupported: boolean; onUnavailable: (only: boolean) => void
 }): React.ReactElement {
   const [draft, setDraft] = useState(query)
   const region = useRef<HTMLElement | null>(null)
   useEffect(() => setDraft(query), [query])
+  const dates = new Intl.DateTimeFormat(currentLocale(), { year: 'numeric', month: 'short', day: 'numeric' })
+  const dateLabel = (time: number): string => time > 0 ? dates.format(time) : t("时间未知")
   const meta = data?.history, outdated = data !== undefined && meta?.version !== 1
   const rows = [...(data?.runs ?? []), ...(data?.legacy ?? [])].sort((a, b) => b.createdAt - a.createdAt || (a.runId === b.runId ? 0 : a.runId < b.runId ? 1 : -1))
   return (
     <section ref={region} className="ac-history" aria-label={t("比较记录列表")} aria-busy={busy} tabIndex={-1}>
+      {meta && <div className="ac-history-totals"><span><b>{meta.total}</b>{t("次比较")}</span>{!!meta.unavailable && <span><b>{meta.unavailable}</b>{t("需处理")}</span>}</div>}
       <div className="ac-history-controls">
         <label>{t("记录范围")}<select aria-label={t("记录范围")} value={scope} disabled={outdated} onChange={event => onScope(event.target.value as 'all' | 'session')}><option value="all">{t("全部对话")}</option><option value="session">{t("当前对话")}</option></select></label>
         <form className="ac-history-search" role="search" onSubmit={event => { event.preventDefault(); onSearch(draft) }}>
@@ -1209,8 +1219,13 @@ function History({ data, open, busy, failed, scope, query, onScope, onSearch, on
       <div className="ac-history-status" role="status">{busy ? <><span className="ac-spin" />{t("正在读取记录…")}</> : failed ? t("记录读取失败，原始文件仍保留。") : meta ? t("{0} · {1} 条{2}", { 0: scope === 'all' ? t("全部对话") : t("当前对话"), 1: meta.total, 2: meta.query ? t(" · 搜索“{0}”", { 0: meta.query }) : '' }) : t("已读取当前服务端提供的记录")}</div>
       {outdated && <div className="ac-feedback" role="alert">{t("服务端尚未更新。请重启 DSH 后使用全部对话、搜索与翻页；以下仍是旧服务端返回的记录。")}</div>}
       {!!meta?.unavailable && <div className="ac-feedback" role="alert">{t("有 ")}{meta.unavailable}{t(" 条记录无法安全载入。这些记录保持只读，原始文件已保留；可打开“只看需处理”查看原因。")}</div>}
-      {!busy && !failed && rows.length === 0 && <div className="ac-empty">{query ? t("没有匹配的记录。换个关键词，或清空搜索查看已有比较。") : onlyUnavailable ? t("没有需处理的记录。取消筛选可以查看其它比较。") : scope === 'session' ? t("当前对话还没有比较。切换到“全部对话”可以查看以前的结果。") : t("还没有比较记录。点输入框左下角的 A|B，在主对话里开始第一次真实比较。")}</div>}
-      {rows.map(r => 'legacy' in r ? (
+      {busy && !rows.length && <div className="ac-history-skeleton" aria-hidden="true">{Array.from({length:6},(_,i)=><i key={i}/>)}</div>}
+      {!busy && !failed && rows.length === 0 && <div className="ac-empty">{!query && !onlyUnavailable && scope==='all' && <span className="ac-sleeping"><WhaleFace stage="cancelled"/></span>}{query ? t("没有匹配的记录。换个关键词，或清空搜索查看已有比较。") : onlyUnavailable ? t("没有需处理的记录。取消筛选可以查看其它比较。") : scope === 'session' ? t("当前对话还没有比较。切换到“全部对话”可以查看以前的结果。") : t("还没有比较记录。点输入框左下角的 A|B，在主对话里开始第一次真实比较。")}{!query && !onlyUnavailable && <button type="button" className="ac-btn" onClick={()=>returnToComposer(sessionId)}>{t("去输入框试一次")}</button>}</div>}
+      {rows.map((r,i) => {
+        const date=dateLabel(r.createdAt)
+        return <React.Fragment key={r.runId}>
+          {(!i || dateLabel(rows[i-1]!.createdAt)!==date) && <h3 className="ac-history-day">{date}</h3>}
+          {'legacy' in r ? (
         <div key={r.runId} className={`ac-hrow legacy${r.unavailable ? ' ac-hrow-unavailable' : ''}`} title={r.unavailable ? t("无法安全载入，原始记录保留") : t("旧版本记录只读，原始文件保留")}>
           <span className="ac-pill">{r.unavailable ? t("需处理") : t("旧版")}</span>
           <span className="ac-hrow-copy"><span className="t">{r.task}</span><span className="ac-meta">{r.runId}{t(" · 只读")}</span>{r.reason && <span className="ac-history-problem"><Diagnostic text={r.reason} /></span>}</span>
@@ -1218,11 +1233,12 @@ function History({ data, open, busy, failed, scope, query, onScope, onSearch, on
         </div>
       ) : (
         <button key={r.runId} className="ac-hrow" onClick={() => open(r)}>
+          <span className="ac-history-dots" data-none={r.choice?.pick==='none'} aria-hidden="true">{r.candidates?.map(c=><i key={c.label} data-label={c.label} data-picked={r.choice?.pick===c.label}/>)}</span>
           <span className={`ac-pill ${r.state === 'adopted' ? 'ok' : ACTIVE.has(r.state) ? 'brand' : ''}`}>{t(STATE_TEXT[r.state]) ?? r.state}</span>
           <span className="ac-hrow-copy"><span className="t" title={r.task}>{r.task}</span><span className="ac-meta" title={r.baseline.repoRoot}>{r.baseline.repoRoot?.split(/[\\/]/).filter(Boolean).at(-1) ?? t("项目未知")} · {r.runId}{r.choice?.reasons?.length ? <span className="ac-hrow-why">{t(" · 因为")}{PICK_REASONS.filter(reason => r.choice!.reasons!.includes(reason.id)).slice(0, 3).map(reason => t(reason.name)).join(t("、"))}</span> : null}</span></span>
           <span className="ac-meta">{r.choice?.pick && r.choice.pick !== 'none' ? t("选了 {0} · ", { 0: r.choice.pick }) : ''}{when(r.createdAt)}</span>
         </button>
-      ))}
+      )}</React.Fragment>})}
       {meta && meta.total > 0 && <nav className="ac-history-pages" aria-label={t("记录翻页")}><span>{meta.offset + 1}–{Math.min(meta.offset + meta.limit, meta.total)} / {meta.total}{t(" 条")}</span><div className="ac-row"><button className="ac-btn" disabled={busy || meta.offset === 0} onClick={() => { region.current?.focus(); region.current?.scrollIntoView({ block: 'start' }); onPage(Math.max(0, meta.offset - meta.limit)) }}>{t("上一页")}</button><button className="ac-btn" disabled={busy || !meta.hasNext} onClick={() => { region.current?.focus(); region.current?.scrollIntoView({ block: 'start' }); onPage(meta.offset + meta.limit) }}>{t("下一页")}</button></div></nav>}
     </section>
   )
@@ -1240,11 +1256,14 @@ function Guide({ sessionId }: { sessionId: string }): React.ReactElement {
   return <div className="ac-guide">
     <div><span className="ac-eyebrow">{t("从比较到交付")}</span><h2 className="ac-h1">{t("体验真实结果，做出开发决策。")}</h2><p className="ac-lead">{t("适合存在多种可行方案的界面、布局与交互任务。已有明确答案的小修复通常用一个 Agent 更直接。")}</p></div>
     <ol className="ac-guide-steps">
-      <li><b>{t("在主对话里开启 A|B")}</b><p>{t("点输入框左下角的 A|B，上方即出现设置条。直接选择比较方式、模型和每版时长；在原输入框里写需求并发送，不用填写参数。")}</p></li>
-      <li><b>{t("体验各版")}</b><p>{t("独立生成后运行安装、检查与构建。桌面和手机预览使用统一尺寸，可以并排观察、逐个排除，或专注体验其中一版。")}</p></li>
-      <li><b>{t("选择并审查")}</b><p>{t("选择后揭晓模型和策略。查看代码改动、程序检查与未验证的部分；一次偏好选择不代表模型的整体排名。")}</p></li>
-      <li><b>{t("采用结果")}</b><p>{t("采用前检查目标是否变化；必要时在临时副本中预演。工作区采用不自动提交；另存分支会明确创建一个提交。")}</p></li>
+      <li><span className="ac-guide-mini" aria-hidden="true"><span className="ac-logo">A|B</span><StyleSwatch id="conservative"/><StyleSwatch id="bold"/></span><b>{t("在主对话里开启 A|B")}</b><p>{t("选择比较方式和版本数，在原输入框写需求。更多设置里可以调整风格和每版时长。")}</p></li>
+      <li><span className="ac-guide-mini" aria-hidden="true"><WhaleFace stage="generating"/><WhaleFace stage="verifying"/></span><b>{t("各版并行运行")}</b><p>{t("展开过程查看每版最近的动作。生成和验收分别记录，已配置的检查会显示结果。")}</p></li>
+      <li><span className="ac-guide-mini" aria-hidden="true"><span className="ac-guide-letter" data-label="A">A</span><span className="ac-guide-letter" data-label="B">B</span></span><b>{t("体验并选择")}</b><p>{t("阅读回答、打开文件或试用页面，再选你愿意继续的一版。盲选会在选择后揭晓。")}</p></li>
+      <li><span className="ac-guide-mini" aria-hidden="true"><span className="ac-guide-diff">+ −</span><WhaleFace stage="ready" eligible/></span><b>{t("审查并继续")}</b><p>{t("回答可以接回主对话。写入项目之前，先核对文件改动、目标和预演结果，再单独确认。")}</p></li>
     </ol>
+    <section className="ac-guide-tasks"><h3>{t("适合什么任务")}</h3><div>{[[t("回答"),t("比较几种解释或文案。")],[t("文件"),t("检查交付文件与源码。")],[t("网页"),t("并排操作候选页面。")]].map(([name,text])=><article key={name}><b>{name}</b><p>{text}</p></article>)}</div></section>
+    <details className="ac-details ac-guide-styles"><summary>{t("浏览八种风格")}</summary><div>{STYLE_CATALOG.map(style=><span key={style.id}><StyleSwatch id={style.id}/>{t(style.name)}</span>)}</div></details>
+    <details className="ac-details ac-guide-faq"><summary>{t("盲选会隐藏哪些信息？")}</summary><p>{t("风格、模型、用量、改动规模和安装日志在选择后显示。")}</p></details>
     <div className="ac-case"><div><b>{t("试跑真实的示例商店")}</b><span>{t("新建独立仓库，不修改当前项目。基础示例实现搜索与清空；完整示例再加入组合筛选和手机适配。使用当前比较与时长设置，各版分别消耗用量；任务、结果和选择保留在主对话。")}</span><label className="ac-budget">{t("示例范围 ")}<select aria-label={t("内置示例范围")} disabled={busy || !mode.loaded} value={mode.preferences.exampleKind ?? 'quick'} onChange={e => saveMode(sessionId, { ...mode.preferences, exampleKind: e.target.value as 'quick' | 'full' })}><option value="quick">{t("基础 · 搜索与清空")}</option><option value="full">{t("完整 · 组合筛选与手机适配")}</option></select></label></div><button className="ac-btn primary" disabled={busy || !mode.loaded} onClick={() => { void example() }}>{busy ? t("正在创建…") : t("试跑内置示例")}</button></div>
     {error && <div className="ac-feedback" role="alert"><Diagnostic text={error} /></div>}
     {(mode.preferences.exampleKind ?? 'quick') === 'quick' && <ExampleTimingEvidence />}
@@ -1356,7 +1375,7 @@ function Sheet({ sessionId, runId, tab, trigger }: { sessionId: string; runId?: 
         <div className="ac-body">{selected ? <>
           <div className="ac-run-heading"><button className="ac-text-btn" onClick={() => navigate('history')}>{t("← 比较记录")}</button><span className="ac-task" title={current?.task}>{current?.task ?? t("比较结果")}</span><span className="ac-meta">{selected}</span></div>
           <RunView key={selected} runId={selected} sessionId={sessionId} {...(current ? { initial: current } : {})} onDone={() => navigate('history')} />
-        </> : view === 'guide' ? <Guide sessionId={sessionId} /> : <History data={list} open={(r) => setSelected(r.runId)} busy={historyBusy} failed={err} scope={historyScope} query={historyQuery} onScope={scope => { setHistoryScope(scope); setHistoryOffset(0) }} onSearch={query => { const trimmed = query.trim(); if (trimmed === historyQuery && historyOffset === 0) void refreshList(); else { setHistoryQuery(trimmed); setHistoryOffset(0) } }} onPage={setHistoryOffset} onlyUnavailable={onlyUnavailable} problemSupported={problemSupported} onUnavailable={only => { setOnlyUnavailable(only); setHistoryOffset(0) }} />}</div>
+        </> : view === 'guide' ? <Guide sessionId={sessionId} /> : <History sessionId={sessionId} data={list} open={(r) => setSelected(r.runId)} busy={historyBusy} failed={err} scope={historyScope} query={historyQuery} onScope={scope => { setHistoryScope(scope); setHistoryOffset(0) }} onSearch={query => { const trimmed = query.trim(); if (trimmed === historyQuery && historyOffset === 0) void refreshList(); else { setHistoryQuery(trimmed); setHistoryOffset(0) } }} onPage={setHistoryOffset} onlyUnavailable={onlyUnavailable} problemSupported={problemSupported} onUnavailable={only => { setOnlyUnavailable(only); setHistoryOffset(0) }} />}</div>
       </dialog>
     </div>
   )
