@@ -556,6 +556,7 @@ export const messages: Readonly<Record<string, string>> = {
   "（揭晓后改选；盲选时选了 {0}）": " (changed after the reveal; blind pick: {0})",
   "依赖与缓存目录较大，已在时限内估算，实际释放量更多；它们会随副本一起删除。": " Dependency and cache folders are large and were sized within a time limit, so the actual amount is higher. They are deleted with the copies.",
   "候选 {0} 的回答": "Candidate {0} answer",
+  "网页": "Web pages",
   "回答": "Answer",
   "文件": "Files",
   "这一版只给出回答，没有写文件": "This version only answered and wrote no files",
