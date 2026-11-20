@@ -455,6 +455,8 @@ export const UI_COMPONENTS = `
 .ac-root .ac-card-head .ac-live-steps{max-width:100%;margin:3px 0 0;display:block}
 .ac-root .ac-card-head .ac-live-step:not(:last-child){display:none}
 .ac-root .ac-whale-face{flex:none;display:inline-block;width:20px;height:20px;color:var(--ac-version,var(--ac-ver-a))}
+.ac-root .ac-card-head .ac-label{position:relative;overflow:visible}
+.ac-root .ac-card-head .ac-label>.ac-whale-face{position:absolute;right:-3px;bottom:-3px;width:13px;height:13px;padding:1px;box-sizing:border-box;border-radius:50%;background:var(--ac-glass-thick);color:var(--ac-reading)}
 .ac-root .ac-whale-lean>.ac-whale-face{position:absolute;z-index:2;top:5%;right:-6%;width:24px;height:24px;padding:3px;box-sizing:content-box;border-radius:50%;background:var(--ac-glass-thick);box-shadow:var(--ac-thick-shadow)}
 .ac-root .ac-stage-dots{display:inline-flex;gap:2px;align-items:center}
 .ac-root .ac-stage-dots i{width:3px;height:3px;border-radius:50%;background:currentColor}
@@ -475,6 +477,6 @@ export const UI_COMPONENTS = `
  .ac-root .ac-view-trigger{display:inline-flex;align-items:center;min-height:40px;gap:6px;border:1px solid var(--ac-glass-edge);border-radius:12px;padding:0 12px;background:var(--ac-glass-thick);color:var(--ac-reading-ink)}
  .ac-root .ac-view-controls{display:flex;flex-wrap:wrap;gap:4px;order:3;flex:1 0 100%;min-width:0}
  .ac-root .ac-view-controls[data-open=false]{display:none}
- .ac-root .ac-pick-options{width:100%}.ac-root .ac-pick-options .ac-btn{min-width:68px;height:40px}
+ .ac-root .ac-pick-options{width:100%;box-sizing:border-box;flex-wrap:wrap}.ac-root .ac-pick-options .ac-btn{min-width:68px;height:40px}
 }
 `

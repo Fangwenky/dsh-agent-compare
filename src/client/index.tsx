@@ -322,8 +322,10 @@ function CandidateCard({ run, c, revealed, picked, busy, act, device, compact, h
     <section ref={card} className={`ac-card${picked ? ' picked' : revealed && run.choice?.pick && run.choice.pick !== 'none' ? ' ac-alternative' : ''}`} data-label={c.label} aria-label={t("候选 {0}", { 0: c.label })} hidden={hidden}>
       <div className="ac-card-head">
         <div className="ac-row">
-          <span className="ac-label">{c.label}</span>
-          {(picked || ['ready','failed','interrupted'].includes(c.stage)) && <WhaleFace stage={c.stage} picked={picked} eligible={c.verdict?.eligible}/>}
+          <span className="ac-label">{c.label}
+            {(picked || ['ready', 'failed', 'interrupted'].includes(c.stage)) &&
+              <WhaleFace stage={c.stage} picked={picked} eligible={c.verdict?.eligible}/>}
+          </span>
           <StagePill c={c} />
           {picked && <span className="ac-pill brand ac-picked ac-seal">{t("你的选择")}</span>}
           {c.previewKind === 'dev' && live && run.acceptance.checks.includes('build') && <span className="ac-pill warn" title={t("构建没有通过，这是开发模式，只供观察")}>{t("开发模式")}</span>}
