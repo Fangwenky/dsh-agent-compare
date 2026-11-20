@@ -98,6 +98,7 @@ try {
       check(await page.locator('.ac-shotbar').allTextContents().then(texts => texts.length === 2 && texts.every(text => text.includes('static record') && !text.includes('copy was released'))), 'both concise English captions must identify static records without inferring deletion')
       check(await page.locator('.ac-bar-text').innerText().then(text => text.includes('Adoption was recorded. Target:')), 'English adoption confirmation must retain the word boundary before its target')
       check(await page.locator('.ac-shottools').first().innerText().then(text => text.includes('Desktop acceptance screenshot · static record')), 'the desktop screenshot caption must be a complete translated phrase')
+      await openViewControls(page)
       await page.getByRole('button', { name: 'Phone 390', exact: true }).click()
       check(await page.locator('.ac-shottools').first().innerText().then(text => text.includes('Phone acceptance screenshot · static record')), 'the phone screenshot caption must be a complete translated phrase')
     }
@@ -256,3 +257,8 @@ try {
   await writeFile(path.join(output, 'language-failure.json'), JSON.stringify({ localeAssertions: assertions, message: error.message, browser: browser?.version(), pageErrors: errors, stepSummaries }, null, 2))
   throw error
 } finally { await browser?.close(); await harness.close() }
+
+async function openViewControls(page) {
+  const trigger=page.locator('.ac-view-trigger:visible').first()
+  if(await trigger.count() && await trigger.getAttribute('aria-expanded')==='false') await trigger.click()
+}

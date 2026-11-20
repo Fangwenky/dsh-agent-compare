@@ -302,6 +302,7 @@ function CandidateCard({ run, c, revealed, picked, busy, act, device, compact, h
   const model = revealed ? routeText(c.actualRoute ?? c.route) : ''
   // The moment of the pick and the reveal: light sweeps the cards, the pick bursts. Only on the change, never on reload.
   const card = useRef<HTMLElement>(null)
+  const [unmask, setUnmask] = useState(false)
   const seen = useRef({ picked, revealed })
   useEffect(() => {
     const before = seen.current
@@ -310,14 +311,15 @@ function CandidateCard({ run, c, revealed, picked, busy, act, device, compact, h
     if (!element) return
     if (picked && !before.picked) burst(element.querySelector('.ac-label') ?? element)
     if (revealed && !before.revealed) {
+      if (run.blind !== false && !document.hidden && !matchMedia('(prefers-reduced-motion: reduce)').matches) setUnmask(true)
       element.classList.add('ac-revealing')
-      const timer = setTimeout(() => element.classList.remove('ac-revealing'), 1400)
+      const timer = setTimeout(() => { element.classList.remove('ac-revealing'); setUnmask(false) }, 650)
       return () => { clearTimeout(timer); element.classList.remove('ac-revealing') }
     }
     return undefined
-  }, [picked, revealed])
+  }, [picked, revealed, run.blind])
   return (
-    <section ref={card} className={`ac-card${picked ? ' picked' : ''}`} data-label={c.label} aria-label={t("候选 {0}", { 0: c.label })} hidden={hidden}>
+    <section ref={card} className={`ac-card${picked ? ' picked' : revealed && run.choice?.pick && run.choice.pick !== 'none' ? ' ac-alternative' : ''}`} data-label={c.label} aria-label={t("候选 {0}", { 0: c.label })} hidden={hidden}>
       <div className="ac-card-head">
         <div className="ac-row">
           <span className="ac-label">{c.label}
@@ -325,7 +327,7 @@ function CandidateCard({ run, c, revealed, picked, busy, act, device, compact, h
               <WhaleFace stage={c.stage} picked={picked} eligible={c.verdict?.eligible}/>}
           </span>
           <StagePill c={c} />
-          {picked && <span className="ac-pill brand ac-picked">{t("你的选择")}</span>}
+          {picked && <span className="ac-pill brand ac-picked ac-seal">{t("你的选择")}</span>}
           {c.previewKind === 'dev' && live && run.acceptance.checks.includes('build') && <span className="ac-pill warn" title={t("构建没有通过，这是开发模式，只供观察")}>{t("开发模式")}</span>}
           {c.stage === 'ready' && c.result === 'answer' && <span className="ac-pill">{t("回答")}</span>}
           {c.stage === 'ready' && c.result === 'files' && <span className="ac-pill">{t("文件")}</span>}
@@ -333,7 +335,7 @@ function CandidateCard({ run, c, revealed, picked, busy, act, device, compact, h
           {run.state === 'running' && busyStage(c.stage) && c.stage !== 'stopping' && <button className="ac-btn sm" disabled={busy} onClick={() => act('cancel', { label: c.label })}>{t("停止这一版")}</button>}
           {onExclude && <button type="button" className="ac-text-btn ac-exclude" disabled={busy} onClick={onExclude} title={t("先把这一版放到一边，剩下的版本重新排布；随时可以恢复")}>{t("排除")}</button>}
           {live && <a className="ac-icon-btn ac-preview-open" href={c.previewUrl} target="_blank" rel="noreferrer" title={t("在浏览器标签页中打开 {0}；Cookie 与存储上下文可能和嵌入预览不同", { 0: c.previewUrl })} aria-label={t("在浏览器中打开 {0}", { 0: c.label })}><IconExternal /></a>}
-          {revealed && c.strategy && <span className="ac-strategy">{revealedStyleName(c.strategy)}{model ? ` · ${model}` : ''}</span>}
+          {revealed && c.strategy && <span className="ac-strategy" data-unmask={unmask}>{revealedStyleName(c.strategy)}{model ? ` · ${model}` : ''}</span>}
         </div>
         {busyStage(c.stage) && <Track c={c} />}
         {!!c.checks?.length && <details className="ac-check-summary"><summary>{t("检查 {0}/{1} 通过", {0:c.checks.filter(k => k.outcome==='passed').length,1:c.checks.length})}</summary><Checks checks={c.checks}/></details>}
@@ -648,8 +650,10 @@ function ActionBar({ run, sessionId, busy, pending, act, onDone, onContinue, exc
         return (
           <div className="ac-bar">
             <span className="ac-bar-text">{text}</span>
-            <button className="ac-btn" disabled={busy} onClick={() => act('choose', { pick: 'none' })}>{t("都不满意")}</button>
-            {choosable.map((c) => <button key={c.label} className="ac-btn primary" disabled={busy} onClick={() => act('choose', { pick: c.label })}>{t("选 ")}{c.label}</button>)}
+            <div className="ac-pick-options">
+              {choosable.map(c => <button key={c.label} className="ac-btn primary ac-pick-option" data-label={c.label} disabled={busy} onClick={() => act('choose', { pick:c.label })}>{t("选 ")}{c.label}</button>)}
+              <button className="ac-btn ac-pick-none" disabled={busy} onClick={() => act('choose', { pick:'none' })}>{t("都不满意")}</button>
+            </div>
           </div>
         )
       }
@@ -753,9 +757,10 @@ function PickReasons({ run, busy, act }: { run: Run; busy: boolean; act: Act }):
   return <section className={`ac-why${said ? ' said' : ''}`} aria-label={t("为什么选 {0}", { 0: pick })}>
     <span className="ac-why-q">{t("为什么选 {0}？", { 0: pick })}</span>
     <div className="ac-why-chips" role="group" aria-label={t("选择理由")}>
-      {PICK_REASONS.map(reason => { const on = shown.reasons.includes(reason.id); return <button key={reason.id} type="button" className={`ac-chip${on ? ' on' : ''}`} aria-pressed={on} onClick={() => toggle(reason.id)}>{t(reason.name)}</button> })}
+      {PICK_REASONS.map(reason => { const on = shown.reasons.includes(reason.id); return <button key={reason.id} type="button" className={`ac-chip${on ? ' on' : ''}`} aria-pressed={on} onClick={() => toggle(reason.id)}>{on && <svg className="ac-reason-check" viewBox="0 0 16 16" aria-hidden="true"><path d="m3 8 3 3 7-7" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/></svg>}{t(reason.name)}</button> })}
       <input ref={field} className="ac-why-note" type="text" maxLength={MAX_PICK_NOTE} value={draft} aria-label={t("补充一句理由")} placeholder={t("补一句，例如：按钮更好找")}
         onChange={event => setDraft(event.target.value)} onBlur={commit} onKeyDown={event => { if (event.key === 'Enter') { event.preventDefault(); commit() } }} />
+      <small className="ac-char-count">{draft.length}/{MAX_PICK_NOTE}</small>
     </div>
     <span className="ac-meta" role="status">{said ? t("已记下。选择理由会随结果写入主对话，供后续修改参考。") : t("可选：选几个理由，主对话接着修改时会保留这些优点。")}</span>
   </section>
@@ -826,7 +831,7 @@ function Banners({ run, recordOnly = false }: { run: Run; recordOnly?: boolean }
   const a = run.adoption
   const bad = a && ['blocked', 'rolled-back', 'needs-recovery'].includes(a.state)
   const comparison = revealed && pick !== undefined ? <>
-    <div>{run.blind === false ? t("公开对比，") : ''}{t("{0} 版，", { 0: run.candidates.length })}{run.mode === 'same-model' ? t("同一模型、不同风格。") : t("不同模型、同一风格。")}{t("你选了 ")}<strong>{pick === 'none' ? t("都不满意") : `${pick}${pickedTitle ? `（${pickedTitle}）` : ''}`}</strong>{run.choice?.initialPick !== undefined && <>{t("（揭晓后改选；盲选时选了 {0}）", { 0: run.choice.initialPick === 'none' ? t("都不满意") : run.choice.initialPick })}</>}{t("；程序验收倾向 ")}<strong>{fav === 'tie' ? t("持平") : fav === 'none' || fav === undefined ? t("无") : fav}</strong>
+    <div className="ac-decision-result">{run.blind === false ? t("公开对比，") : ''}{t("{0} 版，", { 0: run.candidates.length })}{run.mode === 'same-model' ? t("同一模型、不同风格。") : t("不同模型、同一风格。")}{t("你选了 ")}<strong>{pick === 'none' ? t("都不满意") : `${pick}${pickedTitle ? `（${pickedTitle}）` : ''}`}</strong>{run.choice?.initialPick !== undefined && <>{t("（揭晓后改选；盲选时选了 {0}）", { 0: run.choice.initialPick === 'none' ? t("都不满意") : run.choice.initialPick })}</>}{fav !== undefined && <>{t("；程序验收倾向 ")}<strong>{fav === 'tie' ? t("持平") : fav === 'none' ? t("无") : fav}</strong></>}
       {pick !== 'none' && fav !== undefined && fav !== 'tie' && fav !== 'none' && fav !== pick ? t("。你的选择和验收结论不同。") : '。'}</div>
     <div className="disclaimer">{t("单次任务的结果不代表模型或策略的整体优劣。")}</div>
   </> : null
@@ -879,6 +884,8 @@ function RunView({ runId, sessionId, initial, compact, onDone, onExpand, onColla
   const [device, setDevice] = useState<PreviewDevice>('adaptive')
   const [layout, setLayout] = useState<'side' | Label>('side')
   const [alignPages, setAlignPages] = useState(false)
+  const [viewsOpen, setViewsOpen] = useState(false)
+  const viewControlsId = React.useId()
   // Narrowing down is a view of this card only; the record keeps every candidate.
   const [excluded, setExcluded] = useState<ReadonlySet<Label>>(new Set())
   const grid = useRef<HTMLDivElement>(null)
@@ -1055,7 +1062,9 @@ function RunView({ runId, sessionId, initial, compact, onDone, onExpand, onColla
       {!!run.leftovers?.length && <section className="ac-banner warn" role="status" aria-label={t("资源清理状态")}><div><b>{run.state === 'adopted' ? t("采用已完成，仍有资源等待清理") : t("仍有资源等待清理")}</b><p>{t("可以重试清理。清理只处理本次比较拥有的资源。")}</p><ul>{run.leftovers.map((detail, index) => <li key={index}>{detail}</li>)}</ul><button className="ac-btn" disabled={blocked} onClick={() => act('cleanup')}>{t("重试清理")}</button></div></section>}
       {preflight && <section className="ac-review" aria-label={t("采用前审查")} role="region"><div><b>{preflight.ok ? t("目标核验通过，请确认采用") : t("当前无法采用")}</b><p className="ac-project-path">{t("目标：")}{run.baseline.repoRoot ?? t("本次比较的项目")}</p><p>{preflight.ok ? preflight.rehearsal ? t("项目有新改动，将先合并到临时副本中重新验收。") : t("将写入选中版本；不自动提交，保留暂存状态。") : preflight.reasons.join('；')}</p>{preflight.ok && <p>{t("先保留原始文件，再交接候选。交接时出现新编辑会停止并保留双方内容；请等操作完成后再继续编辑涉及的文件。")}</p>}{preflight.overlapping?.length ? <code>{preflight.overlapping.join('、')}</code> : null}</div><div className="ac-row"><button className="ac-btn" onClick={() => setPreflight(undefined)}>{t("返回审查")}</button><button className="ac-btn primary" disabled={blocked || !preflight.ok} onClick={() => act('adopt', { mode: 'worktree' })}>{t("确认采用 ")}{run.choice?.pick}</button></div></section>}
       <Banners run={run} />
-      <div className="ac-compare-tools"><div className="ac-seg" role="group" aria-label={t("比较布局")} title={t("在卡片里按 1–{0} 专注某一版，按 0 回到全部", { 0: run.candidates.length })}>{(['side', ...run.candidates.filter(c => !excluded.has(c.label) || !judging).map(c => c.label)] as const).map((v) => { const text = v === 'side' ? (run.candidates.length > 2 ? t("全部并排") : t("并排比较")) : t("专注 {0}", { 0: v }); return <button key={v} className={layout === v ? 'on' : ''} aria-pressed={layout === v} data-text={text} onClick={() => setLayout(v)}>{text}</button> })}</div>{!contentOnly && <div className="ac-seg" aria-label={t("预览尺寸")}>{([['adaptive', t("适应窗口")], ['desktop', t("桌面 1280")], ['phone', t("手机 390")]] as const).map(([value, text]) => <button key={value} className={device === value ? 'on' : ''} aria-pressed={device === value} data-text={text} onClick={() => setDevice(value)}>{text}</button>)}</div>}{canAlignPages && <div className="ac-seg ac-align-pages"><button type="button" aria-pressed={alignPages} className={alignPages ? 'on' : ''} onClick={() => setAlignPages(value => !value)}>{t("对齐网页")}</button></div>}<span className="ac-meta">{previewHint}</span></div>
+      <div className="ac-compare-tools"><button type="button" className="ac-view-trigger" aria-expanded={viewsOpen} aria-controls={viewControlsId}
+        onClick={() => setViewsOpen(value => !value)}>{t("视图")} <span aria-hidden="true">⌄</span></button>
+        <div className="ac-view-controls" id={viewControlsId} data-open={viewsOpen}><div className="ac-seg" role="group" aria-label={t("比较布局")} title={t("在卡片里按 1–{0} 专注某一版，按 0 回到全部", { 0: run.candidates.length })}>{(['side', ...run.candidates.filter(c => !excluded.has(c.label) || !judging).map(c => c.label)] as const).map((v) => { const text = v === 'side' ? (run.candidates.length > 2 ? t("全部并排") : t("并排比较")) : t("专注 {0}", { 0: v }); return <button key={v} className={layout === v ? 'on' : ''} aria-pressed={layout === v} data-text={text} data-shortcut={v==='side' ? 0 : LABELS.indexOf(v)+1} onClick={() => setLayout(v)}>{text}</button> })}</div>{!contentOnly && <div className="ac-seg" aria-label={t("预览尺寸")}>{([['adaptive', t("适应窗口")], ['desktop', t("桌面 1280")], ['phone', t("手机 390")]] as const).map(([value, text]) => <button key={value} className={device === value ? 'on' : ''} aria-pressed={device === value} data-text={text} onClick={() => setDevice(value)}>{text}</button>)}</div>}{canAlignPages && <div className="ac-seg ac-align-pages"><button type="button" aria-pressed={alignPages} className={alignPages ? 'on' : ''} onClick={() => setAlignPages(value => !value)}>{t("对齐网页")}</button></div>}</div><span className="ac-meta">{previewHint}</span></div>
       {previewHosts.length > 0 && <details className="ac-preview-limits"><summary>{t("预览环境与限制")}</summary><p>{independentHosts ? t("候选使用独立本地地址，避免同名 Cookie 相互影响。") : t("这条旧记录的预览没有独立本地域名，两个端口的 Cookie 可能相互影响；建议使用当前版本重新开始比较。")}{t("嵌入页面仍受浏览器的 Cookie 与存储策略限制；登录、外部后端和共享数据库暂不在支持范围内。重新启动预览会更换浏览器地址，页面内临时数据不保留；比较记录和验收截图仍保留。外部标签页可能使用不同的存储上下文。")}</p></details>}
       <div ref={grid} className={`ac-grid count-${layout === 'side' ? (judging ? shown.length : run.candidates.length) : 1}${layout !== 'side' ? ' focus' : ''}`} data-state={run.state} data-align-pages={canAlignPages && alignPages} onKeyDown={keyboard}>
         {run.candidates.map((c) => judging && excluded.has(c.label)
