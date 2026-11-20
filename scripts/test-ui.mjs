@@ -1246,6 +1246,10 @@ try {
 
   // Four live versions: 2×2, narrowed down one at a time, focused from the keyboard, picked.
   await open('four')
+  const blindFaces = await page.locator('.ac-sheet .ac-card:is([data-label=A],[data-label=C],[data-label=D]) .ac-label .ac-whale-face').evaluateAll(faces =>
+    faces.map(face => ({ glyph: face.innerHTML, stage: face.getAttribute('data-face'), hidden: face.getAttribute('aria-hidden') })))
+  check(blindFaces.length === 3 && blindFaces.every(face => face.stage === 'stars' && face.hidden === 'true' && face.glyph === blindFaces[0].glyph),
+    'blind versions with the same completed stage and verdict must show the same decorative face')
   const four = page.getByRole('dialog')
   check(await four.locator('iframe').count() === 4, 'all four versions are live pages')
   const boxes = await four.locator('.ac-grid > .ac-card').evaluateAll(cards => cards.map(card => { const r = card.getBoundingClientRect(); return { x: Math.round(r.x), y: Math.round(r.y) } }))
