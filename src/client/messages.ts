@@ -1,5 +1,9 @@
 /** Interface copy. Application content and original diagnostic evidence are not translated. */
 export const messages: Readonly<Record<string, string>> = {
+  "浏览风格样式：{0}": "Browse style samples for {0}",
+  "风格样式": "Style samples",
+  "开始时随机分配，选完再揭晓。": "Assigned at random and revealed after your pick.",
+  "{0} 分钟": "{0} minutes",
   "选择已变化，请刷新后再说明理由。": "The selected version changed. Refresh before explaining the choice.",
   "采用与恢复记录": "Adoption and recovery record",
   "比较窗口暂时无法进入前景层。请关闭其他弹窗后重新打开。": "The comparison could not enter the foreground layer. Close other dialogs and reopen it.",

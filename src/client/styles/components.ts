@@ -408,3 +408,44 @@ export const LAYOUT = `
   }
 }
 `
+
+export const UI_COMPONENTS = `
+.ac-mode-btn .ac-mode-letters {display:inline-flex;align-items:center;gap:1px}
+.ac-mode-btn:not(.on) .ac-mode-letters b:first-child{color:#3b5af2}
+.ac-mode-btn:not(.on) .ac-mode-letters b:last-child{color:#1468a5}
+.ac-mode-btn.on:active{transform:scale(.96)}
+.ac-root .ac-mini-pod,.ac-root .ac-recipe-strip{display:inline-flex;align-items:center;gap:1px;vertical-align:middle}
+.ac-root .ac-mini-pod svg{width:12px;height:12px;fill:transparent;stroke:currentColor;stroke-width:1}
+.ac-root .ac-seg .on .ac-mini-pod svg{fill:currentColor}
+.ac-root .ac-eye-icon{width:15px;height:15px;vertical-align:middle;margin-inline-end:3px}
+.ac-root .ac-style-slot{flex-wrap:wrap;min-width:0}
+.ac-root .ac-style-slot:has(.ac-palette){flex-basis:100%}
+.ac-root .ac-swatch-trigger{padding:3px;border:1px solid var(--ac-glass-edge);border-radius:7px;background:var(--ac-glass-thick);cursor:pointer;color:var(--ac-v-ink)}
+.ac-root .ac-swatch{position:relative;display:inline-block;overflow:hidden;vertical-align:middle;width:32px;height:22px;border-radius:4px;background:linear-gradient(145deg,#e7efff,#bbd4f0);color:#36598c}
+.ac-root .ac-swatch i{position:absolute;display:block;background:currentColor;left:15%;top:23%;width:70%;height:12%;border-radius:2px}
+.ac-root .ac-swatch i:nth-child(2){top:48%;width:48%}.ac-root .ac-swatch i:nth-child(3){top:72%;width:58%}
+.ac-root .ac-swatch[data-style=bold] i{width:45%;height:52%;transform:rotate(-16deg);box-shadow:2px 2px #aac8ff}.ac-root .ac-swatch[data-style=bold] i:nth-child(2){left:46%;top:28%;background:#5e75ce}.ac-root .ac-swatch[data-style=bold] i:last-child{display:none}
+.ac-root .ac-swatch[data-style=minimal] i{display:none}.ac-root .ac-swatch[data-style=minimal] i:first-child{display:block;top:60%;width:5px;height:5px;border-radius:50%}
+.ac-root .ac-swatch[data-style=polished] i{width:58%;height:32%;left:21%;background:#f2f5ff;box-shadow:0 2px 4px #5e75ad}
+.ac-root .ac-swatch[data-style=vibrant] i{width:28%;height:43%;border-radius:50%;top:28%;background:#3861c3}.ac-root .ac-swatch[data-style=vibrant] i:nth-child(2){left:37%;background:#ca6f59}.ac-root .ac-swatch[data-style=vibrant] i:last-child{left:60%;background:#378b91}
+.ac-root .ac-swatch[data-style=friendly] i:first-child{top:32%;height:42%;border-radius:9px}.ac-root .ac-swatch[data-style=friendly] i:not(:first-child){display:none}
+.ac-root .ac-swatch[data-style=rigorous] i{border-left:3px solid #317d67;box-sizing:border-box;background:#6981a2}
+.ac-root .ac-swatch[data-style=lean] i{left:22%;top:50%;height:16%;transform:rotate(-29deg);border-radius:100%}.ac-root .ac-swatch[data-style=lean] i:not(:first-child){display:none}
+.ac-root .ac-palette{flex:1 0 100%;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:5px;padding:6px;background:var(--ac-glass-thick);border-radius:12px}
+.ac-root .ac-palette button{display:flex;align-items:center;gap:6px;min-height:36px;padding:5px 7px;background:var(--ac-glass-solid);border:1px solid var(--ac-glass-edge);border-radius:8px;color:var(--ac-reading-ink);cursor:pointer}
+.ac-root .ac-palette button[aria-pressed=true]{border:2px solid var(--ac-v-ink)}
+.ac-root :is(.ac-custom-card,.ac-palette-note){grid-column:1/-1}.ac-root .ac-palette-note{color:var(--ac-reading-soft);font-size:12px}
+.ac-root .ac-char-count,.ac-root .ac-budget-slider output{font-variant-numeric:tabular-nums;color:var(--ac-reading-soft)}
+.ac-root .ac-recipe-strip .ac-swatch{width:10px;height:10px;border-radius:3px}
+.ac-root .ac-habit-item{position:relative;padding-bottom:4px;margin-inline-end:7px}
+.ac-root .ac-habit-item i{position:absolute;inset-inline-start:0;bottom:0;height:2px;background:var(--ac-ver-a);border-radius:5px}
+.ac-root .ac-budget-slider{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.ac-root .ac-budget-slider input{width:clamp(88px,16vw,190px);min-width:0;accent-color:var(--ac-ver-a)}
+.ac-root .ac-budget-slider output{font-weight:700;white-space:nowrap}
+@media(max-width:600px){
+ .ac-root .ac-mini-pod{display:none}.ac-root .ac-palette{grid-template-columns:repeat(2,minmax(0,1fr))}
+ .ac-root .ac-palette button,.ac-root .ac-swatch-trigger{min-height:40px}
+}
+@media(prefers-color-scheme:dark){.ac-mode-btn:not(.on) .ac-mode-letters b{color:#b3cdff}}
+@media(forced-colors:active){.ac-root .ac-swatch{forced-color-adjust:auto;border:1px solid CanvasText}}
+`
