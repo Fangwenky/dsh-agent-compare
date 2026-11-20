@@ -23,7 +23,7 @@ import { CopyButton, ProjectNotes, ResultView } from './results.js'
 import { BlindControl, MAX_VERSIONS, MIN_VERSIONS, revealedStyleName, Segmented, StyleCombos, StyleHabit, StylePicker, StyleSlots, stylesFor, VersionsControl, type StyleChoice } from './style-picker.js'
 import { LABELS, MAX_PICK_NOTE, PICK_REASONS, type Label, type PickReason, type StyleStat } from './model.js'
 import { Ambient, attachFx, burst, RunRing } from './fx.js'
-import { runningTool, LiveSteps, ReplyBlock, StepsPanel, StepsToggle, useTrace, Whale } from './agent-view.js'
+import { runningTool, LiveSteps, ReplyBlock, StepsPanel, StepsToggle, useTrace, Whale, WhaleFace } from './agent-view.js'
 import { StaleBackendNotice } from './version.js'
 export const name = 'agent-compare-client'
 export const inject = ['slots', 'remote', 'remote.commands']
@@ -321,19 +321,21 @@ function CandidateCard({ run, c, revealed, picked, busy, act, device, compact, h
       <div className="ac-card-head">
         <div className="ac-row">
           <span className="ac-label">{c.label}</span>
+          {(picked || ['ready','failed','interrupted'].includes(c.stage)) && <WhaleFace stage={c.stage} picked={picked} eligible={c.verdict?.eligible}/>}
           <StagePill c={c} />
           {picked && <span className="ac-pill brand ac-picked">{t("你的选择")}</span>}
           {c.previewKind === 'dev' && live && run.acceptance.checks.includes('build') && <span className="ac-pill warn" title={t("构建没有通过，这是开发模式，只供观察")}>{t("开发模式")}</span>}
           {c.stage === 'ready' && c.result === 'answer' && <span className="ac-pill">{t("回答")}</span>}
           {c.stage === 'ready' && c.result === 'files' && <span className="ac-pill">{t("文件")}</span>}
-          <span className="ac-meta">{c.verificationHistory?.length ? t("本次验收 ") : ''}{fmt(elapsed(c))}</span>
+          <span className="ac-meta ac-elapsed">{c.verificationHistory?.length ? t("本次验收 ") : ''}{fmt(elapsed(c))}</span>
           {run.state === 'running' && busyStage(c.stage) && c.stage !== 'stopping' && <button className="ac-btn sm" disabled={busy} onClick={() => act('cancel', { label: c.label })}>{t("停止这一版")}</button>}
           {onExclude && <button type="button" className="ac-text-btn ac-exclude" disabled={busy} onClick={onExclude} title={t("先把这一版放到一边，剩下的版本重新排布；随时可以恢复")}>{t("排除")}</button>}
           {live && <a className="ac-icon-btn ac-preview-open" href={c.previewUrl} target="_blank" rel="noreferrer" title={t("在浏览器标签页中打开 {0}；Cookie 与存储上下文可能和嵌入预览不同", { 0: c.previewUrl })} aria-label={t("在浏览器中打开 {0}", { 0: c.label })}><IconExternal /></a>}
           {revealed && c.strategy && <span className="ac-strategy">{revealedStyleName(c.strategy)}{model ? ` · ${model}` : ''}</span>}
         </div>
         {busyStage(c.stage) && <Track c={c} />}
-        <Checks checks={c.checks} />
+        {!!c.checks?.length && <details className="ac-check-summary"><summary>{t("检查 {0}/{1} 通过", {0:c.checks.filter(k => k.outcome==='passed').length,1:c.checks.length})}</summary><Checks checks={c.checks}/></details>}
+        {c.stage === 'generating' && !stepsOpen && <LiveSteps trace={trace} onOpen={() => setStepsOpen(true)} />}
       </div>
       <div className="ac-steps-bar">
         <StepsToggle trace={trace} open={stepsOpen} onToggle={() => setStepsOpen(v => !v)} busy={c.stage === 'generating'} id={stepsId} steps={c.progress?.steps ?? 0} started={c.stage !== 'queued' && c.stage !== 'preparing'} />
@@ -366,8 +368,7 @@ function CandidateCard({ run, c, revealed, picked, busy, act, device, compact, h
         <Screenshots runId={run.runId} c={c} busy={busy} act={act} device={device} />
       ) : (
         <div className={`ac-empty${reply ? ' compact' : ''}`}>
-          <Whale stage={c.stage} level={(step + (c.stage === 'generating' ? Math.min(trace?.steps ?? c.progress?.steps ?? 0, 30) / 30 * 0.9 : 0)) / PIPELINE.length} steps={trace?.steps ?? c.progress?.steps ?? 0} caption={waitingText} action={action} />
-          {c.stage === 'generating' && !stepsOpen && <LiveSteps trace={trace} onOpen={() => setStepsOpen(true)} />}
+          <Whale stage={c.stage} waiting={!!c.timings.verifying && c.stage==='verifying' && Date.now()-c.timings.verifying.startedAt>60_000} level={(step + (c.stage === 'generating' ? Math.min(trace?.steps ?? c.progress?.steps ?? 0, 30) / 30 * 0.9 : 0)) / PIPELINE.length} steps={trace?.steps ?? c.progress?.steps ?? 0} caption={waitingText} action={action} />
         </div>
       )}
       <div className="ac-card-evidence">
@@ -878,6 +879,26 @@ function RunView({ runId, sessionId, initial, compact, onDone, onExpand, onColla
   const [alignPages, setAlignPages] = useState(false)
   // Narrowing down is a view of this card only; the record keeps every candidate.
   const [excluded, setExcluded] = useState<ReadonlySet<Label>>(new Set())
+  const grid = useRef<HTMLDivElement>(null)
+  const beforeLayout = useRef(new Map<string,DOMRect>())
+  function measureCards(): void {
+    beforeLayout.current.clear()
+    if (!grid.current || document.hidden || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return
+    for (const el of grid.current.querySelectorAll<HTMLElement>(':scope > [data-label]')) {
+      if (!el.hidden) beforeLayout.current.set(el.dataset.label!, el.getBoundingClientRect())
+    }
+  }
+  React.useLayoutEffect(() => {
+    if (!beforeLayout.current.size || !grid.current) return
+    for (const el of grid.current.querySelectorAll<HTMLElement>(':scope > [data-label]')) {
+      const before = beforeLayout.current.get(el.dataset.label!)
+      if (!before || el.hidden) continue
+      const after = el.getBoundingClientRect()
+      const x = before.left-after.left, y = before.top-after.top
+      if (x || y) el.animate?.([{transform:`translate(${x}px,${y}px)`},{transform:'none'}],{duration:240,easing:'ease-out'})
+    }
+    beforeLayout.current.clear()
+  }, [excluded])
   useEffect(() => { setExcluded(new Set()); setLayout('side'); setAlignPages(false) }, [runId])
   const [preflight, setPreflight] = useState<{ ok: boolean; reasons: string[]; overlapping?: string[]; rehearsal?: boolean; protectedWorktreeApply?: boolean }>()
   const publish = useCallback((next: Run, expectedId: string): void => {
@@ -996,8 +1017,8 @@ function RunView({ runId, sessionId, initial, compact, onDone, onExpand, onColla
   const canAlignPages = layout === 'side' && visibleCards.length >= 2 && visibleCards.every(c => c.previewUrl && !['failed', 'cancelled', 'interrupted'].includes(c.stage))
   // Narrowing down is offered while choosing among three or four; at least two stay in view.
   const canExclude = judging && run.candidates.length > 2 && shown.length > 2
-  const exclude = (label: Label): void => { setExcluded(previous => new Set([...previous, label])); if (layout === label) setLayout('side') }
-  const restore = (label: Label): void => setExcluded(previous => { const next = new Set(previous); next.delete(label); return next })
+  const exclude = (label: Label): void => { measureCards(); setExcluded(previous => new Set([...previous, label])); if (layout === label) setLayout('side') }
+  const restore = (label: Label): void => { measureCards(); setExcluded(previous => { const next = new Set(previous); next.delete(label); return next }) }
   const keyboard = (event: React.KeyboardEvent): void => {
     // Digits focus a version, 0 shows them all; typing in a field is never taken over.
     if (event.altKey || event.ctrlKey || event.metaKey || event.defaultPrevented || event.nativeEvent.isComposing || !/^[0-4]$/.test(event.key)) return
@@ -1034,7 +1055,7 @@ function RunView({ runId, sessionId, initial, compact, onDone, onExpand, onColla
       <Banners run={run} />
       <div className="ac-compare-tools"><div className="ac-seg" role="group" aria-label={t("比较布局")} title={t("在卡片里按 1–{0} 专注某一版，按 0 回到全部", { 0: run.candidates.length })}>{(['side', ...run.candidates.filter(c => !excluded.has(c.label) || !judging).map(c => c.label)] as const).map((v) => { const text = v === 'side' ? (run.candidates.length > 2 ? t("全部并排") : t("并排比较")) : t("专注 {0}", { 0: v }); return <button key={v} className={layout === v ? 'on' : ''} aria-pressed={layout === v} data-text={text} onClick={() => setLayout(v)}>{text}</button> })}</div>{!contentOnly && <div className="ac-seg" aria-label={t("预览尺寸")}>{([['adaptive', t("适应窗口")], ['desktop', t("桌面 1280")], ['phone', t("手机 390")]] as const).map(([value, text]) => <button key={value} className={device === value ? 'on' : ''} aria-pressed={device === value} data-text={text} onClick={() => setDevice(value)}>{text}</button>)}</div>}{canAlignPages && <div className="ac-seg ac-align-pages"><button type="button" aria-pressed={alignPages} className={alignPages ? 'on' : ''} onClick={() => setAlignPages(value => !value)}>{t("对齐网页")}</button></div>}<span className="ac-meta">{previewHint}</span></div>
       {previewHosts.length > 0 && <details className="ac-preview-limits"><summary>{t("预览环境与限制")}</summary><p>{independentHosts ? t("候选使用独立本地地址，避免同名 Cookie 相互影响。") : t("这条旧记录的预览没有独立本地域名，两个端口的 Cookie 可能相互影响；建议使用当前版本重新开始比较。")}{t("嵌入页面仍受浏览器的 Cookie 与存储策略限制；登录、外部后端和共享数据库暂不在支持范围内。重新启动预览会更换浏览器地址，页面内临时数据不保留；比较记录和验收截图仍保留。外部标签页可能使用不同的存储上下文。")}</p></details>}
-      <div className={`ac-grid count-${layout === 'side' ? (judging ? shown.length : run.candidates.length) : 1}${layout !== 'side' ? ' focus' : ''}`} data-state={run.state} data-align-pages={canAlignPages && alignPages} onKeyDown={keyboard}>
+      <div ref={grid} className={`ac-grid count-${layout === 'side' ? (judging ? shown.length : run.candidates.length) : 1}${layout !== 'side' ? ' focus' : ''}`} data-state={run.state} data-align-pages={canAlignPages && alignPages} onKeyDown={keyboard}>
         {run.candidates.map((c) => judging && excluded.has(c.label)
           ? (layout === 'side' ? <ExcludedCard key={c.label} c={c} onRestore={() => restore(c.label)} /> : null)
           : <CandidateCard key={c.label} run={run} c={c} revealed={revealed} picked={revealed && run.choice?.pick === c.label} busy={blocked} act={act} device={device} compact={compact === true} hidden={layout !== 'side' && layout !== c.label} dense={layout === 'side' && (judging ? shown.length : run.candidates.length) > 2} {...(canExclude ? { onExclude: () => exclude(c.label) } : {})} />)}

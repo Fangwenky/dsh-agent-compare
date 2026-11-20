@@ -53,6 +53,12 @@ const history = [
 ]
 const legacy = [{ runId: '1c1fe140', task: '给商品列表加上搜索框和分类筛选，手机上也要好用', createdAt: now - 2 * 86400000, state: 'revealed', legacy: true }]
 const states = {
+  'faces-waiting': [{ ...base, state:'running', candidates:['queued','preparing','installing','verifying'].map((stage,i) => ({
+    label:['A','B','C','D'][i], stage, timings:{ [stage]:t(stage==='verifying'?70:3) },
+  })) }],
+  'faces-stopped': [{ ...base, state:'judging', candidates:['failed','interrupted','cancelled','stopping'].map((stage,i) => ({
+    label:['A','B','C','D'][i], stage, timings:{ [stage]:t(8) },
+  })) }],
   start: [],
   history: [],
   blank: [],

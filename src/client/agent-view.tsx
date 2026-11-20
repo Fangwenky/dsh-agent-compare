@@ -68,8 +68,10 @@ function Status({ item }: { item: TraceItem }): React.ReactElement {
   return <span className={`ac-step-dot ${item.status ?? 'done'}`} aria-label={item.status === 'error' ? t('出错') : item.status === 'running' ? t('进行中') : t('完成')} />
 }
 
-function Step({ item, live }: { item: TraceItem; live: boolean }): React.ReactElement {
-  if (item.kind === 'text') return <li className="ac-step text"><Status item={item} /><div className="ac-step-words ac-md"><Markdown text={item.text ?? ''} /></div></li>
+function Step({ item, live, longest }: { item: TraceItem; live: boolean; longest:number }): React.ReactElement {
+  const duration = typeof item.ms === 'number' && item.ms >= 0 && longest > 0
+    ? <span aria-hidden="true" className="ac-step-duration" style={{width:(100 * item.ms / longest) + '%'}}/> : null
+  if (item.kind === 'text') return <li className="ac-step text"><Status item={item} /><div className="ac-step-words ac-md"><Markdown text={item.text ?? ''} /></div>{duration}</li>
   const title = item.kind === 'thinking'
     ? <><b className={live ? 'ac-shimmer' : ''}>{live ? t('正在思考') : t('思考')}</b><span className="ac-step-peek">{(item.text ?? '').replace(/\s+/g, ' ').slice(0, 120)}</span>{item.ms !== undefined && !live && <span className="ac-step-time">{seconds(item.ms)}</span>}</>
     : <><b>{toolName(item.name)}</b>{item.target && <code className="ac-step-target" title={item.target}>{item.target}</code>}{item.ms !== undefined && <span className="ac-step-time">{seconds(item.ms)}</span>}</>
@@ -84,6 +86,7 @@ function Step({ item, live }: { item: TraceItem; live: boolean }): React.ReactEl
           {item.status === 'running' && <p className="ac-meta">{t('还在运行…')}</p>}
         </div>}
     </details>
+    {duration}
   </li>
 }
 
@@ -129,6 +132,7 @@ export function StepsPanel({ trace, id, busy }: { trace: Trace | undefined; id: 
     const el = list.current
     if (el && busy && follow.current) el.scrollTop = el.scrollHeight
   }, [items.length, busy])
+  const longest = items.reduce((max,item) => Math.max(max,item.ms ?? 0),0)
   const lastIndex = items.length - 1
   // Say so only when something here was actually hidden or left out.
   const masked = trace?.masked === true && items.some(item => [item.text, item.target, item.input, item.output].some(value => value?.includes('▒▒')))
@@ -140,7 +144,7 @@ export function StepsPanel({ trace, id, busy }: { trace: Trace | undefined; id: 
       : <ol ref={list} onScroll={event => { const el = event.currentTarget; follow.current = el.scrollHeight - el.scrollTop - el.clientHeight < 40 }}>
         {items.map((item, index) => <React.Fragment key={`${index}:${item.at}`}>
           {gap === index && <li className="ac-step-gap">{t('中间省略了 {0} 项', { 0: trace!.omitted! })}</li>}
-          <Step item={item} live={busy && index === lastIndex && item.kind === 'thinking'} />
+          <Step item={item} longest={longest} live={busy && index === lastIndex && item.kind === 'thinking'} />
         </React.Fragment>)}
       </ol>}
   </div>
@@ -241,13 +245,42 @@ function thoughtFor(stage: Stage, action: string | undefined, last: string | und
  * new line each time. Purely decorative: the caption says what matters, the
  * bubbles stay away from screen readers, and reduced motion keeps it still.
  */
-export function Whale({ stage, level, steps, caption, action }: { stage: Stage; level: number; steps: number; caption: string; action?: string }): React.ReactElement {
+
+type Expression = 'sleep' | 'thought' | 'lamp' | 'bubbles' | 'search' | 'stars' | 'unknown' | 'tear' | 'hearts'
+const GLYPH: Record<Expression, React.ReactNode> = {
+  sleep:<><path d="M3 15h4l-4 4h4m2-11h5l-5 6h5m2-11h4l-4 5h4"/></>,
+  thought:<>{[5,12,19].map(x => <circle key={x} cx={x} cy="12" r="1.5" fill="currentColor"/>)}</>,
+  lamp:<><path d="M8 15c0-2-3-3-3-7a7 7 0 0 1 14 0c0 4-3 5-3 7l-1 2H9Zm2 5h4"/><path d="m10 9 2 2 2-2"/></>,
+  bubbles:<><circle cx="8" cy="17" r="3"/><circle cx="15" cy="10" r="3"/><circle cx="11" cy="4" r="1"/></>,
+  search:<><circle cx="9.5" cy="10" r="5.5"/><path d="m14 14.5 6 6"/></>,
+  stars:<><path d="m9 3 1.7 5.3L16 10l-5.3 1.7L9 17l-1.7-5.3L2 10l5.3-1.7ZM18 14l1 3 3 1-3 1-1 3-1-3-3-1 3-1Z"/></>,
+  unknown:<><path d="M8 8a4.2 4.2 0 1 1 7.2 3c-2 1.5-3.2 2-3.2 5"/><circle cx="12" cy="20" r=".8" fill="currentColor"/></>,
+  tear:<><path d="M12 3C10 8 5 11 5 15a7 7 0 0 0 14 0c0-4-5-8-7-12Z"/><path d="M8 15q0 2 2 3"/></>,
+  hearts:<><path d="M10 20 3 13C-1 7 6 4 10 9c5-5 11 0 7 5Z"/><path d="M18 3q3-3 5 0-1 3-5 5-4-2-4-5 1-3 4 0Z"/></>,
+}
+export function WhaleFace({ stage, picked, eligible, spark, waiting }: { stage:Stage; picked?:boolean; eligible?:boolean; spark?:boolean; waiting?:boolean }): React.ReactElement {
+  const face:Expression = picked ? 'hearts' : stage==='ready' ? eligible ? 'stars' : 'unknown'
+    : stage==='failed' || stage==='interrupted' ? 'tear' : stage==='generating' ? spark ? 'lamp' : 'thought'
+    : stage==='installing' ? 'bubbles' : ['verifying','previewing','sealing'].includes(stage) ? 'search' : 'sleep'
+  return <svg className="ac-whale-face" data-face={face} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8"
+    strokeLinecap="round" strokeLinejoin="round" aria-hidden="true" focusable="false">{GLYPH[face]}
+    {waiting && face==='search' && <path d="M20 2q-4 5-1 6 4 1 1-6Z"/>}</svg>
+}
+
+export function Whale({ stage, level, steps, caption, action, waiting }: { stage: Stage; level: number; steps: number; caption: string; action?: string; waiting?: boolean }): React.ReactElement {
   const box = useRef<HTMLDivElement>(null)
   const lean = useRef<HTMLSpanElement>(null)
   const [poked, setPoked] = useState(0)
   const [combo, setCombo] = useState(0)
   const [bubble, setBubble] = useState<Bubble>()
   const [puff, setPuff] = useState(0)
+  const [spark, setSpark] = useState(false)
+  useEffect(() => {
+    if (!puff || reduced() || document.hidden) return
+    setSpark(true)
+    const timer = setTimeout(() => setSpark(false), 650)
+    return () => clearTimeout(timer)
+  }, [puff])
   const seen = useRef(steps)
   const streak = useRef({ count: 0, at: 0 })
   const now = useRef({ stage, action, last: undefined as string | undefined })
@@ -317,6 +350,7 @@ export function Whale({ stage, level, steps, caption, action }: { stage: Stage; 
     {/* A toy for the pointer; it stays out of the keyboard order and away from screen readers. */}
     <button type="button" className="ac-whale" tabIndex={-1} aria-hidden="true" title={t('小鲸鱼，戳一下试试')} onClick={poke}>
       <span ref={lean} className="ac-whale-lean">
+        <WhaleFace stage={stage} spark={spark} waiting={waiting}/>
         <svg viewBox="143.6 6.6 26.4 23.4" width="150" height="133" aria-hidden="true">
           <defs>
             <clipPath id={`${uid}m`}><path d={MARK} /></clipPath>

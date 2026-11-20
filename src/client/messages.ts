@@ -1,5 +1,6 @@
 /** Interface copy. Application content and original diagnostic evidence are not translated. */
 export const messages: Readonly<Record<string, string>> = {
+  "检查 {0}/{1} 通过": "Checks passed: {0}/{1}",
   "浏览风格样式：{0}": "Browse style samples for {0}",
   "风格样式": "Style samples",
   "开始时随机分配，选完再揭晓。": "Assigned at random and revealed after your pick.",
