@@ -460,4 +460,21 @@ export const UI_COMPONENTS = `
 .ac-root .ac-stage-dots i{width:3px;height:3px;border-radius:50%;background:currentColor}
 .ac-root .ac-step{position:relative}.ac-root .ac-step-duration{position:absolute;left:0;bottom:0;height:2px;max-width:100%;background:var(--ac-version,var(--ac-ver-a));opacity:.35;pointer-events:none}
 .ac-root .ac-step-io pre{max-height:240px;overflow:auto;overflow-wrap:anywhere;white-space:pre-wrap}
+.ac-root .ac-pick-options{display:flex;align-items:center;gap:6px;min-width:0;max-width:100%;overflow-x:auto;padding:4px;scrollbar-width:thin}
+.ac-root .ac-pick-options .ac-btn{flex:0 0 auto;white-space:nowrap}
+.ac-root .ac-pick-options .ac-pick-option{background:var(--ac-version);color:var(--ac-ver-on);border:1px solid transparent;box-shadow:inset 0 1px 0 rgba(255,255,255,.25)}
+.ac-root .ac-pick-none{background:transparent;color:var(--ac-reading-soft);box-shadow:none;border:1px solid var(--ac-glass-edge)}
+.ac-root .ac-card .ac-seal{font-weight:750;transform:rotate(-9deg);color:var(--ac-v-ink);border:1.5px solid currentColor;background:var(--ac-glass-thick)}
+.ac-root .ac-alternative:not(:hover):not(:focus-within){box-shadow:inset 0 0 0 1px var(--ac-glass-edge);background:var(--ac-glass-mid)}
+.ac-root .ac-reason-check{width:14px;height:14px;vertical-align:middle;margin-inline-end:3px}
+.ac-root .ac-view-controls{display:contents}
+.ac-root .ac-view-trigger{display:none}
+.ac-root .ac-seg [data-shortcut]:is(:hover,:focus-visible)::after{content:attr(data-shortcut);position:absolute;inset:0 0 auto auto;padding:0 2px;font:9px/1.2 monospace;color:var(--ac-reading-soft);background:var(--ac-glass-solid);border:1px solid var(--ac-glass-edge);border-radius:3px}
+.ac-root .ac-decision-result strong{padding:1px 5px;border-radius:5px;background:var(--ac-glass-solid);color:var(--ac-reading-ink)}
+@media(max-width:600px){
+ .ac-root .ac-view-trigger{display:inline-flex;align-items:center;min-height:40px;gap:6px;border:1px solid var(--ac-glass-edge);border-radius:12px;padding:0 12px;background:var(--ac-glass-thick);color:var(--ac-reading-ink)}
+ .ac-root .ac-view-controls{display:flex;flex-wrap:wrap;gap:4px;order:3;flex:1 0 100%;min-width:0}
+ .ac-root .ac-view-controls[data-open=false]{display:none}
+ .ac-root .ac-pick-options{width:100%}.ac-root .ac-pick-options .ac-btn{min-width:68px;height:40px}
+}
 `

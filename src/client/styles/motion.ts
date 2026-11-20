@@ -28,4 +28,12 @@ export const UI_MOTION = `
  .ac-root .ac-whale-face:is([data-face=lamp],[data-face=stars],[data-face=hearts],[data-face=tear]){animation:ac-expression var(--ac-d-ceremony) ease-out}
 }
 .ac-root[data-page-hidden] *, .ac-root[data-page-hidden] *::before,.ac-root[data-page-hidden] *::after{animation-play-state:paused!important}
+@keyframes ac-land-seal{from{transform:scale(1.24) rotate(-16deg);opacity:0}70%{transform:scale(.97) rotate(-9deg)}to{transform:rotate(-9deg);opacity:1}}
+@keyframes ac-unmask{from{transform:translateX(0)}to{transform:translateX(102%)}}
+@media(prefers-reduced-motion:no-preference){
+ .ac-root .ac-revealing .ac-seal{animation:ac-land-seal .42s var(--ac-v-out)}
+ .ac-root .ac-strategy[data-unmask=true]{position:relative;overflow:hidden}
+ .ac-root .ac-strategy[data-unmask=true]::after{content:"";position:absolute;inset:0;background:var(--ac-glass-solid);animation:ac-unmask .6s steps(10,end) forwards;pointer-events:none}
+ .ac-root .ac-reason-check{animation:ac-expression .22s ease-out}
+}
 `
