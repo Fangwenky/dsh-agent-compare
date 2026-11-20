@@ -3,6 +3,7 @@
 // It loads the real lib/client.js through a stand-in __ModuleLoader__ and
 // answers agent-compare/api/* with fixed sample runs. Sample data only.
 import { createServer } from 'node:http'
+import { createHash } from 'node:crypto'
 import assert from 'node:assert/strict'
 import { isIP } from 'node:net'
 import { randomBytes } from 'node:crypto'
@@ -246,7 +247,7 @@ window.fetch = async (url, init) => {
     : m[1] === 'models' ? {current:{provider:'deepseek',model:'deepseek-chat'},models}
     : m[1] === 'preflight' ? {ok:true,reasons:[],rehearsal:true,...(${JSON.stringify(error)}==='old-apply-host'?{}:{protectedWorktreeApply:true})}
     : m[1] === 'copyCleanupPlan' ? {version:1,runId:body.runId,rev:runs.find(r=>r.runId===body.runId)?.rev??0,state:'revealed',allowed:true,reasons:[],bytes:15728640,token:'a'.repeat(64),otherSession:${JSON.stringify(error==='other-session-cleanup')},resources:[{label:'A',path:'D:/Comparisons/0a1b2c3d/A',bytes:7340032,files:100,links:0,stopsPreview:true},{label:'B',path:'D:/Comparisons/0a1b2c3d/B',bytes:8388608,files:120,links:2,stopsPreview:true}]}
-    : m[1] === 'patch' && ${JSON.stringify(state === 'review-example')} ? {text:${JSON.stringify(reviewPatch)},sha256:'a'.repeat(64),truncated:false}
+    : m[1] === 'patch' && ${JSON.stringify(state === 'review-example')} ? {text:${JSON.stringify(reviewPatch)},sha256:${JSON.stringify(createHash('sha256').update(reviewPatch).digest('hex'))},truncated:false}
     : m[1] === 'patch' ? {text:'diff --git a/src/App.tsx b/src/App.tsx\\n+<button>Clear</button>',sha256:'a'.repeat(64),truncated:false}
     : m[1] === 'trace' ? sampleTrace(runs.find(r=>r.runId===body.runId) ?? history.find(r=>r.runId===body.runId), body.label, body.summary)
     : m[1] === 'contextEntries' ? {entries:contextEntries,limits:{messageChars:2000,totalChars:12000}}
@@ -324,7 +325,7 @@ window.__ModuleLoader__ = {load:({factory})=>{
   const composerRoots={mode:ReactDOM.createRoot(document.getElementById('mode')),settings:ReactDOM.createRoot(document.getElementById('settings'))};
   window.__switchComposer=(sessionId,isBlank)=>{for(const [slot,id]of [['conversation.input.left','mode'],['conversation.input.dock','settings']]){const item=regs[slot];composerRoots[id].render(React.createElement(item.C,{...item.spec.inject(sessionId),session:{blank:isBlank}}))}};
   window.__switchComposer('s1',blank);
-  if(${JSON.stringify(state==='inline')}) renderCommand({kind:'success',text:'A|B 比较已开始 · 运行 0a1b2c3d'});
+  if(${JSON.stringify(state==='inline' || state==='inline-running')}) renderCommand({kind:'success',text:'A|B 比较已开始 · 运行 0a1b2c3d'});
   else if(${JSON.stringify(!['start','closed','compose','blank','blank-history','folder-start'].includes(state))}) {
     const ready = selector => new Promise((resolve, reject) => {
       const find=()=>document.querySelector(selector);if(find())return resolve(find());

@@ -100,7 +100,7 @@ npm pack
 Este comando instala el archivo en el perfil web `web`.
 
 ```bash
-dsh plugin --profile web add ./dsh-agent-compare-3.2.1.tgz
+dsh plugin --profile web add ./dsh-agent-compare-3.3.0.tgz
 ```
 
 </details>
@@ -136,18 +136,22 @@ Si tu petición menciona opciones de `/ab`, escribe `--` antes del texto. Por ej
 
 En una pantalla ancha, pulsa «Align pages» para que las páginas interactivas empiecen a la misma altura. Vuelve a pulsarlo para recuperar la disposición original conservando lo escrito en cada página.
 
+En el móvil, elige un estilo para cada versión con las muestras visuales. En el escritorio, abre los pasos para ver su última acción. En una comparación a ciegas, el modelo y el estilo se revelan después de elegir. Antes de aplicar los cambios puedes revisar cada archivo con números de línea.
+
 <details>
-<summary>Ver la interfaz en Edge con una conversación de ejemplo</summary>
+<summary>Ver la interfaz de la versión 3.3.0</summary>
 
-[![Ajustes, contexto compartido y campo de texto en una pantalla de 390 píxeles](https://raw.githubusercontent.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/1edf6ec2d1be76a45ef3827795be7ceaafc982c9/assets/readme/mobile-settings-3.2.webp)](https://github.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/blob/1edf6ec2d1be76a45ef3827795be7ceaafc982c9/assets/readme/mobile-settings-3.2.webp)
+![Ajustes de comparación y campo de conversación en un móvil](https://raw.githubusercontent.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/main/assets/readme/ui-3.3/composer-mobile.webp)
 
-[![Dos páginas interactivas alineadas bajo respuestas de distinta longitud](https://raw.githubusercontent.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/1edf6ec2d1be76a45ef3827795be7ceaafc982c9/assets/readme/aligned-pages-3.2.webp)](https://github.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/blob/1edf6ec2d1be76a45ef3827795be7ceaafc982c9/assets/readme/aligned-pages-3.2.webp)
+![Archivos y diferencias línea a línea en el escritorio](https://raw.githubusercontent.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/main/assets/readme/ui-3.3/patch-review.webp)
+
+![Guía de cuatro pasos en modo oscuro](https://raw.githubusercontent.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/main/assets/readme/ui-3.3/guide-dark.webp)
 
 </details>
 
-- **Vidrio líquido azul.** Paneles de vidrio translúcido y selectores que se deslizan sobre una luz azul que fluye despacio, en tema claro y oscuro; con el movimiento reducido activado, todo se queda quieto. El texto del producto en los estados de interfaz comprobados se midió glifo a glifo en ambos temas, con un contraste de 4.5:1 o más.
+- **Cristal líquido azul.** Distintas capas separan los ajustes, las versiones y la revisión. Con movimiento reducido, la selección y la revelación cambian de inmediato.
 - **Un pez gordo te acompaña.** Una ballena azul de DeepSeek por versión se llena de agua azul a medida que avanza mientras dos luces recorren su borde. Le suben pensamientos sobre la cabeza; tócala y te contesta, sigue tocándola y gira, se tambalea y salpica.
-- **Cada paso a la vista.** El botón **Steps** muestra razonamientos, llamadas a herramientas y cambios; mientras trabaja, los tres pasos más recientes pasan en vivo bajo la ballena.
+- **Empieza por la última acción.** Mientras se genera una versión, su cabecera muestra la acción más reciente. Abre los pasos para ver las reflexiones, llamadas a herramientas y tiempos registrados.
 - **Respuesta y resultado con el mismo peso.** Una respuesta se muestra sola; una página comparte la tarjeta con su respuesta, y al enfocar una versión la respuesta queda a la izquierda de la página.
 - **Cuatro azules para A–D.** En una comparación a ciegas solo ves A–D; los estilos y modelos se revelan tras elegir, con un barrido de luz sobre las tarjetas.
 - **Se nota que está en marcha.** Dos cometas recorren el borde de una comparación en curso, y cada página se puede usar en cuanto arranca.
@@ -262,6 +266,8 @@ La [CI](https://github.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/actions/
 <a id="whats-new"></a>
 
 ## Novedades por versión
+
+**3.3.0** · Muestras de estilos, expresiones por etapa, revisión línea a línea e historial agrupado por fecha.
 
 **3.2.1** · La comprobación de texto espera hasta cinco segundos a que aparezca la respuesta de la página. Los resultados pendientes llegan a la conversación original por orden de actualización, hasta cinco por paso.
 

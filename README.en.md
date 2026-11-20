@@ -99,7 +99,7 @@ npm pack
 ```
 
 ```bash
-dsh plugin --profile web add ./dsh-agent-compare-3.2.1.tgz
+dsh plugin --profile web add ./dsh-agent-compare-3.3.0.tgz
 ```
 
 </details>
@@ -142,18 +142,22 @@ When typing `/ab`, put `--` before a prompt that mentions option names. For exam
 
 On a wide screen, select Align pages to bring live previews to the same starting height. Select it again to restore the original layout. Anything typed in a preview stays there.
 
+Choose a style by its swatch on mobile. On desktop, open the steps to see what each version just did. Blind comparisons reveal model and style after your pick. Before applying changes, review each file with line numbers.
+
 <details>
-<summary>View the new interface in Edge with a sample conversation</summary>
+<summary>See the 3.3.0 interface</summary>
 
-[![390-pixel mobile view with comparison settings, shared context and the prompt field](https://raw.githubusercontent.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/1edf6ec2d1be76a45ef3827795be7ceaafc982c9/assets/readme/mobile-settings-3.2.webp)](https://github.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/blob/1edf6ec2d1be76a45ef3827795be7ceaafc982c9/assets/readme/mobile-settings-3.2.webp)
+![Comparison settings and the conversation input on a phone](https://raw.githubusercontent.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/main/assets/readme/ui-3.3/composer-mobile.webp)
 
-[![Two interactive desktop previews aligned below replies of different lengths](https://raw.githubusercontent.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/1edf6ec2d1be76a45ef3827795be7ceaafc982c9/assets/readme/aligned-pages-3.2.webp)](https://github.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/blob/1edf6ec2d1be76a45ef3827795be7ceaafc982c9/assets/readme/aligned-pages-3.2.webp)
+![Files and line-by-line changes in desktop review](https://raw.githubusercontent.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/main/assets/readme/ui-3.3/patch-review.webp)
+
+![The four-step guide in dark mode](https://raw.githubusercontent.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/main/assets/readme/ui-3.3/guide-dark.webp)
 
 </details>
 
-- **Blue liquid glass.** Translucent glass panels and sliding selectors over slowly flowing blue light, in light and dark themes; with reduced motion on, everything holds still. Product text in the tested interface states was measured glyph by glyph in both themes at 4.5:1 contrast or better.
+- **Blue liquid glass.** Distinct glass surfaces separate settings, candidates and review. With reduced motion enabled, selections and reveals switch directly.
 - **A Big Fat Fish keeps you company.** One blue DeepSeek whale per version fills with blue water as it goes while two lights trace its edge. Thoughts rise over its head; poke it and it answers, keep poking and it spins, wobbles and splashes.
-- **Every step in view.** The **Steps** button lists thoughts, tool calls and edits; while a version works, its newest three steps run live under the whale.
+- **Start with the latest step.** The card header shows the latest action during generation. Open Steps to read recorded thoughts, tool calls and their available timings.
 - **Reply and result side by side.** An answer stands alone; a page shares the card with its reply, and in focus the reply sits to the left of the page.
 - **Four blues for A–D.** In a blind comparison you only see A–D; styles and models are revealed after the pick, with a sweep of light across the cards.
 - **Easy to tell it's running.** Two comets race around a running comparison, and each page can be used the moment it starts.
@@ -433,6 +437,8 @@ See [CONTRIBUTING.md](https://github.com/lijiaqi-AI-Product-Manager/dsh-agent-co
 <a id="whats-new"></a>
 
 ## What's new
+
+**3.3.0** · Style swatches, stage expressions, line-by-line review and history grouped by date.
 
 **3.2.1** · Page text checks wait up to five seconds for rendered feedback. Queued results reach their original conversation in update order, up to five per conversation step.
 
