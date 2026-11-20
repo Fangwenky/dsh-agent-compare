@@ -36,4 +36,7 @@ export const UI_MOTION = `
  .ac-root .ac-strategy[data-unmask=true]::after{content:"";position:absolute;inset:0;background:var(--ac-glass-solid);animation:ac-unmask .6s steps(10,end) forwards;pointer-events:none}
  .ac-root .ac-reason-check{animation:ac-expression .22s ease-out}
 }
+@keyframes ac-success-wave{from{opacity:1;transform:scale(.8)}to{opacity:0;transform:scale(4)}}
+@keyframes ac-success-bit{from{opacity:1;transform:translate(0,0)}to{opacity:0;transform:translate(var(--ac-x),var(--ac-y)) rotate(100deg)}}
+@media(prefers-reduced-motion:reduce){.ac-root .ac-adoption-splash{display:none}}
 `

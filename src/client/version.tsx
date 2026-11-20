@@ -5,6 +5,7 @@
  * records no steps, sends no replies beside files and finishes slowly. This
  * notices that and says how to fix it.
  */
+import { Banner } from './review.js'
 import React, { useEffect, useState } from 'react'
 import { t } from './i18n.js'
 
@@ -46,8 +47,8 @@ export function StaleBackendNotice({ call }: { call: Call }): React.ReactElement
   const stale = useStaleBackend(call)
   if (stale === undefined) return null
   const running = 'version' in stale ? stale.version : t('3.1.0 之前的版本')
-  return <div className="ac-feedback ac-stale-backend" role="alert">
+  return <Banner className="ac-feedback ac-stale-backend" tone="warn" role="alert">
     <b>{t('请完全退出并重新打开 DSH')}</b>
     <span>{t('AgentCompare 的界面已是 {0}，但 DSH 仍在运行启动时加载的 {1} 后台。重启前看不到各版的过程和回复，完成也会慢约 40 秒。', { 0: CLIENT_VERSION ?? '', 1: running })}</span>
-  </div>
+  </Banner>
 }
