@@ -1,5 +1,12 @@
 /** Interface copy. Application content and original diagnostic evidence are not translated. */
 export const messages: Readonly<Record<string, string>> = {
+  "改动文件": "Changed files",
+  "文件 {0}": "File {0}",
+  "展开其余 {0} 行": "Show {0} remaining lines",
+  "改动概览": "Change summary",
+  "新增行": "lines added",
+  "删除行": "lines removed",
+  "还有 {0} 个路径": "{0} more paths",
   "视图": "View",
   "检查 {0}/{1} 通过": "Checks passed: {0}/{1}",
   "浏览风格样式：{0}": "Browse style samples for {0}",

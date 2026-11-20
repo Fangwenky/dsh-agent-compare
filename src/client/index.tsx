@@ -24,6 +24,7 @@ import { BlindControl, MAX_VERSIONS, MIN_VERSIONS, revealedStyleName, Segmented,
 import { LABELS, MAX_PICK_NOTE, PICK_REASONS, type Label, type PickReason, type StyleStat } from './model.js'
 import { Ambient, attachFx, burst, RunRing } from './fx.js'
 import { runningTool, LiveSteps, ReplyBlock, StepsPanel, StepsToggle, useTrace, Whale, WhaleFace } from './agent-view.js'
+import { Banner, ChangeSummary, DiffViewer, FailureMark, ReviewPaths } from './review.js'
 import { StaleBackendNotice } from './version.js'
 export const name = 'agent-compare-client'
 export const inject = ['slots', 'remote', 'remote.commands']
@@ -265,14 +266,15 @@ function LivePreview({ c, device, compact, dense = false }: { c: Cand; device: P
     <iframe className="ac-frame" title={t("候选 {0} 的运行页面", { 0: c.label })} src={c.previewUrl} sandbox="allow-scripts allow-same-origin allow-forms allow-popups allow-modals allow-downloads" style={{ width: size.width, height: size.height, transform: `scale(${scale})` }} />
   </div></div>
 }
-function PatchReview({ runId, label }: { runId: string; label: Label }): React.ReactElement {
+function PatchReview({ runId, label, stats }: { runId: string; label: Label; stats: NonNullable<Cand['patchStats']> }): React.ReactElement {
   const [patch, setPatch] = useState<{ text: string; sha256?: string; truncated: boolean }>()
   const [error, setError] = useState<string>()
   const read = (): void => { setError(undefined); call<NonNullable<typeof patch>>('patch', { runId, label }).then(setPatch, (e: Error) => setError(e.message)) }
   return <details className="ac-details ac-patch" onToggle={(e) => { if (e.currentTarget.open && !patch) read() }}><summary>{t("查看 ")}{label}{t(" 的代码改动")}</summary>
     {error ? <div role="alert"><Diagnostic text={error} /> <button className="ac-text-btn" onClick={read}>{t("重试")}</button></div> : !patch ? <p className="ac-meta">{t("正在读取补丁…")}</p> : <>
       <div className="ac-meta">SHA-256 {patch.sha256 ?? t("未知")}{patch.truncated ? t(" · 补丁较大，当前仅显示前 400,000 个字符，请另存分支进行完整审查。") : ''}</div>
-      <pre tabIndex={0} aria-label={t("候选 {0} 的补丁", { 0: label })}>{patch.text || t("没有文本改动")}</pre>
+      <ChangeSummary stats={stats}/>
+      {patch.text ? <DiffViewer text={patch.text} label={label}/> : <p>{t("没有文本改动")}</p>}
     </>}
   </details>
 }
@@ -355,6 +357,7 @@ function CandidateCard({ run, c, revealed, picked, busy, act, device, compact, h
         </div>
       ) : c.error || c.canRetryVerification ? (
         <div className={`ac-fail${c.stage === 'interrupted' ? ' interrupted' : ''}`}>
+          {c.install?.failure && <FailureMark kind={c.install.failure.kind}/>}
           <b>{t(c.install?.failure?.summary) ?? (c.error ? (stage => c.stage === 'interrupted' ? `${stage}${t("时中断")}` : c.stage === 'cancelled' ? t("{0}已停止", { 0: stage }) : t("{0}失败", { 0: stage }))(t(ERROR_STAGE[c.error.stage]) ?? t(STAGE_TEXT[c.error.stage]) ?? c.error.stage) : t("验收已停止"))}</b>
           {c.install?.failure ? <p><Diagnostic text={c.install.failure.hint} />{c.install.failure.code ? `（${c.install.failure.code}）` : ''}</p> : <Diagnostic text={c.error?.message} />}
           {c.canRetryVerification && <div className="ac-salvage"><span>{t("保留已封存代码与共同验收，不重新生成。")}</span><button className="ac-btn primary sm" disabled={busy} onClick={() => act('retryVerification', { label: c.label })}>{t("重新验收 ")}{c.label}</button></div>}
@@ -390,7 +393,7 @@ function CandidateCard({ run, c, revealed, picked, busy, act, device, compact, h
         )}
         </details>
         {!!c.verificationHistory?.length && <details className="ac-details"><summary>{t("先前验收记录 · ")}{c.verificationHistory.length}{t(" 次")}</summary><ol>{c.verificationHistory.map((attempt, index) => <li key={index}><b>{attempt.install?.failure?.summary ?? attempt.error?.message.split('\n')[0] ?? t("先前验收未完成")}</b><div className="ac-meta">{t("重试前归档于 ")}{when(attempt.recordedAt)} · {attempt.durationMs === undefined ? t("耗时未知") : fmt(attempt.durationMs)}{attempt.install?.failure?.code ? ` · ${attempt.install.failure.code}` : ''}</div><Checks checks={attempt.checks} /></li>)}</ol></details>}
-        {revealed && c.patchStats && c.result !== 'answer' && <PatchReview runId={run.runId} label={c.label} />}
+        {revealed && c.patchStats && c.result !== 'answer' && <PatchReview key={run.runId+c.label} runId={run.runId} label={c.label} stats={c.patchStats}/>}
       </div>
     </section>
   )
@@ -704,7 +707,7 @@ function ActionBar({ run, sessionId, busy, pending, act, onDone, onContinue, exc
           {run.adoption?.mode === 'worktree' && <button className="ac-btn" disabled={busy} onClick={() => act('revert')}>{t("撤销采用")}</button>}
           {run.adoption?.mode === 'folder' && run.adoption.exportPath && <CopyButton className="ac-btn" text={run.adoption.exportPath} label={t("复制路径")} title={t("复制保存的文件夹路径")} />}
           {run.adoption?.mode === 'folder' && <button className="ac-btn" disabled={busy} onClick={() => act('revert')} title={t("只删除保存后没有改过的文件；改过的文件会保留")}>{t("撤销保存")}</button>}
-          {onContinue && <button className="ac-btn primary" disabled={busy} onClick={onContinue} title={t("退出比较模式，在原输入框中继续。比较记录仍然保留。")}>{t("继续主对话")}</button>}
+          {onContinue && <button data-ac-continue className="ac-btn primary" disabled={busy} onClick={onContinue} title={t("退出比较模式，在原输入框中继续。比较记录仍然保留。")}>{t("继续主对话")}</button>}
           {onDone && <button className="ac-btn" disabled={busy} onClick={onDone}>{t("完成")}</button>}
         </div>
       )
@@ -846,16 +849,16 @@ function Banners({ run, recordOnly = false }: { run: Run; recordOnly?: boolean }
   return (
     <>
       {run.outsideChanges && run.outsideChanges.length > 0 && (
-        <div className="ac-banner warn" role="alert">
+        <Banner tone="warn" className="warn" role="alert">
           <div><strong>{t("生成期间，你的项目里这些文件和开始时不一样了")}</strong>：<code>{run.outsideChanges.slice(0, 8).join('、')}{run.outsideChanges.length > 8 ? t(" 等 {0} 个", { 0: run.outsideChanges.length }) : ''}</code></div>
           <div className="disclaimer">{t("这些变化的来源尚未核实。采用前会检查是否与候选改动重叠；请先查看这些文件。")}</div>
-        </div>
+        </Banner>
       )}
       {a && (a.state === 'adopted' || a.state === 'reverted' ? <details className="ac-banner ac-adoption-record"><summary><span className={`ac-pill ${a.state === 'adopted' ? 'ok' : ''}`}>{adoptionTitle}</span>{' '}{t("采用与恢复记录")}</summary>{adoptionDetails}</details> : (
-        <div className={`ac-banner${bad ? ' err' : a.state === 'needs-attention' ? ' warn' : ''}`}>
+        <Banner tone={bad?'error':a.state==='needs-attention'?'warn':'info'} className={bad?'err':a.state==='needs-attention'?'warn':''}>
           <div><span className={`ac-pill ${bad ? 'err' : a.state === 'needs-attention' ? 'warn' : ''}`}>{adoptionTitle}</span></div>
           {adoptionDetails}
-        </div>
+        </Banner>
       ))}
     </>
   )
@@ -866,6 +869,9 @@ function Banners({ run, recordOnly = false }: { run: Run; recordOnly?: boolean }
  */
 function RunView({ runId, sessionId, initial, compact, onDone, onExpand, onCollapse }: { runId: string; sessionId?: string; initial?: Run; compact?: boolean; onDone?: () => void; onExpand?: () => void; onCollapse?: () => void }): React.ReactElement {
   const [run, setRun] = useState<Run | undefined>(initial)
+  const adoptionDock = useRef<HTMLDivElement>(null)
+  const ownAdoption = useRef<string | undefined>(undefined)
+  const celebrated = useRef<string | undefined>(undefined)
   const [err, setErr] = useState<string>()
   const [readErr, setReadErr] = useState<string>()
   const [busy, setBusy] = useState(false)
@@ -984,6 +990,7 @@ function RunView({ runId, sessionId, initial, compact, onDone, onExpand, onColla
     const finished = (): void => { if (current()) { action.current.pending = false; setBusy(false); setPending(undefined); void refresh(true) } }
     setBusy(true)
     setPending(method)
+    if (method==='adopt') ownAdoption.current=runId
     setErr(undefined)
     if (method === 'reviewAdoption') {
       call<NonNullable<typeof preflight>>('preflight', { runId, sessionId, ...extra }).then(value => { if (current()) setPreflight(value.protectedWorktreeApply === true ? value : { ...value, ok: false, reasons: [t("插件服务尚未启用文件交接保护。请重启 DSH 后重新审查；也可以先另存为分支。")] }) }, failed).finally(finished)
@@ -1012,6 +1019,31 @@ function RunView({ runId, sessionId, initial, compact, onDone, onExpand, onColla
       .then((r) => { if (current() && r && typeof r === 'object' && 'runId' in r) publish(r, targetId) }, failed)
       .finally(finished)
   }
+  useEffect(() => {
+    const dock=adoptionDock.current
+    if (!dock || busy || run?.state!=='adopted' || ownAdoption.current!==runId || celebrated.current===runId) return
+    celebrated.current=runId
+    ownAdoption.current=undefined
+    const next=dock.querySelector<HTMLButtonElement>('[data-ac-continue]')
+    if (next && !document.hidden && (!document.activeElement || document.activeElement===document.body || dock.contains(document.activeElement))) next.focus({preventScroll:true})
+    if (document.hidden || matchMedia('(prefers-reduced-motion: reduce)').matches) return
+    const effect=document.createElement('span')
+    effect.className='ac-adoption-splash'; effect.setAttribute('aria-hidden','true')
+    const check=document.createElement('b'); check.textContent='✓'; effect.append(check)
+    for(let i=0;i<3;i++) {
+      const ring=document.createElement('i');ring.className='ac-success-ring';ring.style.animationDelay=(i*70)+'ms';effect.append(ring)
+    }
+    for(let i=0;i<16;i++){
+      const dot=document.createElement('i');dot.className='ac-confetti'
+      const angle=(Math.PI*2*i)/16
+      dot.style.setProperty('--ac-x',Math.round(Math.cos(angle)*(32+(i%3)*8))+'px')
+      dot.style.setProperty('--ac-y',Math.round(Math.sin(angle)*(20+(i%3)*6))+'px')
+      effect.append(dot)
+    }
+    dock.append(effect)
+    const timer=setTimeout(()=>effect.remove(),900)
+    return ()=>{clearTimeout(timer);effect.remove()}
+  },[busy,run?.state,runId])
   if (run === undefined || run.runId !== runId) return <div className={compact ? 'ac-inline-note' : 'ac-empty'}>{err ?? readErr ?? t("正在读取这次比较…")}</div>
   const operationBlocked = busy || copyBusy || run.control?.allowed === false
   const blocked = operationBlocked || confirmation !== undefined
@@ -1058,9 +1090,10 @@ function RunView({ runId, sessionId, initial, compact, onDone, onExpand, onColla
     <>
       {(err || readErr) && <div className="ac-error" role="alert" style={{ marginTop: 12 }}><Diagnostic text={err ?? readErr} /></div>}
       {confirmation && <div ref={confirmationBox} tabIndex={-1} className="ac-review" role="region" aria-label={t("跨对话操作确认")} onKeyDown={event => { if (event.key === 'Escape') { event.preventDefault(); event.stopPropagation(); setConfirmation(undefined) } }}><div><b>{t("这次比较来自另一个对话")}</b><p>{t("请确认要操作的项目：")}{run.baseline.repoRoot ?? t("记录中未提供项目路径")}</p><p>{t("运行编号：")}<code>{runId}</code>{t(" · 将执行：")}{confirmationLabel ?? ({ choose: t("选择并揭晓"), reviewAdoption: t("审查采用"), adopt: t("采用候选"), revert: t("撤销采用"), recover: t("恢复文件"), cancel: t("停止比较"), cancelAdoption: t("停止采用预演"), salvage: t("验收已有改动"), retryVerification: t("重新验收"), reopenPreview: t("重新打开预览") } as Record<string, string>)[confirmation.method] ?? t("更新这次比较")}</p><p>{t("确认仅适用于这一次操作，仍会重新核验项目、候选与归属。")}</p></div><div className="ac-row"><button className="ac-btn" onClick={() => setConfirmation(undefined)}>{t("取消操作")}</button><button className="ac-btn primary" disabled={cancelBusy || (confirmation.method === 'cancelAdoption' ? run.control?.allowed === false : operationBlocked)} onClick={() => { const next = confirmation; setConfirmation(undefined); act(next.method, { ...next.extra, confirmOtherSession: true }) }}>{t("确认本次操作")}</button></div></div>}
-      <div className="ac-action-dock">{run.state === 'running' && !compact && <RunRing />}<ActionBar run={run} {...(sessionId ? { sessionId } : {})} busy={busy || copyBusy || !!confirmation} pending={confirmation ? 'confirmation' : cancelBusy ? 'cancelAdoption' : pending} act={act} excluded={judging ? excluded : new Set()} {...(onDone ? { onDone } : {})} {...(continueConversation ? { onContinue: continueConversation } : {})} /></div>
+      <div ref={adoptionDock} className="ac-action-dock">{run.state === 'running' && !compact && <RunRing />}<ActionBar run={run} {...(sessionId ? { sessionId } : {})} busy={busy || copyBusy || !!confirmation} pending={confirmation ? 'confirmation' : cancelBusy ? 'cancelAdoption' : pending} act={act} excluded={judging ? excluded : new Set()} {...(onDone ? { onDone } : {})} {...(continueConversation ? { onContinue: continueConversation } : {})} /></div>
       {!!run.leftovers?.length && <section className="ac-banner warn" role="status" aria-label={t("资源清理状态")}><div><b>{run.state === 'adopted' ? t("采用已完成，仍有资源等待清理") : t("仍有资源等待清理")}</b><p>{t("可以重试清理。清理只处理本次比较拥有的资源。")}</p><ul>{run.leftovers.map((detail, index) => <li key={index}>{detail}</li>)}</ul><button className="ac-btn" disabled={blocked} onClick={() => act('cleanup')}>{t("重试清理")}</button></div></section>}
-      {preflight && <section className="ac-review" aria-label={t("采用前审查")} role="region"><div><b>{preflight.ok ? t("目标核验通过，请确认采用") : t("当前无法采用")}</b><p className="ac-project-path">{t("目标：")}{run.baseline.repoRoot ?? t("本次比较的项目")}</p><p>{preflight.ok ? preflight.rehearsal ? t("项目有新改动，将先合并到临时副本中重新验收。") : t("将写入选中版本；不自动提交，保留暂存状态。") : preflight.reasons.join('；')}</p>{preflight.ok && <p>{t("先保留原始文件，再交接候选。交接时出现新编辑会停止并保留双方内容；请等操作完成后再继续编辑涉及的文件。")}</p>}{preflight.overlapping?.length ? <code>{preflight.overlapping.join('、')}</code> : null}</div><div className="ac-row"><button className="ac-btn" onClick={() => setPreflight(undefined)}>{t("返回审查")}</button><button className="ac-btn primary" disabled={blocked || !preflight.ok} onClick={() => act('adopt', { mode: 'worktree' })}>{t("确认采用 ")}{run.choice?.pick}</button></div></section>}
+      {preflight && <section className="ac-review" aria-label={t("采用前审查")} role="region"><div><b>{preflight.ok ? t("目标核验通过，请确认采用") : t("当前无法采用")}</b><p className="ac-project-path">{t("目标：")}{run.baseline.repoRoot ?? t("本次比较的项目")}</p><p>{preflight.ok ? preflight.rehearsal ? t("项目有新改动，将先合并到临时副本中重新验收。") : t("将写入选中版本；不自动提交，保留暂存状态。") : preflight.reasons.join('；')}</p>{preflight.ok && <ReviewPaths candidate={run.candidates.find(c=>c.label===run.choice?.pick)}/>}
+          {preflight.ok && <p>{t("先保留原始文件，再交接候选。交接时出现新编辑会停止并保留双方内容；请等操作完成后再继续编辑涉及的文件。")}</p>}{preflight.overlapping?.length ? <code>{preflight.overlapping.join('、')}</code> : null}</div><div className="ac-row"><button className="ac-btn" onClick={() => setPreflight(undefined)}>{t("返回审查")}</button><button className="ac-btn primary" disabled={blocked || !preflight.ok} onClick={() => act('adopt', { mode: 'worktree' })}>{t("确认采用 ")}{run.choice?.pick}</button></div></section>}
       <Banners run={run} />
       <div className="ac-compare-tools"><button type="button" className="ac-view-trigger" aria-expanded={viewsOpen} aria-controls={viewControlsId}
         onClick={() => setViewsOpen(value => !value)}>{t("视图")} <span aria-hidden="true">⌄</span></button>
