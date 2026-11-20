@@ -483,7 +483,7 @@ function ComposerSettings({ sessionId, session, onExpand }: { sessionId: string;
     <button type="button" className="ac-text-btn ac-more-settings" title={t("风格、时长和内置示例")} aria-controls={advancedId} aria-expanded={advanced} onClick={() => setAdvanced(value => !value)}>{advanced ? t("收起更多设置") : t("更多设置")}<span aria-hidden="true">{advanced ? '▴' : '▾'}</span></button>
     <div id={advancedId} className="ac-advanced-settings" data-open={advanced} data-project-blocked={setup?.project?.supported === false}>
       <div className="ac-settings-row">
-        <label className="ac-budget">{t("每版上限 ")}<select aria-label={t("每版生成上限")} value={p.generationMinutes} onChange={e => saveMode(sessionId, { ...p, generationMinutes: Number(e.target.value) })}>{[...new Set([5, 15, 30, 60, 90, 120, p.generationMinutes])].sort((a, b) => a - b).map(m => <option key={m} value={m}>{m}{t(" 分钟")}</option>)}</select></label>
+        <GenerationBudget minutes={p.generationMinutes} onChange={generationMinutes => saveMode(sessionId, { ...p, generationMinutes })}/>
       </div>
       {p.mode === 'cross-model' ? (
         <StylePicker index={0} shared open={!blind} choice={p.crossStyle ?? { id: 'balanced' }} disabled={busy || !mode.loaded} onChange={crossStyle => saveMode(sessionId, { ...p, crossStyle })} />
@@ -583,6 +583,14 @@ function StarNudge(): React.ReactElement | null {
 type Act = (method: string, extra?: Record<string, unknown>) => void
 const BUDGET_OPTIONS = [5, 15, 30, 60, 90, 120]
 /** The same limit again, or the next longer one when generation ran out of time. */
+function GenerationBudget({ minutes, onChange }: { minutes: number; onChange(value:number):void }): React.ReactElement {
+  const values = BUDGET_OPTIONS.includes(minutes) ? BUDGET_OPTIONS : [...BUDGET_OPTIONS, minutes].sort((a,b) => a-b)
+  const text = t("{0} 分钟", { 0:minutes })
+  return <label className="ac-budget ac-budget-slider"><span>{t("每版上限 ")}</span><input type="range" min={0} max={values.length-1} step={1}
+    aria-label={t("每版生成上限")} aria-valuetext={text} value={values.indexOf(minutes)} onChange={e => onChange(values[Number(e.currentTarget.value)]!)}/>
+    <output>{text}</output></label>
+}
+
 function suggestedMinutes(run: Run): number {
   const base = Math.min(120, Math.max(5, Math.round((run.budget?.generationMs ?? 30 * 60_000) / 60_000)))
   if (!run.candidates.some(c => c.generation?.ended === 'budget')) return base
@@ -1110,7 +1118,7 @@ function AbModeButton({ sessionId }: { sessionId: string }): React.ReactElement 
     mode.collapsed = startWithSettingsFolded()
     saveMode(sessionId, { ...mode.preferences, enabled: !enabled }); inputShell(sessionId)?.focus?.()
   }
-  return <><Styles /><button className={`ac-mode-btn${enabled ? ' on' : ''}`} onClick={toggle} disabled={!mode.loaded || mode.loading || !!capabilityError} aria-pressed={enabled} title={capabilityError ?? (enabled ? t("A|B 对比模式已开启，点此退出") : t("开启 A|B 对比模式，在主对话里同时运行 2–4 版"))} aria-label={t("A|B 对比模式")}>A|B</button></>
+  return <><Styles /><button className={`ac-mode-btn${enabled ? ' on' : ''}`} onClick={toggle} disabled={!mode.loaded || mode.loading || !!capabilityError} aria-pressed={enabled} title={capabilityError ?? (enabled ? t("A|B 对比模式已开启，点此退出") : t("开启 A|B 对比模式，在主对话里同时运行 2–4 版"))} aria-label={t("A|B 对比模式")}><span aria-hidden="true" className="ac-mode-letters"><b>A</b>|<b>B</b></span></button></>
 }
 function History({ data, open, busy, failed, scope, query, onScope, onSearch, onPage, onlyUnavailable, problemSupported, onUnavailable }: {
   data?: ListResult; open: (r: Run) => void; busy: boolean; failed?: string
