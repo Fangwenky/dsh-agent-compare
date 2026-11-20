@@ -239,3 +239,39 @@ export const SURFACES = `/* the workspace: one step deeper than the glass on it,
 @media(max-width:600px){.ac-why{margin:10px 12px 0}.ac-why-note{min-width:0;flex:1 1 160px}.ac-why-link{display:none}}
 @media(max-width:600px){.ac-sheet{border-radius:22px 22px 0 0}.ac-action-dock{margin:4px 10px 0;border-radius:20px}.ac-action-dock>.ac-bar{padding:10px 12px}}
 `
+
+export const UI_SURFACES = `
+.ac-root :is(.ac-tabs,.ac-seg,.ac-compare-tools,.ac-action-dock) {
+  background-color:var(--ac-glass-solid);
+}
+@supports ((backdrop-filter:blur(1px)) or (-webkit-backdrop-filter:blur(1px))) {
+  .ac-root :is(.ac-tabs,.ac-seg,.ac-compare-tools,.ac-action-dock) {
+    background:var(--ac-glass-thin); -webkit-backdrop-filter:blur(18px); backdrop-filter:blur(18px);
+  }
+}
+.ac-root .ac-card { background-color:var(--ac-glass-mid) }
+.ac-root :is(.ac-reply,.ac-steps,.ac-patch,.ac-guide-steps>li,.ac-approve) {
+  background:var(--ac-glass-thick); color:var(--ac-reading-ink); box-shadow:var(--ac-thick-shadow);
+}
+.ac-root .ac-card .ac-label {
+  display:inline-grid; place-items:center; box-sizing:border-box; width:32px; height:32px; min-width:32px;
+  border-radius:10px; color:var(--ac-ver-on); background:var(--ac-version,var(--ac-ver-a));
+  box-shadow:inset 0 1.5px 0 rgba(255,255,255,.32),0 2px 5px rgba(22,43,91,.12);
+}
+.ac-root button:enabled:active { transform:scale(.96) }
+@media(prefers-color-scheme:dark) {
+  .ac-root .ac-sheet { background:radial-gradient(70% 18% at 50% 100%,rgba(67,109,189,.19),transparent),linear-gradient(155deg,#111a33,#0b1020) }
+}
+@media(prefers-reduced-transparency:reduce) {
+  .ac-root :is(.ac-card,.ac-tabs,.ac-seg,.ac-compare-tools,.ac-action-dock,.ac-steps,.ac-patch,.ac-reply) {
+    background:var(--ac-glass-solid); backdrop-filter:none; -webkit-backdrop-filter:none;
+  }
+}
+@media(prefers-reduced-motion:reduce) { .ac-root button:enabled:active { transform:none } }
+@media(forced-colors:active) {
+  .ac-root :is(.ac-card,.ac-tabs,.ac-seg,.ac-compare-tools,.ac-action-dock,.ac-steps,.ac-patch,.ac-reply,.ac-label) {
+    background:Canvas; color:CanvasText; box-shadow:none; border:1px solid CanvasText;
+    backdrop-filter:none; -webkit-backdrop-filter:none;
+  }
+}
+`
