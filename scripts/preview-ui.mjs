@@ -308,7 +308,10 @@ window.__ModuleLoader__ = {load:({factory})=>{
     });
     void (async()=>{
       const button=await ready('.ac-header-btn');button.focus();button.click();
-      if(${JSON.stringify(state==='guide')}) (await ready('.ac-tab:last-child')).click();
+      if(${JSON.stringify(state==='guide')}) {
+        await ready('.ac-hrow');
+        (await ready('.ac-tabs .ac-tab:last-of-type')).click();
+      }
       else if(${JSON.stringify(!['history', 'history-many', 'history-old', 'history-damaged'].includes(state))}) (await ready('.ac-hrow')).click();
     })().catch(error=>window.__harnessErrors.push(error.message));
   }
