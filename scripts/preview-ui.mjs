@@ -52,6 +52,23 @@ const history = [
   { ...base, runId: '22222222', state: 'abandoned', task: '把设置页改成分组卡片布局，并加上保存成功提示', choice: { pick: 'none' }, candidates: [], createdAt: now - 86400000 },
 ]
 const legacy = [{ runId: '1c1fe140', task: '给商品列表加上搜索框和分类筛选，手机上也要好用', createdAt: now - 2 * 86400000, state: 'revealed', legacy: true }]
+const reviewPatch = `diff --git a/src/search.ts b/src/search.ts
+--- a/src/search.ts
++++ b/src/search.ts
+@@ -1,3 +1,4 @@
+ export function matches(name, query) {
+-  return name.includes(query)
++  const term = query.trim().toLowerCase()
++  return name.toLowerCase().includes(term)
+ }
+diff --git a/src/Reset.tsx b/src/Reset.tsx
+--- a/src/Reset.tsx
++++ b/src/Reset.tsx
+@@ -1,3 +1,3 @@
+ export function Reset({ clear }) {
+-  return <button>Clear</button>
++  return <button onClick={clear}>Clear</button>
+ }`
 const states = {
   'faces-waiting': [{ ...base, state:'running', candidates:['queued','preparing','installing','verifying'].map((stage,i) => ({
     label:['A','B','C','D'][i], stage, timings:{ [stage]:t(stage==='verifying'?70:3) },
@@ -82,7 +99,9 @@ const states = {
   foreign: [{ ...base, state: 'judging', control: { allowed: false, retryable: true, reason: '另一个宿主正在管理这次比较。此处可查看结果；需要选择、停止、采用或清理时，请回到原窗口，或等它关闭后重试。' }, candidates: [A, B] }],
   'old-owner': [{ ...base, state: 'running', control: { allowed: false, reason: '这条旧记录没有宿主归属凭据，当前仅可查看。请先关闭旧版本实例并保留原始记录。' }, candidates: [{ label: 'A', stage: 'generating', timings: { generating: t(60) } }, { ...B, previewUrl: undefined, canReopenPreview: true }] }],
   unverified: [{ ...base, state: 'judging', candidates: [{ ...A, checks: [{ name: 'build', outcome: 'passed', durationMs: 1000 }, { name: 'browser', outcome: 'skipped', durationMs: 0, reason: 'no browser' }], verdict: { eligible: true, reasons: [], warnings: ['页面检查未运行'] } }, B] }],
-  revealed: [{ ...base, state: 'revealed', checksFavoured: 'A', choice: { pick: 'B' }, revealedAt: now, candidates: [{ ...A, ...strat.A }, { ...B, ...strat.B }] }],
+  revealed: [{ ...base, state: 'revealed', checksFavoured: 'A', choice: { pick: 'B' }, revealedAt: now, candidates: [{ ...A, ...strat.A, touchedFiles: ['src/App.tsx','src/styles.css'] }, { ...B, ...strat.B }] }],
+  'review-example': [{ ...base, state: 'revealed', choice: { pick: 'A' }, revealedAt: now,
+    candidates: [{ ...A, ...strat.A, patchStats: { files: 2, insertions: 3, deletions: 2, binary: 0 }, touchedFiles: ['src/search.ts', 'src/Reset.tsx'] }, { ...B, ...strat.B }] }],
   partial: [{ ...base, state: 'revealed', choice: { pick: 'A' }, revealedAt: now, candidates: [{ ...A, ...strat.A, usage: { kind: 'reported', inputTokens: 10, outputTokens: 2, cacheReadTokens: 100, cacheWriteTokens: 50 } }, { ...B, ...strat.B, usage: { kind: 'unknown', reason: 'provider omitted usage' } }] }],
   blocked: [{ ...base, state: 'revealed', checksFavoured: 'A', choice: { pick: 'A' }, revealedAt: now, adoption: { state: 'blocked', mode: 'worktree', rehearsed: true, message: '把这一版接到你当前的项目上预演后，验收没有通过：test 未通过。尚未写入任何文件。', rehearsalChecks: [{ name: 'typecheck', outcome: 'passed', durationMs: 1 }, { name: 'test', outcome: 'failed', durationMs: 1 }, { name: 'build', outcome: 'passed', durationMs: 1 }] }, candidates: [{ ...A, ...strat.A }, { ...B, ...strat.B }] }],
   adopted: [{ ...base, conversationMemory: 'synced', state: 'adopted', checksFavoured: 'A', choice: { pick: 'A' }, revealedAt: now, adoption: { state: 'adopted', mode: 'worktree', rehearsed: true, retainedDirectory: 'D:/Projects/demo-shop/.agent-compare-transfer-1234567890abcdef1234567890abcdef', message: '已写入 2 个文件，项目现在与预演通过的版本完全一致；未提交，index 和 HEAD 未改动' }, candidates: [{ ...A, ...strat.A, previewUrl: undefined }, { ...B, ...strat.B, previewUrl: undefined }] }],
@@ -227,6 +246,7 @@ window.fetch = async (url, init) => {
     : m[1] === 'models' ? {current:{provider:'deepseek',model:'deepseek-chat'},models}
     : m[1] === 'preflight' ? {ok:true,reasons:[],rehearsal:true,...(${JSON.stringify(error)}==='old-apply-host'?{}:{protectedWorktreeApply:true})}
     : m[1] === 'copyCleanupPlan' ? {version:1,runId:body.runId,rev:runs.find(r=>r.runId===body.runId)?.rev??0,state:'revealed',allowed:true,reasons:[],bytes:15728640,token:'a'.repeat(64),otherSession:${JSON.stringify(error==='other-session-cleanup')},resources:[{label:'A',path:'D:/Comparisons/0a1b2c3d/A',bytes:7340032,files:100,links:0,stopsPreview:true},{label:'B',path:'D:/Comparisons/0a1b2c3d/B',bytes:8388608,files:120,links:2,stopsPreview:true}]}
+    : m[1] === 'patch' && ${JSON.stringify(state === 'review-example')} ? {text:${JSON.stringify(reviewPatch)},sha256:'a'.repeat(64),truncated:false}
     : m[1] === 'patch' ? {text:'diff --git a/src/App.tsx b/src/App.tsx\\n+<button>Clear</button>',sha256:'a'.repeat(64),truncated:false}
     : m[1] === 'trace' ? sampleTrace(runs.find(r=>r.runId===body.runId) ?? history.find(r=>r.runId===body.runId), body.label, body.summary)
     : m[1] === 'contextEntries' ? {entries:contextEntries,limits:{messageChars:2000,totalChars:12000}}

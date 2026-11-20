@@ -46,7 +46,9 @@ export function CopyButton({ text, label, className = 'ac-text-btn', title }: { 
     return () => clearTimeout(timer)
   }, [state])
   return <button type="button" className={`${className} ac-copy${state === 'copied' ? ' done' : ''}`} {...(title ? { title } : {})} onClick={() => { copyText(text).then(() => setState('copied'), () => setState('failed')) }}>
-    <span aria-live="polite">{state === 'copied' ? t("已复制") : state === 'failed' ? t("复制失败，请手动选择") : label}</span>
+    <svg aria-hidden="true" width="13" height="13" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+      {state === 'copied' ? <path d="m2.5 8 3.2 3.3 7.5-7.2"/> : <><rect x="5.5" y="5.5" width="8" height="8" rx="1.5"/><path d="M3.5 10.5h-1v-8h8v1"/></>}
+    </svg><span aria-live="polite">{state === 'copied' ? t("已复制") : state === 'failed' ? t("复制失败，请手动选择") : label}</span>
   </button>
 }
 
@@ -104,11 +106,11 @@ export function ResultView({ run, c, call }: { run: Run; c: Cand; call: Call }):
 
 const isPage = (file: string | undefined): boolean => /\.html?$/i.test(file ?? '')
 
-function FilesView({ run, c, call }: { run: Run; c: Cand; call: Call }): React.ReactElement {
-  const files = c.resultFiles ?? c.touchedFiles ?? []
+export function FilesView({ run, c, call, source = false }: { run: Run; c: Cand; call: Call; source?: boolean }): React.ReactElement {
+  const files = source ? c.touchedFiles ?? [] : c.resultFiles ?? c.touchedFiles ?? []
   // A page opens first, shown as a page: an HTML file read as code is no way to judge it.
   const [open, setOpen] = useState<string | undefined>(files.find(file => /(^|[\\/])index\.html?$/i.test(file)) ?? files.find(isPage) ?? files[0])
-  const [asCode, setAsCode] = useState(false)
+  const [asCode, setAsCode] = useState(source)
   const [content, setContent] = useState<FileContent>()
   const [error, setError] = useState<string>()
   useEffect(() => {
@@ -124,7 +126,16 @@ function FilesView({ run, c, call }: { run: Run; c: Cand; call: Call }): React.R
     {c.previewNote && <p className="ac-meta"><Diagnostic text={c.previewNote} /></p>}
     <div className="ac-files">
       <ul className="ac-file-list" aria-label={t("文件列表")}>
-        {files.map(file => <li key={file}><button type="button" className={`ac-file${open === file ? ' on' : ''}`} aria-pressed={open === file} onClick={() => setOpen(file)} title={file}>{file}</button></li>)}
+        {files.map(file => {
+          const extension = /\.([a-z\d]{1,9})$/i.exec(file)?.[1]?.toUpperCase()
+          return <li key={file}>
+            <button type="button" className={`ac-file${open === file ? ' on' : ''}`} aria-label={file} aria-pressed={open === file} onClick={() => setOpen(file)} title={file}>
+              <svg aria-hidden="true" width="15" height="17" viewBox="0 0 16 18" fill="none" stroke="currentColor" strokeWidth="1.4"><path d="M3 1.5h6L13 6v10.5H3ZM9 1.5V6h4M5.5 10h5M5.5 13h4"/></svg>
+              <span>{file}</span>{extension && <small aria-hidden="true">{extension}</small>}
+            </button>
+            <CopyButton text={file} className="ac-file-copy" label={t("复制文件路径：{0}", { 0: file })} title={t("复制文件路径：{0}", { 0: file })}/>
+          </li>
+        })}
       </ul>
       <div className="ac-file-view" aria-live="polite">
         {error ? <p className="ac-feedback" role="alert"><Diagnostic text={error} /></p>

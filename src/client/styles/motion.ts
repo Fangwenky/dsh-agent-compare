@@ -39,4 +39,6 @@ export const UI_MOTION = `
 @keyframes ac-success-wave{from{opacity:1;transform:scale(.8)}to{opacity:0;transform:scale(4)}}
 @keyframes ac-success-bit{from{opacity:1;transform:translate(0,0)}to{opacity:0;transform:translate(var(--ac-x),var(--ac-y)) rotate(100deg)}}
 @media(prefers-reduced-motion:reduce){.ac-root .ac-adoption-splash{display:none}}
+@media(prefers-reduced-motion:no-preference){.ac-root .ac-style-sample{animation:ac-style-in var(--ac-d-action,180ms) backwards}}
+@keyframes ac-style-in{from{transform:translateY(2px);opacity:.55}to{transform:translateY(0);opacity:1}}
 `

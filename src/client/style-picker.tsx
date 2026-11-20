@@ -91,7 +91,7 @@ export function StylePicker({ index, choice, open, onChange, disabled, shared }:
   return <span data-label={open && !shared ? LETTERS[index] : undefined} className={`ac-style-slot${custom ? ' custom' : ''}`}>
     {!shared && <span className="ac-style-badge" aria-hidden="true">{open ? LETTERS[index] : index + 1}</span>}
     <button className="ac-swatch-trigger" type="button" ref={trigger} aria-label={t("浏览风格样式：{0}", { 0: label })}
-      aria-controls={panelId} aria-expanded={palette} disabled={disabled} onClick={() => setPalette(v => !v)}><StyleSwatch id={choice.id}/></button>
+      aria-controls={panelId} aria-expanded={palette} disabled={disabled} onClick={() => setPalette(v => !v)}><span className="ac-style-sample" key={choice.id} style={{ animationDelay: `${index * 40}ms` }}><StyleSwatch id={choice.id}/></span></button>
     <select aria-label={label} disabled={disabled} value={custom ? CUSTOM_STYLE : choice.id} title={style ? t(style.hint) : choice.note ?? ''}
       onChange={event => { const id = event.target.value; if (id === CUSTOM_STYLE) { setPending(true); return } setPending(false); onChange({ id }) }}>
       {shared && <option value={BALANCED_STYLE.id}>{t(BALANCED_STYLE.name)}</option>}

@@ -1,5 +1,8 @@
 /** Interface copy. Application content and original diagnostic evidence are not translated. */
 export const messages: Readonly<Record<string, string>> = {
+  "复制文件路径：{0}": "Copy the path to {0}",
+  "页面预览": "Page preview",
+  "实时页面": "Live page",
   "次比较": "comparisons",
   "去输入框试一次": "Go to the composer",
   "选择比较方式和版本数，在原输入框写需求。更多设置里可以调整风格和每版时长。": "Choose the comparison mode and candidate count, then type in the original composer. Open more settings for styles and time limits.",
