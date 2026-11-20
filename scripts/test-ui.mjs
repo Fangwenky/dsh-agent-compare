@@ -613,16 +613,27 @@ try {
     const head = flat.find(rule => rule.selectorText === '.ac-run-ring .head' && rule.style.animationDelay)
     return keyframes !== undefined && !/var\(|calc\(/.test(keyframes.cssText) && parseFloat(head?.style.animationDelay ?? '0') < 0
   }), 'the comets must animate without custom-property arithmetic in their keyframes')
-  // Every label a different blue: no purple, no green.
-  const labelHues = await page.evaluate(() => ['A', 'B', 'C', 'D'].map(label => {
-    const probe = document.createElement('section'); probe.dataset.label = label; probe.className = 'ac-card'
-    const chip = document.createElement('span'); chip.className = 'ac-label'; probe.append(chip); document.querySelector('.ac-sheet')?.append(probe)
-    const [r, g, b] = getComputedStyle(chip).backgroundColor.match(/\d+(\.\d+)?/g).map(Number); probe.remove()
-    const max = Math.max(r, g, b), min = Math.min(r, g, b), d = max - min
-    const hue = d === 0 ? 0 : max === r ? 60 * (((g - b) / d) % 6) : max === g ? 60 * ((b - r) / d + 2) : 60 * ((r - g) / d + 4)
-    return { label, hue: (hue + 360) % 360, color: `${r},${g},${b}` }
-  }))
-  check(labelHues.every(item => item.hue >= 195 && item.hue <= 235) && new Set(labelHues.map(item => item.color)).size === 4, `version labels must be four different blues: ${JSON.stringify(labelHues)}`)
+  // Candidate identifiers must retain their distinct palette and legibility in both appearances.
+  for (const scheme of ['light', 'dark']) {
+    await page.emulateMedia({ colorScheme: scheme })
+    const labels = await page.evaluate(() => ['A','B','C','D'].map(label => {
+      const probe = document.createElement('section'); probe.dataset.label = label; probe.className = 'ac-card'
+      const chip = document.createElement('span'); chip.className = 'ac-label'; chip.textContent = label; probe.append(chip)
+      document.querySelector('.ac-sheet').append(probe)
+      const style = getComputedStyle(chip)
+      const rgb = value => value.match(/[\d.]+/g).map(Number).slice(0,3)
+      const luminance = channels => channels.map(c => c <= 10.31475 ? c/3294.6 : ((c/255+.055)/1.055)**2.4)
+        .reduce((sum,c,i) => sum+c*[.2126,.7152,.0722][i],0)
+      const fg = luminance(rgb(style.color)), bg = luminance(rgb(style.backgroundColor))
+      const color = '#' + rgb(style.backgroundColor).map(c => c.toString(16).padStart(2,'0')).join('')
+      probe.remove()
+      return { label, color, contrast:(Math.max(fg,bg)+.05)/(Math.min(fg,bg)+.05) }
+    }))
+    const palette = scheme === 'light' ? ['#3b5af2','#1670cc','#6a54f0','#0b7d99'] : ['#99aeff','#74bdff','#b9a6ff','#69d3e0']
+    check(labels.every((item,i) => item.color === palette[i] && item.contrast >= 4.5),
+      `candidate badges must use the reviewed ${scheme} palette with readable letters: ${JSON.stringify(labels)}`)
+  }
+  await page.emulateMedia({colorScheme:'light'})
   const workingCard = page.getByRole('region', { name: '候选 B', exact: true })
   const stepsToggle = workingCard.locator('button.ac-steps-toggle')
   check(await stepsToggle.getAttribute('aria-expanded') === 'false' && (await stepsToggle.innerText()).includes('过程'), 'a working version must offer a steps button')
