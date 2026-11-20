@@ -100,7 +100,7 @@ npm pack
 ```
 
 ```bash
-dsh plugin --profile web add ./dsh-agent-compare-3.2.1.tgz
+dsh plugin --profile web add ./dsh-agent-compare-3.3.0.tgz
 ```
 
 </details>
@@ -143,20 +143,24 @@ dsh plugin --profile web add ./dsh-agent-compare-3.2.1.tgz
 
 在宽屏并排比较实时网页时，点「对齐网页」，两版页面会从同一高度开始。再点一次就能恢复原排版，网页里已经输入的内容会保留。
 
+在手机上用风格小样搭配各版，在桌面上展开过程，看每版最近做了什么。盲选后才揭晓模型和风格。采用前可以按文件查看带行号的改动。
+
 <details>
-<summary>查看新版实际界面（Edge，示例对话）</summary>
+<summary>查看 3.3.0 实际界面</summary>
 
-[![390 像素手机布局：设置、上下文和需求输入框同屏可见](https://raw.githubusercontent.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/1edf6ec2d1be76a45ef3827795be7ceaafc982c9/assets/readme/mobile-settings-3.2.webp)](https://github.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/blob/1edf6ec2d1be76a45ef3827795be7ceaafc982c9/assets/readme/mobile-settings-3.2.webp)
+![手机上的比较设置和对话输入框](https://raw.githubusercontent.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/main/assets/readme/ui-3.3/composer-mobile.webp)
 
-[![桌面上的两版可操作网页从同一高度开始](https://raw.githubusercontent.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/1edf6ec2d1be76a45ef3827795be7ceaafc982c9/assets/readme/aligned-pages-3.2.webp)](https://github.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/blob/1edf6ec2d1be76a45ef3827795be7ceaafc982c9/assets/readme/aligned-pages-3.2.webp)
+![桌面审阅中的文件列表和逐行差异](https://raw.githubusercontent.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/main/assets/readme/ui-3.3/patch-review.webp)
+
+![深色模式下的四步使用指南](https://raw.githubusercontent.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/main/assets/readme/ui-3.3/guide-dark.webp)
 
 </details>
 
-- **蓝色液态玻璃。** 半透明玻璃面板、会滑动的选择器，背后是缓慢流动、彼此交融的蓝色光；浅色与深色两套主题，开启「减弱动态效果」后画面保持静止。已测界面状态中的产品文字在两种主题下逐字实测，对比度不低于 4.5:1。
+- **蓝色液态玻璃。** 设置栏、候选卡和审阅区用不同层次的蓝色玻璃区分。系统开启减少动效时，选择和揭晓会直接切换。
 - **大肥鱼陪你等。** 每版一条 DeepSeek 蓝鲸，随进度注入蓝色的水，两道光沿轮廓奔跑；头上不时冒出想法，戳一下会回话，连戳会转圈、晕头、溅水花。
-- **过程一目了然。** 「过程」按钮列出思考、工具调用和改动；工作中，最新三步在鲸鱼下方实时滚动。
+- **从最近一步看起。** 生成中的卡片顶部显示最新动作。展开「过程」可读到已记录的思考、工具调用和耗时。
 - **回复与成品同等显示。** 只回答就只显示回答；做了网页时回复和页面并排，专注某一版时回复在左、页面在右。
-- **A–D 四种蓝。** 每版一种蓝色标签；盲选时只看 A–D，选完才揭晓风格和模型，揭晓时光束扫过卡片。
+- **A–D 各有标记。** 钴蓝、天蓝、紫罗兰和青色分别对应 A、B、C、D，字母也始终可见。
 - **一眼看出在跑。** 运行中的比较有两颗彗星绕边框奔跑；页面一启动就能直接点、直接输入。
 - **桌面、浏览器和手机宽度都能用**，中英文界面随时切换。
 
@@ -468,6 +472,8 @@ node scripts/preview-ui.mjs
 <a id="whats-new"></a>
 
 ## 版本更新
+
+**3.3.0** · 新增风格小样、候选阶段表情、逐行改动审阅和按日期分组的历史。
 
 **3.2.1** · 网页文字验收会等候最多 5 秒，让点击后的反馈有时间显示。积压的比较结果按更新时间先后写回原对话，每个对话步骤最多 5 条。
 

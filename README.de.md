@@ -100,7 +100,7 @@ npm pack
 Der Befehl installiert das Archiv im Web-Profil `web`.
 
 ```bash
-dsh plugin --profile web add ./dsh-agent-compare-3.2.1.tgz
+dsh plugin --profile web add ./dsh-agent-compare-3.3.0.tgz
 ```
 
 </details>
@@ -136,18 +136,22 @@ Wenn Ihr Auftrag Optionsnamen enthält, setzen Sie bei `/ab` ein `--` vor den Te
 
 Auf breiten Bildschirmen richtet „Align pages“ die Oberkanten der interaktiven Seiten aneinander aus. Ein zweiter Klick stellt die ursprüngliche Anordnung wieder her. Bereits eingegebene Werte bleiben erhalten.
 
+Auf dem Smartphone wählst du den Stil jeder Version anhand einer Vorschau. Am Desktop zeigen die aufgeklappten Schritte die jeweils letzte Aktion. Beim Blindvergleich werden Modell und Stil nach deiner Wahl sichtbar. Vor dem Übernehmen lassen sich Änderungen pro Datei mit Zeilennummern prüfen.
+
 <details>
-<summary>Oberfläche in Edge mit einem Beispielgespräch ansehen</summary>
+<summary>Die Oberfläche von 3.3.0 ansehen</summary>
 
-[![Einstellungen, geteilter Kontext und Eingabefeld bei 390 Pixeln Breite](https://raw.githubusercontent.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/1edf6ec2d1be76a45ef3827795be7ceaafc982c9/assets/readme/mobile-settings-3.2.webp)](https://github.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/blob/1edf6ec2d1be76a45ef3827795be7ceaafc982c9/assets/readme/mobile-settings-3.2.webp)
+![Vergleichseinstellungen und Eingabefeld auf dem Smartphone](https://raw.githubusercontent.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/main/assets/readme/ui-3.3/composer-mobile.webp)
 
-[![Zwei ausgerichtete Seiten unter unterschiedlich langen Antworten](https://raw.githubusercontent.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/1edf6ec2d1be76a45ef3827795be7ceaafc982c9/assets/readme/aligned-pages-3.2.webp)](https://github.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/blob/1edf6ec2d1be76a45ef3827795be7ceaafc982c9/assets/readme/aligned-pages-3.2.webp)
+![Dateien und zeilenweise Änderungen in der Desktopansicht](https://raw.githubusercontent.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/main/assets/readme/ui-3.3/patch-review.webp)
+
+![Die vier Schritte der Anleitung im Dunkelmodus](https://raw.githubusercontent.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/main/assets/readme/ui-3.3/guide-dark.webp)
 
 </details>
 
-- **Blaues Flüssigglas.** Durchscheinende Glasflächen und gleitende Auswahlelemente vor langsam fließendem blauem Licht, im hellen und dunklen Thema; mit reduzierter Bewegung bleibt alles still. Produkttexte in den geprüften Oberflächenzuständen wurden in beiden Themen Glyphe für Glyphe gemessen und erreichten mindestens 4.5:1 Kontrast.
-- **Ein dicker Fisch leistet Gesellschaft.** Ein blauer DeepSeek-Wal je Version füllt sich mit dem Fortschritt mit blauem Wasser, während zwei Lichter um seinen Rand laufen. Über seinem Kopf steigen Gedanken auf; ein Stups, und er antwortet, noch mehr, und er dreht sich, taumelt und spritzt.
-- **Jeder Schritt sichtbar.** Die Schaltfläche **Steps** listet Überlegungen, Werkzeugaufrufe und Änderungen; während eine Version arbeitet, laufen ihre neuesten drei Schritte live unter dem Wal mit.
+- **Blaues Flüssigglas.** Unterschiedliche Flächen trennen Einstellungen, Versionen und Prüfung. Bei reduzierter Bewegung wechseln Auswahl und Aufdeckung direkt.
+- **Vier Versionen mit Buchstabe und Farbe.** A, B, C und D sind kobaltblau, himmelblau, violett und petrol. Die Buchstaben bleiben immer sichtbar.
+- **Mit der letzten Aktion beginnen.** Während der Generierung zeigt der Kartenkopf die jüngste Aktion. Die aufgeklappten Schritte enthalten aufgezeichnete Gedanken, Werkzeugaufrufe und verfügbare Laufzeiten.
 - **Antwort und Ergebnis gleichrangig.** Eine Antwort steht für sich; eine Seite teilt sich die Karte mit ihrer Antwort, und im Fokus steht die Antwort links neben der Seite.
 - **Vier Blautöne für A–D.** Im Blindvergleich sehen Sie nur A–D; Stile und Modelle werden nach der Wahl aufgedeckt, mit einem Lichtschweif über die Karten.
 - **Man sieht, dass es läuft.** Zwei Kometen jagen um einen laufenden Vergleich, und jede Seite ist bedienbar, sobald sie startet.
@@ -262,6 +266,8 @@ Die [CI](https://github.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/actions
 <a id="whats-new"></a>
 
 ## Neuerungen nach Version
+
+**3.3.0** · Stilvorschauen, Statussymbole, eine zeilenweise Änderungsansicht und ein nach Datum gruppierter Verlauf.
 
 **3.2.1** · Textprüfungen warten bis zu fünf Sekunden auf die sichtbare Rückmeldung der Seite. Ausstehende Ergebnisse gelangen nach Änderungszeit geordnet in das ursprüngliche Gespräch, bis zu fünf pro Gesprächsschritt.
 

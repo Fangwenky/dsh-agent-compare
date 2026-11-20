@@ -455,6 +455,7 @@ try {
   check(!(await page.getByRole('region', { name: '候选 B', exact: true }).innerText()).includes('61240') && !(await page.getByRole('region', { name: '候选 B', exact: true }).innerText()).includes('src\\App.tsx'), 'blind activity must withhold tool targets and token counters')
   await open('judging')
   for (const label of ['A', 'B']) await page.getByRole('region', { name: '候选 ' + label, exact: true }).locator('.ac-evidence > summary').click()
+  check(await page.locator('.ac-browser-bar button').count() === 0, 'a blind page must not expose a source control')
   const blindText = await page.locator('.ac-grid').innerText()
   check(!blindText.includes('48,210') && !blindText.includes('71,533') && !blindText.includes(' 个文件'), 'blind evidence must withhold usage and change scale even if an older host includes them')
   check(!blindText.includes('esbuild 服务管道') && !blindText.includes('观察到的触发'), 'blind comparisons must not expose implementation-specific compatibility hooks')
@@ -482,6 +483,15 @@ try {
   check(await page.getByRole('dialog', { name: 'AgentCompare' }).count() === 0, 'the large window must close so the new conversation card is visible')
 
   await open('revealed')
+  const reviewedCard = page.getByRole('region', { name: '候选 A', exact: true })
+  const liveFrame = reviewedCard.locator('iframe.ac-frame')
+  await liveFrame.evaluate(frame => { frame.dataset.reviewMarker = 'same-page' })
+  await reviewedCard.getByRole('button', { name: '源码', exact: true }).click()
+  await reviewedCard.locator('.ac-file-text').waitFor()
+  check(await reviewedCard.getByRole('button', { name: 'src/App.tsx', exact: true }).isVisible(), 'source review shows the recorded path')
+  check((await requests('candidateFile')).at(-1).body.path === 'src/App.tsx', 'source review reads a file recorded for that version')
+  await reviewedCard.getByRole('button', { name: '实时页面', exact: true }).click()
+  check(await liveFrame.evaluate(frame => frame.dataset.reviewMarker === 'same-page' && frame.getBoundingClientRect().height > 0), 'closing source must restore the same interactive frame')
   const switchPick = page.getByRole('button', { name: '改选 A', exact: true })
   check(await switchPick.isVisible(), 'a revealed pick that failed the checks must offer the other finished version')
   check(await page.getByRole('button', { name: '再比较一次', exact: true }).isVisible(), 'an ineligible pick must also offer a repeat')
@@ -1152,7 +1162,7 @@ try {
   check(cardHeights.length === 2 && Math.abs(cardHeights[0] - cardHeights[1]) <= 1, `result cards side by side must share one height: ${cardHeights}`)
   const written = page.getByRole('region', { name: '候选 B 写出的文件' })
   await page.waitForFunction(() => document.querySelector('.ac-file-text')?.textContent?.includes('README.md'))
-  await written.getByRole('button', { name: 'count_words.py' }).click()
+  await written.getByRole('button', { name: 'count_words.py', exact: true }).click()
   await page.waitForFunction(() => document.querySelector('.ac-file-text')?.textContent?.includes('count_words.py'))
   check((await requests('candidateFile')).some(r => r.body.label === 'B' && r.body.path === 'count_words.py'), 'opening a written file must read that file of that version')
   check(!/\+\d+ −\d+/.test(await page.locator('[role="dialog"]').innerText()), 'blind review must still hide change sizes')
@@ -1236,6 +1246,10 @@ try {
 
   // Four live versions: 2×2, narrowed down one at a time, focused from the keyboard, picked.
   await open('four')
+  const blindFaces = await page.locator('.ac-sheet .ac-card:is([data-label=A],[data-label=C],[data-label=D]) .ac-label .ac-whale-face').evaluateAll(faces =>
+    faces.map(face => ({ glyph: face.innerHTML, stage: face.getAttribute('data-face'), hidden: face.getAttribute('aria-hidden') })))
+  check(blindFaces.length === 3 && blindFaces.every(face => face.stage === 'stars' && face.hidden === 'true' && face.glyph === blindFaces[0].glyph),
+    'blind versions with the same completed stage and verdict must show the same decorative face')
   const four = page.getByRole('dialog')
   check(await four.locator('iframe').count() === 4, 'all four versions are live pages')
   const boxes = await four.locator('.ac-grid > .ac-card').evaluateAll(cards => cards.map(card => { const r = card.getBoundingClientRect(); return { x: Math.round(r.x), y: Math.round(r.y) } }))

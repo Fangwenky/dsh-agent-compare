@@ -1,5 +1,13 @@
 # Changelog
 
+## 3.3.0
+
+- Choose version styles from visual swatches or the native keyboard-accessible selector. The comparison keeps letter and color labels across light and dark themes.
+- Follow each candidate's current stage and recorded steps. On small screens a single view control opens layout options. Blind comparisons reveal model and style after the choice.
+- Browse changed files with line numbers and review the destination and affected paths before confirming adoption. Read a live page's available source without losing the page state.
+- Find saved comparisons by date and see totals from the history response. The illustrated guide covers setup, parallel work, choice and adoption.
+- All eight guides include current interface screenshots and the installation command for this version.
+
 ## 3.2.1
 
 - Page and step text checks read rendered text and wait up to five seconds for feedback after an interaction.

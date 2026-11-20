@@ -1,14 +1,13 @@
 {
   "schema": "agentcompare.gallery/v1",
-  "packageVersion": "3.2.1",
-  "updatedAt": "2026-11-18T11:03:27.163Z",
-  "runtimeSource": "782b8911b823936ca2d3cc15c0ce54a18e9a1f22",
-  "hostVersion": "0.2.2-rc.1",
-  "browser": "Microsoft Edge 157",
-  "runtimeFilesMatched": 153,
+  "packageVersion": "3.3.0",
+  "updatedAt": "2026-11-20T16:04:57Z",
+  "runtimeSource": "b10e273ac3e393c1b7c8b0e6eb05e6e169f0cacf",
+  "hostVersion": "0.2.2-rc.3",
+  "browser": "Chromium 157",
   "privatePathsHidden": true,
-  "captionsAdded": true,
-  "scenario": "Two product illustrations and six actual interface captures. The captures use controlled candidates in an isolated DSH Web profile at desktop window sizes, recorded on 2026-11-15 from the source named here; every installed file other than package.json matched it byte for byte. They show real application execution, steps, replies, answers and saved history, not external-model generation. The conversation view shows a greeting sent from a Vite repository and answered by four versions with nothing built, with the steps of one version open. No user Desktop profile was changed.",
+  "captionsAdded": false,
+  "scenario": "Two product illustrations, one composer capture from an isolated DSH Web profile and five captures of the plugin components rendering controlled sample records. The composer masks the local project path. The examples show the interface without using an external generation service.",
   "files": [
     {
       "path": "assets/readme/gallery-2.0/01-overview.png",
@@ -24,61 +23,67 @@
       "path": "assets/readme/gallery-2.0/02-live-comparison.png",
       "url": "https://raw.githubusercontent.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/main/assets/readme/gallery-2.0/02-live-comparison.png",
       "kind": "screenshot",
-      "title": "四版实时页面、过程与回复 / Four live pages with steps and replies",
-      "width": 1576,
-      "height": 1140,
-      "bytes": 996240,
-      "sha256": "df9edd9e5152a931bf2908b843627a95de01ac30a25d057c760e3b950e646b1d"
+      "title": "四版实时网页比较 / Compare four live pages",
+      "width": 1440,
+      "height": 940,
+      "bytes": 257936,
+      "sha256": "97dbed32e5fefb80752096482b612eff89a794d80ee9d7cc0486b91123a890b7",
+      "source": "Local UI fixture: four-open"
     },
     {
       "path": "assets/readme/gallery-2.0/03-main-conversation.png",
       "url": "https://raw.githubusercontent.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/main/assets/readme/gallery-2.0/03-main-conversation.png",
       "kind": "screenshot",
-      "title": "打招呼得到四种回答，过程可展开 / A greeting answered four ways, with steps",
-      "width": 1600,
-      "height": 1200,
-      "bytes": 325146,
-      "sha256": "5fa063fa78494e766428ef712c927ff7a6d501c70ac3744346e63df041313617"
+      "title": "在主对话里体验两版网页 / Try two pages in the main conversation",
+      "width": 1440,
+      "height": 940,
+      "bytes": 180571,
+      "sha256": "01b878052f8548d67c01ed8676af18a83869880975ea9355003f4b980c04c0b8",
+      "source": "Local UI fixture: inline"
     },
     {
       "path": "assets/readme/gallery-2.0/04-comparison-settings.png",
       "url": "https://raw.githubusercontent.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/main/assets/readme/gallery-2.0/04-comparison-settings.png",
       "kind": "screenshot",
-      "title": "版本、风格与上下文 / Versions, styles and context",
-      "width": 988,
-      "height": 438,
-      "bytes": 162679,
-      "sha256": "3947bcb8b6141c76c4c9e9b0a45098a164b7cfcf9714484f700458a2219d1f5a"
+      "title": "DSH 主对话里的比较设置 / Comparison settings in DSH",
+      "width": 1440,
+      "height": 900,
+      "bytes": 128205,
+      "sha256": "ce1bdd8aae84a7d6cc86ee81744d811cd34813dd68d51bb8065fe54688cfa4a5",
+      "source": "Isolated DSH Web profile"
     },
     {
       "path": "assets/readme/gallery-2.0/05-saved-result.png",
       "url": "https://raw.githubusercontent.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/main/assets/readme/gallery-2.0/05-saved-result.png",
       "kind": "screenshot",
-      "title": "回复与页面并排，保存并说明理由 / Reply beside the page, saved with reasons",
-      "width": 1576,
-      "height": 1140,
-      "bytes": 1059207,
-      "sha256": "a0fa27b34a1c0edce7c6361a3eec26246787036452f8f8d6587ca03d899a8d9b"
+      "title": "采用前逐行核对文件改动 / Review file changes before adoption",
+      "width": 1440,
+      "height": 940,
+      "bytes": 190021,
+      "sha256": "d598f51c6f895bb92ba2e45b24a75e9dab5192aebd1d51f841d87c9aece6fafa",
+      "source": "Local UI fixture: review-example"
     },
     {
       "path": "assets/readme/gallery-2.0/06-english-answers.png",
       "url": "https://raw.githubusercontent.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/main/assets/readme/gallery-2.0/06-english-answers.png",
       "kind": "screenshot",
-      "title": "英文回答并排比较 / Compare English answers",
-      "width": 1576,
-      "height": 1140,
-      "bytes": 1164302,
-      "sha256": "36e7b87dd0f7e5f26589c83fce1bc0926343eaf54aa3bc27e026fd5b197369fb"
+      "title": "英文界面中的回答对比 / Compare answers in the English interface",
+      "width": 1440,
+      "height": 940,
+      "bytes": 236790,
+      "sha256": "eb72c86a5745ceeb277a4d4cef89e63580d8ac7faf96d1cee862b32b5aef41ec",
+      "source": "Local UI fixture: project-answers"
     },
     {
       "path": "assets/readme/gallery-2.0/07-history.png",
       "url": "https://raw.githubusercontent.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/main/assets/readme/gallery-2.0/07-history.png",
       "kind": "screenshot",
-      "title": "查找历史，保留选择与理由 / Find history, picks and reasons",
-      "width": 1576,
-      "height": 520,
-      "bytes": 628111,
-      "sha256": "60085be96f7ce3131b2c1781d3b265d23d1734619f35ab687aaf9cd82f2e7f10"
+      "title": "按日期找回比较与选择 / Find comparisons and picks by date",
+      "width": 1440,
+      "height": 940,
+      "bytes": 220918,
+      "sha256": "07500543d47c954161d37af51b08d2eafd9a2dc1ef60e00d601186e56f5f1db4",
+      "source": "Local UI fixture: history-many"
     },
     {
       "path": "assets/readme/gallery-2.0/08-workflow.png",
@@ -92,5 +97,6 @@
     }
   ],
   "illustrationUpdatedAt": "2026-11-15T16:06:53.593Z",
-  "illustrationNote": "Blue brand setting with natural object and semantic colors: red, yellow and green window controls, a red tomato with green leaves, and red/green review marks. The header slogan is 让同一想法，长出更多实现方案！ / One idea. More ways to bring it to life. Illustrations are distinct from the six unchanged real interface captures and their recorded runtime source."
+  "illustrationNote": "Blue brand setting with natural object and semantic colors: red, yellow and green window controls, a red tomato with green leaves, and red/green review marks. The header slogan is 让同一想法，长出更多实现方案！ / One idea. More ways to bring it to life. Illustrations are distinct from the six unchanged real interface captures and their recorded runtime source.",
+  "clientSha256": "39c5997cbab62dd0704e09435979d59df7d3ba0bd9f8c22c4a83422419d5b79f"
 }

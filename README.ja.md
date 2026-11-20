@@ -100,7 +100,7 @@ npm pack
 次のコマンドはアーカイブを Web プロファイル `web` にインストールします。
 
 ```bash
-dsh plugin --profile web add ./dsh-agent-compare-3.2.1.tgz
+dsh plugin --profile web add ./dsh-agent-compare-3.3.0.tgz
 ```
 
 </details>
@@ -136,20 +136,24 @@ DSH を再起動します。同じ記録を使う古いプラグインの実行�
 
 横並びのライブページは、広い画面で「Align pages」を押すと同じ高さから表示されます。もう一度押すと元の配置に戻り、ページに入力した内容も残ります。
 
+スマートフォンでは見本を見ながら各案のスタイルを選べます。デスクトップでは手順を開くと各案の直近の作業が分かります。ブラインド比較でモデルとスタイルが明かされるのは選択後です。適用前にファイルごとの変更を行番号付きで確認できます。
+
 <details>
-<summary>サンプル会話を使った Edge の実画面</summary>
+<summary>3.3.0 の画面を見る</summary>
 
-[![幅390ピクセルの設定、共有する会話、入力欄](https://raw.githubusercontent.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/1edf6ec2d1be76a45ef3827795be7ceaafc982c9/assets/readme/mobile-settings-3.2.webp)](https://github.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/blob/1edf6ec2d1be76a45ef3827795be7ceaafc982c9/assets/readme/mobile-settings-3.2.webp)
+![スマートフォンの比較設定と会話入力欄](https://raw.githubusercontent.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/main/assets/readme/ui-3.3/composer-mobile.webp)
 
-[![長さの異なる返答の下に開始位置をそろえた2つのプレビュー](https://raw.githubusercontent.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/1edf6ec2d1be76a45ef3827795be7ceaafc982c9/assets/readme/aligned-pages-3.2.webp)](https://github.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/blob/1edf6ec2d1be76a45ef3827795be7ceaafc982c9/assets/readme/aligned-pages-3.2.webp)
+![デスクトップのファイル一覧と行ごとの差分](https://raw.githubusercontent.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/main/assets/readme/ui-3.3/patch-review.webp)
+
+![ダークモードの4ステップガイド](https://raw.githubusercontent.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/main/assets/readme/ui-3.3/guide-dark.webp)
 
 </details>
 
-- **青いリキッドグラス。** 半透明のガラスパネルとスライドする選択部品、その後ろでゆっくり流れて溶け合う青い光。ライトとダークに対応し、視差効果を減らす設定では静止します。検証した画面状態の製品 UI テキストは両テーマでグリフ単位に測定し、コントラスト比 4.5:1 以上でした。
+- **青いリキッドガラス。** 設定、候補、レビューを濃淡の異なる面で区別します。モーションを減らす設定では、選択と結果の表示がすぐに切り替わります。
 - **太っちょ魚が付き添います。** バージョンごとに DeepSeek の青いクジラが 1 頭。進むにつれて青い水が満ち、2 つの光が輪郭を走ります。頭の上に考えごとが浮かび、つつくと返事をし、続けてつつくと回ったり、ふらついたり、水しぶきを上げたりします。
-- **すべてのステップが見える。** 「Steps」ボタンで思考・ツール呼び出し・変更を一覧でき、作業中は最新の 3 ステップがクジラの下でリアルタイムに流れます。
+- **直近の作業から確認。** 生成中のカード上部に最新の作業が表示されます。手順を開くと、記録された思考、ツール呼び出し、所要時間を確認できます。
 - **返信と成果物を同じ重みで。** 回答だけなら回答だけ、ページがあれば返信と並べて表示し、1 つに絞ると返信が左、ページが右に並びます。
-- **A〜D は 4 つの青。** ブラインド比較では A〜D だけが見え、スタイルとモデルは選んだ後に公開され、カードに光が走ります。
+- **A〜D を見分けやすく。** A はコバルト、B は空色、C は紫、D は青緑。どの色にも文字を併記します。
 - **動いているのがひと目でわかる。** 実行中の比較の周りを 2 つの彗星が走り、ページは起動した瞬間から操作できます。
 - **デスクトップ・ブラウザー・スマホ幅**に対応し、中国語と英語の画面を切り替えられます。
 
@@ -269,6 +273,8 @@ npm run test:ui
 <a id="whats-new"></a>
 
 ## 更新内容
+
+**3.3.0** · スタイル見本、段階別の表情、行単位の変更確認、日付別の履歴を追加しました。
 
 **3.2.1** · ページの文字検証は、操作後の表示を最大5秒待ちます。未反映の比較結果は更新の古い順に、会話の1ステップにつき最大5件ずつ元の会話に反映されます。
 

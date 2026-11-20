@@ -100,7 +100,7 @@ npm pack
 다음 명령은 압축 파일을 웹 프로필 `web`에 설치합니다.
 
 ```bash
-dsh plugin --profile web add ./dsh-agent-compare-3.2.1.tgz
+dsh plugin --profile web add ./dsh-agent-compare-3.3.0.tgz
 ```
 
 </details>
@@ -136,20 +136,24 @@ DSH를 다시 시작합니다. 업데이트 전에는 같은 기록을 사용하
 
 넓은 화면에서 실시간 페이지를 나란히 열고 ‘Align pages’를 누르면 두 페이지의 시작 높이가 맞춰집니다. 다시 누르면 원래 배치로 돌아가며 페이지에 입력한 값도 유지됩니다.
 
+모바일에서는 미리보기를 보고 각 버전의 스타일을 고르세요. 데스크톱에서는 단계를 펼쳐 각 버전이 방금 수행한 작업을 확인할 수 있습니다. 블라인드 비교에서는 선택한 뒤 모델과 스타일을 공개합니다. 변경 사항을 적용하기 전에 파일별로 줄 번호와 차이를 확인할 수 있습니다.
+
 <details>
-<summary>샘플 대화로 확인한 Edge 실제 화면</summary>
+<summary>3.3.0 실제 화면 보기</summary>
 
-[![390픽셀 화면에 함께 보이는 설정, 공유할 대화와 입력창](https://raw.githubusercontent.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/1edf6ec2d1be76a45ef3827795be7ceaafc982c9/assets/readme/mobile-settings-3.2.webp)](https://github.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/blob/1edf6ec2d1be76a45ef3827795be7ceaafc982c9/assets/readme/mobile-settings-3.2.webp)
+![휴대폰의 비교 설정과 대화 입력란](https://raw.githubusercontent.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/main/assets/readme/ui-3.3/composer-mobile.webp)
 
-[![길이가 다른 답변 밑에서 같은 높이로 정렬된 두 페이지](https://raw.githubusercontent.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/1edf6ec2d1be76a45ef3827795be7ceaafc982c9/assets/readme/aligned-pages-3.2.webp)](https://github.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/blob/1edf6ec2d1be76a45ef3827795be7ceaafc982c9/assets/readme/aligned-pages-3.2.webp)
+![데스크톱 검토 화면의 파일 목록과 줄 단위 변경](https://raw.githubusercontent.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/main/assets/readme/ui-3.3/patch-review.webp)
+
+![다크 모드의 4단계 사용 안내](https://raw.githubusercontent.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/main/assets/readme/ui-3.3/guide-dark.webp)
 
 </details>
 
-- **파란 리퀴드 글래스.** 반투명 유리 패널과 미끄러지는 선택 컨트롤 뒤로 천천히 흐르며 섞이는 파란 빛. 라이트·다크 테마를 지원하고, 동작 줄이기를 켜면 화면이 멈춰 있습니다. 검증한 화면 상태의 제품 UI 텍스트를 두 테마에서 글자별로 측정했으며 대비는 4.5:1 이상이었습니다.
+- **블루 리퀴드 글라스.** 서로 다른 깊이의 패널로 설정, 후보, 검토 영역을 구분합니다. 동작 줄이기를 켜면 선택과 결과 공개가 즉시 전환됩니다.
 - **뚱뚱한 물고기가 함께 기다립니다.** 버전마다 DeepSeek 파란 고래 한 마리. 진행될수록 파란 물이 차오르고 빛 두 줄기가 윤곽을 따라 달립니다. 머리 위로 생각이 떠오르고, 찌르면 대답하고, 연달아 찌르면 빙글 돌고 비틀거리고 물을 튀깁니다.
-- **모든 단계가 보입니다.** 「Steps」 버튼으로 생각, 도구 호출, 변경을 볼 수 있고, 작업 중에는 최신 3단계가 고래 아래에서 실시간으로 흐릅니다.
+- **최근 단계부터 확인.** 생성 중인 카드 상단에 가장 최근 작업이 표시됩니다. 단계를 펼치면 기록된 생각, 도구 호출, 소요 시간을 확인할 수 있습니다.
 - **답장과 결과물을 같은 비중으로.** 답변만 있으면 답변만, 페이지가 있으면 답장과 나란히 보여 주고, 한 버전에 집중하면 답장은 왼쪽, 페이지는 오른쪽에 놓입니다.
-- **A–D는 네 가지 파랑.** 블라인드 비교에서는 A–D만 보이고, 스타일과 모델은 선택 뒤에 공개되며 카드 위로 빛이 지나갑니다.
+- **색과 글자로 구분하는 네 버전.** A는 코발트, B는 하늘색, C는 보라색, D는 청록색이며 각 버전에는 글자도 표시됩니다.
 - **실행 중인지 한눈에.** 실행 중인 비교 둘레를 혜성 두 개가 달리고, 페이지는 시작되는 즉시 사용할 수 있습니다.
 - **데스크톱, 브라우저, 휴대폰 폭** 모두 지원하며 중국어와 영어 화면을 전환할 수 있습니다.
 
@@ -262,6 +266,8 @@ Windows, Linux, macOS에서 네이티브 검증을 실행합니다. npm, pnpm, Y
 <a id="whats-new"></a>
 
 ## 업데이트 내역
+
+**3.3.0** · 스타일 미리보기, 단계별 표정, 줄 단위 변경 검토, 날짜별 기록을 추가했습니다.
 
 **3.2.1** · 페이지 텍스트 검사는 작업 결과가 화면에 나타날 때까지 최대 5초 기다립니다. 대기 중인 비교 결과는 먼저 갱신된 순서대로 원래 대화에 반영되며 한 단계에 최대 5개씩 처리합니다.
 

@@ -456,7 +456,7 @@ export const UI_COMPONENTS = `
 .ac-root .ac-card-head .ac-live-step:not(:last-child){display:none}
 .ac-root .ac-whale-face{flex:none;display:inline-block;width:20px;height:20px;color:var(--ac-version,var(--ac-ver-a))}
 .ac-root .ac-card-head .ac-label{position:relative;overflow:visible}
-.ac-root .ac-card-head .ac-label>.ac-whale-face{position:absolute;right:-3px;bottom:-3px;width:13px;height:13px;padding:1px;box-sizing:border-box;border-radius:50%;background:var(--ac-glass-thick);color:var(--ac-reading)}
+.ac-root .ac-card-head .ac-label>.ac-whale-face{position:absolute;right:-3px;bottom:-3px;width:13px;height:13px;padding:1px;box-sizing:border-box;border-radius:50%;background:var(--ac-glass-thick);color:var(--ac-reading-ink)}
 .ac-root .ac-whale-lean>.ac-whale-face{position:absolute;z-index:2;top:5%;right:-6%;width:24px;height:24px;padding:3px;box-sizing:content-box;border-radius:50%;background:var(--ac-glass-thick);box-shadow:var(--ac-thick-shadow)}
 .ac-root .ac-stage-dots{display:inline-flex;gap:2px;align-items:center}
 .ac-root .ac-stage-dots i{width:3px;height:3px;border-radius:50%;background:currentColor}
@@ -524,5 +524,23 @@ export const UI_COMPONENTS = `
  .ac-root .ac-sheet .ac-head{padding-top:max(6px,env(safe-area-inset-top))}
  .ac-root .ac-head .ac-icon-btn{min-width:40px;min-height:40px}
  .ac-root .ac-guide-tasks>div{grid-template-columns:1fr}
+}
+.ac-root .ac-copy{display:inline-flex;align-items:center;justify-content:center;gap:5px}
+.ac-root .ac-file-list li{display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:start;gap:2px}
+.ac-root .ac-file-list .ac-file{display:flex;align-items:center;gap:5px;min-width:0;min-height:32px}
+.ac-root .ac-file>span{min-width:0;overflow-wrap:anywhere}.ac-root .ac-file>svg{flex:none;color:var(--ac-reading-soft)}
+.ac-root .ac-file small{font:600 10px/1.4 ui-monospace,monospace;color:var(--ac-reading-soft)}
+.ac-root .ac-file-copy{min-width:32px;min-height:32px;border:0;border-radius:8px;background:transparent;color:var(--ac-reading-ink);cursor:pointer}
+.ac-root .ac-file-copy span{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%)}
+.ac-root .ac-preview-stage{flex-direction:column;align-items:center;justify-content:flex-start}
+.ac-root .ac-browser-bar{box-sizing:border-box;display:flex;align-items:center;gap:8px;width:100%;min-height:32px;padding:1px 8px;background:var(--ac-glass-thick);border-bottom:1px solid var(--ac-glass-edge);color:var(--ac-reading-soft);font-size:11px}
+.ac-root .ac-browser-bar>span:nth-child(2){flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;text-align:center}
+.ac-root .ac-browser-lights{display:flex;gap:3px}.ac-root .ac-browser-lights i{width:5px;height:5px;border-radius:50%;background:currentColor;opacity:.6}
+.ac-root .ac-browser-bar button{color:var(--ac-reading-ink);border:1px solid var(--ac-glass-edge);background:var(--ac-glass-solid);border-radius:6px;padding:2px 8px;cursor:pointer}
+.ac-root .ac-preview-surface[hidden]{display:none}.ac-root .ac-preview-stage>.ac-result{width:100%;box-sizing:border-box}
+.ac-root .ac-style-sample{display:inline-flex}.ac-root .ac-reply-body{font-size:14px;line-height:1.7}
+@media(forced-colors:active){.ac-root :is(.ac-browser-bar,.ac-file-copy,.ac-swatch-trigger,.ac-pick-option,.ac-view-trigger){border:1px solid ButtonText}.ac-root .ac-style-sample{outline:1px solid CanvasText}}
+@media(min-width:900px) and (min-height:850px){
+ .ac-root .ac-conversation-run-scroll{max-height:clamp(170px,calc(100dvh - 312px),808px)}
 }
 `

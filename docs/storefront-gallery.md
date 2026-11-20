@@ -1,48 +1,40 @@
 # 鲸挑细选 · AgentCompare · 图片与界面 / Gallery
 
-在 DSH Desktop 与 Web 的主对话里比较 2–4 版回答、文件或网页。每版的思考和工具调用可展开查看，回复与成品同等显示。选择风格、盲选或公开对比，选完说明理由，再继续主对话；文件写回前先审查，保留撤销与恢复入口。
+在 DSH Desktop 和 Web 主对话里同时比较 2–4 版回答、文件或网页。3.3.0 的实图展示了比较设置、并排体验、选择后的逐行审阅和历史记录。
 
-Compare 2–4 answers, files or live pages in the main conversation on DSH Desktop and Web. Open each version's thinking and tool calls, and read its reply beside what it built. Choose styles, compare blind or openly, keep reasons for the pick, and review before adoption. Chinese and English interfaces are included.
+Compare two to four answers, files or live pages inside the DSH conversation. The 3.3.0 captures show how to configure a comparison, try the results, review a chosen change and revisit history.
 
-主图与流程图已使用「鲸挑细选」中文名、A–D 四种蓝和实时步骤示意；真实截图保留各自的录制来源。/ The overview and workflow use the current name, four blues and live-step illustrations; runtime captures retain their recorded source.
+设置图来自单独安装 3.3.0 的 DSH Web 配置，已遮住本地项目路径。其余五张截图由本插件渲染固定样例。首图和流程图为产品示意。
 
-图库按“是什么 → 实际比较 → 主对话 → 设置 → 保存与撤销 → English → 历史 → 流程”排列。前两张用于小卡片展示。首图和流程图是功能示意，另外六张为固定候选在真实 DSH Web 宿主中的桌面尺寸界面，不代表外部模型的生成质量或速度。
-
-The first and last images are product illustrations. The six interface captures use controlled candidates in an isolated DSH Web profile at desktop window sizes. They show real pages, answers and persisted records, not an external-model benchmark. No user Desktop profile was used for these captures.
+The settings image comes from an isolated DSH Web installation with its local project path masked. The five other screenshots show the plugin rendering sample records. The overview and workflow are illustrations.
 
 ## 1. 让同一想法，长出更多实现方案！ / One idea. More ways to bring it to life.
 
 ![让同一想法，长出更多实现方案！ / One idea. More ways to bring it to life.](https://raw.githubusercontent.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/main/assets/readme/gallery-2.0/01-overview.png)
 
-## 2. 四版实时页面、过程与回复 / Four live pages with steps and replies
+## 2. 四版实时网页比较 / Compare four live pages
 
-四个页面都能直接操作；每版的回复显示在页面上方，A 的「过程」已展开，列出思考与写文件。/ All four pages can be used directly; each version's reply sits above its page, and A's steps are open with its thinking and file write.
+![四版实时网页比较 / Compare four live pages](https://raw.githubusercontent.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/main/assets/readme/gallery-2.0/02-live-comparison.png)
 
-![四版实时页面、过程与回复 / Four live pages with steps and replies](https://raw.githubusercontent.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/main/assets/readme/gallery-2.0/02-live-comparison.png)
+## 3. 在主对话里体验两版网页 / Try two pages in the main conversation
 
-## 3. 打招呼得到四种回答，过程可展开 / A greeting answered four ways, with steps
+![在主对话里体验两版网页 / Try two pages in the main conversation](https://raw.githubusercontent.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/main/assets/readme/gallery-2.0/03-main-conversation.png)
 
-在可以构建的 Vite 项目里发「你好」，四版按各自风格直接回答，不改文件、不构建；B 的「过程」已展开。/ "你好" (hello) sent from a Vite project that can be built: four versions answer in their own styles, with no files changed and nothing built; B's steps are open.
+## 4. DSH 主对话里的比较设置 / Comparison settings in DSH
 
-![打招呼得到四种回答，过程可展开 / A greeting answered four ways, with steps](https://raw.githubusercontent.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/main/assets/readme/gallery-2.0/03-main-conversation.png)
+![DSH 主对话里的比较设置 / Comparison settings in DSH](https://raw.githubusercontent.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/main/assets/readme/gallery-2.0/04-comparison-settings.png)
 
-## 4. 版本、风格与上下文 / Versions, styles and context
+## 5. 采用前逐行核对文件改动 / Review file changes before adoption
 
-![版本、风格与上下文 / Versions, styles and context](https://raw.githubusercontent.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/main/assets/readme/gallery-2.0/04-comparison-settings.png)
+![采用前逐行核对文件改动 / Review file changes before adoption](https://raw.githubusercontent.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/main/assets/readme/gallery-2.0/05-saved-result.png)
 
-## 5. 回复与页面并排，保存并说明理由 / Reply beside the page, saved with reasons
+## 6. 英文界面中的回答对比 / Compare answers in the English interface
 
-专注一版时，回复在左、页面在右；保存后可复制路径或撤销保存。/ With one version in focus, its reply sits to the left of its page; after saving, the path can be copied or the save undone.
+![英文界面中的回答对比 / Compare answers in the English interface](https://raw.githubusercontent.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/main/assets/readme/gallery-2.0/06-english-answers.png)
 
-![回复与页面并排，保存并说明理由 / Reply beside the page, saved with reasons](https://raw.githubusercontent.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/main/assets/readme/gallery-2.0/05-saved-result.png)
+## 7. 按日期找回比较与选择 / Find comparisons and picks by date
 
-## 6. 英文回答并排比较 / Compare English answers
-
-![英文回答并排比较 / Compare English answers](https://raw.githubusercontent.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/main/assets/readme/gallery-2.0/06-english-answers.png)
-
-## 7. 查找历史，保留选择与理由 / Find history, picks and reasons
-
-![查找历史，保留选择与理由 / Find history, picks and reasons](https://raw.githubusercontent.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/main/assets/readme/gallery-2.0/07-history.png)
+![按日期找回比较与选择 / Find comparisons and picks by date](https://raw.githubusercontent.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/main/assets/readme/gallery-2.0/07-history.png)
 
 ## 8. 设定、实跑、选择、采用 / Set up, run, choose and adopt
 

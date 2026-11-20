@@ -19,7 +19,7 @@ import { runIdFromToolResult } from './tool-result.js'
 import { clientCapabilities } from './capabilities.js'
 import { WindowsProcessControl, WindowsProcessEvidence } from './windows-compat.js'
 import { ConversationContextControl, type ContextMode } from './conversation-context.js'
-import { CopyButton, ProjectNotes, ResultView } from './results.js'
+import { CopyButton, FilesView, ProjectNotes, ResultView } from './results.js'
 import { BlindControl, MAX_VERSIONS, MIN_VERSIONS, revealedStyleName, Segmented, StyleSwatch, StyleCombos, StyleHabit, StylePicker, StyleSlots, stylesFor, VersionsControl, type StyleChoice } from './style-picker.js'
 import { LABELS, MAX_PICK_NOTE, PICK_REASONS, type Label, type PickReason, type StyleStat } from './model.js'
 import { Ambient, attachFx, burst, RunRing } from './fx.js'
@@ -248,8 +248,16 @@ function Screenshots({ runId, c, busy, act, device }: { runId: string; c: Cand; 
 }
 /** What the agent is doing right now, so a slow run reads as slow rather than stuck. */
 type PreviewDevice = 'adaptive' | 'desktop' | 'phone'
-function LivePreview({ c, device, compact, dense = false }: { c: Cand; device: PreviewDevice; compact: boolean; dense?: boolean }): React.ReactElement {
+function LivePreview({ run, c, revealed, device, compact, dense = false }: { run: Run; c: Cand; revealed: boolean; device: PreviewDevice; compact: boolean; dense?: boolean }): React.ReactElement {
   const holder = useRef<HTMLDivElement>(null)
+  const [showSource, setShowSource] = useState(false)
+  const hasSource = revealed && !!c.touchedFiles?.length
+  const sourceOpen = hasSource && showSource
+  let address = ''
+  try {
+    const url = new URL(c.previewUrl ?? '')
+    if (url.protocol === 'http:' || url.protocol === 'https:') address = url.host
+  } catch { /* The preview may not have an address yet. */ }
   const [width, setWidth] = useState(0)
   // Three or four versions side by side get shorter adaptive pages, so every one stays in view.
   const size = device === 'adaptive' ? { width: Math.max(240, width - 24), height: compact ? (dense ? 300 : 320) : (dense ? 300 : 480) } : device === 'phone' ? { width: 390, height: 844 } : { width: 1280, height: 800 }
@@ -263,7 +271,14 @@ function LivePreview({ c, device, compact, dense = false }: { c: Cand; device: P
     return () => observer.disconnect()
   }, [])
   const scale = width === 0 ? 1 : Math.min(1, Math.max(1, width - 24) / size.width)
-  return <div ref={holder} className="ac-preview-stage"><div className="ac-preview-surface" style={{ width: size.width * scale, height: size.height * scale }}>
+  return <div ref={holder} className="ac-preview-stage">
+    <div className="ac-browser-bar">
+      <span className="ac-browser-lights" aria-hidden="true"><i/><i/><i/></span>
+      <span dir="auto">{address || t("页面预览")}</span>
+      {hasSource && <button type="button" aria-pressed={sourceOpen} onClick={() => setShowSource(!sourceOpen)}>{sourceOpen ? t("实时页面") : t("源码")}</button>}
+    </div>
+    {sourceOpen && <FilesView key={run.runId + c.label} run={run} c={c} call={call} source/>}
+    <div className="ac-preview-surface" hidden={sourceOpen} style={{ width: size.width * scale, height: size.height * scale }}>
     <iframe className="ac-frame" title={t("候选 {0} 的运行页面", { 0: c.label })} src={c.previewUrl} sandbox="allow-scripts allow-same-origin allow-forms allow-popups allow-modals allow-downloads" style={{ width: size.width, height: size.height, transform: `scale(${scale})` }} />
   </div></div>
 }
@@ -354,7 +369,7 @@ function CandidateCard({ run, c, revealed, picked, busy, act, device, compact, h
       {live ? (
         <div className="ac-browser">
           {c.stage === 'previewing' && <div className="ac-page-note" role="status"><span className="ac-spin" />{t("页面已可操作，验收还在进行")}</div>}
-          <LivePreview c={c} device={device} compact={compact} dense={dense} />
+          <LivePreview run={run} c={c} revealed={revealed} device={device} compact={compact} dense={dense} />
         </div>
       ) : c.error || c.canRetryVerification ? (
         <div className={`ac-fail${c.stage === 'interrupted' ? ' interrupted' : ''}`}>
