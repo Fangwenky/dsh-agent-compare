@@ -129,6 +129,9 @@ const owns = (root: Element, element: Element): boolean => element.closest('.ac-
 export function attachFx(root: HTMLElement): () => void {
   if (attached.has(root) || typeof window === 'undefined') return () => {}
   attached.add(root)
+  const visibility = (): void => { root.toggleAttribute('data-page-hidden', document.hidden) }
+  visibility()
+  document.addEventListener('visibilitychange', visibility)
   let frame = 0
   let pointer: PointerEvent | undefined
   const placeLenses = (): void => {
@@ -176,6 +179,7 @@ export function attachFx(root: HTMLElement): () => void {
   void document.fonts?.ready.then(schedule, () => {})
   schedule()
   return () => {
+    document.removeEventListener('visibilitychange', visibility)
     attached.delete(root)
     mutations.disconnect()
     sizes?.disconnect()

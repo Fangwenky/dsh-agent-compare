@@ -17,3 +17,15 @@ export const WHALE_MOTION = `@keyframes ac-whale-bob{50%{transform:translateY(-5
 .ac-root{--ac-p-shadow:inset 0 1px 0 rgba(255,255,255,.32),0 1px 2px rgba(28,48,120,.22),0 8px 18px -10px rgba(72,102,250,.7);--ac-p-shadow-hover:inset 0 1px 0 rgba(255,255,255,.38),0 1px 2px rgba(28,48,120,.24),0 12px 24px -10px rgba(72,102,250,.78);--ac-p-bg:var(--ac-v-grad),var(--ac-v-fill)}
 .ac-btn.primary::before{display:none}
 `
+
+export const UI_MOTION = `
+@keyframes ac-stage-light{50%{opacity:.35;transform:translateY(-1px)}}
+@keyframes ac-expression{35%{transform:translateY(-2px) scale(1.09)}}
+@media(prefers-reduced-motion:no-preference){
+ .ac-root .ac-stage-dots i,.ac-root .ac-whale-face[data-face=thought] circle{animation:ac-stage-light 1.4s ease-in-out infinite}
+ .ac-root .ac-stage-dots i:nth-child(2),.ac-root .ac-whale-face circle:nth-child(2){animation-delay:.15s}
+ .ac-root .ac-stage-dots i:nth-child(3),.ac-root .ac-whale-face circle:nth-child(3){animation-delay:.3s}
+ .ac-root .ac-whale-face:is([data-face=lamp],[data-face=stars],[data-face=hearts],[data-face=tear]){animation:ac-expression var(--ac-d-ceremony) ease-out}
+}
+.ac-root[data-page-hidden] *, .ac-root[data-page-hidden] *::before,.ac-root[data-page-hidden] *::after{animation-play-state:paused!important}
+`

@@ -56,7 +56,7 @@ export function StagePill({ c }: { c: Cand }): React.ReactElement {
   const title = c.stage === 'ready' ? `${availability} · ${status}` : t(STAGE_TEXT[c.stage])
   return (
     <span className={`ac-pill ${kind}`}>
-      {busyStage(c.stage) ? <span className="ac-spin" /> : <span className="ac-dot" />}
+      {busyStage(c.stage) ? <span className="ac-stage-dots" aria-hidden="true"><i/><i/><i/></span> : <span className="ac-dot" />}
       {title}
     </span>
   )
