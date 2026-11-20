@@ -11,8 +11,8 @@
 [![npm download/下载量](https://raw.githubusercontent.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/main/assets/statistics/npm-total-highlight.svg)](https://www.npmjs.com/package/dsh-agent-compare)
 [![DSH Market · 워크플로 다운로드 1위](https://raw.githubusercontent.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/main/assets/statistics/dsh-market-workflow-download.svg)](https://dshmarket.com/categories/workflow/)
 
-[![dsh.so · 주간 다운로드 6위](https://raw.githubusercontent.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/main/assets/statistics/dshso-weekly-download-rank.svg)](https://www.dsh.so/artifact/dsh-agent-compare/)
-[![dsh.so · 주간 Star 증가 19위](https://raw.githubusercontent.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/main/assets/statistics/dshso-weekly-stars.svg)](https://www.dsh.so/artifact/dsh-agent-compare/)
+[![dsh.so · 주간 다운로드 4위](https://raw.githubusercontent.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/main/assets/statistics/dshso-weekly-download-rank.svg)](https://www.dsh.so/artifact/dsh-agent-compare/)
+[![dsh.so · 주간 Star 증가 33위](https://raw.githubusercontent.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/main/assets/statistics/dshso-weekly-stars.svg)](https://www.dsh.so/artifact/dsh-agent-compare/)
 
 [![npm version](https://img.shields.io/npm/v/dsh-agent-compare?label=npm&color=3657f5&style=flat&labelColor=0b1b4f&logo=npm&logoColor=white)](https://www.npmjs.com/package/dsh-agent-compare)
 [![CI](https://img.shields.io/github/actions/workflow/status/lijiaqi-AI-Product-Manager/dsh-agent-compare/ci.yml?branch=main&label=CI&logo=github&logoColor=white&style=flat&labelColor=0b1b4f)](https://github.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/actions/workflows/ci.yml)
