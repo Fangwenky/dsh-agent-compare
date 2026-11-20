@@ -1,8 +1,8 @@
 {
   "schema": "agentcompare.gallery/v1",
   "packageVersion": "3.3.0",
-  "updatedAt": "2026-11-20T15:50:33Z",
-  "runtimeSource": "b936ea977878317dcf7ba35c151ae2563701f294",
+  "updatedAt": "2026-11-20T16:04:57Z",
+  "runtimeSource": "b10e273ac3e393c1b7c8b0e6eb05e6e169f0cacf",
   "hostVersion": "0.2.2-rc.3",
   "browser": "Chromium 157",
   "privatePathsHidden": true,
@@ -26,8 +26,8 @@
       "title": "四版实时网页比较 / Compare four live pages",
       "width": 1440,
       "height": 940,
-      "bytes": 258064,
-      "sha256": "eddc40d4c60b45119641c17cb9b731b6f433db732fbdd5ad555150b5f2e29738",
+      "bytes": 257936,
+      "sha256": "97dbed32e5fefb80752096482b612eff89a794d80ee9d7cc0486b91123a890b7",
       "source": "Local UI fixture: four-open"
     },
     {
@@ -37,8 +37,8 @@
       "title": "在主对话里体验两版网页 / Try two pages in the main conversation",
       "width": 1440,
       "height": 940,
-      "bytes": 182849,
-      "sha256": "e9d6d3cda813adea52b66b33b2406bb33b438694a9e6656a307291489c053a86",
+      "bytes": 180571,
+      "sha256": "01b878052f8548d67c01ed8676af18a83869880975ea9355003f4b980c04c0b8",
       "source": "Local UI fixture: inline"
     },
     {
@@ -49,7 +49,7 @@
       "width": 1440,
       "height": 900,
       "bytes": 128205,
-      "sha256": "5a1d8fc7658a86a2c6c5ca8851d4d81ab69e6ca39e911b0c8bcd2748c15ac94a",
+      "sha256": "ce1bdd8aae84a7d6cc86ee81744d811cd34813dd68d51bb8065fe54688cfa4a5",
       "source": "Isolated DSH Web profile"
     },
     {
@@ -81,8 +81,8 @@
       "title": "按日期找回比较与选择 / Find comparisons and picks by date",
       "width": 1440,
       "height": 940,
-      "bytes": 222248,
-      "sha256": "988f7236ce40300b20c51faa3066a1579c4b33d21990e880caf481bedc99b67d",
+      "bytes": 220918,
+      "sha256": "07500543d47c954161d37af51b08d2eafd9a2dc1ef60e00d601186e56f5f1db4",
       "source": "Local UI fixture: history-many"
     },
     {
@@ -98,5 +98,5 @@
   ],
   "illustrationUpdatedAt": "2026-11-15T16:06:53.593Z",
   "illustrationNote": "Blue brand setting with natural object and semantic colors: red, yellow and green window controls, a red tomato with green leaves, and red/green review marks. The header slogan is 让同一想法，长出更多实现方案！ / One idea. More ways to bring it to life. Illustrations are distinct from the six unchanged real interface captures and their recorded runtime source.",
-  "clientSha256": "bd272b401090b51d6296bcb3d0dbdc3b5513d18a65690d575760d662d06d7a9b"
+  "clientSha256": "39c5997cbab62dd0704e09435979d59df7d3ba0bd9f8c22c4a83422419d5b79f"
 }
