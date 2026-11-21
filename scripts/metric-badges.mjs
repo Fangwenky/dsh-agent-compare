@@ -1,5 +1,5 @@
 import assert from 'node:assert/strict'
-import { readFile, writeFile } from 'node:fs/promises'
+import { readdir, readFile, writeFile } from 'node:fs/promises'
 import path from 'node:path'
 import { fileURLToPath, pathToFileURL } from 'node:url'
 
@@ -153,6 +153,38 @@ export function renderDshSoBadge(snapshot, metric) {
   </g>`)
 }
 
+const badgeRoot = 'https://raw.githubusercontent.com/' + repository + '/main/assets/statistics/'
+
+export function updateReadmeBadgeLabels(markdown, locale, stars, total, ranks) {
+  const counts = new Map([
+    ['github-stars.svg', stars],
+    ['npm-total-highlight.svg', total],
+    ['dsh-market-workflow-download.svg', ranks.dshMarket.position],
+    ['dshso-weekly-download-rank.svg', ranks.dshSo.weeklyDownloadsPosition],
+    ['dshso-weekly-stars.svg', ranks.dshSo.weeklyStarGrowthPosition],
+  ])
+  const seen = new Set()
+  const format = new Intl.NumberFormat(locale)
+  const linkedImage = /^(\[!\[)([^\]\r\n]+)(\]\(([^)\s]+)\)\]\()/gm
+  const trailingNumber = /\d+(?:[., \u00a0\u202f]\d{3})*(?=(?:\s*(?:名|位|위))?$)/u
+  const output = markdown.replace(linkedImage, (image, open, label, close, url) => {
+    if (!url.startsWith(badgeRoot)) return image
+    const file = url.slice(badgeRoot.length)
+    if (!counts.has(file)) return image
+    assert.ok(!seen.has(file), 'Duplicate README badge: ' + file)
+    seen.add(file)
+    const isCount = file === 'github-stars.svg' || file === 'npm-total-highlight.svg'
+    const value = counts.get(file)
+    count(value, isCount ? 0 : 1)
+    const number = format.format(value)
+    if (trailingNumber.test(label)) return open + label.replace(trailingNumber, number) + close
+    assert.ok(isCount, 'Missing rank in README badge: ' + file)
+    return open + label + ' · ' + number + close
+  })
+  for (const name of counts.keys()) assert.ok(seen.has(name), 'Missing README badge: ' + name)
+  return output
+}
+
 async function main() {
   const check = process.argv.includes('--check')
   const offline = check || process.argv.includes('--render-only')
@@ -169,6 +201,15 @@ async function main() {
     ['assets/statistics/dshso-weekly-stars.svg', renderDshSoBadge(ranks.dshSo, 'stars')],
     [starsFile, JSON.stringify(stars, null, 2) + '\n'],
   ])
+  const npm = JSON.parse(await readFile(path.join(root, 'docs/measurements/npm-total.json'), 'utf8'))
+  const guides = (await readdir(root)).filter(file => /^README(?:\.[a-z]{2}(?:-[A-Z]{2})?)?\.md$/.test(file))
+  for (const file of guides) {
+    const current = await readFile(path.join(root, file), 'utf8')
+    const locale = file === 'README.md' ? 'zh' : file.split('.')[1]
+    const updated = updateReadmeBadgeLabels(current, locale, stars.stars, npm.total, ranks)
+    if (check) assert.ok(current === updated, 'Stale README badge values: ' + file)
+    else if (current !== updated) assets.set(file, updated)
+  }
   for (const [file, content] of assets) {
     const target = path.join(root, file)
     if (check) assert.equal(await readFile(target, 'utf8'), content, 'Stale metric asset: ' + file)
