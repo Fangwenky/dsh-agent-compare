@@ -1,4 +1,4 @@
-import { collectGitHubStars, renderStarsBadge, renderDownloadBadge, renderMarketBadge, renderDshSoBadge } from '../scripts/metric-badges.mjs'
+import { updateReadmeBadgeLabels, collectGitHubStars, renderStarsBadge, renderDownloadBadge, renderMarketBadge, renderDshSoBadge } from '../scripts/metric-badges.mjs'
 import test from 'node:test'
 import assert from 'node:assert/strict'
 import {collectTotal, lifetimeTotal, renderTotal, renderBadge} from '../scripts/npm-total-downloads.mjs'
@@ -106,4 +106,29 @@ test('new artwork shows the lifetime value and qualifies each rank with its own 
   assert.match(renderDshSoBadge(dshSo, 'downloads'), /Weekly downloads #7/)
   assert.match(renderDshSoBadge(dshSo, 'stars'), /Weekly star gain #19/)
   assert.match(renderDshSoBadge(dshSo, 'stars'), /2026-11-18/)
+})
+
+test('badge values follow the snapshots and keep translated labels and destinations', () => {
+  const base = 'https://raw.githubusercontent.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/main/assets/statistics/'
+  const labels = [
+    ['github-stars', 'GitHub stars'],
+    ['npm-total-highlight', 'Requêtes de téléchargement npm · 1\u202f234'],
+    ['dsh-market-workflow-download', '工作流第 4 名'],
+    ['dshso-weekly-download-rank', '週間 DL 4位'],
+    ['dshso-weekly-stars', '주간 Star 증가 33위'],
+  ]
+  const badges = labels.map(([asset, alt]) => '[![' + alt + '](' + base + asset + '.svg)](https://example.org/board)')
+  const guide = [...badges, '', 'Keep #4 in the rest of the guide.'].join('\n')
+  const ranks = { dshMarket: { position: 1 }, dshSo: { weeklyDownloadsPosition: 3, weeklyStarGrowthPosition: 38 } }
+  const render = text => updateReadmeBadgeLabels(text, 'fr', 0, 249799, ranks)
+  const next = render(guide)
+  assert.ok(next.includes('GitHub stars · 0]'))
+  assert.ok(next.includes('Requêtes de téléchargement npm · ' + (249799).toLocaleString('fr') + ']'))
+  assert.ok(next.includes('工作流第 1 名]') && next.includes('週間 DL 3位]') && next.includes('주간 Star 증가 38위]'))
+  assert.ok(next.endsWith('Keep #4 in the rest of the guide.'))
+  assert.equal((next.match(/https:\/\/example\.org\/board/g) ?? []).length, 5)
+  assert.equal(render(next), next)
+  assert.throws(() => render(guide.replace(badges[0], '')), /Missing README badge/)
+  assert.throws(() => render(guide + '\n' + badges[0]), /Duplicate README badge/)
+  assert.throws(() => render(guide.replace('工作流第 4 名', '工作流')), /Missing rank/)
 })

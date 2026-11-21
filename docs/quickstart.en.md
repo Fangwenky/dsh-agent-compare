@@ -2,7 +2,7 @@
 
 [中文](quickstart.md) · **English**
 
-1. **Install and open a project.** Follow the [full guide](../README.en.md#install) to install or update `dsh-agent-compare`. Quit DSH Desktop completely and reopen it; for Web, restart the relevant DSH service and reload the page. Reuse your configured model. Any folder works; outside Git, every version starts empty and does not read existing files. See [folders and project types](workspaces-and-projects.md#english).
+1. **Install and open a project.** Follow the [full guide](../README.en.md#install) to install or update `dsh-agent-compare`. In **Plugins → Installed**, check that AgentCompare is enabled, then quit DSH Desktop completely and reopen it. For Web, restart the relevant DSH service and reload the page. Reuse your configured model. Any folder works; outside Git, every version starts empty and does not read existing files. See [folders and project types](workspaces-and-projects.md#english).
 2. **Select A|B, choose versions and styles, describe the task.** Use the settings above the composer:
    - the comparison mode;
    - 2–4 versions;

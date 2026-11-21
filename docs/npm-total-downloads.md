@@ -14,9 +14,9 @@ The Star badge uses the GitHub repository API snapshot. The same daily job refre
 
 [Star 快照](https://github.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/blob/main/docs/measurements/github-stars.json) · [榜单快照](https://github.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/blob/main/docs/measurements/market-ranks.json)
 
-[DSH插件市场下载榜](https://dshmarket.com/zh/categories/workflow/) 展示工作流与自动化分类的名次，按近 30 天 npm 下载请求排序。[dsh.so](https://www.dsh.so/artifact/dsh-agent-compare/) 周下载榜合计 npm 与镜像请求，Star 周榜按增量排序。榜单的观察日期保存在公开快照中。维护者核对最新榜单后更新快照和各语言的排名说明。
+[DSH插件市场下载榜](https://dshmarket.com/zh/categories/workflow/) 展示工作流与自动化分类的名次，按近 30 天 npm 下载请求排序。[dsh.so](https://www.dsh.so/artifact/dsh-agent-compare/) 周下载榜合计 npm 与镜像请求，Star 周榜按增量排序。榜单的观察日期保存在公开快照中。维护者核对两个榜单后更新快照。徽章图和八语 README 的替代文字都取自同一份数据，关闭图片也能读到数字。
 
-The [DSH Market badge](https://dshmarket.com/categories/workflow/) shows the Workflow & Automation category rank by 30-day npm download requests. [dsh.so](https://www.dsh.so/artifact/dsh-agent-compare/) combines npm and mirror requests for weekly downloads and ranks weekly Star gains separately. The public snapshot records each board’s observation date. Verify both sources before updating the data and translated labels.
+The [DSH Market badge](https://dshmarket.com/categories/workflow/) shows the Workflow & Automation category rank by 30-day npm download requests. [dsh.so](https://www.dsh.so/artifact/dsh-agent-compare/) combines npm and mirror requests for weekly downloads and ranks weekly Star gains separately. The public snapshot records each board’s observation date. Maintainers verify both boards before updating the snapshots. The badge images and the alternative text in every README use the same figures, so the values are available when images are hidden.
 
 来源：[发布元数据](https://registry.npmjs.org/dsh-agent-compare) · [最后可用日](https://api.npmjs.org/downloads/point/last-day/dsh-agent-compare) · [npm API 定义](https://github.com/npm/registry/blob/main/docs/download-counts.md)。完整逐日来源及范围保留在[公开快照](https://github.com/lijiaqi-AI-Product-Manager/dsh-agent-compare/blob/main/docs/measurements/npm-total.json)，README 只展示累计总数。
 
@@ -38,5 +38,5 @@ node scripts/metric-badges.mjs
 node scripts/metric-badges.mjs --check
 ```
 
-`--render-only` 使用已保存快照离线生成图片；`--check` 离线检查图片与快照的一致性。上述过程不登录 npm，也不发布新包。
+`--render-only` 根据已保存的快照离线生成徽章并同步 README 数字。`--check` 核对图片、替代文字与快照。上述过程不登录 npm，也不发布新包。
 
